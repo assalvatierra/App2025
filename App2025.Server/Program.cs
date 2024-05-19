@@ -1,4 +1,4 @@
-using App2025.Server.Controllers;
+﻿using App2025.Server.Controllers;
 using Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,5 +35,7 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 app.MapCustStatusEndpoints();
+
+app.MapCustMainEndpoints();
 
 app.Run();

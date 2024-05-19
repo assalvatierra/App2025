@@ -57,7 +57,10 @@ export class AppComponent implements OnInit {
   }
 
   getSample() {
-    this.http.get<CustStatus[]>('/api/CustStatus').subscribe(
+
+    var apiUrl = 'https://localhost:7228/api/CustStatus';
+
+    this.http.get<CustStatus[]>('api/CustStatus').subscribe(
       (result) => {
         var t = result;
       },

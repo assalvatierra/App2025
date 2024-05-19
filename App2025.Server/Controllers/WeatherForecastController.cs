@@ -1,3 +1,4 @@
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App2025.Server.Controllers
@@ -29,5 +30,12 @@ namespace App2025.Server.Controllers
             })
             .ToArray();
         }
+
+        //[HttpGet(Name = "CustStatus")]
+        //public IEnumerable<CustStatus> GetStatus()
+        //{
+        //    return db.CustStatuses.ToListAsync();
+        //}
+
     }
 }

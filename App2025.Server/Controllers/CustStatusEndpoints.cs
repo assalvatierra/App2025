@@ -13,27 +13,12 @@ public static class CustStatusEndpoints
 
         group.MapGet("/", async (Models db) =>
         {
-            //var command = db.Database.GetDbConnection().CreateCommand();
-            //command.CommandText = "SELECT * FROM [dbo].[CustStatuses]";
-            //db.Database.OpenConnection();
-            //var result = command.ExecuteReader();
-            //while(result.Read())
-            //{
-            //    int sId = result.GetInt32( result.GetOrdinal("Id") );
-            //    string sCode = result.GetString(result.GetOrdinal("Code"));
-            //}
-
-            //foreach (var item in result )
-            //{
-            //    CustStatus t1 = (CustStatus) item;
-            //}
-
-            //List<CustStatus> t = db.CustStatuses.FromSqlRaw( command.CommandText ).ToList();
-
             return await db.CustStatuses.ToListAsync();
         })
         .WithName("GetAllCustStatuses")
         .WithOpenApi();
+        
+
 
         group.MapGet("/{id}", async Task<Results<Ok<CustStatus>, NotFound>> (int id, Models db) =>
         {

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore context-namespace="Context" namespace="Entities" p1:name="Models" p1:Guid="8f22392a-e288-48d3-9a35-169c6d0f066a" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="$ComplexTypes">
+    <component class="RecordInfo" p1:Guid="2577dcfd-6946-4c2e-b85e-42e2adffda20">
+      <property name="DtCreated" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5adb7614-3b99-4a61-b8db-3e43483a714e">
+        <column name="" />
+      </property>
+      <property name="CreatedBy" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="817f26f6-cfdb-4055-997c-d170e0ba2406">
+        <column name="" />
+      </property>
+      <property name="DtEdited" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4e83942d-c7be-4acd-a607-1917e8490894">
+        <column name="" />
+      </property>
+      <property name="EditedBy" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d13bc763-ad95-46f1-9456-58e65688d210">
+        <column name="" />
+      </property>
+      <property name="IsActive" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="86aac18a-16d7-41c4-b08e-95d1eff371d1">
+        <column name="" />
+      </property>
+      <property name="RecordOrder" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="2389efdb-1a87-4f02-91e0-2558adb2c954">
+        <column name="" />
+      </property>
+    </component>
+    <component class="DataInfo" p1:Guid="8870e40f-c593-4c15-95d0-e5978e136992">
+      <property name="Name" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d597e282-74e5-43d0-bf53-fd91eb9dabc4">
+        <column name="" />
+      </property>
+      <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c73b45c4-cca2-4e4a-a2ab-f432f19a294a">
+        <column name="" />
+      </property>
+      <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5e0e4626-ed04-41b2-8bf2-b1ed5e3008fc">
+        <column name="" />
+      </property>
+    </component>
+    <component class="ReferenceInfo" p1:Guid="0b9ffd52-f8e9-4af0-9ab4-12c62543f291">
+      <property name="Code" type="String" p1:ValidateRequired="true" p1:Guid="eb17f17b-6195-4166-82a1-e9747cac38f8">
+        <column name="" />
+      </property>
+      <property name="Display" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f86d1153-146d-427d-9bfa-07f0af2347ce">
+        <column name="" />
+      </property>
+      <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3c6e0151-aa8d-4e4f-8c70-b3faf1aa2b12">
+        <column name="" />
+      </property>
+      <property name="OrderNo" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="73490073-6a2f-4839-85e6-14e434c7faf7">
+        <column name="" />
+      </property>
+      <property name="IsActive" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e267ad63-9596-4bc1-9f77-d46de64d515f">
+        <column name="" />
+      </property>
+      <property name="IsDefault" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="779d74e7-2c09-4344-b7a6-15061f68a652">
+        <column name="" />
+      </property>
+    </component>
+  </class>
+  <class name="CustMain" entity-set="CustMains" p1:Guid="c09ca043-d125-4404-9242-f7e12702acda">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="2ba3a47b-c9dd-4656-ac7f-7e619fab4c67">
+      <column name="" not-null="True" />
+    </id>
+    <component name="DataInfo" class="DataInfo" p1:ValidateRequired="false" p1:Guid="b9563229-d7ab-4895-9930-7a97cfbbfa1c">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+    </component>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="ea18a3fd-83c2-4ec7-a59f-a0fe7a68734c">
+      <property name="DtCreated" />
+      <property name="CreatedBy" />
+      <property name="DtEdited" />
+      <property name="EditedBy" />
+      <property name="IsActive" />
+      <property name="RecordOrder" />
+    </component>
+    <property name="CustStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="0c98c1ec-e435-4fd4-9738-89bfeccdd9d2">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="CustStatus" entity-set="CustStatuses" p1:Guid="78cfbc09-aa99-4d63-9d9f-f113f83655de">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="7e13bff1-30ef-4a76-bf25-678f2fa8bf1e">
+      <column name="" />
+    </id>
+    <component name="ReferenceInfo" class="ReferenceInfo" p1:ValidateRequired="false" p1:Guid="e1ead7af-5453-47f3-b5f9-5c650f4c4008">
+      <property name="Code" />
+      <property name="Display" />
+      <property name="Remarks" />
+      <property name="OrderNo" />
+      <property name="IsActive" />
+      <property name="IsDefault" />
+    </component>
+  </class>
+  <associations>
+    <association name="CustStatus_Customer" cardinality="OneToMany" p1:Guid="05e7ce2f-8904-4006-81b7-8f248337013d">
+      <end1 multiplicity="One" name="CustStatus" class="CustMain" relation-class="CustStatus" constrained="True" lazy="False" p1:Guid="86f8b2c1-8b69-4654-8cca-72dcdef1bb1b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Customers" class="CustStatus" relation-class="CustMain" generate="False" lazy="False" p1:Guid="d28f7690-5a7b-45c8-9d7e-c53dc49d86a4">
+        <property name="CustStatusId" />
+      </end2>
+    </association>
+  </associations>
+</efcore>

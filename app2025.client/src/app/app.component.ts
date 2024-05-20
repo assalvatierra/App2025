@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+// import {MatTableDataSource, MatSort} from '@angular/material';
+
 
 interface WeatherForecast {
   date: string;
@@ -56,6 +58,9 @@ interface CustMain {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+
+  displayedColumns = ['id', 'name', 'description', 'status'];
+
   public forecasts: WeatherForecast[] = [];
   public customers: CustMain[]=[];
 

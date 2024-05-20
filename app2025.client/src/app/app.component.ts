@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    //this.getForecasts();
+    this.getForecasts();
     this.getSample();
   }
 

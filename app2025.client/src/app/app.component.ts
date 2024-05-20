@@ -17,7 +17,7 @@ interface WeatherForecast {
 
 interface ReferenceInfo {
   Code: string;
-  Display: string;
+  display: string;
   Remarks: string;
   OrderNo: string;
   IsActive: boolean;
@@ -25,9 +25,13 @@ interface ReferenceInfo {
 }
 interface CustStatus {
   Id: number;
-  ReferenceInfo: ReferenceInfo
+  referenceInfo: ReferenceInfo
 }
 
+interface CustMain {
+  id: number;
+  custStatus: CustStatus
+}
 
 
 @Component({
@@ -37,18 +41,20 @@ interface CustStatus {
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
+  public customers: CustMain[]=[];
 
+  public _error?: string;
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.getForecasts();
-    this.getSample();
+    //this.getSample();
   }
 
   getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+    this.http.get<CustMain[]>('/weatherforecast').subscribe(
       (result) => {
-        this.forecasts = result;
+        this.customers = result;
       },
       (error) => {
         console.error(error);
@@ -56,19 +62,20 @@ export class AppComponent implements OnInit {
     );
   }
 
-  getSample() {
+  //getSample() {
 
-    var apiUrl = 'https://localhost:7228/api/CustStatus';
+  //  var apiUrl = 'https://localhost:7228/api/CustStatus';
 
-    this.http.get<CustStatus[]>('api/CustStatus').subscribe(
-      (result) => {
-        var t = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+  //  this.http.get<CustStatus[]>('/Api/CustStatus').subscribe(
+  //    (result) => {
+  //      var t = result;
+  //    },
+  //    (error) => {
+  //      this._error = error.error;
+  //      console.log(error.error);
+  //    }
+  //  );
+  //}
 
   title = 'app2025.client';
 }

@@ -12,6 +12,8 @@
             <th>Description</th>
             <th>Status</th>
             <th>Remarks</th>
+            <th>Date Created</th>
+            <th>Created By</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +23,8 @@
             <td>{{ customer.dataInfo.description }}</td>
             <td>{{ customer.custStatus.referenceInfo.display }}</td>
             <td>{{ customer.dataInfo.remarks }}</td>
+            <td>{{ customer.recordInfo.dtCreated }}</td>
+            <td>{{ customer.recordInfo.createdBy }}</td>
         </tr>
     </tbody>
 </table>

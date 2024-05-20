@@ -28,6 +28,14 @@ interface CustStatus {
   referenceInfo: ReferenceInfo
 }
 
+interface RecordInfo {
+    dtCreated?:Date;
+    createdBy?:string;
+    dtEdited?:Date;
+    editedBy?:string;
+    isActive?:boolean;
+    recordOrder?:number;
+}
 interface DataInfo {
   name?: string;
   description?: string;
@@ -37,7 +45,8 @@ interface CustMain {
   id: number;
   custStatusId?: number;
   dataInfo: DataInfo;
-  custStatus: CustStatus
+  custStatus: CustStatus;
+  recordInfo:RecordInfo;
 }
 
 

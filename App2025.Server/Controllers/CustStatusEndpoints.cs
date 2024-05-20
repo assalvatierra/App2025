@@ -3,6 +3,7 @@ using Context;
 using Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
+using NuGet.Protocol;
 namespace App2025.Server.Controllers;
 
 public static class CustStatusEndpoints
@@ -16,7 +17,7 @@ public static class CustStatusEndpoints
             return await db.CustStatuses.ToListAsync();
         })
         .WithName("GetAllCustStatuses")
-        .WithOpenApi();
+        .WithOpenApi().ToJson();
         
 
 

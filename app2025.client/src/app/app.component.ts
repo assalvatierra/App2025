@@ -16,12 +16,12 @@ interface WeatherForecast {
 }
 
 interface ReferenceInfo {
-  Code: string;
-  display: string;
-  Remarks: string;
-  OrderNo: string;
-  IsActive: boolean;
-  IsDefault: boolean;
+  Code?: string;
+  display?: string;
+  Remarks?: string;
+  OrderNo?: string;
+  IsActive?: boolean;
+  IsDefault?: boolean;
 }
 interface CustStatus {
   Id: number;
@@ -63,8 +63,8 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.getForecasts();
-    //this.getSample();
+    //this.getForecasts();
+    this.getSample();
   }
 
   getForecasts() {
@@ -78,20 +78,20 @@ export class AppComponent implements OnInit {
     );
   }
 
-  //getSample() {
+  getSample() {
 
-  //  var apiUrl = 'https://localhost:7228/api/CustStatus';
+    var apiurl = 'https://localhost:7228/api/custstatus';
 
-  //  this.http.get<CustStatus[]>('/Api/CustStatus').subscribe(
-  //    (result) => {
-  //      var t = result;
-  //    },
-  //    (error) => {
-  //      this._error = error.error;
-  //      console.log(error.error);
-  //    }
-  //  );
-  //}
+    this.http.get<CustStatus[]>('/api/CustStatus').subscribe(
+      (result) => {
+        var t = result;
+      },
+      (error) => {
+        this._error = error.error;
+        console.log(error.error);
+      }
+    );
+  }
 
   title = 'app2025.client';
 }

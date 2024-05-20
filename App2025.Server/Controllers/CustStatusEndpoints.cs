@@ -17,7 +17,10 @@ public static class CustStatusEndpoints
             return await db.CustStatuses.ToListAsync();
         })
         .WithName("GetAllCustStatuses")
-        .WithOpenApi().ToJson();
+        .WithOpenApi()
+        .RequireAuthorization()
+        .ToJson()
+        ;
         
 
 

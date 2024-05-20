@@ -28,8 +28,15 @@ interface CustStatus {
   referenceInfo: ReferenceInfo
 }
 
+interface DataInfo {
+  name?: string;
+  description?: string;
+  remarks?: string
+}
 interface CustMain {
   id: number;
+  custStatusId?: number;
+  dataInfo: DataInfo;
   custStatus: CustStatus
 }
 

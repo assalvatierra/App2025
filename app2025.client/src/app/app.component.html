@@ -37,7 +37,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.Id}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
@@ -61,3 +61,19 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+
+<nav>
+  <a class="button"
+     routerLink="/Sample01"
+     routerLinkActive="activebutton"
+     ariaCurrentWhenActive="page">
+     Sample01
+  </a>
+  <a class="button"
+     routerLink="/Sample02"
+     routerLinkActive="activebutton"
+     ariaCurrentWhenActive="page">
+     Sample02
+  </a>
+</nav>
+<router-outlet></router-outlet>

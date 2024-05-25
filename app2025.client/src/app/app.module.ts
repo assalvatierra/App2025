@@ -8,10 +8,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import { SamplesComponent } from './samples/samples.component';
+import { Samples2Component } from './samples2/samples2.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SamplesComponent,
+    Samples2Component
   ],
   imports: [
     BrowserModule, HttpClientModule,

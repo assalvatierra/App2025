@@ -11,6 +11,7 @@ import {MatSortModule} from '@angular/material/sort';
 import { SamplesComponent } from './samples/samples.component';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+// import { ReportViewerComponent } from './report-viewer/report-viewer.component';
 
 @NgModule({
   declarations: [

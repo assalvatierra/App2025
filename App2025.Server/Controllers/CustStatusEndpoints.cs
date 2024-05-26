@@ -18,7 +18,7 @@ public static class CustStatusEndpoints
         })
         .WithName("GetAllCustStatuses")
         .WithOpenApi()
-        .RequireAuthorization()
+        //.RequireAuthorization()
         .ToJson()
         ;
         

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 // import {MatTableDataSource, MatSort} from '@angular/material';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 
 interface WeatherForecast {

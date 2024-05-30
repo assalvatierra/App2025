@@ -11,22 +11,24 @@ import {MatSortModule} from '@angular/material/sort';
 import { SamplesComponent } from './samples/samples.component';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainMenuComponent } from "./main-menu/main-menu.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SamplesComponent,
-    Samples2Component,
-    PageNotFoundComponent
-  ],
-  imports: [
-    BrowserModule, HttpClientModule,
-    AppRoutingModule,
-    MatTableModule,MatSortModule
-  ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SamplesComponent,
+        Samples2Component,
+        PageNotFoundComponent,
+    ],
+    providers: [
+        provideAnimationsAsync()
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule, HttpClientModule,
+        AppRoutingModule,
+        MatTableModule, MatSortModule,
+        MainMenuComponent
+    ]
 })
 export class AppModule { }

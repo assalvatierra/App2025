@@ -1,13 +1,12 @@
-import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component} from '@angular/core';
-import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './../app-routing.module';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
+
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+
 interface MainMenu {
   name: string;
   linkUrl: string;
@@ -23,34 +22,17 @@ const TREE_DATA: MainMenu[] = [
   {
     name: 'Module-2',
     linkUrl: '',
-    children: [
-      {
-        name: 'Green',
-        linkUrl: '',
-        children: [{name: 'Broccoli',linkUrl: ''}, {name: 'Brussels sprouts',linkUrl: ''}],
-      }
-    ],
+    children: [{name: 'Reports',linkUrl: '/Sample02'}, {name: 'Sample-1',linkUrl: ''}],
   },
 ];
 
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
-
-/**
- * @title Tree with flat nodes
- */
 
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css',
   standalone: true,
-  imports: [MatTreeModule, MatButtonModule, MatIconModule,AppRoutingModule,],
+  imports: [BrowserModule, MatButtonModule, MatIconModule,AppRoutingModule,MatListModule,MatCardModule,],
 })
 export class MainMenuComponent {
   private _transformer = (node: MainMenu, level: number) => {
@@ -61,23 +43,11 @@ export class MainMenuComponent {
     };
   };
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level,
-    node => node.expandable,
-  );
 
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.children,
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  public menuItems: MainMenu[] | undefined;
 
   constructor() {
-    this.dataSource.data = TREE_DATA;
+    this.menuItems = TREE_DATA;
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 }

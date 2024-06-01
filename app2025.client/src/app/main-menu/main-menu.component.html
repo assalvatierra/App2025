@@ -1,26 +1,14 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
-    <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-      <a
-        class="button"
-        [routerLink]="node.linkUrl"
-        routerLinkActive="activebutton"
-        ariaCurrentWhenActive="page">
-        {{node.name}}
-      </a>
-    </mat-tree-node>
-
-    <!-- This is the tree node template for expandable nodes -->
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-      <button mat-icon-button matTreeNodeToggle
-              [attr.aria-label]="'Toggle ' + node.name">
-        <mat-icon class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-        </mat-icon>
-      </button>
-      *{{node.name}}
-    </mat-tree-node>
-  </mat-tree>
+<div style="width: 200px;" >
+  <ng-container #name *ngFor="let group of menuItems">
+    <div>{{group.name}}</div>
+    <mat-list>
+      <mat-list-item role="listitem"  *ngFor="let item of group.children">
+        <a class="button" [routerLink]="item.linkUrl" routerLinkActive="activebutton" ariaCurrentWhenActive="page">
+        {{item.name}}
+      </a></mat-list-item>
+    </mat-list>
+    </ng-container>
 
 
+</div>

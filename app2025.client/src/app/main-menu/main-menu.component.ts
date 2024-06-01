@@ -1,6 +1,7 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
+import { AppRoutingModule } from './../app-routing.module';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 /**
@@ -9,25 +10,25 @@ import {MatButtonModule} from '@angular/material/button';
  */
 interface MainMenu {
   name: string;
+  linkUrl: string;
   children?: MainMenu[];
 }
 
 const TREE_DATA: MainMenu[] = [
   {
-    name: 'Fruit',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
+    name: 'Module-1',
+    linkUrl: '',
+    children: [{name: 'Transactions', linkUrl: '/Sample01'}, {name: 'Contacts', linkUrl: '/Sample02'} ],
   },
   {
-    name: 'Vegetables',
+    name: 'Module-2',
+    linkUrl: '',
     children: [
       {
         name: 'Green',
-        children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-      },
-      {
-        name: 'Orange',
-        children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-      },
+        linkUrl: '',
+        children: [{name: 'Broccoli',linkUrl: ''}, {name: 'Brussels sprouts',linkUrl: ''}],
+      }
     ],
   },
 ];
@@ -49,7 +50,7 @@ interface ExampleFlatNode {
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css',
   standalone: true,
-  imports: [MatTreeModule, MatButtonModule, MatIconModule],
+  imports: [MatTreeModule, MatButtonModule, MatIconModule,AppRoutingModule,],
 })
 export class MainMenuComponent {
   private _transformer = (node: MainMenu, level: number) => {

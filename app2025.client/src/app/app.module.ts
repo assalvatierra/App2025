@@ -12,6 +12,7 @@ import { SamplesComponent } from './samples/samples.component';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainMenuComponent } from "./main-menu/main-menu.component";
+import { MainPageComponent } from './main-page/main-page.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
         SamplesComponent,
         Samples2Component,
         PageNotFoundComponent,
+        MainPageComponent,
     ],
     providers: [
         provideAnimationsAsync()

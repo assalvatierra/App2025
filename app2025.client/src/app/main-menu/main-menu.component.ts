@@ -17,12 +17,18 @@ const TREE_DATA: MainMenu[] = [
   {
     name: 'Module-1',
     linkUrl: '',
-    children: [{name: 'Transactions', linkUrl: '/Sample01'}, {name: 'Contacts', linkUrl: '/Sample02'} ],
+    children: [
+      {name: 'Sample 1', linkUrl: '/Sample01'},
+      {name: 'Sample 2', linkUrl: '/Sample02'}
+    ],
   },
   {
     name: 'Module-2',
     linkUrl: '',
-    children: [{name: 'Reports',linkUrl: '/Sample02'}, {name: 'Sample-1',linkUrl: ''}],
+    children: [
+      {name: 'References',linkUrl: '/References'},
+      {name: 'Reports',linkUrl: '/reports'}
+    ],
   },
 ];
 

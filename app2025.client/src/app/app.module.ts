@@ -8,25 +8,33 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { SamplesComponent } from './samples/samples.component';
+// import { SamplesComponent } from './samples/samples.component';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainMenuComponent } from "./main-menu/main-menu.component";
+import { MainPageComponent } from './main-page/main-page.component';
+import { MainHeaderComponent } from './main-header/main-header.component';
+import { MainFooterComponent } from './main-footer/main-footer.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SamplesComponent,
-    Samples2Component,
-    PageNotFoundComponent
-  ],
-  imports: [
-    BrowserModule, HttpClientModule,
-    AppRoutingModule,
-    MatTableModule,MatSortModule
-  ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        // SamplesComponent,
+        Samples2Component,
+        PageNotFoundComponent,
+        MainPageComponent,
+        MainHeaderComponent,
+        MainFooterComponent,
+    ],
+    providers: [
+        provideAnimationsAsync()
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule, HttpClientModule,
+        AppRoutingModule,
+        MatTableModule, MatSortModule,
+        MainMenuComponent
+    ]
 })
 export class AppModule { }

@@ -5,20 +5,20 @@
 
     <div class="example-sidenav-content" *ngIf="sidenav.opened">
       <button type="button" mat-button (click)="sidenav.toggle()">
-        Close sidenav
+        <mat-icon *ngIf="sidenav.opened">keyboard_arrow_left</mat-icon>
       </button>
     </div>
-    
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
     <app-main-menu></app-main-menu></mat-drawer>
 
   <mat-drawer-content>
 
     <div class="example-sidenav-content" *ngIf="!sidenav.opened">
       <button type="button" mat-button (click)="sidenav.toggle()">
-        open sidenav
+        <mat-icon *ngIf="!sidenav.opened">keyboard_arrow_right</mat-icon>
       </button>
     </div>
-
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
     <app-main-page></app-main-page></mat-drawer-content>
 
 </mat-drawer-container>

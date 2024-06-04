@@ -10,6 +10,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainMenuComponent } from "./main-menu/main-menu.component";
@@ -35,6 +36,7 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
         BrowserModule, HttpClientModule,
         AppRoutingModule,
         MatSidenavModule,
+        MatIconModule,
         MatTableModule, MatSortModule,
         MainMenuComponent
     ]

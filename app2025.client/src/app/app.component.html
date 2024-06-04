@@ -1,20 +1,20 @@
 
 <app-main-header></app-main-header>
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened #drawer>
+  <mat-drawer mode="side" opened #sidenav>
 
-    <div class="example-sidenav-content">
-      <button type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
+    <div class="example-sidenav-content" *ngIf="sidenav.opened">
+      <button type="button" mat-button (click)="sidenav.toggle()">
+        Close sidenav
       </button>
     </div>
     
     <app-main-menu></app-main-menu></mat-drawer>
 
   <mat-drawer-content>
-    
-    <div class="example-sidenav-content">
-      <button type="button" mat-button (click)="drawer.toggle()">
+
+    <div class="example-sidenav-content" *ngIf="!sidenav.opened">
+      <button type="button" mat-button (click)="sidenav.toggle()">
         open sidenav
       </button>
     </div>

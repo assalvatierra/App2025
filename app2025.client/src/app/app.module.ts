@@ -8,7 +8,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-// import { SamplesComponent } from './samples/samples.component';
+
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { Samples2Component } from './samples2/samples2.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainMenuComponent } from "./main-menu/main-menu.component";
@@ -33,6 +34,7 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
     imports: [
         BrowserModule, HttpClientModule,
         AppRoutingModule,
+        MatSidenavModule,
         MatTableModule, MatSortModule,
         MainMenuComponent
     ]

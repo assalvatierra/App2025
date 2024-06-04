@@ -1,12 +1,18 @@
 
 <app-main-header></app-main-header>
-<table>
+
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened><app-main-menu></app-main-menu></mat-drawer>
+  <mat-drawer-content><app-main-page></app-main-page></mat-drawer-content>
+</mat-drawer-container>
+
+<!-- <table>
   <tr>
     <td><app-main-menu></app-main-menu></td>
     <td><app-main-page></app-main-page></td>
   </tr>
 
-</table>
+</table> -->
 
 
 <app-main-footer></app-main-footer>

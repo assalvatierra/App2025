@@ -1,9 +1,26 @@
 
 <app-main-header></app-main-header>
-
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened><app-main-menu></app-main-menu></mat-drawer>
-  <mat-drawer-content><app-main-page></app-main-page></mat-drawer-content>
+  <mat-drawer mode="side" opened #drawer>
+
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+    </div>
+    
+    <app-main-menu></app-main-menu></mat-drawer>
+
+  <mat-drawer-content>
+    
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        open sidenav
+      </button>
+    </div>
+
+    <app-main-page></app-main-page></mat-drawer-content>
+
 </mat-drawer-container>
 
 <!-- <table>

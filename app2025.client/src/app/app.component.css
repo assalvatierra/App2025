@@ -24,7 +24,7 @@ table {
 /* added */
 .example-container {
   width: auto;
-  height: 200px;
+  height: 80%;
   margin: 10px;
   border: 1px solid #555;
   /* The background property is added to clearly distinguish the borders between drawer and main

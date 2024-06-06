@@ -31,3 +31,10 @@ table {
      content */
   background: #eee;
 }
+
+.left-togglemenu-button {
+    text-align: left;
+}
+.togglemenu-button {
+    text-align: left;
+}

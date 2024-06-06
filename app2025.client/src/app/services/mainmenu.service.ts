@@ -38,7 +38,7 @@ export class MainmenuService {
 
   }
 
-  getMenu(menuid:number): MenuItem[] {
+  public getMenu(menuid:number): MenuItem[] {
     return this.menudata;
 
   }

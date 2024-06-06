@@ -8,6 +8,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,6 +40,7 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
         MatSidenavModule,
         MatIconModule,
         MatTableModule, MatSortModule,
+        MatMenuModule,MatButtonModule,
         MainMenuComponent
     ]
 })

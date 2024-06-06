@@ -22,10 +22,11 @@ table {
 }
 
 /* added */
-.example-container {
+.menu-container {
   width: auto;
   height: 80%;
   margin: 10px;
+  padding: 5px;
   border: 1px solid #555;
   /* The background property is added to clearly distinguish the borders between drawer and main
      content */

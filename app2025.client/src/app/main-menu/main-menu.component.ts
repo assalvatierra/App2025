@@ -17,13 +17,13 @@ import { MenuItem } from '../models/menu-item';
   imports: [BrowserModule, MatButtonModule, MatIconModule,AppRoutingModule,MatListModule,MatCardModule,],
 })
 export class MainMenuComponent {
-  private _transformer = (node: MenuItem, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
-  };
+  // private _transformer = (node: MenuItem, level: number) => {
+  //   return {
+  //     expandable: !!node.children && node.children.length > 0,
+  //     name: node.name,
+  //     level: level,
+  //   };
+  // };
 
 
   public menuItems: MenuItem[] | undefined;

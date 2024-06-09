@@ -19,6 +19,7 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { MainPageComponent } from './main-page/main-page.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
     declarations: [
@@ -26,9 +27,9 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
         // SamplesComponent,
         Samples2Component,
         PageNotFoundComponent,
-        MainPageComponent,
         MainHeaderComponent,
         MainFooterComponent,
+
     ],
     providers: [
         provideAnimationsAsync()
@@ -41,7 +42,7 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
         MatIconModule,
         MatTableModule, MatSortModule,
         MatMenuModule,MatButtonModule,
-        MainMenuComponent
+        MainMenuComponent,MainPageComponent,UserLoginComponent,
     ]
 })
 export class AppModule { }

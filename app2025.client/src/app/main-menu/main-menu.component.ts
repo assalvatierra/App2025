@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './../app-routing.module';
 import {MatIconModule} from '@angular/material/icon';
@@ -17,19 +17,27 @@ import { MenuItem } from '../models/menu-item';
   imports: [BrowserModule, MatButtonModule, MatIconModule,AppRoutingModule,MatListModule,MatCardModule,],
 })
 export class MainMenuComponent {
-  // private _transformer = (node: MenuItem, level: number) => {
-  //   return {
-  //     expandable: !!node.children && node.children.length > 0,
-  //     name: node.name,
-  //     level: level,
-  //   };
-  // };
+
+  private _isauthenticated:boolean = false;
+  @Input()
+  public get isUserAuthenticated():boolean{
+     return this._isauthenticated;
+  }
+  public set isUserAuthenticated(value:boolean){
+    this._isauthenticated = value;
+    this.setMenu(value);
+  }
 
 
   public menuItems: MenuItem[] | undefined;
 
-  constructor(menusrv:MainmenuService ) {
-    this.menuItems = menusrv.getMenu(0);
+  constructor(private menusrv:MainmenuService ) {
   }
 
+  private setMenu(auth:boolean){
+    if(auth)
+      this.menuItems = this.menusrv.getMenu(0);
+    else
+      this.menuItems = this.menusrv.getMenuUnauthenticated();
+  }
 }

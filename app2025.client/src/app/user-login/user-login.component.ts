@@ -25,6 +25,7 @@ export class UserLoginComponent {
   constructor(private user: UserService, private router: Router) {}
 
   public login() {
+    alert('Continue Login?');
     var t = this.user.login('username', 'pwd');
     this.isUserAuthenticatedChange.emit(t);
     this._isauthenticated = t;

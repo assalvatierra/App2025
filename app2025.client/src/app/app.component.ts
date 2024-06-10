@@ -1,20 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  private _isauthenticated:boolean = false;
-  public get isAuthenticated():boolean{
-     return this._isauthenticated;
-  }
-  public set isAuthenticated(value:boolean){
-    this._isauthenticated = value;
-  }
+  public isAuthenticated:boolean = false;
+  private authenticationEventSubscription: Subscription | undefined;
 
   constructor(
     private http: HttpClient,
@@ -26,7 +22,14 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticationEventSubscription = this.user.authenticationEvent$.subscribe(data => {
+      //TODO: handle data
+      this.isAuthenticated = data;
+    });
   }
-
+  ngOnDestroy() {
+    if(this.authenticationEventSubscription)
+      this.authenticationEventSubscription.unsubscribe();
+  }
 
 }

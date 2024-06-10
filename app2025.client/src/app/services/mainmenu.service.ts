@@ -82,5 +82,9 @@ export class MainmenuService {
 
   }
 
+  public getDefaultMenuItem():string {
+    return '/Sample01';
+  }
+
 }
 

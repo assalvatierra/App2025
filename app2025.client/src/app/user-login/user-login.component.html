@@ -1,5 +1,14 @@
-<h2>User Login form</h2>
+
 <div style="text-align: center;">
-  <button (click)="login()">Login</button>
-  <button (click)="logout()">Logout</button>
+
+  <ng-container #loginform *ngIf="!isUserAuthenticated">
+    <h2>User Login form</h2>
+    <button (click)="login()">Login</button>
+  </ng-container>
+
+  <ng-container #logoutform *ngIf="isUserAuthenticated">
+    <h2>User Logout form</h2>
+    <button (click)="logout()">Logout</button>
+  </ng-container>
+
 </div>

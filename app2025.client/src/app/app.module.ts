@@ -21,6 +21,7 @@ import { MainHeaderComponent } from './main-header/main-header.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,6 +30,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
         PageNotFoundComponent,
         MainHeaderComponent,
         MainFooterComponent,
+
 
     ],
     providers: [

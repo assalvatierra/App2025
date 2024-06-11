@@ -31,7 +31,6 @@ import { UserLoginComponent } from './user-login/user-login.component';
         MainHeaderComponent,
         MainFooterComponent,
 
-
     ],
     providers: [
         provideAnimationsAsync()

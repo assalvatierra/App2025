@@ -1,7 +1,9 @@
-<p>action-buttons works!</p>
+<button mat-button *ngIf="ShowAddButton"
+  (click)="addButtonClicked($event)">
+  {{(this.AddButtonLabel?this.AddButtonLabel:'Add')}}
+</button>
 
-
-<div class="headermenu">
+<!-- <div class="headermenu">
   <button mat-button [matMenuTriggerFor]="aboveMenu">Action Set 01</button>
   <mat-menu #aboveMenu="matMenu" yPosition="above">
     <button mat-menu-item>Item 1</button>
@@ -27,4 +29,4 @@
     <button mat-menu-item>Item 2</button>
   </mat-menu>
 
-  </div>
+  </div> -->

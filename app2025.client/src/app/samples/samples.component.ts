@@ -11,4 +11,7 @@ import { ActionButtonsComponent } from '../common/action-buttons/action-buttons.
 })
 export class SamplesComponent {
 
+  addClicked(event:any){
+    alert("here");
+  }
 }

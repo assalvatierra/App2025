@@ -13,17 +13,41 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ActionButtonsComponent {
   @Input()
+  public buttonSet?: ButtonSets;
+
+
+  @Input()
   public ShowAddButton?: boolean;
   @Input()
   public AddButtonLabel?: string;
   
+  @Input()
+  public ShowArchiveButton?: boolean;
+  @Input()
+  public ArchiveButtonLabel?: string;
+
   @Output() addEvent = new EventEmitter<any>(); 
+  @Output() aarchivevent = new EventEmitter<any>(); 
 
   constructor(){
+    if(this.buttonSet && this.buttonSet==ButtonSets.forGrid){
+      this.ShowAddButton=true;
+      this.ShowArchiveButton=true;
+    }
+    
   }
 
   addButtonClicked(event:any) {
     //alert('actionbuttn: addbuttonclicked');
     this.addEvent.emit(event);
+  }
+  archiveButtonClicked(event:any){
+    this.aarchivevent.emit(event);
   } 
+}
+
+
+export enum ButtonSets{
+  forGrid='for-grid',
+  forForm='for-form'
 }

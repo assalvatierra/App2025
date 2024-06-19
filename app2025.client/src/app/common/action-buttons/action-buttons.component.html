@@ -1,7 +1,15 @@
-<button mat-button *ngIf="ShowAddButton"
-  (click)="addButtonClicked($event)">
-  {{(this.AddButtonLabel?this.AddButtonLabel:'Add')}}
-</button>
+<div class="headermenu">
+  <button mat-button *ngIf="ShowAddButton"
+    (click)="addButtonClicked($event)">
+    {{(this.AddButtonLabel?this.AddButtonLabel:'Add')}}
+  </button>
+
+  <button mat-button *ngIf="ShowArchiveButton"
+    (click)="archiveButtonClicked($event)">
+    {{(this.ArchiveButtonLabel?this.ArchiveButtonLabel:'Archive')}}
+  </button>
+</div>
+
 
 <!-- <div class="headermenu">
   <button mat-button [matMenuTriggerFor]="aboveMenu">Action Set 01</button>

@@ -1,6 +1,8 @@
 <p>samples works!</p>
 
-<app-action-buttons [ShowAddButton]="true"
-[AddButtonLabel]="'My AddButton'"
+<app-action-buttons 
+[buttonSet]="buttonset"
+[ShowAddButton]="true"
+[AddButtonLabel]="'Add New'"
 (addEvent)="addClicked($event)"
 ></app-action-buttons>

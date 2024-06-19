@@ -15,4 +15,8 @@ export class SamplesComponent {
   addClicked(event:any){
     alert("here");
   }
+
+  archivedClicked(event:any){
+    alert("Archive");
+  }
 }

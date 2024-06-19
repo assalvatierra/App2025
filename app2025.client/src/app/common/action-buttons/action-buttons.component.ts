@@ -1,4 +1,4 @@
-import { Component, Input, Output,EventEmitter } from '@angular/core';
+import { Component, Input, Output,EventEmitter, OnInit } from '@angular/core';
 import { CommonModule  } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
   imports:[CommonModule,MatMenuModule,MatButtonModule,]
 
 })
-export class ActionButtonsComponent {
+export class ActionButtonsComponent implements OnInit {
   @Input()
   public buttonSet?: ButtonSets;
 
@@ -27,14 +27,23 @@ export class ActionButtonsComponent {
   public ArchiveButtonLabel?: string;
 
   @Output() addEvent = new EventEmitter<any>(); 
-  @Output() aarchivevent = new EventEmitter<any>(); 
+  @Output() archiveEvent = new EventEmitter<any>(); 
 
   constructor(){
+    
+  }
+
+
+  ngOnInit():void {
+
+  }
+
+  ngAfterViewInit():void {
     if(this.buttonSet && this.buttonSet==ButtonSets.forGrid){
       this.ShowAddButton=true;
       this.ShowArchiveButton=true;
     }
-    
+
   }
 
   addButtonClicked(event:any) {
@@ -42,7 +51,7 @@ export class ActionButtonsComponent {
     this.addEvent.emit(event);
   }
   archiveButtonClicked(event:any){
-    this.aarchivevent.emit(event);
+    this.archiveEvent.emit(event);
   } 
 }
 

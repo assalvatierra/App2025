@@ -22,7 +22,7 @@ export class UserLoginComponent {
   }
 
   public login() {
-    alert('Continue Login?');
+    // alert('Continue Login?');
     var t = this.user.login('username', 'pwd');
     this.isUserAuthenticated = t;
     // this.isUserAuthenticatedChange.emit(t);

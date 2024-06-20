@@ -13,7 +13,7 @@ export class SamplesComponent {
   public buttonset = ButtonSets.forGrid;
 
   addClicked(event:any){
-    alert("here");
+    alert("Add Event");
   }
 
   archivedClicked(event:any){

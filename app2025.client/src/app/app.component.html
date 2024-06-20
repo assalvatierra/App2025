@@ -12,23 +12,21 @@
   </mat-drawer>
 
   <mat-drawer-content>
+    <div class="app-right-panel">
+      <div *ngIf="sidenav.opened"  class="left-togglemenu-button">
+        <button type="button" mat-button (click)="sidenav.toggle()">
+          <mat-icon *ngIf="sidenav.opened">keyboard_arrow_left</mat-icon>
+        </button>
+      </div>
 
-    <div class="example-sidenav-content" *ngIf="sidenav.opened"  class="left-togglemenu-button">
-      <button type="button" mat-button (click)="sidenav.toggle()">
-        <mat-icon *ngIf="sidenav.opened">keyboard_arrow_left</mat-icon>
-      </button>
+      <div *ngIf="!sidenav.opened" class="togglemenu-button">
+        <button type="button" mat-button (click)="sidenav.toggle()">
+          <mat-icon *ngIf="!sidenav.opened">keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+
+      <app-main-page *ngIf="isAuthenticated"></app-main-page>
     </div>
-
-    <div class="example-sidenav-content" *ngIf="!sidenav.opened" class="togglemenu-button">
-      <button type="button" mat-button (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">keyboard_arrow_right</mat-icon>
-      </button>
-    </div>
-
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
-
-    <app-main-page *ngIf="isAuthenticated"></app-main-page>
-
   </mat-drawer-content>
 
 </mat-drawer-container>

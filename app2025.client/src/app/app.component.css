@@ -33,9 +33,23 @@ table {
   background: #eee;
 }
 
-.left-togglemenu-button {
-    text-align: left;
-}
 .togglemenu-button {
     text-align: left;
+    padding-left: 0px !important;
+    width: 35px;
+    height: 25px;
+    background-color: #eee;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.left-togglemenu-button{
+    text-align: left;
+    padding-left: 0px !important;
+    width: 35px;
+    height: 25px;
+    background-color: #eee;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+
 }

@@ -1,8 +1,17 @@
-<p>samples works!</p>
+<div class="app-page-container">
+    <h2>Sample List</h2>
 
-<app-action-buttons 
-[buttonSet]="buttonset"
-[ShowAddButton]="true"
-[AddButtonLabel]="'Add New'"
-(addEvent)="addClicked($event)"
-></app-action-buttons>
+    <app-action-buttons 
+    [buttonSet]="buttonset"
+    [ShowAddButton]="true"
+    [AddButtonLabel]="'Add New'"
+    (addEvent)="addClicked($event)"
+    (archiveEvent)="archivedClicked($event)"
+    ></app-action-buttons>
+
+    <div class="app-data-container">
+        data container
+    </div>
+
+
+</div>

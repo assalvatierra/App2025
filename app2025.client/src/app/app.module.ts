@@ -27,7 +27,7 @@ import { SampleFormComponent } from './samples/sample-form/sample-form.component
     declarations: [
         AppComponent,
         // SamplesComponent,
-        Samples2Component,
+        //Samples2Component,
         PageNotFoundComponent,
         MainHeaderComponent,
         MainFooterComponent,

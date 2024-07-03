@@ -11,7 +11,11 @@ import {MatTableModule} from '@angular/material/table';
 
 })
 export class SamplesComponent {
-  public buttonset = ButtonSets.forGrid;
+  public buttonset:ButtonSets;
+
+  constructor(){
+    this.buttonset = ButtonSets.forGrid;
+  }
 
   public dataSource = [
     {Id:0, Name:'test',Remarks:'Over'},

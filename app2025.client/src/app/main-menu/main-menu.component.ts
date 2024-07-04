@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './../app-routing.module';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css',
   standalone: true,
-  imports: [BrowserModule, MatButtonModule, MatIconModule,AppRoutingModule,MatListModule,MatCardModule,],
+  imports: [CommonModule, MatButtonModule, MatIconModule,AppRoutingModule,MatListModule,MatCardModule,],
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
 

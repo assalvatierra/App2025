@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient  } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } 
+    from '@angular/common/http/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { MainPageComponent } from './main-page.component';
 
@@ -8,7 +12,14 @@ describe('MainPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainPageComponent]
+      imports: [MainPageComponent],
+      providers:[
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideAnimationsAsync(),
+       ],
+      declarations: [],
+
     })
     .compileComponents();
     

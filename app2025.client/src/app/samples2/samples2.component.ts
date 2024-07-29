@@ -1,14 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-
+// import { AppRoutingModule } from './../app-routing.module';
+// import { Router } from '@angular/router';
 @Component({
   selector: 'app-samples2',
   templateUrl: './samples2.component.html',
   styleUrl: './samples2.component.css',
   standalone:true ,
   imports:[MatTableModule,MatSortModule], 
+  // imports:[CommonModule,MatTableModule,MatSortModule,AppRoutingModule], 
 })
 export class Samples2Component {
 

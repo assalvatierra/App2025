@@ -31,6 +31,7 @@ const samplemenu: MenuItem[] = [
     OrderNo: 1,
     children: [
       {name: 'Sample 01', linkUrl: '/Sample01', OrderNo:1},
+      {name: 'Sample-Form', linkUrl: '/Sample-Form', OrderNo:1},
       {name: 'Sample 02', linkUrl: '/Sample02', OrderNo:2}
     ],
   },

@@ -3,8 +3,7 @@
 
 <app-user-login *ngIf="!isAuthenticated" [isUserAuthenticated]="isAuthenticated"></app-user-login>
 
-<!-- <mat-drawer-container class="menu-container" *ngIf="isAuthenticated"> -->
-  <mat-drawer-container class="menu-container">
+<mat-drawer-container class="menu-container" *ngIf="isAuthenticated">
   <mat-drawer mode="side" opened #sidenav>
 
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
@@ -26,8 +25,7 @@
         </button>
       </div>
 
-      <app-main-page></app-main-page>
-      <!-- <app-main-page *ngIf="isAuthenticated"></app-main-page> -->
+      <app-main-page *ngIf="isAuthenticated"></app-main-page>
     </div>
   </mat-drawer-content>
 

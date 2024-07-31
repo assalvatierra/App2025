@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActionButtonsComponent, ButtonSets } from '../common/action-buttons/action-buttons.component';
 import {MatTableModule} from '@angular/material/table';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-samples',
   templateUrl: './samples.component.html',
@@ -13,7 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 export class SamplesComponent {
   public buttonset:ButtonSets;
 
-  constructor(){
+  constructor( private router: Router ){
     this.buttonset = ButtonSets.forGrid;
   }
 
@@ -29,9 +29,12 @@ export class SamplesComponent {
 
   addClicked(event:any){
     alert("Add Event");
+    this.router.navigate(['/Sample-Form']);
+
   }
 
   archivedClicked(event:any){
     alert("Archive");
   }
+
 }

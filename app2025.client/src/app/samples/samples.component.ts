@@ -33,6 +33,12 @@ export class SamplesComponent {
 
   }
 
+  editClicked(event:any){
+    alert("edit Event:" + JSON.stringify(event));
+    this.router.navigate(['/Sample-Form']);
+
+  }
+
   archivedClicked(event:any){
     alert("Archive");
   }

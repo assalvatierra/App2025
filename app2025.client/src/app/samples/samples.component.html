@@ -20,7 +20,8 @@
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let row">
-            <a href="./Sample-Form">
+            <a  class="button" routerLink="/Sample-Form">News1</a>
+            <a (click)="editClicked(row)">
               {{row.Name}}
             </a>
           </td>

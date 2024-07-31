@@ -16,6 +16,13 @@ export class UserService {
   constructor() {}
 
   public isAuthenticated(): boolean {
+
+    if(document.cookie)
+    {
+      //TODO: implement authentication process
+      this._isauthenticated = true;
+    }
+
     return this._isauthenticated;
   }
 
@@ -23,6 +30,8 @@ export class UserService {
     this._isauthenticated = true;
 
     //TODO: implement authentication process
+
+    document.cookie = "user=" + username;
 
     this.authenticationSubject.next(this._isauthenticated);
     return this._isauthenticated;
@@ -32,6 +41,7 @@ export class UserService {
     this._isauthenticated = false;
 
     //TODO: implement logout process
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
     this.authenticationSubject.next(this._isauthenticated);
     return this._isauthenticated;

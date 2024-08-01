@@ -20,7 +20,6 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { SampleFormComponent } from './samples/sample-form/sample-form.component';
 
 
 @NgModule({
@@ -31,7 +30,6 @@ import { SampleFormComponent } from './samples/sample-form/sample-form.component
         PageNotFoundComponent,
         MainHeaderComponent,
         MainFooterComponent,
-        SampleFormComponent,
 
     ],
     providers: [

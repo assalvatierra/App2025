@@ -35,7 +35,7 @@ export class SamplesComponent {
 
   editClicked(event:any){
     alert("edit Event:" + JSON.stringify(event));
-    this.router.navigate(['/Sample-Form']);
+    this.router.navigate(['/Sample-Form',{id:event.Id}]);
 
   }
 

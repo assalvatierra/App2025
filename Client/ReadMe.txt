@@ -1,0 +1,1 @@
+Store all client side projects in this folder

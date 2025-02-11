@@ -1,0 +1,6 @@
+C:\DATA\GitProjects\App2025\AppDB\bin\Debug\AppDB.dacpac
+C:\DATA\GitProjects\App2025\AppDB\bin\Debug\AppDB.dll
+C:\DATA\GitProjects\App2025\AppDB\bin\Debug\AppDB.pdb
+C:\DATA\GitProjects\App2025\AppDB\obj\Debug\AppDB.sqlproj.AssemblyReference.cache
+C:\DATA\GitProjects\App2025\AppDB\obj\Debug\AppDB.dll
+C:\DATA\GitProjects\App2025\AppDB\obj\Debug\AppDB.pdb

@@ -1,0 +1,21 @@
+﻿** Highlights
+     Tables that will be recreated with data migrated
+       [dbo].[CustMains]
+       [dbo].[CustStatuses]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Recreate table
+       [dbo].[CustMains] (Table)
+       [dbo].[CustStatuses] (Table)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_CustMains_CustStatuses_0] (Foreign Key)
+     Create
+       [dbo].[FK_CustMains_CustStatuses_0] (Foreign Key)

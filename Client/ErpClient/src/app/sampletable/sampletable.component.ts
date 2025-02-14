@@ -25,16 +25,18 @@ export class SampletableComponent implements AfterViewInit {
   constructor(@Inject(SampleDataService) private dataService: SampleDataService) {
     this.dataService.getData().subscribe(data => {
       this.dataSource.data = data.map((item:SampletableItem) => ({
-        Date: item.Date,
-        TemperatureC: item.TemperatureC,
-        TemperatureF: item.TemperatureF,
-        Summary: item.Summary
+        Date: item.date,
+        TemperatureC: item.temperatureC,
+        TemperatureF: item.temperatureF,
+        Summary: item.summary
       }));
+
+      this.table.dataSource = this.dataSource;
     })
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    // this.table.dataSource = this.dataSource;
   }
 }

@@ -8,10 +8,10 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface SampletableItem {
   // name: string;
   // id: number;
-  Date: Date;
-  TemperatureC: number;
-  TemperatureF: number;
-  Summary: string;
+  date: Date;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
 }
 
 // TODO: replace this with real data from your application
@@ -84,8 +84,8 @@ export class SampletableDataSource extends DataSource<SampletableItem> {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
         // case 'Date': return compare(a.Date, b.Date, isAsc);
-        case 'TemperatureC': return compare(+a.TemperatureC, +b.TemperatureC, isAsc);
-        case 'TemperatureF': return compare(+a.TemperatureF, +b.TemperatureF, isAsc);
+        case 'temperatureC': return compare(+a.temperatureC, +b.temperatureC, isAsc);
+        case 'temperatureF': return compare(+a.temperatureF, +b.temperatureF, isAsc);
         default: return 0;
       }
     });

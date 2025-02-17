@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\DATA\\GitHub\\App2025\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\notes.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\notes.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\erp.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\erp.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}|Erp.Mvc01\\Erp.Mvc01.csproj|c:\\data\\github\\app2025\\erp.mvc01\\models\\dba0a0aedev2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}|Erp.Mvc01\\Erp.Mvc01.csproj|solutionrelative:erp.mvc01\\models\\dba0a0aedev2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -48,18 +60,57 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "DbA0a0aeDev2025Context.cs",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "RelativeDocumentMoniker": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T21:59:52.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Notes.txt",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Notes.txt",
+              "RelativeDocumentMoniker": "Erp.Domain\\Notes.txt",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Notes.txt",
+              "RelativeToolTip": "Erp.Domain\\Notes.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAADjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-02-17T21:52:40.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Erp.Domain",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj",
+              "RelativeDocumentMoniker": "Erp.Domain\\Erp.Domain.csproj",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj",
+              "RelativeToolTip": "Erp.Domain\\Erp.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-17T21:50:43.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DbA0a0aeDev2025Context.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeToolTip": "Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-17T21:44:40.104Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\appsettings.json",
               "RelativeDocumentMoniker": "Erp.Mvc01\\appsettings.json",
@@ -72,7 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Program.cs",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Program.cs",
@@ -85,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Erp.Mvc01",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Erp.Mvc01.csproj",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Erp.Mvc01.csproj",
@@ -102,7 +153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Infrastructure\\Class1.cs",
               "RelativeDocumentMoniker": "Erp.Infrastructure\\Class1.cs",
@@ -115,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Class1.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Class1.cs",
@@ -128,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\BlazorUI\\appsettings.json",
               "RelativeDocumentMoniker": "BlazorUI\\appsettings.json",

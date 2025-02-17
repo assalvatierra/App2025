@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\DATA\\GitHub\\App2025\\Server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|c:\\data\\github\\app2025\\server\\erpapi2\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|solutionrelative:erpapi2\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|c:\\data\\github\\app2025\\server\\erpapi2\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|solutionrelative:erpapi2\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|c:\\data\\github\\app2025\\server\\erpapi2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09C5E495-6FCF-45D0-8173-644D2E587BF7}|ErpApi2\\ErpApi2.csproj|solutionrelative:erpapi2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 313,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "ErpApi2\\WeatherForecast.cs",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\WeatherForecast.cs",
+              "RelativeToolTip": "ErpApi2\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T04:57:19.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "ErpApi2\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "ErpApi2\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwBIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T04:50:33.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\Program.cs",
+              "RelativeDocumentMoniker": "ErpApi2\\Program.cs",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Server\\ErpApi2\\Program.cs",
+              "RelativeToolTip": "ErpApi2\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-10T05:27:45.897Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 158,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

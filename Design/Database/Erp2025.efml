@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore p1:name="Model" p1:Guid="2677f626-5210-4289-9c3d-a233c09bd8a4" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="Customer" entity-set="Customers" p1:Guid="ccdd2dd0-a1aa-4bbb-b7b2-0832b38695b4">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c3c638e5-3171-4f65-a2b3-253e9f3a8084">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="f7709d2b-7b32-46d7-9918-ebfc36a7a137">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="b2779c5d-d9e3-430d-b688-7451cd74a5da">
+      <column name="" />
+    </property>
+  </class>
+</efcore>

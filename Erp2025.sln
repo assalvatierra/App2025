@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Domain", "Erp.Domain\Er
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Infrastructure", "Erp.Infrastructure\Erp.Infrastructure.csproj", "{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Mvc01", "Erp.Mvc01\Erp.Mvc01.csproj", "{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

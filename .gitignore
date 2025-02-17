@@ -6,3 +6,9 @@
 /.vs/Erp2025/CopilotIndices
 /.vs/Erp2025/DesignTimeBuild
 /Erp.Domain/bin/Debug
+/Erp.Mvc01/obj/Debug
+/Erp.Domain/obj
+/Erp.Application/obj/Debug
+/Erp.Application/bin/Debug
+/BlazorUI/obj/Debug
+/Erp.Infrastructure/obj/Debug

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\DATA\\GitHub\\App2025\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|c:\\data\\github\\app2025\\erp.application\\erp.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|solutionrelative:erp.application\\erp.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|c:\\data\\github\\app2025\\erp.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|solutionrelative:erp.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|c:\\data\\github\\app2025\\erp.application\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}|Erp.Application\\Erp.Application.csproj|solutionrelative:erp.application\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -71,6 +79,36 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Erp.Application",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Erp.Application.csproj",
+              "RelativeDocumentMoniker": "Erp.Application\\Erp.Application.csproj",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Erp.Application.csproj",
+              "RelativeToolTip": "Erp.Application\\Erp.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-17T22:50:25.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Program.cs",
+              "RelativeDocumentMoniker": "Erp.Application\\Program.cs",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Program.cs",
+              "RelativeToolTip": "Erp.Application\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T22:35:21.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "CustomersController.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Controllers\\CustomersController.cs",
               "RelativeDocumentMoniker": "Erp.Application\\Controllers\\CustomersController.cs",
@@ -83,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Erp.Application\\Controllers\\WeatherForecastController.cs",
@@ -91,12 +129,11 @@
               "RelativeToolTip": "Erp.Application\\Controllers\\WeatherForecastController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T22:10:53.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T22:10:53.765Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "WeatherForecast.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Application\\WeatherForecast.cs",
               "RelativeDocumentMoniker": "Erp.Application\\WeatherForecast.cs",
@@ -104,12 +141,11 @@
               "RelativeToolTip": "Erp.Application\\WeatherForecast.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T22:10:47.222Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T22:10:47.222Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Customer.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Customer.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\Customer.cs",
@@ -117,12 +153,11 @@
               "RelativeToolTip": "Erp.Domain\\Models\\Customer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T22:02:03.302Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T22:02:03.302Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "DbA0a0aeDev2025Context.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
@@ -130,12 +165,11 @@
               "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T21:59:52.707Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T21:59:52.707Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Notes.txt",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Notes.txt",
               "RelativeDocumentMoniker": "Erp.Domain\\Notes.txt",
@@ -143,13 +177,12 @@
               "RelativeToolTip": "Erp.Domain\\Notes.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAADjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-02-17T21:52:40.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T21:52:40.92Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Erp.Domain",
+              "DocumentIndex": 8,
+              "Title": "Erp.Domain.csproj",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj",
               "RelativeDocumentMoniker": "Erp.Domain\\Erp.Domain.csproj",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj",
@@ -161,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "DbA0a0aeDev2025Context.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
@@ -169,12 +202,11 @@
               "RelativeToolTip": "Erp.Mvc01\\Models\\DbA0a0aeDev2025Context.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T21:44:40.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T21:44:40.104Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\appsettings.json",
               "RelativeDocumentMoniker": "Erp.Mvc01\\appsettings.json",
@@ -182,12 +214,11 @@
               "RelativeToolTip": "Erp.Mvc01\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-17T21:28:11.216Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T21:28:11.216Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Program.cs",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Program.cs",
@@ -195,13 +226,12 @@
               "RelativeToolTip": "Erp.Mvc01\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T21:27:28.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T21:27:28.494Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Erp.Mvc01",
+              "DocumentIndex": 12,
+              "Title": "Erp.Mvc01.csproj",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Erp.Mvc01.csproj",
               "RelativeDocumentMoniker": "Erp.Mvc01\\Erp.Mvc01.csproj",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Mvc01\\Erp.Mvc01.csproj",
@@ -212,12 +242,8 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Infrastructure\\Class1.cs",
               "RelativeDocumentMoniker": "Erp.Infrastructure\\Class1.cs",
@@ -225,12 +251,11 @@
               "RelativeToolTip": "Erp.Infrastructure\\Class1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T18:47:42.211Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T18:47:42.211Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\BlazorUI\\appsettings.json",
               "RelativeDocumentMoniker": "BlazorUI\\appsettings.json",
@@ -238,8 +263,7 @@
               "RelativeToolTip": "BlazorUI\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAACFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-17T18:39:27.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T18:39:27.104Z"
             },
             {
               "$type": "Bookmark",

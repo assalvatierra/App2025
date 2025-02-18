@@ -14,6 +14,15 @@ namespace Erp.Application.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Customer>(t => { 
+                t.ToTable("Customers");
+            });
+
+            //builder.Entity<Customer>().ToTable("Customers");
+            
+        }
         public DbSet<Erp.Domain.Models.Customer> Customer { get; set; } = default!;
     }
 }

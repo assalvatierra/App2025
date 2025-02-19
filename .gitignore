@@ -16,3 +16,5 @@
 /.vs/Erp2025/CopilotIndices
 /Erp.Domain/bin
 /BlazorUI/bin
+/.vs
+/Erp.Domain/obj

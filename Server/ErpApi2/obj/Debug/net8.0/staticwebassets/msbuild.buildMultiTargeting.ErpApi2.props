@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ErpApi2.props" />
-</Project>

@@ -1,0 +1,49 @@
+﻿@page "/customers/create"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Customer</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Customer" OnValidSubmit="AddCustomer" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="Customer.Name" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="remarks" class="form-label">Remarks:</label> 
+                <InputText id="remarks" @bind-Value="Customer.Remarks" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Remarks" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/customers">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Customer Customer { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddCustomer()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Customer.Add(Customer);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/customers");
+    }
+}

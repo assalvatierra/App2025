@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp2025", "BlazorUI\Erp2025.csproj", "{6CC2EC92-9776-4F68-645A-B87E2DF38577}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Domain", "Erp.Domain\Erp.Domain.csproj", "{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Infrastructure", "Erp.Infrastructure\Erp.Infrastructure.csproj", "{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Mvc01", "Erp.Mvc01\Erp.Mvc01.csproj", "{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Application", "Erp.Application\Erp.Application.csproj", "{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp2025", "Erp2025\Erp2025.csproj", "{5EA176CB-996C-F9DC-9F35-1433DA7F6710}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6CC2EC92-9776-4F68-645A-B87E2DF38577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CC2EC92-9776-4F68-645A-B87E2DF38577}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CC2EC92-9776-4F68-645A-B87E2DF38577}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CC2EC92-9776-4F68-645A-B87E2DF38577}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E02325C-5327-4AA8-8B1D-6322B27D5C9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36AA5A9D-4814-4679-8F86-3127AD1E7BAC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01F49583-8C0E-4AF5-BD11-9E0131E0A7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

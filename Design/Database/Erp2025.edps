@@ -6,17 +6,22 @@
       <GeneratedFiles>
         <File Name="Erp2025.Model.cs" />
         <File Name="Erp2025.Customer.cs" />
+        <File Name="Erp2025.Contact.cs" />
+        <File Name="Erp2025.Supplier.cs" />
+        <File Name="Erp2025.Address.cs" />
+        <File Name="Erp2025.Customer_Contact.cs" />
+        <File Name="Erp2025.DataInfo.cs" />
       </GeneratedFiles>
     </Generation>
     <DatabaseFirstNamingRules>
-      <EntitySet PluralizationName="Pluralize" />
+      <EntitySet PluralizationName="Unchanged" />
       <Class UseSchemaAsPrefix="False" PluralizeCollectionNavigationPropertyName="True" AddConstraintColumnsToNavigationPropertyName="False" RemoveUnderscores="True" AddUnderscores="False" RemoveInvalidCharacters="True" CodeCase="FirstLetterUppercase" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Singularize" />
       <Property RemoveUnderscores="True" AddUnderscores="False" RemoveInvalidCharacters="True" CodeCase="FirstLetterUppercase" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />
     </DatabaseFirstNamingRules>
     <ModelFirst StorageSynchronizationEnabled="False" TargetProviderName="System.Data.SqlClient">
       <TargetServer Server="SQL Server" ServerVersion="2019" />
       <ModelFirstNamingRules>
-        <Table RemoveUnderscores="False" AddUnderscores="False" RemoveInvalidCharacters="True" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Pluralize" />
+        <Table RemoveUnderscores="False" AddUnderscores="False" RemoveInvalidCharacters="True" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />
         <Column RemoveUnderscores="False" AddUnderscores="False" RemoveInvalidCharacters="True" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />
       </ModelFirstNamingRules>
     </ModelFirst>

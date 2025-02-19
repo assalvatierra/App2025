@@ -18,11 +18,10 @@ using System.Collections.Generic;
 
 namespace Model
 {
-    public partial class Customer {
+    public partial class Contact {
 
-        public Customer()
+        public Contact()
         {
-            this.Customer_Contacts = new List<Customer_Contact>();
             OnCreated();
         }
 
@@ -39,12 +38,6 @@ namespace Model
         }
 
         public virtual string Remarks
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<Customer_Contact> Customer_Contacts
         {
             get;
             set;

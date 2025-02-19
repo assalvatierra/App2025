@@ -18,36 +18,11 @@ using System.Collections.Generic;
 
 namespace Model
 {
-    public partial class Customer {
+    public partial class DataInfo {
 
-        public Customer()
+        public DataInfo()
         {
-            this.Customer_Contacts = new List<Customer_Contact>();
             OnCreated();
-        }
-
-        public virtual int Id
-        {
-            get;
-            set;
-        }
-
-        public virtual string Name
-        {
-            get;
-            set;
-        }
-
-        public virtual string Remarks
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<Customer_Contact> Customer_Contacts
-        {
-            get;
-            set;
         }
 
         #region Extensibility Method Definitions

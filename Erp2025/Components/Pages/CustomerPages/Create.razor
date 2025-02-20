@@ -25,6 +25,81 @@
                 <InputText id="remarks" @bind-Value="Customer.Remarks" class="form-control" /> 
                 <ValidationMessage For="() => Customer.Remarks" class="text-danger" /> 
             </div>        
+            <div class="mb-3">
+                <label for="contactno1" class="form-label">ContactNo1:</label> 
+                <InputText id="contactno1" @bind-Value="Customer.ContactNo1" class="form-control" /> 
+                <ValidationMessage For="() => Customer.ContactNo1" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="contactno2" class="form-label">ContactNo2:</label> 
+                <InputText id="contactno2" @bind-Value="Customer.ContactNo2" class="form-control" /> 
+                <ValidationMessage For="() => Customer.ContactNo2" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address1" class="form-label">Address1:</label> 
+                <InputText id="address1" @bind-Value="Customer.Address1" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Address1" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address2" class="form-label">Address2:</label> 
+                <InputText id="address2" @bind-Value="Customer.Address2" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Address2" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="email1" class="form-label">Email1:</label> 
+                <InputText id="email1" @bind-Value="Customer.Email1" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Email1" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="email2" class="form-label">Email2:</label> 
+                <InputText id="email2" @bind-Value="Customer.Email2" class="form-control" /> 
+                <ValidationMessage For="() => Customer.Email2" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="cityid" class="form-label">CityId:</label> 
+                <InputNumber id="cityid" @bind-Value="Customer.CityId" class="form-control" /> 
+                <ValidationMessage For="() => Customer.CityId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="countryid" class="form-label">CountryId:</label> 
+                <InputText id="countryid" @bind-Value="Customer.CountryId" class="form-control" /> 
+                <ValidationMessage For="() => Customer.CountryId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="createdby" class="form-label">CreatedBy:</label> 
+                <InputText id="createdby" @bind-Value="Customer.CreatedBy" class="form-control" /> 
+                <ValidationMessage For="() => Customer.CreatedBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="createdon" class="form-label">CreatedOn:</label> 
+                <InputDate id="createdon" @bind-Value="Customer.CreatedOn" class="form-control" /> 
+                <ValidationMessage For="() => Customer.CreatedOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lasteditby" class="form-label">LastEditBy:</label> 
+                <InputText id="lasteditby" @bind-Value="Customer.LastEditBy" class="form-control" /> 
+                <ValidationMessage For="() => Customer.LastEditBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lastediton" class="form-label">LastEditOn:</label> 
+                <InputDate id="lastediton" @bind-Value="Customer.LastEditOn" class="form-control" /> 
+                <ValidationMessage For="() => Customer.LastEditOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isarchived" class="form-label">IsArchived:</label> 
+                <InputCheckbox id="isarchived" @bind-Value="Customer.IsArchived" class="form-check-input" /> 
+                <ValidationMessage For="() => Customer.IsArchived" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isprivate" class="form-label">IsPrivate:</label> 
+                <InputCheckbox id="isprivate" @bind-Value="Customer.IsPrivate" class="form-check-input" /> 
+                <ValidationMessage For="() => Customer.IsPrivate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isactive" class="form-label">IsActive:</label> 
+                <InputCheckbox id="isactive" @bind-Value="Customer.IsActive" class="form-check-input" /> 
+                <ValidationMessage For="() => Customer.IsActive" class="text-danger" /> 
+            </div>        
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

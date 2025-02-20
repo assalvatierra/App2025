@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Erp2025")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+108404c0efac69e45ab247655ce9414c3c78ce17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5af96597eaa2413080c5353c268dcad8ca154352")]
 [assembly: System.Reflection.AssemblyProductAttribute("Erp2025")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Erp2025")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

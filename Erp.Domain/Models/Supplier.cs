@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models;
 
-public partial class Customer
+public partial class Supplier
 {
     public int Id { get; set; }
 
@@ -41,5 +41,5 @@ public partial class Customer
 
     public bool IsActive { get; set; }
 
-    public virtual ICollection<CustomerContact> CustomerContacts { get; set; } = new List<CustomerContact>();
+    public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }

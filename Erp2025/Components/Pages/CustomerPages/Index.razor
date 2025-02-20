@@ -17,6 +17,21 @@
 <QuickGrid Class="table" Items="context.Customer">
     <PropertyColumn Property="customer => customer.Name" />
     <PropertyColumn Property="customer => customer.Remarks" />
+    <PropertyColumn Property="customer => customer.ContactNo1" />
+    <PropertyColumn Property="customer => customer.ContactNo2" />
+    <PropertyColumn Property="customer => customer.Address1" />
+    <PropertyColumn Property="customer => customer.Address2" />
+    <PropertyColumn Property="customer => customer.Email1" />
+    <PropertyColumn Property="customer => customer.Email2" />
+    <PropertyColumn Property="customer => customer.CityId" />
+    <PropertyColumn Property="customer => customer.CountryId" />
+    <PropertyColumn Property="customer => customer.CreatedBy" />
+    <PropertyColumn Property="customer => customer.CreatedOn" />
+    <PropertyColumn Property="customer => customer.LastEditBy" />
+    <PropertyColumn Property="customer => customer.LastEditOn" />
+    <PropertyColumn Property="customer => customer.IsArchived" />
+    <PropertyColumn Property="customer => customer.IsPrivate" />
+    <PropertyColumn Property="customer => customer.IsActive" />
 
     <TemplateColumn Context="customer">
         <a href="@($"customers/edit?id={customer.Id}")">Edit</a> |

@@ -25,6 +25,66 @@
             <dt class="col-sm-2">Remarks</dt>
             <dd class="col-sm-10">@customer.Remarks</dd>
         </dl>
+        <dl class="row">
+            <dt class="col-sm-2">ContactNo1</dt>
+            <dd class="col-sm-10">@customer.ContactNo1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">ContactNo2</dt>
+            <dd class="col-sm-10">@customer.ContactNo2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Address1</dt>
+            <dd class="col-sm-10">@customer.Address1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Address2</dt>
+            <dd class="col-sm-10">@customer.Address2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email1</dt>
+            <dd class="col-sm-10">@customer.Email1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email2</dt>
+            <dd class="col-sm-10">@customer.Email2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CityId</dt>
+            <dd class="col-sm-10">@customer.CityId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CountryId</dt>
+            <dd class="col-sm-10">@customer.CountryId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@customer.CreatedBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedOn</dt>
+            <dd class="col-sm-10">@customer.CreatedOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastEditBy</dt>
+            <dd class="col-sm-10">@customer.LastEditBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastEditOn</dt>
+            <dd class="col-sm-10">@customer.LastEditOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsArchived</dt>
+            <dd class="col-sm-10">@customer.IsArchived</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsPrivate</dt>
+            <dd class="col-sm-10">@customer.IsPrivate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsActive</dt>
+            <dd class="col-sm-10">@customer.IsActive</dd>
+        </dl>
         <EditForm method="post" Model="customer" OnValidSubmit="DeleteCustomer" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(customer is null)">Delete</button> |
             <a href="/customers">Back to List</a>

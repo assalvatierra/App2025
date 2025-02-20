@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models;
 
-public partial class Customer
+public partial class Contact
 {
     public int Id { get; set; }
 
@@ -27,19 +27,7 @@ public partial class Customer
 
     public string? CountryId { get; set; }
 
-    public string CreatedBy { get; set; } = null!;
-
-    public DateTime CreatedOn { get; set; }
-
-    public string LastEditBy { get; set; } = null!;
-
-    public DateTime LastEditOn { get; set; }
-
-    public bool IsArchived { get; set; }
-
-    public bool IsPrivate { get; set; }
-
-    public bool IsActive { get; set; }
-
     public virtual ICollection<CustomerContact> CustomerContacts { get; set; } = new List<CustomerContact>();
+
+    public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }

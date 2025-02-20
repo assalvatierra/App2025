@@ -3,52 +3,36 @@
   "WorkspaceRootPath": "C:\\DATA\\GitHub\\App2025\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\data\\erp2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\data\\erp2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\dba0a0aedev2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\dba0a0aedev2025context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\suppliercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\suppliercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\customercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\customercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\components\\pages\\contactpages\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\components\\pages\\contactpages\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\suppliercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\suppliercontact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\components\\pages\\contactpages\\edit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\components\\pages\\contactpages\\edit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\components\\pages\\contactpages\\delete.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\components\\pages\\contactpages\\delete.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\components\\pages\\contactpages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\components\\pages\\contactpages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|c:\\data\\github\\app2025\\erp2025\\components\\pages\\contactpages\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5EA176CB-996C-F9DC-9F35-1433DA7F6710}|Erp2025\\Erp2025.csproj|solutionrelative:erp2025\\components\\pages\\contactpages\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|solutionrelative:erp.domain\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}|Erp.Domain\\Erp.Domain.csproj|c:\\data\\github\\app2025\\erp.domain\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 313,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,104 +58,104 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Details.razor",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Details.razor",
-              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Details.razor",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Details.razor",
-              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Details.razor",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAlwEYAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T07:00:26.604Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Erp2025Context.cs",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Data\\Erp2025Context.cs",
-              "RelativeDocumentMoniker": "Erp2025\\Data\\Erp2025Context.cs",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Data\\Erp2025Context.cs",
-              "RelativeToolTip": "Erp2025\\Data\\Erp2025Context.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T06:40:37.974Z",
+              "Title": "Edit.razor",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
+              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
+              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAKUAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-20T07:27:03.142Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "Index.razor",
+              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
+              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
+              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-20T07:24:35.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Customer.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Customer.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\Customer.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Customer.cs",
               "RelativeToolTip": "Erp.Domain\\Models\\Customer.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAiwD4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAiwCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:58:55.429Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "SupplierContact.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\SupplierContact.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\SupplierContact.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\SupplierContact.cs",
               "RelativeToolTip": "Erp.Domain\\Models\\SupplierContact.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:55:40.189Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "CustomerContact.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\CustomerContact.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\CustomerContact.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\CustomerContact.cs",
               "RelativeToolTip": "Erp.Domain\\Models\\CustomerContact.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAAABgAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:54:57.755Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "DbA0a0aeDev2025Context.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
-              "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAlwEkAAACDAAAAAAAAAA==",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs*",
+              "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs*",
+              "ViewState": "AgIAAMEAAAAAAAAAAAAAwNUAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:09:41.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Contact.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Contact.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\Contact.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Contact.cs",
               "RelativeToolTip": "Erp.Domain\\Models\\Contact.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAiwEAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAA0wCMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:46:13.951Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Supplier.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Supplier.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\Supplier.cs",
               "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Supplier.cs",
               "RelativeToolTip": "Erp.Domain\\Models\\Supplier.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAA+wEAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAA+wC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:58:45.147Z",
               "EditorCaption": ""
@@ -179,58 +163,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "Edit.razor",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
-              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
-              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAlwIEAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T06:59:14.32Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Delete.razor",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Delete.razor",
-              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Delete.razor",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Delete.razor",
-              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Delete.razor",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAlwGcAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T06:58:00.387Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Index.razor",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
-              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
-              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T06:28:40.025Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Create.razor",
-              "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Create.razor",
-              "RelativeDocumentMoniker": "Erp2025\\Components\\Pages\\ContactPages\\Create.razor",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp2025\\Components\\Pages\\ContactPages\\Create.razor",
-              "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Create.razor",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T06:27:18.972Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\Product.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\Product.cs",
@@ -243,7 +175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 9,
               "Title": "Notes.txt",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Notes.txt",
               "RelativeDocumentMoniker": "Erp.Domain\\Notes.txt",

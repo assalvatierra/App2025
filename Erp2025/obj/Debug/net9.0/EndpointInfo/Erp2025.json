@@ -383,50 +383,34 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "remarks": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "contactNo1": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "contactNo2": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "address1": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "address2": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "email1": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "email2": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -436,14 +420,10 @@
             "nullable": true
           },
           "countryId": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "createdBy": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -452,8 +432,6 @@
             "format": "date-time"
           },
           "lastEditBy": {
-            "maxLength": 4000,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },

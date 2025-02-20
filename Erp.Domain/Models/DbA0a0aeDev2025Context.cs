@@ -67,24 +67,24 @@ public partial class DbA0a0aeDev2025Context : DbContext
                     });
         });
 
-        modelBuilder.Entity<CustomerContact>(entity =>
-        {
-            entity.HasOne(d => d.Contact).WithMany(p => p.CustomerContacts).HasConstraintName("FK_Customer_Contact_Contact_1");
+        //modelBuilder.Entity<CustomerContact>(entity =>
+        //{
+        //    entity.HasOne(d => d.Contact).WithMany(p => p.CustomerContacts).HasConstraintName("FK_Customer_Contact_Contact_1");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.CustomerContacts).HasConstraintName("FK_Customer_Contact_Customer_0");
-        });
+        //    entity.HasOne(d => d.Customer).WithMany(p => p.CustomerContacts).HasConstraintName("FK_Customer_Contact_Customer_0");
+        //});
 
-        modelBuilder.Entity<RefCity>(entity =>
-        {
-            entity.HasOne(d => d.RefCountry).WithMany(p => p.RefCities).HasConstraintName("FK_RefCity_RefCountry_0");
-        });
+        //modelBuilder.Entity<RefCity>(entity =>
+        //{
+        //    entity.HasOne(d => d.RefCountry).WithMany(p => p.RefCities).HasConstraintName("FK_RefCity_RefCountry_0");
+        //});
 
-        modelBuilder.Entity<SupplierContact>(entity =>
-        {
-            entity.HasOne(d => d.Contact).WithMany(p => p.SupplierContacts).HasConstraintName("FK_Supplier_Contact_Contact_1");
+        //modelBuilder.Entity<SupplierContact>(entity =>
+        //{
+        //    entity.HasOne(d => d.Contact).WithMany(p => p.SupplierContacts).HasConstraintName("FK_Supplier_Contact_Contact_1");
 
-            entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContacts).HasConstraintName("FK_Supplier_Contact_Supplier_0");
-        });
+        //    entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContacts).HasConstraintName("FK_Supplier_Contact_Supplier_0");
+        //});
 
         OnModelCreatingPartial(modelBuilder);
     }

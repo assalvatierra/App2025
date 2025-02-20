@@ -60,9 +60,7 @@ public partial class Contact
     [Column("isActive")]
     public bool IsActive { get; set; }
 
-    [InverseProperty("Contact")]
     public virtual ICollection<CustomerContact> CustomerContacts { get; set; } = new List<CustomerContact>();
 
-    [InverseProperty("Contact")]
     public virtual ICollection<SupplierContact> SupplierContacts { get; set; } = new List<SupplierContact>();
 }

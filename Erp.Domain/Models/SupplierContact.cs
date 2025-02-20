@@ -16,11 +16,7 @@ public partial class SupplierContact
 
     public int? ContactId { get; set; }
 
-    [ForeignKey("ContactId")]
-    [InverseProperty("SupplierContacts")]
-    public virtual Contact? Contact { get; set; }
+    //public virtual Contact? Contact { get; set; }
 
-    [ForeignKey("SupplierId")]
-    [InverseProperty("SupplierContacts")]
-    public virtual Supplier? Supplier { get; set; }
+    //public virtual Supplier? Supplier { get; set; }
 }

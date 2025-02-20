@@ -18,17 +18,14 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Customer {
+    public partial class RefCity {
 
-        public Customer()
+        public RefCity()
         {
-            this.ContactInfo = new ContactInfo();
-            this.RecordInfo = new RecordInfo();
-            this.Customer_Contacts = new List<Customer_Contact>();
             OnCreated();
         }
 
-        public virtual int Id
+        public virtual string Id
         {
             get;
             set;
@@ -40,25 +37,13 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Remarks
+        public virtual int RefCountryId
         {
             get;
             set;
         }
 
-        public virtual ContactInfo ContactInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual RecordInfo RecordInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<Customer_Contact> Customer_Contacts
+        public virtual RefCountry RefCountry
         {
             get;
             set;

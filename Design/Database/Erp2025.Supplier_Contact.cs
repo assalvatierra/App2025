@@ -18,13 +18,10 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Customer {
+    public partial class Supplier_Contact {
 
-        public Customer()
+        public Supplier_Contact()
         {
-            this.ContactInfo = new ContactInfo();
-            this.RecordInfo = new RecordInfo();
-            this.Customer_Contacts = new List<Customer_Contact>();
             OnCreated();
         }
 
@@ -34,31 +31,13 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Name
+        public virtual int SupplierId
         {
             get;
             set;
         }
 
-        public virtual string Remarks
-        {
-            get;
-            set;
-        }
-
-        public virtual ContactInfo ContactInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual RecordInfo RecordInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<Customer_Contact> Customer_Contacts
+        public virtual int ContactId
         {
             get;
             set;

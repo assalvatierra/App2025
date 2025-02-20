@@ -6,15 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Erp.Domain.Models;
 
-[Table("RefCountry")]
-public partial class RefCountry
+[Table("Product")]
+public partial class Product
 {
-    [Key]
-    public int Id { get; set; }
-
     [StringLength(4000)]
     public string Name { get; set; } = null!;
 
-    [InverseProperty("RefCountry")]
-    public virtual ICollection<RefCity> RefCities { get; set; } = new List<RefCity>();
+    [StringLength(4000)]
+    public string? Remarks { get; set; }
+
+    [StringLength(4000)]
+    public string? Code { get; set; }
+
+    [Key]
+    public int Id { get; set; }
 }

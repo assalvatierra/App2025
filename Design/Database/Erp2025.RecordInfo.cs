@@ -18,47 +18,50 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Customer {
+    public partial class RecordInfo {
 
-        public Customer()
+        public RecordInfo()
         {
-            this.ContactInfo = new ContactInfo();
-            this.RecordInfo = new RecordInfo();
-            this.Customer_Contacts = new List<Customer_Contact>();
             OnCreated();
         }
 
-        public virtual int Id
+        public virtual string CreatedBy
         {
             get;
             set;
         }
 
-        public virtual string Name
+        public virtual System.DateTime CreatedOn
         {
             get;
             set;
         }
 
-        public virtual string Remarks
+        public virtual string LastEditBy
         {
             get;
             set;
         }
 
-        public virtual ContactInfo ContactInfo
+        public virtual System.DateTime LastEditOn
         {
             get;
             set;
         }
 
-        public virtual RecordInfo RecordInfo
+        public virtual bool isArchived
         {
             get;
             set;
         }
 
-        public virtual IList<Customer_Contact> Customer_Contacts
+        public virtual bool isPrivate
+        {
+            get;
+            set;
+        }
+
+        public virtual bool isActive
         {
             get;
             set;

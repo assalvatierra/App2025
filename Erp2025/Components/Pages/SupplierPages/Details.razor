@@ -1,0 +1,78 @@
+﻿@page "/suppliers/details"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Supplier</h2>
+    <hr />
+    @if (supplier is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@supplier.Name</dd>
+            <dt class="col-sm-2">Remarks</dt>
+            <dd class="col-sm-10">@supplier.Remarks</dd>
+            <dt class="col-sm-2">ContactNo1</dt>
+            <dd class="col-sm-10">@supplier.ContactNo1</dd>
+            <dt class="col-sm-2">ContactNo2</dt>
+            <dd class="col-sm-10">@supplier.ContactNo2</dd>
+            <dt class="col-sm-2">Address1</dt>
+            <dd class="col-sm-10">@supplier.Address1</dd>
+            <dt class="col-sm-2">Address2</dt>
+            <dd class="col-sm-10">@supplier.Address2</dd>
+            <dt class="col-sm-2">Email1</dt>
+            <dd class="col-sm-10">@supplier.Email1</dd>
+            <dt class="col-sm-2">Email2</dt>
+            <dd class="col-sm-10">@supplier.Email2</dd>
+            <dt class="col-sm-2">CityId</dt>
+            <dd class="col-sm-10">@supplier.CityId</dd>
+            <dt class="col-sm-2">CountryId</dt>
+            <dd class="col-sm-10">@supplier.CountryId</dd>
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@supplier.CreatedBy</dd>
+            <dt class="col-sm-2">CreatedOn</dt>
+            <dd class="col-sm-10">@supplier.CreatedOn</dd>
+            <dt class="col-sm-2">LastEditBy</dt>
+            <dd class="col-sm-10">@supplier.LastEditBy</dd>
+            <dt class="col-sm-2">LastEditOn</dt>
+            <dd class="col-sm-10">@supplier.LastEditOn</dd>
+            <dt class="col-sm-2">IsArchived</dt>
+            <dd class="col-sm-10">@supplier.IsArchived</dd>
+            <dt class="col-sm-2">IsPrivate</dt>
+            <dd class="col-sm-10">@supplier.IsPrivate</dd>
+            <dt class="col-sm-2">IsActive</dt>
+            <dd class="col-sm-10">@supplier.IsActive</dd>
+        </dl>
+        <div>
+            <a href="@($"/suppliers/edit?id={supplier.Id}")">Edit</a> |
+            <a href="@($"/suppliers")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Supplier? supplier;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        supplier = await context.Supplier.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (supplier is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

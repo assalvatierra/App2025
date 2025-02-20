@@ -14,6 +14,8 @@ namespace Erp2025.Data
         {
         }
         public DbSet<Erp.Domain.Models.Customer> Customer { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.Supplier> Supplier { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.Contact> Contact { get; set; } = default!;
       
     }
 }

@@ -66,8 +66,7 @@
               "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Edit.razor",
               "ViewState": "AgIAABgAAAAAAAAAAAAAAKUAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T07:27:03.142Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T07:27:03.142Z"
             },
             {
               "$type": "Document",
@@ -79,8 +78,7 @@
               "RelativeToolTip": "Erp2025\\Components\\Pages\\ContactPages\\Index.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-20T07:24:35.112Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T07:24:35.112Z"
             },
             {
               "$type": "Document",
@@ -92,8 +90,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\Customer.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAiwCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:58:55.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:58:55.429Z"
             },
             {
               "$type": "Document",
@@ -105,8 +102,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\SupplierContact.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:55:40.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:55:40.189Z"
             },
             {
               "$type": "Document",
@@ -118,8 +114,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\CustomerContact.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:54:57.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:54:57.755Z"
             },
             {
               "$type": "Document",
@@ -127,9 +122,9 @@
               "Title": "DbA0a0aeDev2025Context.cs",
               "DocumentMoniker": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
               "RelativeDocumentMoniker": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
-              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs*",
-              "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs*",
-              "ViewState": "AgIAAMEAAAAAAAAAAAAAwNUAAABEAAAAAAAAAA==",
+              "ToolTip": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "RelativeToolTip": "Erp.Domain\\Models\\DbA0a0aeDev2025Context.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAAwLwAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T05:09:41.138Z",
               "EditorCaption": ""
@@ -144,8 +139,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\Contact.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAA0wCMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:46:13.951Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:46:13.951Z"
             },
             {
               "$type": "Document",
@@ -157,8 +151,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\Supplier.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAA+wC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T05:58:45.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T05:58:45.147Z"
             },
             {
               "$type": "Document",
@@ -170,8 +163,7 @@
               "RelativeToolTip": "Erp.Domain\\Models\\Product.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T06:19:35.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T06:19:35.912Z"
             },
             {
               "$type": "Document",
@@ -183,8 +175,7 @@
               "RelativeToolTip": "Erp.Domain\\Notes.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAD7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-02-20T03:57:14.305Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T03:57:14.305Z"
             }
           ]
         },

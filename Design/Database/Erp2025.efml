@@ -54,6 +54,9 @@
       <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="b68a24f0-f17c-4713-94ba-578a3a1ed3e6">
         <column name="" />
       </property>
+      <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8631c869-cb6a-4a00-a58a-eb910f5da63e">
+        <column name="" />
+      </property>
       <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c3a10c3a-c8c5-4f8a-a073-2436df58349d">
         <column name="" />
       </property>
@@ -199,9 +202,49 @@
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="ad386267-7c62-40cb-a4d6-bb13ee45250a">
       <property name="Name" />
+      <property name="Description" />
       <property name="Remarks" />
       <property name="Code" />
     </component>
+  </class>
+  <class name="JobMain" entity-set="JobMain" p1:Guid="b2c798b2-11d9-4da9-a47f-c39a3e7676a1">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ef684ebe-4d21-4000-bcc2-b252b6f0495c">
+      <column name="" />
+    </id>
+    <property name="JobDate" type="DateTime" p1:ValidateRequired="true" p1:Guid="1802e2b7-ade7-4a3c-a984-f0c4bf26adcf">
+      <column name="" />
+    </property>
+    <property name="Description" type="String" p1:ValidateRequired="true" p1:Guid="74d13586-87da-4d0b-ac52-8d66d8e63e52">
+      <column name="" />
+    </property>
+  </class>
+  <class name="JobServices" entity-set="JobServices" p1:Guid="b2fecd9e-aad3-4a83-95cb-767f51b7bb30">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5f7bb83f-f5c0-4e92-aea1-6752696024b1">
+      <column name="" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="3df6a031-3a9b-4584-a2d3-d39c217e9502">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Particulars" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="03ab43ff-f73d-44e0-9209-dd2971e71074">
+      <column name="" />
+    </property>
+    <property name="DateStart" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ab7cb03e-cd8e-4a68-8daa-112c4385abe9">
+      <column name="" />
+    </property>
+    <property name="DateEnd" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f8841315-3985-46e5-8fda-849a23e962e3">
+      <column name="" />
+    </property>
+    <property name="QuotedAmt" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37e0a695-01ba-4248-b7bb-9620c8ff0260">
+      <column name="" />
+    </property>
+    <property name="ActualAmt" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5a82b5ff-fc8a-469d-9284-134edb6f45f2">
+      <column name="" />
+    </property>
+  </class>
+  <class name="Services" entity-set="Services" p1:Guid="e06179b4-34f7-49cc-9ebf-78712855ac5e">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="28921957-93af-4a1c-95a1-30502fae9ac1">
+      <column name="" />
+    </id>
   </class>
   <associations>
     <association name="Customer_Customer_Contact" cardinality="OneToMany" p1:Guid="a265c22b-f18a-4be7-a1dc-6944ed73edec">
@@ -242,6 +285,14 @@
       </end1>
       <end2 multiplicity="Many" name="RefCities" class="RefCountry" relation-class="RefCity" lazy="False" p1:Guid="c46f64cb-accb-4025-a27e-8e065a957e88">
         <property name="RefCountryId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
+      <end1 multiplicity="One" name="JobMain" class="JobServices" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServices" class="JobMain" relation-class="JobServices" lazy="False" p1:Guid="17ad3884-5308-496e-9cfd-37553007586a">
+        <property name="JobMainId" />
       </end2>
     </association>
   </associations>

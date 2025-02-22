@@ -217,8 +217,17 @@
     <property name="Description" type="String" p1:ValidateRequired="true" p1:Guid="74d13586-87da-4d0b-ac52-8d66d8e63e52">
       <column name="" />
     </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="b978ed53-c7fd-4610-b771-af85d66c711c">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
   </class>
-  <class name="JobServices" entity-set="JobServices" p1:Guid="b2fecd9e-aad3-4a83-95cb-767f51b7bb30">
+  <class name="JobService" entity-set="JobService" p1:Guid="b2fecd9e-aad3-4a83-95cb-767f51b7bb30">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5f7bb83f-f5c0-4e92-aea1-6752696024b1">
       <column name="" />
     </id>
@@ -237,45 +246,280 @@
     <property name="QuotedAmt" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37e0a695-01ba-4248-b7bb-9620c8ff0260">
       <column name="" />
     </property>
-    <property name="ActualAmt" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5a82b5ff-fc8a-469d-9284-134edb6f45f2">
+    <property name="SupplierAmt" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5a82b5ff-fc8a-469d-9284-134edb6f45f2">
       <column name="" />
     </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="392ccd71-09e5-4d6c-988c-1fb8e7ee0298">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="ServiceItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="4f18e6a6-de61-4943-94fa-fbad63b82c36">
+      <column name="" not-null="False" />
+    </property>
   </class>
-  <class name="Services" entity-set="Services" p1:Guid="e06179b4-34f7-49cc-9ebf-78712855ac5e">
+  <class name="ServiceItem" entity-set="ServiceItem" p1:Guid="e06179b4-34f7-49cc-9ebf-78712855ac5e">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="28921957-93af-4a1c-95a1-30502fae9ac1">
       <column name="" />
     </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="434a3894-d667-4264-add0-f8b6c275c53d">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="db8ff2ab-a4f9-40ca-99e7-0b671e72eb6b">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="ServiceItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="2ea3f8e3-3a82-4958-bd0c-27c94f7f88a4">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobResource" entity-set="JobResource" p1:Guid="40d3aac3-b5ee-42f6-be8b-4e65d2ad6569">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="aaf944f6-5554-452c-a96a-6c7293e84f7e">
+      <column name="" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="745d54b2-51ab-4790-ac0d-21dfa51f583c">
+      <column name="" not-null="False" />
+    </property>
+    <property name="DateStart" type="DateTime" p1:ValidateRequired="true" p1:Guid="3ae36b73-a37d-4c1e-ad0e-d705c1b0dc13">
+      <column name="" />
+    </property>
+    <property name="DateEnd" type="DateTime" p1:ValidateRequired="true" p1:Guid="ceae1a68-99fd-4794-81ae-c647a3e0b1e3">
+      <column name="" />
+    </property>
+    <property name="Particulars" type="String" p1:ValidateRequired="true" p1:Guid="2d455002-a9a0-454a-83e9-a5d560f16db3">
+      <column name="" />
+    </property>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="b9e53c64-f060-41c6-a0ec-7f70affe03bb">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ResourceItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="6efa2438-26b7-4c01-a9d0-0acf362e4de6">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobInventory" entity-set="JobInventory" p1:Guid="6541b9d0-cab2-4412-b3f8-c0d4da89c33a">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ece2fb53-e868-486d-bdca-a476f7bac63d">
+      <column name="" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="02f2503b-93c9-48fd-8e62-23a9258d0018">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Particulars" type="String" p1:ValidateRequired="true" p1:Guid="936cb9ec-b64c-493a-a2d7-d1b66713aa31">
+      <column name="" />
+    </property>
+    <property name="InvItemsId" type="Int32" p1:ValidateRequired="true" p1:Guid="b24a63b5-cc4e-42e5-8ebd-8d4c10964368">
+      <column name="" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="QtyRequired" type="Decimal" p1:ValidateRequired="true" p1:Guid="812f0b61-d0c2-4978-8a9a-e3679f3b0cc6">
+      <column name="" />
+    </property>
+  </class>
+  <class name="ResourceItem" entity-set="ResourceItem" p1:Guid="3d9e8807-8bc9-4440-bfd8-081221510b46">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="568f2258-de22-430b-a061-adb6c2f93ca7">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="e640c9a9-b044-4b72-b498-2f8e8be20bd8">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="d62551d1-6e30-4853-a493-20b3efd81b6f">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+  </class>
+  <class name="JobCustomer" entity-set="JobCustomer" p1:Guid="d31263a7-28bf-474a-9088-32894cbaf0c1">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="1a027139-b44b-47c7-8237-b1fb29eb1241">
+      <column name="" not-null="False" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="a991bb90-429f-4547-8610-8aa64152c8fa">
+      <column name="" not-null="False" />
+    </property>
+    <property name="CustomerId" type="Int32" p1:ValidateRequired="true" p1:Guid="439cf114-a6b3-44c1-b29c-b55166fc8984">
+      <column name="" not-null="False" />
+    </property>
+    <property name="IsPrimary" type="Boolean" p1:ValidateRequired="true" p1:Guid="a11543f7-4ce6-47e2-9299-7f61569582e9">
+      <column name="" />
+    </property>
+    <property name="IsBillTo" type="Boolean" p1:ValidateRequired="true" p1:Guid="80487b85-a7bc-405a-badf-b13349fee3d9">
+      <column name="" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7b38cc7f-363b-48d7-96c4-1bb54fbf9986">
+      <column name="" />
+    </property>
+    <property name="JobCustomerTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="0d3c478f-0002-41d3-9ef9-946b1067145a">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobContact" entity-set="JobContact" p1:Guid="97b4616e-a779-4890-a1ca-25b7c8b5ae91">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="9768de7d-a35c-406a-97e2-abf0e0f6247e">
+      <column name="" not-null="False" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="d3ea3371-a150-44f9-bae1-a54f07942509">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ContactId" type="Int32" p1:ValidateRequired="true" p1:Guid="4c638bfc-5a2c-41a5-b4ed-90a149b04f7f">
+      <column name="" not-null="False" />
+    </property>
+    <property name="IsPrimary" type="Boolean" p1:ValidateRequired="true" p1:Guid="f03973aa-59fa-4b7f-bdfa-ad70586bf9e7">
+      <column name="" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="60295726-8667-4518-9641-e4761e56cba1">
+      <column name="" />
+    </property>
+    <property name="JobContactTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="92141f63-02e4-4e6b-aa5a-ede40e622ed3">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobContactType" entity-set="JobContactType" p1:Guid="c31cfa1e-281d-4bc0-b7f8-12ac197f064a">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f153e5ac-1192-49a9-8409-8bf26856c79d">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="e16fa0fa-1042-4df0-8078-ef4d693f6df3">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+  </class>
+  <class name="JobCustomerType" entity-set="JobCustomerType" p1:Guid="72c5d1ce-dae0-4957-b477-b5bf73b5924f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="62080a2c-c924-4ae4-b7fc-c55d6c504e3e">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="a8a05910-fe4d-4962-9e80-31b13dcde534">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+  </class>
+  <class name="InvItems" entity-set="InvItems" table="InvItems" schema="dbo" p1:Guid="f2b37225-0345-4a1d-8717-6f0b0c6eca45">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="b3e9afb7-213f-4619-83e0-c21dbdb81ad9">
+      <column name="Id" not-null="True" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="ItemCode" type="String" p1:ValidateMaxLength="30" p1:ValidateRequired="true" p1:Guid="6e6c5370-a357-4da8-a6a9-0ac26db0f075">
+      <column name="ItemCode" not-null="True" length="30" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="Description" type="String" p1:ValidateMaxLength="80" p1:ValidateRequired="true" p1:Guid="6cba2d0d-36c2-4548-ba60-e5420d4df1a2">
+      <column name="Description" not-null="True" length="80" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateMaxLength="150" p1:ValidateRequired="false" p1:Guid="f453625c-4429-44a8-9390-e73f0cef6efc">
+      <column name="Remarks" not-null="False" length="150" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="ImgPath" type="String" p1:nullable="True" p1:ValidateMaxLength="80" p1:ValidateRequired="false" p1:Guid="35f816c4-e608-4a7c-8932-9b2a206624ef">
+      <column name="ImgPath" not-null="False" length="80" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="ContactInfo" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="1d7a66ce-52ed-4b75-bd21-f2b386144074">
+      <column name="ContactInfo" not-null="False" length="50" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="ViewLabel" type="String" p1:nullable="True" p1:ValidateMaxLength="20" p1:ValidateRequired="false" p1:Guid="b6a344dd-876b-4c0a-a7ad-852e76d472f5">
+      <column name="ViewLabel" not-null="False" length="20" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="OrderNo" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8e6711a7-ad61-4ad4-9c1e-4594a4c96b4b">
+      <column name="OrderNo" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="InvTypeId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="cd0022d7-1c3f-48b2-8215-7015c8053a1d">
+      <column name="InvTypeId" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="InvCategoryId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b857b658-8f2f-46cd-8355-0a9dcd5346fe">
+      <column name="InvCategoryId" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="InvUomId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a479dd5e-75c2-44a0-82d8-0548ae78b879">
+      <column name="InvUomId" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="Material" type="String" p1:nullable="True" p1:ValidateMaxLength="80" p1:ValidateRequired="false" p1:Guid="3c9de320-6eda-4817-baa4-a23f45b5c8c6">
+      <column name="Material" not-null="False" length="80" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Weight" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4caf9e70-9c19-4107-9273-6c1ad955e29b">
+      <column name="Weight" not-null="False" precision="18" scale="2" sql-type="decimal" p1:unicode="False" />
+    </property>
+    <property name="Code" type="String" p1:nullable="True" p1:ValidateMaxLength="40" p1:ValidateRequired="false" p1:Guid="c7ace164-d47f-440a-b231-33c346230e62">
+      <column name="Code" not-null="False" length="40" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+  </class>
+  <class name="ServiceItemType" entity-set="ServiceItemType" p1:Guid="1d9453e9-7bed-48ba-be97-5e16eabfe256">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="18ae6b06-3824-47c7-8816-e87174698008">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="3331f725-0744-4dab-af8c-e90089f8493b">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+  </class>
+  <class name="ResourceItemType" entity-set="ResourceItemType" p1:Guid="8aa46d1b-154b-46a7-bf7d-fc44d0fb5d95">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="6c92b958-f6fa-4078-8a25-e55087cd0596">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="8d53a468-9766-46bb-8629-5f82fb94179d">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+    </component>
+  </class>
+  <class name="InvTypes" entity-set="InvTypes" table="InvTypes" schema="dbo" p1:Guid="aad42d0e-86a8-4531-adc5-0bed9f3d948f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="aadc725f-37c5-4a81-a99a-ad4792510750">
+      <column name="Id" not-null="True" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="Desc" type="String" p1:ValidateMaxLength="50" p1:ValidateRequired="true" p1:Guid="6ad5dcf7-4cea-4020-80c7-e0e71e8895c9">
+      <column name="`Desc`" not-null="True" length="50" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="Remarks" type="String" p1:ValidateMaxLength="150" p1:ValidateRequired="true" p1:Guid="5277db62-4e08-43fd-9264-702b36a5811c">
+      <column name="Remarks" not-null="True" length="150" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="SysCode" type="String" p1:ValidateMaxLength="10" p1:ValidateRequired="true" p1:Guid="7b4d8467-29a0-48cd-acf5-6c474b04e569">
+      <column name="SysCode" not-null="True" length="10" sql-type="nvarchar" p1:unicode="True" />
+    </property>
   </class>
   <associations>
     <association name="Customer_Customer_Contact" cardinality="OneToMany" p1:Guid="a265c22b-f18a-4be7-a1dc-6944ed73edec">
-      <end1 multiplicity="One" name="Customer" class="Customer_Contact" relation-class="Customer" constrained="True" lazy="False" p1:Guid="8ced2723-cd66-45a7-a31f-d87622a2bbbf">
+      <end1 multiplicity="One" name="Customer" class="Customer_Contact" relation-class="Customer" generate="False" constrained="True" lazy="False" p1:Guid="8ced2723-cd66-45a7-a31f-d87622a2bbbf">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Customer_Contacts" class="Customer" relation-class="Customer_Contact" generate="False" lazy="False" p1:Guid="6f5e9db2-755a-45ff-b923-5f6130af757b">
+      <end2 multiplicity="Many" name="Customer_Contacts" class="Customer" relation-class="Customer_Contact" lazy="False" p1:Guid="6f5e9db2-755a-45ff-b923-5f6130af757b">
         <property name="CustomerId" />
       </end2>
     </association>
     <association name="Contact_Customer_Contact" cardinality="OneToMany" p1:Guid="1646f1c5-3b17-41ab-ade0-b00968b652bd">
-      <end1 multiplicity="One" name="Contact" class="Customer_Contact" relation-class="Contact" constrained="True" lazy="False" p1:Guid="35631ccd-aa90-4abc-8aa3-ad0948f975c1">
+      <end1 multiplicity="One" name="Contact" class="Customer_Contact" relation-class="Contact" generate="False" constrained="True" lazy="False" p1:Guid="35631ccd-aa90-4abc-8aa3-ad0948f975c1">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Customer_Contacts" class="Contact" relation-class="Customer_Contact" generate="False" lazy="False" p1:Guid="2cb5c809-d5e5-4137-bc22-fd169debc3b4">
+      <end2 multiplicity="Many" name="Customer_Contacts" class="Contact" relation-class="Customer_Contact" lazy="False" p1:Guid="2cb5c809-d5e5-4137-bc22-fd169debc3b4">
         <property name="ContactId" />
       </end2>
     </association>
     <association name="Supplier_Supplier_Contact" cardinality="OneToMany" p1:Guid="69297955-4cef-4b87-b6c3-0af0917554dd">
-      <end1 multiplicity="One" name="Supplier" class="Supplier_Contact" relation-class="Supplier" constrained="True" lazy="False" p1:Guid="0e428107-db46-4ef9-ae40-dca661663d9c">
+      <end1 multiplicity="One" name="Supplier" class="Supplier_Contact" relation-class="Supplier" generate="False" constrained="True" lazy="False" p1:Guid="0e428107-db46-4ef9-ae40-dca661663d9c">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Supplier_Contacts" class="Supplier" relation-class="Supplier_Contact" generate="False" lazy="False" p1:Guid="18635d57-4703-42d9-9b86-9d8f85db31d2">
+      <end2 multiplicity="Many" name="Supplier_Contacts" class="Supplier" relation-class="Supplier_Contact" lazy="False" p1:Guid="18635d57-4703-42d9-9b86-9d8f85db31d2">
         <property name="SupplierId" />
       </end2>
     </association>
     <association name="Contact_Supplier_Contact" cardinality="OneToMany" p1:Guid="ad23fc5f-d9fb-487e-86a7-1c72e6757420">
-      <end1 multiplicity="One" name="Contact" class="Supplier_Contact" relation-class="Contact" constrained="True" lazy="False" p1:Guid="e313935a-7452-4aa3-aa3a-d2bb0ed96da6">
+      <end1 multiplicity="One" name="Contact" class="Supplier_Contact" relation-class="Contact" generate="False" constrained="True" lazy="False" p1:Guid="e313935a-7452-4aa3-aa3a-d2bb0ed96da6">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Supplier_Contacts" class="Contact" relation-class="Supplier_Contact" generate="False" lazy="False" p1:Guid="b14a524f-3161-4ae0-916d-7adc8746adea">
+      <end2 multiplicity="Many" name="Supplier_Contacts" class="Contact" relation-class="Supplier_Contact" lazy="False" p1:Guid="b14a524f-3161-4ae0-916d-7adc8746adea">
         <property name="ContactId" />
       </end2>
     </association>
@@ -288,11 +532,107 @@
       </end2>
     </association>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
-      <end1 multiplicity="One" name="JobMain" class="JobServices" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
+      <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="JobServices" class="JobMain" relation-class="JobServices" lazy="False" p1:Guid="17ad3884-5308-496e-9cfd-37553007586a">
+      <end2 multiplicity="Many" name="JobServices" class="JobMain" relation-class="JobService" lazy="False" p1:Guid="17ad3884-5308-496e-9cfd-37553007586a">
         <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobResource" cardinality="OneToMany" p1:Guid="1d495e68-3439-4cd9-9a97-e1afa6c811e4">
+      <end1 multiplicity="One" name="JobMain" class="JobResource" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="13152975-7c86-47cd-be22-06f8c24c98f5">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobResources" class="JobMain" relation-class="JobResource" lazy="False" p1:Guid="878ec465-771e-4a32-9010-e01ea609c360">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobInventory" cardinality="OneToMany" p1:Guid="fcebd903-b7bd-465e-b940-4e8494c7f72f">
+      <end1 multiplicity="One" name="JobMain" class="JobInventory" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="6671da97-e64a-48c5-b9b0-7a13eea0049f">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobInventories" class="JobMain" relation-class="JobInventory" lazy="False" p1:Guid="55ffa56e-4c4b-49cb-b88f-0779a970b739">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobCustomer" cardinality="OneToMany" p1:Guid="793f4f5d-d82b-4599-84de-91771153853d">
+      <end1 multiplicity="One" name="JobMain" class="JobCustomer" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="bba1d9e3-2ffa-4024-9c11-1bc4ac303a42">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobCustomers" class="JobMain" relation-class="JobCustomer" lazy="False" p1:Guid="eb7b7bf3-5f8c-4e09-a5d8-5de5d3de3743">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="Customer_JobCustomer" cardinality="OneToMany" p1:Guid="22abaf3a-e2e5-4766-b30d-cbf290c59e93">
+      <end1 multiplicity="One" name="Customer" class="JobCustomer" relation-class="Customer" constrained="True" lazy="False" p1:Guid="ad5c6afb-274f-4844-8e94-575493f60b78">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobCustomers" class="Customer" relation-class="JobCustomer" generate="False" lazy="False" p1:Guid="a65b7374-52d7-4df0-9e53-de02790fc519">
+        <property name="CustomerId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobContact" cardinality="OneToMany" p1:Guid="98b0a153-0713-4bb4-a19b-0f9446bdb739">
+      <end1 multiplicity="One" name="JobMain" class="JobContact" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="3ce20f7e-b316-49b0-82d0-7b4767f99788">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobContacts" class="JobMain" relation-class="JobContact" lazy="False" p1:Guid="343ae20b-0b0c-48d9-a5a8-18f42c9c280f">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="Contact_JobContact" cardinality="OneToMany" p1:Guid="0fbf1e5a-6f2e-4a62-9e8e-f2aede45a2aa">
+      <end1 multiplicity="One" name="Contact" class="JobContact" relation-class="Contact" constrained="True" lazy="False" p1:Guid="7e2c40a2-092a-4be0-833b-5affc5a05007">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobContacts" class="Contact" relation-class="JobContact" generate="False" lazy="False" p1:Guid="277a2617-15bb-45d0-9b7e-aaf69475a4d8">
+        <property name="ContactId" />
+      </end2>
+    </association>
+    <association name="JobContactType_JobContact" cardinality="OneToMany" p1:Guid="6d0ec926-aecb-4a02-98ca-30cb429ddbc3">
+      <end1 multiplicity="One" name="JobContactType" class="JobContact" relation-class="JobContactType" constrained="True" lazy="False" p1:Guid="9a0e0691-2cd2-4416-aab0-b9075d26cac3">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobContacts" class="JobContactType" relation-class="JobContact" generate="False" lazy="False" p1:Guid="57a8f414-aecc-4db1-be79-8a837ac72658">
+        <property name="JobContactTypeId" />
+      </end2>
+    </association>
+    <association name="JobCustomerType_JobCustomer" cardinality="OneToMany" p1:Guid="73f8abb9-4db7-455d-b847-179634732a6f">
+      <end1 multiplicity="One" name="JobCustomerType" class="JobCustomer" relation-class="JobCustomerType" constrained="True" lazy="False" p1:Guid="f2fd7021-3e6e-4d2c-a8f6-95be55ec9f54">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobCustomers" class="JobCustomerType" relation-class="JobCustomer" generate="False" lazy="False" p1:Guid="97167172-f522-47e3-8484-509c5b0ffec5">
+        <property name="JobCustomerTypeId" />
+      </end2>
+    </association>
+    <association name="ServiceItem_JobService" cardinality="OneToMany" p1:Guid="5ff0f93d-45d7-4b9c-ba47-7b1796874867">
+      <end1 multiplicity="One" name="ServiceItem" class="JobService" relation-class="ServiceItem" constrained="True" lazy="False" p1:Guid="1ff274c6-9034-40a8-b34a-ad7e0bf4baeb">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServices" class="ServiceItem" relation-class="JobService" generate="False" lazy="False" p1:Guid="be903188-503f-4368-9868-ce1cf04b4f75">
+        <property name="ServiceItemId" />
+      </end2>
+    </association>
+    <association name="ResourceItem_JobResource" cardinality="OneToMany" p1:Guid="b7cc76f5-c756-4c40-9838-c0645a0d8279">
+      <end1 multiplicity="One" name="ResourceItem" class="JobResource" relation-class="ResourceItem" constrained="True" lazy="False" p1:Guid="7270734a-25c1-4d57-b314-616ea56845ba">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobResources" class="ResourceItem" relation-class="JobResource" generate="False" lazy="False" p1:Guid="47d9e181-c0da-4cda-a226-41925e16e432">
+        <property name="ResourceItemId" />
+      </end2>
+    </association>
+    <association name="InvItems_JobInventory" cardinality="OneToMany" p1:Guid="75b9a956-3ee2-4a2f-84ff-4cf54fbffc96">
+      <end1 multiplicity="One" name="InvItems" class="JobInventory" relation-class="InvItems" constrained="True" lazy="False" p1:Guid="07e99d69-6dab-4f17-b5a3-65f112c683dc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobInventories" class="InvItems" relation-class="JobInventory" generate="False" lazy="False" p1:Guid="698232ee-a4f4-4a3a-b72b-29146fef2ce4">
+        <property name="InvItemsId" />
+      </end2>
+    </association>
+    <association name="ServiceItemType_ServiceItem" cardinality="OneToMany" p1:Guid="721bbbba-0f76-40f2-a1cf-387900f468e1">
+      <end1 multiplicity="One" name="ServiceItemType" class="ServiceItem" relation-class="ServiceItemType" constrained="True" lazy="False" p1:Guid="70ec617a-2fc7-4b62-bd4e-c411286694fe">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ServiceItems" class="ServiceItemType" relation-class="ServiceItem" generate="False" lazy="False" p1:Guid="efe2b3fc-a8e7-4162-b9d5-ce67b6636cdb">
+        <property name="ServiceItemTypeId" />
       </end2>
     </association>
   </associations>

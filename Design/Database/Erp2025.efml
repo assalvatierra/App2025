@@ -20,12 +20,6 @@
       <property name="Email2" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3e907f91-64f2-4a49-8834-e57951b2362b">
         <column name="" />
       </property>
-      <property name="CityId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0eb309c6-bf15-4ac2-97e9-9766eb0bf60a">
-        <column name="" />
-      </property>
-      <property name="CountryId" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="92e2555e-7c29-48ef-854e-910d8cc71702">
-        <column name="" />
-      </property>
     </component>
     <component class="RecordInfo" p1:Guid="146688a5-9634-432e-a58c-0f553fda53b4">
       <property name="CreatedBy" type="String" p1:ValidateRequired="true" p1:Guid="1f6e2a70-2fc6-4f6a-8765-0e1c592432c8">
@@ -63,6 +57,9 @@
       <property name="Code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ee95ec85-58d4-46de-aced-e2e51e9428c3">
         <column name="" />
       </property>
+      <property name="SortOrder" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="307a14fb-d82c-4cf9-a0bd-ffcd07905e21">
+        <column name="" />
+      </property>
     </component>
   </class>
   <class name="Customer" entity-set="Customers" p1:Guid="ccdd2dd0-a1aa-4bbb-b7b2-0832b38695b4">
@@ -82,8 +79,6 @@
       <property name="Address2" />
       <property name="Email1" />
       <property name="Email2" />
-      <property name="CityId" />
-      <property name="CountryId" />
     </component>
     <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="605ed287-9598-4a64-b4f5-cbd0104627ec">
       <property name="CreatedBy" />
@@ -112,8 +107,6 @@
       <property name="Address2" />
       <property name="Email1" />
       <property name="Email2" />
-      <property name="CityId" />
-      <property name="CountryId" />
     </component>
     <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="884cedec-cfe2-428c-a855-7ce7fc23570e">
       <property name="CreatedBy" />
@@ -124,6 +117,9 @@
       <property name="isPrivate" />
       <property name="isActive" />
     </component>
+    <property name="ContactTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="bffe62ef-358f-40da-80c9-990ba78defb5">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="Supplier" entity-set="Supplier" p1:Guid="5ceab54d-4d18-48dc-beef-dfcb194265a0">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="38b16e93-0f73-4e23-bd12-edfec720ece7">
@@ -142,8 +138,6 @@
       <property name="Address2" />
       <property name="Email1" />
       <property name="Email2" />
-      <property name="CityId" />
-      <property name="CountryId" />
     </component>
     <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="4858091d-300f-4415-bc3b-de407a31971a">
       <property name="CreatedBy" />
@@ -269,6 +263,7 @@
       <property name="Description" />
       <property name="Remarks" />
       <property name="Code" />
+      <property name="SortOrder" />
     </component>
     <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="db8ff2ab-a4f9-40ca-99e7-0b671e72eb6b">
       <property name="CreatedBy" />
@@ -332,6 +327,7 @@
       <property name="Description" />
       <property name="Remarks" />
       <property name="Code" />
+      <property name="SortOrder" />
     </component>
     <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="d62551d1-6e30-4853-a493-20b3efd81b6f">
       <property name="CreatedBy" />
@@ -436,6 +432,7 @@
       <property name="Description" />
       <property name="Remarks" />
       <property name="Code" />
+      <property name="SortOrder" />
     </component>
   </class>
   <class name="ResourceItemType" entity-set="ResourceItemType" p1:Guid="8aa46d1b-154b-46a7-bf7d-fc44d0fb5d95">
@@ -447,6 +444,7 @@
       <property name="Description" />
       <property name="Remarks" />
       <property name="Code" />
+      <property name="SortOrder" />
     </component>
   </class>
   <class name="InvTypes" entity-set="InvTypes" table="InvTypes" schema="dbo" p1:Guid="aad42d0e-86a8-4531-adc5-0bed9f3d948f">
@@ -478,6 +476,85 @@
     </property>
     <property name="IsPrimary" type="Boolean" p1:ValidateRequired="true" p1:Guid="7c025819-db4d-4e76-b014-59cfa7873ab2">
       <column name="" />
+    </property>
+  </class>
+  <class name="ContactType" entity-set="ContactType" p1:Guid="034eb212-6cd3-4e7d-bb32-cacea315f9bd">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c00a6c80-8de5-434a-af20-aafc21d8cef3">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="6092e7a2-651e-4a87-9460-3ac9fd07e18c">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="Personel" entity-set="Personel" p1:Guid="c0a992a2-ab1b-4253-a753-a73ce75102d8">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="482b6009-a564-476e-aeb1-ad8b464731a3">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="dcd0da2d-b7ed-4be3-94e5-61196db84604">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="04efbbec-c999-416e-bb37-29067f23840a">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <component name="ContactInfo" class="ContactInfo" p1:ValidateRequired="false" p1:Guid="985083d7-78cd-4479-89ac-cd734fa75673">
+      <property name="ContactNo1" />
+      <property name="ContactNo2" />
+      <property name="Address1" />
+      <property name="Address2" />
+      <property name="Email1" />
+      <property name="Email2" />
+    </component>
+    <property name="SectionId" type="Int32" p1:ValidateRequired="true" p1:Guid="74c3d1c4-680f-4d93-9976-e804df47e4bf">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="Section" entity-set="Section" p1:Guid="6511dfe7-4682-4293-be83-a0d200aacc82">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0ef18345-72cb-4a5b-94fc-ffdf7c0bbf9a">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="8379aeb6-d604-4478-b019-98174d619ed5">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="JobPersonel" entity-set="JobPersonel" p1:Guid="89a816a2-01e0-4245-9e46-7846374e2d2b">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="5b752971-6689-4f98-b443-4da2360440c8">
+      <column name="" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="3b63e526-290e-4c0f-92b3-8ff09bbfb7c7">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Prticulars" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37f916fd-c4bd-4671-bbea-a67301cec118">
+      <column name="" />
+    </property>
+    <property name="DateStart" type="DateTime" p1:ValidateRequired="true" p1:Guid="4cea8e8e-9c09-499f-9206-eb8f6c9cdf96">
+      <column name="" />
+    </property>
+    <property name="DateEnd" type="DateTime" p1:ValidateRequired="true" p1:Guid="bf611f0f-fffd-41db-a015-db603e636f8c">
+      <column name="" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="36eced34-7908-4f16-98d6-277485062e48">
+      <column name="" />
+    </property>
+    <property name="PersonelId" type="Int32" p1:ValidateRequired="true" p1:Guid="1c8c600e-e6cc-43f9-9da5-f6b537271933">
+      <column name="" not-null="False" />
     </property>
   </class>
   <associations>
@@ -639,6 +716,38 @@
       </end1>
       <end2 multiplicity="Many" name="JobServiceContacts" class="JobService" relation-class="JobServiceContact" lazy="False" p1:Guid="48497d6f-b48a-4811-8fe2-c524511cbfbb">
         <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="ContactType_Contact" cardinality="OneToMany" p1:Guid="498f96d3-9393-41c2-ac6d-f548027760e8">
+      <end1 multiplicity="One" name="ContactType" class="Contact" relation-class="ContactType" constrained="True" lazy="False" p1:Guid="04de008f-fc9d-4caa-9760-722bc33823b3">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Contacts" class="ContactType" relation-class="Contact" generate="False" lazy="False" p1:Guid="ea64c2e7-f91c-4d97-8ce9-c2f5ca78c09c">
+        <property name="ContactTypeId" />
+      </end2>
+    </association>
+    <association name="Section_Personel" cardinality="OneToMany" p1:Guid="fed21733-e2a4-4ffc-b78f-15d9ef3796fe">
+      <end1 multiplicity="One" name="Section" class="Personel" relation-class="Section" constrained="True" lazy="False" p1:Guid="707c2285-52f2-4462-a821-4b264913d6a2">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Personels" class="Section" relation-class="Personel" generate="False" lazy="False" p1:Guid="8a1b9523-513e-46c8-8a9e-a47a17f26883">
+        <property name="SectionId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobPersonel" cardinality="OneToMany" p1:Guid="30799029-077a-4e20-aadd-d2143caaacb9">
+      <end1 multiplicity="One" name="JobMain" class="JobPersonel" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="8a9c8e9d-49fa-41dd-8b43-56cc8207313b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobPersonels" class="JobMain" relation-class="JobPersonel" lazy="False" p1:Guid="a0c14cfc-65e8-47cb-9709-5a126532f79b">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="Personel_JobPersonel" cardinality="OneToMany" p1:Guid="e551e323-fbd8-499d-92a0-7b6624dc08be">
+      <end1 multiplicity="One" name="Personel" class="JobPersonel" relation-class="Personel" constrained="True" lazy="False" p1:Guid="d7541f31-b811-4aca-804d-0099151e5c09">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobPersonels" class="Personel" relation-class="JobPersonel" generate="False" lazy="False" p1:Guid="cee568ad-f007-482f-bb60-b21e49a85128">
+        <property name="PersonelId" />
       </end2>
     </association>
   </associations>

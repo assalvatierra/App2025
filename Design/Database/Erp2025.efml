@@ -215,6 +215,9 @@
       <property name="isPrivate" />
       <property name="isActive" />
     </component>
+    <property name="JobMainStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="7b95efab-a858-4701-8ad8-7f4945cd11bc">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="JobService" entity-set="JobService" p1:Guid="b2fecd9e-aad3-4a83-95cb-767f51b7bb30">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5f7bb83f-f5c0-4e92-aea1-6752696024b1">
@@ -251,6 +254,9 @@
       <column name="" not-null="False" />
     </property>
     <property name="SupplierId" type="Int32" p1:ValidateRequired="true" p1:Guid="141819ca-6660-4334-96a0-37495815af89">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobServiceStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="15fd8c33-d8cd-4b3b-a757-f4e9a89235d2">
       <column name="" not-null="False" />
     </property>
   </class>
@@ -298,6 +304,12 @@
       <column name="" not-null="False" />
     </property>
     <property name="ResourceItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="6efa2438-26b7-4c01-a9d0-0acf362e4de6">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b7181fb5-2dd6-40f9-bb75-519a603a51ab">
+      <column name="" />
+    </property>
+    <property name="JobResourceStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="f3800927-bfe1-47fb-bcf6-fcbf80bfde6c">
       <column name="" not-null="False" />
     </property>
   </class>
@@ -518,11 +530,11 @@
       <property name="Email1" />
       <property name="Email2" />
     </component>
-    <property name="SectionId" type="Int32" p1:ValidateRequired="true" p1:Guid="74c3d1c4-680f-4d93-9976-e804df47e4bf">
+    <property name="PersonelSectionId" type="Int32" p1:ValidateRequired="true" p1:Guid="80d3a7c3-f9f9-43af-aa2c-fbe71b4b2bc5">
       <column name="" not-null="False" />
     </property>
   </class>
-  <class name="Section" entity-set="Section" p1:Guid="6511dfe7-4682-4293-be83-a0d200aacc82">
+  <class name="PersonelSection" entity-set="PersonelSection" p1:Guid="6511dfe7-4682-4293-be83-a0d200aacc82">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0ef18345-72cb-4a5b-94fc-ffdf7c0bbf9a">
       <column name="" />
     </id>
@@ -541,7 +553,7 @@
     <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="3b63e526-290e-4c0f-92b3-8ff09bbfb7c7">
       <column name="" not-null="False" />
     </property>
-    <property name="Prticulars" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37f916fd-c4bd-4671-bbea-a67301cec118">
+    <property name="Particulars" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37f916fd-c4bd-4671-bbea-a67301cec118">
       <column name="" />
     </property>
     <property name="DateStart" type="DateTime" p1:ValidateRequired="true" p1:Guid="4cea8e8e-9c09-499f-9206-eb8f6c9cdf96">
@@ -556,6 +568,57 @@
     <property name="PersonelId" type="Int32" p1:ValidateRequired="true" p1:Guid="1c8c600e-e6cc-43f9-9da5-f6b537271933">
       <column name="" not-null="False" />
     </property>
+    <property name="JobPersonelStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="e73dd916-82a0-43ff-a36d-e49a76439899">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobServiceStatus" entity-set="JobServiceStatus" p1:Guid="1ec16802-cfac-421d-8bf5-5d042aabe94f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="75c49ce2-f289-41c8-b0d1-1fb1ebf266a6">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="fd5e0adc-c792-48e4-aa25-d91aa11b1a9c">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="JobMainStatus" entity-set="JobMainStatus" p1:Guid="26872cb5-2ab1-4663-a3fd-12856c97d799">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ff4c74ca-4eb4-42e9-88e8-29c8b347a386">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="cf79420c-32ce-441b-b1b6-4fbdde8d1006">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="JobResourceStatus" entity-set="JobResourceStatus" p1:Guid="1d098699-e5cc-4e44-b9c0-cf0a8413f9fb">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ee83776e-d69f-49c7-93bc-fe3812e0a1be">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="f4b92a2c-910f-4ec5-98d7-eed618296da1">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="JobPersonelStatus" entity-set="JobPersonelStatus" p1:Guid="06ec03da-6602-40c1-be79-3e2952038144">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f8cab3c7-0ad4-4e67-8690-9d6612ec53b2">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="4cb662df-297e-4993-b4fb-019dfdf3f830">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
   </class>
   <associations>
     <association name="Customer_Customer_Contact" cardinality="OneToMany" p1:Guid="a265c22b-f18a-4be7-a1dc-6944ed73edec">
@@ -726,14 +789,6 @@
         <property name="ContactTypeId" />
       </end2>
     </association>
-    <association name="Section_Personel" cardinality="OneToMany" p1:Guid="fed21733-e2a4-4ffc-b78f-15d9ef3796fe">
-      <end1 multiplicity="One" name="Section" class="Personel" relation-class="Section" constrained="True" lazy="False" p1:Guid="707c2285-52f2-4462-a821-4b264913d6a2">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="Personels" class="Section" relation-class="Personel" generate="False" lazy="False" p1:Guid="8a1b9523-513e-46c8-8a9e-a47a17f26883">
-        <property name="SectionId" />
-      </end2>
-    </association>
     <association name="JobMain_JobPersonel" cardinality="OneToMany" p1:Guid="30799029-077a-4e20-aadd-d2143caaacb9">
       <end1 multiplicity="One" name="JobMain" class="JobPersonel" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="8a9c8e9d-49fa-41dd-8b43-56cc8207313b">
         <property name="Id" />
@@ -748,6 +803,46 @@
       </end1>
       <end2 multiplicity="Many" name="JobPersonels" class="Personel" relation-class="JobPersonel" generate="False" lazy="False" p1:Guid="cee568ad-f007-482f-bb60-b21e49a85128">
         <property name="PersonelId" />
+      </end2>
+    </association>
+    <association name="PersonelSection_Personel" cardinality="OneToMany" p1:Guid="2545172e-d810-4b6b-8223-07684835f13c">
+      <end1 multiplicity="One" name="PersonelSection" class="Personel" relation-class="PersonelSection" constrained="True" lazy="False" p1:Guid="04a75a97-0345-4475-93c3-e1f851355099">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Personels" class="PersonelSection" relation-class="Personel" generate="False" lazy="False" p1:Guid="969621ce-a014-47bc-ba58-ec6c9d38afd6">
+        <property name="PersonelSectionId" />
+      </end2>
+    </association>
+    <association name="JobServiceStatus_JobService" cardinality="OneToMany" p1:Guid="d025cb1f-1f58-4368-a1f6-33b8c69d1157">
+      <end1 multiplicity="One" name="JobServiceStatus" class="JobService" relation-class="JobServiceStatus" constrained="True" lazy="False" p1:Guid="e6ba3d7f-658c-4749-86ff-c90042936ee7">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServices" class="JobServiceStatus" relation-class="JobService" generate="False" lazy="False" p1:Guid="5fb0f937-65fb-4dd4-89c8-7150869c7ae2">
+        <property name="JobServiceStatusId" />
+      </end2>
+    </association>
+    <association name="JobMainStatus_JobMain" cardinality="OneToMany" p1:Guid="3f2d5e57-e3bc-4fbe-bfb3-ece3343b4c11">
+      <end1 multiplicity="One" name="JobMainStatus" class="JobMain" relation-class="JobMainStatus" constrained="True" lazy="False" p1:Guid="d688c087-1b0c-4765-a6ff-81950ff69798">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobMains" class="JobMainStatus" relation-class="JobMain" generate="False" lazy="False" p1:Guid="91376a58-d3f0-433f-a303-bca5db15dfaa">
+        <property name="JobMainStatusId" />
+      </end2>
+    </association>
+    <association name="JobResourceStatus_JobResource" cardinality="OneToMany" p1:Guid="ecc73fee-0f77-4fbd-996c-aa6470348bd3">
+      <end1 multiplicity="One" name="JobResourceStatus" class="JobResource" relation-class="JobResourceStatus" constrained="True" lazy="False" p1:Guid="ed07e6e2-3a87-4fc6-a66f-90cb8e236e34">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobResources" class="JobResourceStatus" relation-class="JobResource" generate="False" lazy="False" p1:Guid="af3dcb25-1d6a-4871-97f3-8677ace72cd9">
+        <property name="JobResourceStatusId" />
+      </end2>
+    </association>
+    <association name="JobPersonelStatus_JobPersonel" cardinality="OneToMany" p1:Guid="2c03f613-06ea-4a0b-8231-836c9fcb846f">
+      <end1 multiplicity="One" name="JobPersonelStatus" class="JobPersonel" relation-class="JobPersonelStatus" constrained="True" lazy="False" p1:Guid="a7bac852-6b6f-4a01-a405-a7f00f6369fc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobPersonels" class="JobPersonelStatus" relation-class="JobPersonel" generate="False" lazy="False" p1:Guid="2395f2a0-b120-4a36-a33f-22de158f2a64">
+        <property name="JobPersonelStatusId" />
       </end2>
     </association>
   </associations>

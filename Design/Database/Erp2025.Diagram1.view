@@ -3434,11 +3434,11 @@
                 </Children>
                 <Size>
                   <Width>145 px</Width>
-                  <Height>55.0000000000001 px</Height>
+                  <Height>55 px</Height>
                 </Size>
                 <MaxSize>
                   <Width>0 px</Width>
-                  <Height>55.0000000000001 px</Height>
+                  <Height>55 px</Height>
                 </MaxSize>
               </Model>
               <Model xsi:type="RelationPropertiesVwModel">
@@ -3453,10 +3453,6 @@
                       <Parent>184</Parent>
                     </CustomProperties>
                     <Children />
-                    <Location>
-                      <X>0 px</X>
-                      <Y>2.8421709430404E-14 px</Y>
-                    </Location>
                     <Size>
                       <Width>144 px</Width>
                       <Height>18 px</Height>
@@ -4522,7 +4518,7 @@
             </Children>
             <Location>
               <X>-1560 px</X>
-              <Y>840 px</Y>
+              <Y>928 px</Y>
             </Location>
             <Size>
               <Width>150 px</Width>
@@ -4581,7 +4577,7 @@
             <BendPoints>
               <PointD>
                 <X>-1811.94018554688 px</X>
-                <Y>894.492797851563 px</Y>
+                <Y>982.492797851563 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -4643,8 +4639,8 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>0.61</Scale>
           <Location>
-            <X>-1967.21306862097 px</X>
-            <Y>-773.770473657581 px</Y>
+            <X>-2086.88519696208 px</X>
+            <Y>-563.934413004678 px</Y>
           </Location>
         </ViewPort>
         <Oid xsi:type="SchemaModelOID">

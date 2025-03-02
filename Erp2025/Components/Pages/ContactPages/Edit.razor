@@ -1,6 +1,8 @@
 ﻿@page "/contacts/edit"
 @using Microsoft.EntityFrameworkCore
 @using Erp.Domain.Models
+@using Erp2025.Components.Common
+
 @inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
 @inject NavigationManager NavigationManager
 
@@ -100,13 +102,24 @@ else
                 <div class="mb-3">
                     <label for="typeid" class="form-label">TypeId:</label>
                     <InputNumber id="typeid" @bind-Value="Contact.TypeId" class="form-control" />
+                    <select id="typeid" class="form-control" @bind="Contact.TypeId">
+                        @foreach (var item in ItemTypes)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
                     <ValidationMessage For="() => Contact.TypeId" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="statusid" class="form-label">StatusId:</label>
                     <InputNumber id="statusid" @bind-Value="Contact.StatusId" class="form-control" />
                     <ValidationMessage For="() => Contact.StatusId" class="text-danger" />
-                    <button type="button" class="btn btn-secondary" @onclick="ShowStatusModal">Select Status</button>
+                    <select id="statusid" class="form-control" @bind="Contact.StatusId">
+                        @foreach (var status in StatusList)
+                        {
+                            <option value="@status.Id">@status.Name</option>
+                        }
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="refcityid" class="form-label">RefCityId:</label>
@@ -119,32 +132,9 @@ else
     </div>
 }
 
+
 <div>
     <a href="/contacts">Back to List</a>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="statusModalLabel">Select Status</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <select class="form-select" @bind="SelectedStatusId">
-                    @foreach (var status in StatusList)
-                    {
-                        <option value="@status.Id">@status.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" @onclick="SelectStatus">Save changes</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 @code {
@@ -155,18 +145,20 @@ else
     private Contact? Contact { get; set; }
 
     private List<ItemStatus> StatusList { get; set; } = new();
-    private int SelectedStatusId { get; set; }
+    private List<ItemType> ItemTypes { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
         Contact ??= await context.Contact.FirstOrDefaultAsync(m => m.Id == Id);
         StatusList = await context.ItemStatus.ToListAsync();
+        ItemTypes = await context.ItemType.ToListAsync();
 
         if (Contact is null)
         {
             NavigationManager.NavigateTo("notfound");
         }
+
     }
 
     // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -201,17 +193,5 @@ else
         return context.Contact.Any(e => e.Id == id);
     }
 
-    private void ShowStatusModal()
-    {
-        // var modal = new bootstrap.Modal(document.getElementById("statusModal"));
-        // modal.show();
-    }
-
-    private void SelectStatus()
-    {
-        // Contact.StatusId = SelectedStatusId;
-        // var modal = new bootstrap.Modal(document.getElementById("statusModal"));
-        // modal.hide();
-    }
-
+    
 }

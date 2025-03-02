@@ -15,6 +15,10 @@
 </p>
 
 <QuickGrid Class="table" Items="context.Contact">
+    <TemplateColumn Context="contact">
+        <a href="@($"contacts/edit?id={contact.Id}")">Edit</a>
+    </TemplateColumn>
+
     <PropertyColumn Property="contact => contact.Name" />
     <PropertyColumn Property="contact => contact.Remarks" />
     <PropertyColumn Property="contact => contact.ContactNo1" />

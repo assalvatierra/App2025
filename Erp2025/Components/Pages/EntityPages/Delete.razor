@@ -1,0 +1,139 @@
+﻿@page "/entities/delete"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>Entity</h2>
+    <hr />
+    @if (entity is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@entity.Name</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@entity.Description</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Remarks</dt>
+            <dd class="col-sm-10">@entity.Remarks</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Code</dt>
+            <dd class="col-sm-10">@entity.Code</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">SortOrder</dt>
+            <dd class="col-sm-10">@entity.SortOrder</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">ContactNo1</dt>
+            <dd class="col-sm-10">@entity.ContactNo1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">ContactNo2</dt>
+            <dd class="col-sm-10">@entity.ContactNo2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Address1</dt>
+            <dd class="col-sm-10">@entity.Address1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Address2</dt>
+            <dd class="col-sm-10">@entity.Address2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email1</dt>
+            <dd class="col-sm-10">@entity.Email1</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email2</dt>
+            <dd class="col-sm-10">@entity.Email2</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@entity.CreatedBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedOn</dt>
+            <dd class="col-sm-10">@entity.CreatedOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastEditBy</dt>
+            <dd class="col-sm-10">@entity.LastEditBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastEditOn</dt>
+            <dd class="col-sm-10">@entity.LastEditOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsArchived</dt>
+            <dd class="col-sm-10">@entity.IsArchived</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsPrivate</dt>
+            <dd class="col-sm-10">@entity.IsPrivate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">IsActive</dt>
+            <dd class="col-sm-10">@entity.IsActive</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">EntityTypeId</dt>
+            <dd class="col-sm-10">@entity.EntityTypeId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">EntityStatusId</dt>
+            <dd class="col-sm-10">@entity.EntityStatusId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">BusinessUnitId</dt>
+            <dd class="col-sm-10">@entity.BusinessUnitId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">RefCityId</dt>
+            <dd class="col-sm-10">@entity.RefCityId</dd>
+        </dl>
+        <EditForm method="post" Model="entity" OnValidSubmit="DeleteEntity" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(entity is null)">Delete</button> |
+            <a href="/entities">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private Entity? entity;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        entity = await context.Entity.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (entity is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteEntity()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Entity.Remove(entity!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/entities");
+    }
+}

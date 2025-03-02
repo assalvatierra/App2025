@@ -1,0 +1,94 @@
+﻿@page "/jobmains/create"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>JobMain</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="JobMain" OnValidSubmit="AddJobMain" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="jobdate" class="form-label">JobDate:</label> 
+                <InputDate id="jobdate" @bind-Value="JobMain.JobDate" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.JobDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="JobMain.Description" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="createdby" class="form-label">CreatedBy:</label> 
+                <InputText id="createdby" @bind-Value="JobMain.CreatedBy" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.CreatedBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="createdon" class="form-label">CreatedOn:</label> 
+                <InputDate id="createdon" @bind-Value="JobMain.CreatedOn" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.CreatedOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lasteditby" class="form-label">LastEditBy:</label> 
+                <InputText id="lasteditby" @bind-Value="JobMain.LastEditBy" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.LastEditBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lastediton" class="form-label">LastEditOn:</label> 
+                <InputDate id="lastediton" @bind-Value="JobMain.LastEditOn" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.LastEditOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isarchived" class="form-label">IsArchived:</label> 
+                <InputCheckbox id="isarchived" @bind-Value="JobMain.IsArchived" class="form-check-input" /> 
+                <ValidationMessage For="() => JobMain.IsArchived" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isprivate" class="form-label">IsPrivate:</label> 
+                <InputCheckbox id="isprivate" @bind-Value="JobMain.IsPrivate" class="form-check-input" /> 
+                <ValidationMessage For="() => JobMain.IsPrivate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="isactive" class="form-label">IsActive:</label> 
+                <InputCheckbox id="isactive" @bind-Value="JobMain.IsActive" class="form-check-input" /> 
+                <ValidationMessage For="() => JobMain.IsActive" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="itemstatusid" class="form-label">ItemStatusId:</label> 
+                <InputNumber id="itemstatusid" @bind-Value="JobMain.ItemStatusId" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.ItemStatusId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="businessunitid" class="form-label">BusinessUnitId:</label> 
+                <InputNumber id="businessunitid" @bind-Value="JobMain.BusinessUnitId" class="form-control" /> 
+                <ValidationMessage For="() => JobMain.BusinessUnitId" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/jobmains">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private JobMain JobMain { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddJobMain()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.JobMain.Add(JobMain);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/jobmains");
+    }
+}

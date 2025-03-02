@@ -1,0 +1,41 @@
+﻿@page "/itemstatuses"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Erp.Domain.Models
+@using Erp2025.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="itemstatuses/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.ItemStatus">
+    <PropertyColumn Property="itemstatus => itemstatus.Name" />
+    <PropertyColumn Property="itemstatus => itemstatus.Description" />
+    <PropertyColumn Property="itemstatus => itemstatus.Remarks" />
+    <PropertyColumn Property="itemstatus => itemstatus.Code" />
+    <PropertyColumn Property="itemstatus => itemstatus.SortOrder" />
+    <PropertyColumn Property="itemstatus => itemstatus.ItemStatusClassId" />
+
+    <TemplateColumn Context="itemstatus">
+        <a href="@($"itemstatuses/edit?id={itemstatus.Id}")">Edit</a> |
+        <a href="@($"itemstatuses/details?id={itemstatus.Id}")">Details</a> |
+        <a href="@($"itemstatuses/delete?id={itemstatus.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Erp2025Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

@@ -1,0 +1,66 @@
+﻿@page "/jobmains/details"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>JobMain</h2>
+    <hr />
+    @if (jobmain is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">JobDate</dt>
+            <dd class="col-sm-10">@jobmain.JobDate</dd>
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@jobmain.Description</dd>
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@jobmain.CreatedBy</dd>
+            <dt class="col-sm-2">CreatedOn</dt>
+            <dd class="col-sm-10">@jobmain.CreatedOn</dd>
+            <dt class="col-sm-2">LastEditBy</dt>
+            <dd class="col-sm-10">@jobmain.LastEditBy</dd>
+            <dt class="col-sm-2">LastEditOn</dt>
+            <dd class="col-sm-10">@jobmain.LastEditOn</dd>
+            <dt class="col-sm-2">IsArchived</dt>
+            <dd class="col-sm-10">@jobmain.IsArchived</dd>
+            <dt class="col-sm-2">IsPrivate</dt>
+            <dd class="col-sm-10">@jobmain.IsPrivate</dd>
+            <dt class="col-sm-2">IsActive</dt>
+            <dd class="col-sm-10">@jobmain.IsActive</dd>
+            <dt class="col-sm-2">ItemStatusId</dt>
+            <dd class="col-sm-10">@jobmain.ItemStatusId</dd>
+            <dt class="col-sm-2">BusinessUnitId</dt>
+            <dd class="col-sm-10">@jobmain.BusinessUnitId</dd>
+        </dl>
+        <div>
+            <a href="@($"/jobmains/edit?id={jobmain.Id}")">Edit</a> |
+            <a href="@($"/jobmains")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private JobMain? jobmain;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        jobmain = await context.JobMain.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (jobmain is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

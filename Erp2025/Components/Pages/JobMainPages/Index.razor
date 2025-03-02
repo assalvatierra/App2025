@@ -1,0 +1,46 @@
+﻿@page "/jobmains"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Erp.Domain.Models
+@using Erp2025.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="jobmains/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.JobMain">
+    <PropertyColumn Property="jobmain => jobmain.JobDate" />
+    <PropertyColumn Property="jobmain => jobmain.Description" />
+    <PropertyColumn Property="jobmain => jobmain.CreatedBy" />
+    <PropertyColumn Property="jobmain => jobmain.CreatedOn" />
+    <PropertyColumn Property="jobmain => jobmain.LastEditBy" />
+    <PropertyColumn Property="jobmain => jobmain.LastEditOn" />
+    <PropertyColumn Property="jobmain => jobmain.IsArchived" />
+    <PropertyColumn Property="jobmain => jobmain.IsPrivate" />
+    <PropertyColumn Property="jobmain => jobmain.IsActive" />
+    <PropertyColumn Property="jobmain => jobmain.ItemStatusId" />
+    <PropertyColumn Property="jobmain => jobmain.BusinessUnitId" />
+
+    <TemplateColumn Context="jobmain">
+        <a href="@($"jobmains/edit?id={jobmain.Id}")">Edit</a> |
+        <a href="@($"jobmains/details?id={jobmain.Id}")">Details</a> |
+        <a href="@($"jobmains/delete?id={jobmain.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Erp2025Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

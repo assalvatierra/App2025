@@ -1,0 +1,49 @@
+﻿@page "/serviceitems"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Erp.Domain.Models
+@using Erp2025.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="serviceitems/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.ServiceItem">
+    <PropertyColumn Property="serviceitem => serviceitem.Name" />
+    <PropertyColumn Property="serviceitem => serviceitem.Description" />
+    <PropertyColumn Property="serviceitem => serviceitem.Remarks" />
+    <PropertyColumn Property="serviceitem => serviceitem.Code" />
+    <PropertyColumn Property="serviceitem => serviceitem.SortOrder" />
+    <PropertyColumn Property="serviceitem => serviceitem.CreatedBy" />
+    <PropertyColumn Property="serviceitem => serviceitem.CreatedOn" />
+    <PropertyColumn Property="serviceitem => serviceitem.LastEditBy" />
+    <PropertyColumn Property="serviceitem => serviceitem.LastEditOn" />
+    <PropertyColumn Property="serviceitem => serviceitem.IsArchived" />
+    <PropertyColumn Property="serviceitem => serviceitem.IsPrivate" />
+    <PropertyColumn Property="serviceitem => serviceitem.IsActive" />
+    <PropertyColumn Property="serviceitem => serviceitem.ItemTypeId" />
+    <PropertyColumn Property="serviceitem => serviceitem.ItemStatusId" />
+
+    <TemplateColumn Context="serviceitem">
+        <a href="@($"serviceitems/edit?id={serviceitem.Id}")">Edit</a> |
+        <a href="@($"serviceitems/details?id={serviceitem.Id}")">Details</a> |
+        <a href="@($"serviceitems/delete?id={serviceitem.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Erp2025Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

@@ -1,0 +1,69 @@
+﻿@page "/itemstatuses/create"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>ItemStatus</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="ItemStatus" OnValidSubmit="AddItemStatus" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="ItemStatus.Name" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="ItemStatus.Description" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="remarks" class="form-label">Remarks:</label> 
+                <InputText id="remarks" @bind-Value="ItemStatus.Remarks" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.Remarks" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="code" class="form-label">Code:</label> 
+                <InputText id="code" @bind-Value="ItemStatus.Code" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.Code" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="sortorder" class="form-label">SortOrder:</label> 
+                <InputNumber id="sortorder" @bind-Value="ItemStatus.SortOrder" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.SortOrder" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="itemstatusclassid" class="form-label">ItemStatusClassId:</label> 
+                <InputNumber id="itemstatusclassid" @bind-Value="ItemStatus.ItemStatusClassId" class="form-control" /> 
+                <ValidationMessage For="() => ItemStatus.ItemStatusClassId" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/itemstatuses">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private ItemStatus ItemStatus { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddItemStatus()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.ItemStatus.Add(ItemStatus);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/itemstatuses");
+    }
+}

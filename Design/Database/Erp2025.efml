@@ -95,6 +95,9 @@
     <property name="StatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="591bb05c-552c-45f5-8e91-acd84ec19d39">
       <column name="" />
     </property>
+    <property name="RefCityId" type="Int32" p1:ValidateRequired="true" p1:Guid="e3f0842c-a629-4c1b-9223-728d6a7e3d9e">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="JobMain" entity-set="JobMain" p1:Guid="b2c798b2-11d9-4da9-a47f-c39a3e7676a1">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ef684ebe-4d21-4000-bcc2-b252b6f0495c">
@@ -193,23 +196,6 @@
       <column name="" not-null="False" />
     </property>
   </class>
-  <class name="JobInventory" entity-set="JobInventory" p1:Guid="6541b9d0-cab2-4412-b3f8-c0d4da89c33a">
-    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ece2fb53-e868-486d-bdca-a476f7bac63d">
-      <column name="" />
-    </id>
-    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="02f2503b-93c9-48fd-8e62-23a9258d0018">
-      <column name="" not-null="False" />
-    </property>
-    <property name="Particulars" type="String" p1:ValidateRequired="true" p1:Guid="936cb9ec-b64c-493a-a2d7-d1b66713aa31">
-      <column name="" />
-    </property>
-    <property name="InvItemsId" type="Int32" p1:ValidateRequired="true" p1:Guid="b24a63b5-cc4e-42e5-8ebd-8d4c10964368">
-      <column name="" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
-    </property>
-    <property name="QtyRequired" type="Decimal" p1:ValidateRequired="true" p1:Guid="812f0b61-d0c2-4978-8a9a-e3679f3b0cc6">
-      <column name="" />
-    </property>
-  </class>
   <class name="JobCustomer" entity-set="JobCustomer" p1:Guid="d31263a7-28bf-474a-9088-32894cbaf0c1">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="1a027139-b44b-47c7-8237-b1fb29eb1241">
       <column name="" not-null="False" />
@@ -265,7 +251,7 @@
     </property>
   </class>
   <class name="Entity" entity-set="Entity" p1:Guid="29fa20af-e5e9-4c83-8f5e-d6b14d724866">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="8ecd8b38-b3ff-41da-bc3e-bc5362626815">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="8ecd8b38-b3ff-41da-bc3e-bc5362626815">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="f56bc078-30b9-4126-a99f-839e8a702971">
@@ -301,9 +287,12 @@
     <property name="BusinessUnitId" type="Int32" p1:ValidateRequired="true" p1:Guid="37e4a24d-2111-4275-af3d-c4dd0a999644">
       <column name="" not-null="False" />
     </property>
+    <property name="RefCityId" type="Int32" p1:ValidateRequired="true" p1:Guid="64fc894b-6454-4e54-bb3c-0d8c18b4c2e5">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="ItemType" entity-set="ItemType" p1:Guid="159b50b6-127f-4163-8033-ce0110b8c55f">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="fd82d8cb-5af2-4dd1-bbba-7f69cba4d39a">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="fd82d8cb-5af2-4dd1-bbba-7f69cba4d39a">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="280ea66d-1143-4e78-a650-6d2042b333f6">
@@ -332,7 +321,7 @@
     </property>
   </class>
   <class name="ItemStatus" entity-set="ItemStatus" p1:Guid="26a7bbaa-e83e-4f62-b8a6-9bb40e9a21d3">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="73b756f7-b0d1-4fa4-9473-9ba961f1835d">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="73b756f7-b0d1-4fa4-9473-9ba961f1835d">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="05dcfa08-5672-45d0-9959-f0017ab52eea">
@@ -347,7 +336,7 @@
     </property>
   </class>
   <class name="ItemTypeClass" entity-set="ItemTypeClass" p1:Guid="7679556a-882a-457a-9a72-02c3e1b62eb3">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="eb222373-b657-4c88-b283-064f8df49a75">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="eb222373-b657-4c88-b283-064f8df49a75">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="8fb63d08-f1be-4577-8763-01342154320c">
@@ -359,7 +348,7 @@
     </component>
   </class>
   <class name="ItemStatusClass" entity-set="ItemStatusClass" p1:Guid="6b2be9cd-6299-4ce6-9aef-1297cc327a13">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="a10a5778-eb8c-4212-a527-db5a4a10219c">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a10a5778-eb8c-4212-a527-db5a4a10219c">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="3c3003ed-edfb-416d-9e63-2292fb3bdef3">
@@ -371,10 +360,40 @@
     </component>
   </class>
   <class name="BusinessUnit" entity-set="BusinessUnit" p1:Guid="777276b9-3641-4b21-85bd-48e3c6825e7e">
-    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="55ed280f-055b-4f46-a632-b3cbf7050815">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="55ed280f-055b-4f46-a632-b3cbf7050815">
       <column name="" />
     </id>
     <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="b78ac408-52f3-44f2-b804-bdf0c84ed42a">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+  </class>
+  <class name="RefCity" entity-set="RefCity" p1:Guid="d46e67b5-1c79-4958-9b22-7f00b0cb49e7">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0027a0bb-39f6-4dec-95bc-3ae23cb4ab77">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="3e6c5fd5-479c-49a1-87c3-84b3071dceb7">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+    <property name="CountryId" type="Int32" p1:ValidateRequired="true" p1:Guid="842fd2d0-d63f-46b5-b296-089cfb222530">
+      <column name="" not-null="False" />
+    </property>
+    <property name="RefCountryId" type="Int32" p1:ValidateRequired="true" p1:Guid="531603a3-2730-4ab6-8c0f-5aec12a7ad24">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="RefCountry" entity-set="RefCountry" p1:Guid="7d83419c-436b-446c-9885-970669550877">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c60a26c3-9d4d-4bfd-adf1-5611995f7844">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="a53ec147-8120-432e-b6ce-3478bec0c1e7">
       <property name="Name" />
       <property name="Description" />
       <property name="Remarks" />
@@ -388,14 +407,6 @@
         <property name="Id" />
       </end1>
       <end2 multiplicity="Many" name="JobServices" class="JobMain" relation-class="JobService" lazy="False" p1:Guid="17ad3884-5308-496e-9cfd-37553007586a">
-        <property name="JobMainId" />
-      </end2>
-    </association>
-    <association name="JobMain_JobInventory" cardinality="OneToMany" p1:Guid="fcebd903-b7bd-465e-b940-4e8494c7f72f">
-      <end1 multiplicity="One" name="JobMain" class="JobInventory" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="6671da97-e64a-48c5-b9b0-7a13eea0049f">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="JobInventories" class="JobMain" relation-class="JobInventory" lazy="False" p1:Guid="55ffa56e-4c4b-49cb-b88f-0779a970b739">
         <property name="JobMainId" />
       </end2>
     </association>
@@ -573,6 +584,30 @@
       </end1>
       <end2 multiplicity="Many" name="Entities" class="BusinessUnit" relation-class="Entity" generate="False" lazy="False" p1:Guid="6b2cd10d-be2e-49ed-997a-be4601269387">
         <property name="BusinessUnitId" />
+      </end2>
+    </association>
+    <association name="RefCountry_RefCity" cardinality="OneToMany" p1:Guid="babe7a1e-8a25-4f9b-bd1d-4f6c761e0869">
+      <end1 multiplicity="One" name="RefCountry" class="RefCity" relation-class="RefCountry" constrained="True" lazy="False" p1:Guid="68c12674-3ad8-4206-bb56-dc61cab4b26f">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="RefCities" class="RefCountry" relation-class="RefCity" generate="False" lazy="False" p1:Guid="8b032ee3-ffd4-49d4-85c7-7e5f40fb3de3">
+        <property name="RefCountryId" />
+      </end2>
+    </association>
+    <association name="RefCity_Contact" cardinality="OneToMany" p1:Guid="e916b287-793d-4baa-8ee1-b9339b9cc067">
+      <end1 multiplicity="One" name="RefCity" class="Contact" relation-class="RefCity" constrained="True" lazy="False" p1:Guid="cadb5ed6-fae0-4d9b-b5ae-86657bcbf3b5">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Contacts" class="RefCity" relation-class="Contact" generate="False" lazy="False" p1:Guid="ade9a58d-2a54-42d4-8827-048ffdacdeb4">
+        <property name="RefCityId" />
+      </end2>
+    </association>
+    <association name="RefCity_Entity" cardinality="OneToMany" p1:Guid="a20eb981-9804-4a18-8f11-70960a1b6fdd">
+      <end1 multiplicity="One" name="RefCity" class="Entity" relation-class="RefCity" constrained="True" lazy="False" p1:Guid="6e4066a3-7858-4176-a154-dc3f63a8ccba">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Entities" class="RefCity" relation-class="Entity" generate="False" lazy="False" p1:Guid="96e8a250-985d-4401-b456-7f800e4fc405">
+        <property name="RefCityId" />
       </end2>
     </association>
   </associations>

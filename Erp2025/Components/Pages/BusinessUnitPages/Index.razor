@@ -1,0 +1,40 @@
+﻿@page "/businessunits"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Erp.Domain.Models
+@using Erp2025.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="businessunits/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.BusinessUnit">
+    <PropertyColumn Property="businessunit => businessunit.Name" />
+    <PropertyColumn Property="businessunit => businessunit.Description" />
+    <PropertyColumn Property="businessunit => businessunit.Remarks" />
+    <PropertyColumn Property="businessunit => businessunit.Code" />
+    <PropertyColumn Property="businessunit => businessunit.SortOrder" />
+
+    <TemplateColumn Context="businessunit">
+        <a href="@($"businessunits/edit?id={businessunit.Id}")">Edit</a> |
+        <a href="@($"businessunits/details?id={businessunit.Id}")">Details</a> |
+        <a href="@($"businessunits/delete?id={businessunit.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Erp2025Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

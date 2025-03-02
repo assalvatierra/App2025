@@ -1,0 +1,41 @@
+﻿@page "/itemtypes"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Erp.Domain.Models
+@using Erp2025.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="itemtypes/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.ItemType">
+    <PropertyColumn Property="itemtype => itemtype.Name" />
+    <PropertyColumn Property="itemtype => itemtype.Description" />
+    <PropertyColumn Property="itemtype => itemtype.Remarks" />
+    <PropertyColumn Property="itemtype => itemtype.Code" />
+    <PropertyColumn Property="itemtype => itemtype.SortOrder" />
+    <PropertyColumn Property="itemtype => itemtype.ItemTypeClassId" />
+
+    <TemplateColumn Context="itemtype">
+        <a href="@($"itemtypes/edit?id={itemtype.Id}")">Edit</a> |
+        <a href="@($"itemtypes/details?id={itemtype.Id}")">Details</a> |
+        <a href="@($"itemtypes/delete?id={itemtype.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Erp2025Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

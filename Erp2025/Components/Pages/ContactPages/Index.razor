@@ -23,8 +23,6 @@
     <PropertyColumn Property="contact => contact.Address2" />
     <PropertyColumn Property="contact => contact.Email1" />
     <PropertyColumn Property="contact => contact.Email2" />
-    <PropertyColumn Property="contact => contact.CityId" />
-    <PropertyColumn Property="contact => contact.CountryId" />
     <PropertyColumn Property="contact => contact.CreatedBy" />
     <PropertyColumn Property="contact => contact.CreatedOn" />
     <PropertyColumn Property="contact => contact.LastEditBy" />
@@ -32,6 +30,9 @@
     <PropertyColumn Property="contact => contact.IsArchived" />
     <PropertyColumn Property="contact => contact.IsPrivate" />
     <PropertyColumn Property="contact => contact.IsActive" />
+    <PropertyColumn Property="contact => contact.TypeId" />
+    <PropertyColumn Property="contact => contact.StatusId" />
+    <PropertyColumn Property="contact => contact.RefCityId" />
 
     <TemplateColumn Context="contact">
         <a href="@($"contacts/edit?id={contact.Id}")">Edit</a> |

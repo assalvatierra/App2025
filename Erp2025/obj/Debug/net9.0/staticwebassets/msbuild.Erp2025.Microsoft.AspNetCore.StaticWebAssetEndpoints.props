@@ -16,13 +16,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Erp2025.6zbew21evq.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6zbew21evq"},{"Name":"integrity","Value":"sha256-IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc="},{"Name":"label","Value":"_content/Erp2025/Erp2025.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8249"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 05:20:19 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8249"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 06:57:55 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Erp2025/Erp2025.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Erp2025.6zbew21evq.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8249"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 05:20:19 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8249"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022IiyBCr1IdvAoRB0Nkn\u002BgDMgIwCR4UtP0XIxHuL6H2Wc=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 06:57:55 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Erp2025/favicon.ifv42okdf2.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))</AssetFile>

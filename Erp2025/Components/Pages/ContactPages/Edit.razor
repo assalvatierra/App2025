@@ -106,6 +106,7 @@ else
                     <label for="statusid" class="form-label">StatusId:</label>
                     <InputNumber id="statusid" @bind-Value="Contact.StatusId" class="form-control" />
                     <ValidationMessage For="() => Contact.StatusId" class="text-danger" />
+                    <button type="button" class="btn btn-secondary" @onclick="ShowStatusModal">Select Status</button>
                 </div>
                 <div class="mb-3">
                     <label for="refcityid" class="form-label">RefCityId:</label>
@@ -122,6 +123,30 @@ else
     <a href="/contacts">Back to List</a>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Select Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select class="form-select" @bind="SelectedStatusId">
+                    @foreach (var status in StatusList)
+                    {
+                        <option value="@status.Id">@status.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" @onclick="SelectStatus">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -129,10 +154,14 @@ else
     [SupplyParameterFromForm]
     private Contact? Contact { get; set; }
 
+    private List<ItemStatus> StatusList { get; set; } = new();
+    private int SelectedStatusId { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
         Contact ??= await context.Contact.FirstOrDefaultAsync(m => m.Id == Id);
+        StatusList = await context.ItemStatus.ToListAsync();
 
         if (Contact is null)
         {
@@ -171,4 +200,18 @@ else
         using var context = DbFactory.CreateDbContext();
         return context.Contact.Any(e => e.Id == id);
     }
+
+    private void ShowStatusModal()
+    {
+        // var modal = new bootstrap.Modal(document.getElementById("statusModal"));
+        // modal.show();
+    }
+
+    private void SelectStatus()
+    {
+        // Contact.StatusId = SelectedStatusId;
+        // var modal = new bootstrap.Modal(document.getElementById("statusModal"));
+        // modal.hide();
+    }
+
 }

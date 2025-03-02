@@ -184,26 +184,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/BusinessUnitPages/Create.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCdXNpbmVzc1VuaXRQYWdlc1xDcmVhdGUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/BusinessUnitPages/Delete.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCdXNpbmVzc1VuaXRQYWdlc1xEZWxldGUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/BusinessUnitPages/Details.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCdXNpbmVzc1VuaXRQYWdlc1xEZXRhaWxzLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/BusinessUnitPages/Edit.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCdXNpbmVzc1VuaXRQYWdlc1xFZGl0LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/BusinessUnitPages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCdXNpbmVzc1VuaXRQYWdlc1xJbmRleC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ContactPages/Create.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250YWN0UGFnZXNcQ3JlYXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -256,46 +236,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemStatusPages/Create.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtU3RhdHVzUGFnZXNcQ3JlYXRlLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemStatusPages/Delete.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtU3RhdHVzUGFnZXNcRGVsZXRlLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemStatusPages/Details.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtU3RhdHVzUGFnZXNcRGV0YWlscy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemStatusPages/Edit.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtU3RhdHVzUGFnZXNcRWRpdC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemStatusPages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtU3RhdHVzUGFnZXNcSW5kZXgucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemTypePages/Create.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVHlwZVBhZ2VzXENyZWF0ZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemTypePages/Delete.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVHlwZVBhZ2VzXERlbGV0ZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemTypePages/Details.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVHlwZVBhZ2VzXERldGFpbHMucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemTypePages/Edit.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVHlwZVBhZ2VzXEVkaXQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/ItemTypePages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVHlwZVBhZ2VzXEluZGV4LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/DATA/GitHub/App2025/Erp2025/Components/Pages/JobMainPages/Create.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xKb2JNYWluUGFnZXNcQ3JlYXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -314,6 +254,66 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/DATA/GitHub/App2025/Erp2025/Components/Pages/JobMainPages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xKb2JNYWluUGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/BusinessUnitPages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xCdXNpbmVzc1VuaXRQYWdlc1xDcmVhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/BusinessUnitPages/Delete.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xCdXNpbmVzc1VuaXRQYWdlc1xEZWxldGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/BusinessUnitPages/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xCdXNpbmVzc1VuaXRQYWdlc1xEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/BusinessUnitPages/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xCdXNpbmVzc1VuaXRQYWdlc1xFZGl0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/BusinessUnitPages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xCdXNpbmVzc1VuaXRQYWdlc1xJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemStatusPages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtU3RhdHVzUGFnZXNcQ3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemStatusPages/Delete.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtU3RhdHVzUGFnZXNcRGVsZXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemStatusPages/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtU3RhdHVzUGFnZXNcRGV0YWlscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemStatusPages/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtU3RhdHVzUGFnZXNcRWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemStatusPages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtU3RhdHVzUGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemTypePages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtVHlwZVBhZ2VzXENyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemTypePages/Delete.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtVHlwZVBhZ2VzXERlbGV0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemTypePages/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtVHlwZVBhZ2VzXERldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemTypePages/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtVHlwZVBhZ2VzXEVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/ItemTypePages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXN0ZXJmaWxlc1xJdGVtVHlwZVBhZ2VzXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/DATA/GitHub/App2025/Erp2025/Components/Pages/Masterfiles/RefCityPages/Create.razor]

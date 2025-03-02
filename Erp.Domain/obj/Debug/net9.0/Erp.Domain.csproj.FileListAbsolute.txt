@@ -1,6 +1,8 @@
 C:\DATA\GitHub\App2025\Erp.Domain\bin\Debug\net9.0\Erp.Domain.deps.json
+C:\DATA\GitHub\App2025\Erp.Domain\bin\Debug\net9.0\Erp.Domain.runtimeconfig.json
 C:\DATA\GitHub\App2025\Erp.Domain\bin\Debug\net9.0\Erp.Domain.dll
 C:\DATA\GitHub\App2025\Erp.Domain\bin\Debug\net9.0\Erp.Domain.pdb
+C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.csproj.AssemblyReference.cache
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.AssemblyInfoInputs.cache
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.AssemblyInfo.cs
@@ -9,7 +11,5 @@ C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.sourcelink.json
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.dll
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\refint\Erp.Domain.dll
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.pdb
-C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\ref\Erp.Domain.dll
-C:\DATA\GitHub\App2025\Erp.Domain\bin\Debug\net9.0\Erp.Domain.runtimeconfig.json
 C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.genruntimeconfig.cache
-C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\Erp.Domain.csproj.AssemblyReference.cache
+C:\DATA\GitHub\App2025\Erp.Domain\obj\Debug\net9.0\ref\Erp.Domain.dll

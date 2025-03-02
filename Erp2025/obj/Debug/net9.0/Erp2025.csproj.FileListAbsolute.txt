@@ -529,15 +529,11 @@ C:\DATA\GitHub\App2025\BlazorUI\bin\Debug\net9.0\Microsoft.AspNetCore.Components
 C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\compressed\unlu0xluo6-eu7w3d5g1a.gz
 C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\compressed\3gin1ph7ub-25o87uqmvr.gz
 C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\compressed\xi7wbvhu4f-rnua58gtou.gz
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.exe
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\appsettings.Development.json
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\appsettings.json
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.staticwebassets.endpoints.json
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.staticwebassets.runtime.json
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.exe
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.deps.json
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.runtimeconfig.json
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.dll
-C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.pdb
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.staticwebassets.endpoints.json
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Azure.Core.dll
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Azure.Identity.dll
 C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Humanizer.dll
@@ -852,5 +848,9 @@ C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\Erp2025.csproj.Up2Date
 C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\Erp2025.dll
 C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\refint\Erp2025.dll
 C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\Erp2025.pdb
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.deps.json
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.runtimeconfig.json
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.dll
+C:\DATA\GitHub\App2025\Erp2025\bin\Debug\net9.0\Erp2025.pdb
 C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\Erp2025.genruntimeconfig.cache
 C:\DATA\GitHub\App2025\Erp2025\obj\Debug\net9.0\ref\Erp2025.dll

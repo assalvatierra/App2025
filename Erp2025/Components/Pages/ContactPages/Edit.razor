@@ -101,7 +101,6 @@ else
                 </div>
                 <div class="mb-3">
                     <label for="typeid" class="form-label">TypeId:</label>
-                    <InputNumber id="typeid" @bind-Value="Contact.TypeId" class="form-control" />
                     <select id="typeid" class="form-control" @bind="Contact.TypeId">
                         @foreach (var item in ItemTypes)
                         {
@@ -112,7 +111,6 @@ else
                 </div>
                 <div class="mb-3">
                     <label for="statusid" class="form-label">StatusId:</label>
-                    <InputNumber id="statusid" @bind-Value="Contact.StatusId" class="form-control" />
                     <ValidationMessage For="() => Contact.StatusId" class="text-danger" />
                     <select id="statusid" class="form-control" @bind="Contact.StatusId">
                         @foreach (var status in StatusList)

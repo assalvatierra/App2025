@@ -1,0 +1,24 @@
+﻿@page "/TestPages/Test101"
+@using Erp2025.Components.Common
+@using Erp.Domain.Models
+
+<h3>Test101</h3>
+
+<RecordInfo model="contact">
+
+</RecordInfo>
+
+@code {
+    public Contact contact { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.contact.IsActive = true;
+        this.contact.IsArchived = false;
+        this.contact.IsPrivate = true;
+        this.contact.CreatedOn = DateTime.Now;
+        this.contact.LastEditOn = DateTime.Now;
+        this.contact.CreatedBy = "Default";
+    }
+
+}

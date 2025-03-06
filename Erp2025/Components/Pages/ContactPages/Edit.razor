@@ -101,23 +101,23 @@ else
                 </div>
                 <div class="mb-3">
                     <label for="typeid" class="form-label">TypeId:</label>
-                    <select id="typeid" class="form-control" @bind="Contact.TypeId">
+                    <InputSelect id="typeid" class="form-control" @bind-value="Contact.TypeId">
                         @foreach (var item in ItemTypes)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
-                    </select>
+                    </InputSelect>
                     <ValidationMessage For="() => Contact.TypeId" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="statusid" class="form-label">StatusId:</label>
                     <ValidationMessage For="() => Contact.StatusId" class="text-danger" />
-                    <select id="statusid" class="form-control" @bind="Contact.StatusId">
+                    <InputSelect id="statusid" class="form-control" @bind-value="Contact.StatusId">
                         @foreach (var status in StatusList)
                         {
                             <option value="@status.Id">@status.Name</option>
                         }
-                    </select>
+                    </InputSelect>
                 </div>
                 <div class="mb-3">
                     <label for="refcityid" class="form-label">RefCityId:</label>

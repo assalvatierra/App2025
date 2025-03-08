@@ -22,6 +22,7 @@ namespace Erp2025.Data
         public DbSet<Erp.Domain.Models.ServiceItem> ServiceItem { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemType> ItemType { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatus> ItemStatus { get; set; } = default!;
         
 

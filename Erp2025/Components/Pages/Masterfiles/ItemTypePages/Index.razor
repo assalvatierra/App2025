@@ -14,17 +14,17 @@
     <a href="itemtypes/create">Create New</a>
 </p>
 <div class="mb-3">
-    <label for="statusid" class="">StatusId:</label>
-    <InputSelect id="statusid" class="form-control" @bind-value="selectedItemClassId">
+    <label for="TypeClassId" class="">Type Class :</label>
+    <InputSelect id="TypeClassId" class="form-control" @bind-value="selectedItemClassId" @onchange="OnValueChanged">
         @foreach (var item in ItemTypeClasses)
         {
-            <option value="@item.Id">@item.Name</option>
+            <option value="@item.Id">@item.Name (@item.Description) </option>
         }
     </InputSelect>
 </div>
 
 
-<QuickGrid Class="table" Items="context.ItemType">
+<QuickGrid Class="table" Items="filteredItemTypes">
     <PropertyColumn Property="itemtype => itemtype.Name" />
     <PropertyColumn Property="itemtype => itemtype.Description" />
     <PropertyColumn Property="itemtype => itemtype.Remarks" />
@@ -41,15 +41,29 @@
 
 @code {
     private Erp2025Context context = default!;
+    private List<ItemType> ItemTypes { get; set; } = new();
+    private IQueryable<ItemType> filteredItemTypes { get; set; }
+
     private List<ItemTypeClass> ItemTypeClasses { get; set; } = new();
     private int selectedItemClassId { get; set; }
 
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
-        
+
         this.ItemTypeClasses = context.ItemTypeClass.ToList();
+        this.ItemTypes = context.ItemType.ToList();
+        this.filteredItemTypes = ItemTypes.AsQueryable(); // Initialize with all items
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
+
+    private async Task OnValueChanged(ChangeEventArgs e)
+    {
+        selectedItemClassId = int.Parse(e.Value.ToString());
+        filteredItemTypes = context.ItemType
+             .Where(item => item.ItemTypeClassId == selectedItemClassId)
+             .AsQueryable();
+    }
+
 }

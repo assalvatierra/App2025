@@ -14,6 +14,16 @@
     <a href="itemstatuses/create">Create New</a>
 </p>
 
+<div class="mb-3">
+    <label for="TypeClassId" class="">Type Class :</label>
+    <InputSelect id="TypeClassId" class="form-control" @bind-value="SelectedItemStatusClassId">
+        @foreach (var item in ItemStatusClasses)
+        {
+            <option value="@item.Id">@item.Name (@item.Description) </option>
+        }
+    </InputSelect>
+</div>
+
 <QuickGrid Class="table" Items="context.ItemStatus">
     <PropertyColumn Property="itemstatus => itemstatus.Name" />
     <PropertyColumn Property="itemstatus => itemstatus.Description" />
@@ -32,9 +42,13 @@
 @code {
     private Erp2025Context context = default!;
 
+    private List<ItemStatusClass> ItemStatusClasses { get; set; }
+    private int SelectedItemStatusClassId { get; set; }
+
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+        this.ItemStatusClasses = context.ItemStatusClass.ToList();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

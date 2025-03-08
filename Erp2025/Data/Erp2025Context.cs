@@ -24,6 +24,7 @@ namespace Erp2025.Data
         public DbSet<Erp.Domain.Models.ItemType> ItemType { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatus> ItemStatus { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ItemStatusClass> ItemStatusClass { get; set; }
         
 
     }

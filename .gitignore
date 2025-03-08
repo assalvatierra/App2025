@@ -76,3 +76,10 @@
 .vs/Erp2025/DesignTimeBuild/.dtbcache.v2
 .vs/Erp2025/CopilotIndices/17.13.430.18484/CodeChunks.db
 .vs/Erp2025/CopilotIndices/17.13.430.18484/SemanticSymbols.db
+/Erp.Component/obj/Debug
+/Erp.Component/bin/Debug
+/Erp.Component/obj
+/Erp2025/obj/Debug
+/Erp2025/bin/Debug
+/Erp2025/obj/Debug
+/Erp2025/obj/Debug/net9.0

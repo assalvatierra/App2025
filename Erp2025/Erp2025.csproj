@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Erp.Component\Erp.Component.csproj" />
     <ProjectReference Include="..\Erp.Domain\Erp.Domain.csproj" />
   </ItemGroup>
 

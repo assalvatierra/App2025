@@ -1,8 +1,19 @@
 ﻿@page "/TestPages/Test101"
 @using Erp2025.Components.Common
 @using Erp.Domain.Models
+@using Erp.Component
+
 
 <h3>Test101</h3>
+
+
+<ErpCommonDialog Title="My first Modal dialog" Show="true">
+ <p>
+   This is my first modal dialog
+ </p>
+</ErpCommonDialog>
+
+
 
 <RecordInfo model="contact">
 

@@ -15,8 +15,8 @@
 </p>
 
 <div class="mb-3">
-    <label for="TypeClassId" class="">Type Class :</label>
-    <InputSelect id="TypeClassId" class="form-control" @bind-value="SelectedItemStatusClassId">
+    <label for="StatusClassId" class="">Type Class :</label>
+    <InputSelect id="StatusClassId" class="form-control" @bind-value="SelectedItemStatusClassId">
         @foreach (var item in ItemStatusClasses)
         {
             <option value="@item.Id">@item.Name (@item.Description) </option>

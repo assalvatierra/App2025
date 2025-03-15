@@ -1,4 +1,5 @@
-﻿@using Erp.Component
+﻿@using Microsoft.AspNetCore.Components.Web
+@using Erp.Component
 
 @if (Show)
 {
@@ -17,6 +18,13 @@
                 <button class="btn btn-secondary mr-auto" @onclick="OnCancel">@CancelText</button>
                 <button class="btn btn-success ml-auto" @onclick="OnConfirm">@ConfirmText</button>
             </div>
+
+
+            <p>
+                <button @onclick="OnClickCallback">
+                    Trigger a Parent component method
+                </button>
+            </p>
 
         </div>
     </div>
@@ -41,7 +49,13 @@
     public bool Show { get; set; }
 
 
-    [Parameter] public EventCallback OnCancel { get; set; }
-    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] 
+    public EventCallback<MouseEventArgs> OnCancel { get; set; }
+    
+    [Parameter] 
+    public EventCallback<MouseEventArgs> OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
 
 }

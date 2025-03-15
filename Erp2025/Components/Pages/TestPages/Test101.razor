@@ -2,15 +2,17 @@
 @using Erp2025.Components.Common
 @using Erp.Domain.Models
 @using Erp.Component
+@rendermode InteractiveServer
 
 
 <h3>Test101</h3>
 
 
-<ErpCommonDialog Title="My first Modal dialog" Show="true">
- <p>
-   This is my first modal dialog
- </p>
+<ErpCommonDialog Title="My first Modal dialog" Show="isDialogOpen" OnClickCallback="ShowMessage" OnConfirm="confirmDialog" OnCancel="cancelDialog">
+    <p>
+        This is my first modal dialog
+    </p>
+
 </ErpCommonDialog>
 
 
@@ -19,7 +21,14 @@
 
 </RecordInfo>
 
+
+<p>isDialogOpen: @isDialogOpen</p>
+<p>message: @message</p>
+<button class="btn btn-primary" @onclick="showDialog">Open Dialog</button>
+
+
 @code {
+    public Boolean isDialogOpen = false;
     public Contact contact { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
@@ -31,5 +40,25 @@
         this.contact.LastEditOn = DateTime.Now;
         this.contact.CreatedBy = "Default";
     }
+
+    private void showDialog()
+    {
+        this.isDialogOpen = true;
+    }
+
+    private void cancelDialog(MouseEventArgs e)
+    {
+        this.isDialogOpen = false;
+    }
+
+    private void confirmDialog(MouseEventArgs e)
+    {
+        this.isDialogOpen = false;
+    }
+
+    private string? message;
+    private void ShowMessage(MouseEventArgs e) =>
+        message = $"Blaze a new trail with Blazor! ({e.ScreenX}:{e.ScreenY})";
+
 
 }

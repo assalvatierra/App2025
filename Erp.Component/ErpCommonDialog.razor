@@ -14,12 +14,12 @@
                 @ChildContent
             </div>
             <p>
-                <button class="btn btn-success mr-auto" @onclick="(e)=>OnClickCallback.InvokeAsync((e,DataValues[0]))">
+                <button class="btn btn-success mr-auto" @onclick="(e)=>OnClickCallback.InvokeAsync((e,SampleDataValues[0]))">
                     Value 1
                 </button>
             </p>
             <p>
-                <button class="btn btn-success mr-auto" @onclick="(e)=>OnClickCallback.InvokeAsync((e,DataValues[1]))">
+                <button class="btn btn-success mr-auto" @onclick="(e)=>OnClickCallback.InvokeAsync((e,SampleDataValues[1]))">
                     Value 2
                 </button>
             </p>
@@ -63,6 +63,6 @@
     [Parameter]
     public EventCallback<(MouseEventArgs,string)> OnClickCallback { get; set; }
 
-    string[] DataValues = new string[] { "Value 1", "Value 2" };
+    string[] SampleDataValues = new string[] { "Value 1", "Value 2" };
 
 }

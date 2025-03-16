@@ -6,6 +6,7 @@ using Erp2025.Components.Account;
 using Erp2025.Data;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<Erp2025Context>(options =>
@@ -15,6 +16,8 @@ builder.Services.AddDbContextFactory<Erp2025Context>(options =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+
+#region Authentication and Identity
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -41,6 +44,13 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+#endregion
+
+
+#region Localization
+builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+//builder.Services.AddScoped<IStringLocalizer<App>, StringLocalizer<App>>();
+#endregion
 
 builder.Services.AddControllers()
         .AddJsonOptions(options =>
@@ -68,6 +78,15 @@ else
 
 app.UseHttpsRedirection();
 
+//app.UseRequestLocalization("Default");
+//app.UseRequestLocalization("en-US");
+//app.UseRequestLocalization(options =>
+//{
+//    var supportedCultures = new[] { "en-US", "fr-FR" };
+//    options.SetDefaultCulture(supportedCultures[0])
+//           .AddSupportedCultures(supportedCultures)
+//           .AddSupportedUICultures(supportedCultures);
+//});
 
 app.UseAntiforgery();
 

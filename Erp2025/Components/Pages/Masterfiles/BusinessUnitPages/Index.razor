@@ -5,11 +5,11 @@
 @using Erp2025.Data
 @implements IAsyncDisposable
 @inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
-@inject IStringLocalizer<Erp2025.App> L
+@inject IStringLocalizer<Erp2025.App> Localizer
 
-<PageTitle>@L["BusinessUnit.Page.Title"]</PageTitle>
+<PageTitle>@Localizer["BusinessUnit.Page.Title"]</PageTitle>
 
-<h1>@L["BusinessUnit.Page.Title"]</h1>
+<h1>@Localizer["BusinessUnit.Page.Title"]</h1>
 
 <p>
     <a href="businessunits/create">Create New</a>

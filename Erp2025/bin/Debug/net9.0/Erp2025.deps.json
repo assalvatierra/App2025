@@ -21,11 +21,6 @@
         },
         "runtime": {
           "Erp2025.dll": {}
-        },
-        "resources": {
-          "en-US/Erp2025.resources.dll": {
-            "locale": "en-US"
-          }
         }
       },
       "Azure.Core/1.38.0": {

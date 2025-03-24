@@ -1,0 +1,21 @@
+﻿@using Erp.Component
+<h3>ErpRecordInfoContainer</h3>
+
+<div>
+    <div class="Container">
+
+        <div class="Container-body">
+            @ChildContent
+        </div>
+
+    </div>
+</div>
+<button class="btn btn-primary" @onclick="popupmsg">Set data from component</button>
+
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+}

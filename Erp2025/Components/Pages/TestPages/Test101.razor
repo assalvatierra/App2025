@@ -15,17 +15,42 @@
 
 </ErpCommonDialog>
 
+<ErpRecordInfoContainer>
+    <dl class="row">
+        <dt class="col-sm-2">Created By</dt>
+        <dd class="col-sm-10">@contact.CreatedBy</dd>
+        <dt class="col-sm-2">Created On</dt>
+        <dd class="col-sm-10">@contact.CreatedOn</dd>
+        <dt class="col-sm-2">LastEdit By</dt>
+        <dd class="col-sm-10">@contact.LastEditBy</dd>
+        <dt class="col-sm-2">LastEdit On</dt>
+        <dd class="col-sm-10">@contact.LastEditOn</dd>
+        <dt class="col-sm-2">IsArchived</dt>
+        <dd class="col-sm-10">@contact.IsArchived</dd>
+        <dt class="col-sm-2">IsPrivate</dt>
+        <dd class="col-sm-10">@contact.IsPrivate</dd>
+        <dt class="col-sm-2">IsActive</dt>
+        <dd class="col-sm-10">@contact.IsActive</dd>
+    </dl>
+
+</ErpRecordInfoContainer>
+
+<div class="mb-3">
+    <label for="isactive" class="form-label">IsActive:</label>
+    <InputCheckbox id="isactive" @bind-Value="contact.IsActive" class="form-check-input" />
+</div>
 
 
+@* 
 <RecordInfo model="contact">
 
 </RecordInfo>
-
+ *@
 
 <p>isDialogOpen: @isDialogOpen</p>
 <p>message: @message</p>
 <button class="btn btn-primary" @onclick="showDialog">Open Dialog</button>
-
+<button class="btn btn-primary" @onclick="popupmsg" >Set data</button>
 
 @code {
     public Boolean isDialogOpen = false;
@@ -54,6 +79,11 @@
     private void confirmDialog(MouseEventArgs e)
     {
         this.isDialogOpen = false;
+    }
+
+    private void popupmsg(MouseEventArgs e)
+    {
+        message = "Active: " + this.contact.IsActive.ToString();
     }
 
     private string? message;

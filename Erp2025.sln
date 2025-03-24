@@ -5,9 +5,9 @@ VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Domain", "Erp.Domain\Erp.Domain.csproj", "{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp2025", "Erp2025\Erp2025.csproj", "{5EA176CB-996C-F9DC-9F35-1433DA7F6710}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularapp1.client", "AngularApp1\angularapp1.client\angularapp1.client.esproj", "{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Component", "Erp.Component\Erp.Component.csproj", "{9BB28C3D-D257-4028-85D6-A2E4DAD579E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularApp1.Server", "AngularApp1\AngularApp1.Server\AngularApp1.Server.csproj", "{88BCF4BF-7602-44F2-9877-64745A6E1CCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,16 @@ Global
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5EA176CB-996C-F9DC-9F35-1433DA7F6710}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BB28C3D-D257-4028-85D6-A2E4DAD579E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BB28C3D-D257-4028-85D6-A2E4DAD579E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BB28C3D-D257-4028-85D6-A2E4DAD579E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BB28C3D-D257-4028-85D6-A2E4DAD579E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF6DE24-C57F-4541-AA25-E65F9FB22E86}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

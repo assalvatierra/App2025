@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "XuAl4O0qw9o=",
+  "success": true,
+  "projectFilePath": "C:\\Project\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\abel\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.2\\microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512",
+    "C:\\Users\\abel\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\9.0.3\\microsoft.aspnetcore.spaproxy.9.0.3.nupkg.sha512",
+    "C:\\Users\\abel\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

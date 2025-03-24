@@ -34,5 +34,5 @@ export class AppComponent implements OnInit {
     );
   }
 
-  title = 'angularapp1.client';
+  title = 'angularapp1.client001';
 }

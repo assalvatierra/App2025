@@ -15,4 +15,5 @@ table {
 
 .mat-toolbar {
   position: relative;
+  z-index:99;
 }

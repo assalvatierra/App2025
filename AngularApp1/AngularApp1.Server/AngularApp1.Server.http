@@ -1,6 +1,24 @@
+
 @AngularApp1.Server_HostAddress = http://localhost:5157
+@AngularApp1.openapi.def = https://localhost:7252/openapi/v1.json
 
 GET {{AngularApp1.Server_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+@AngularApp1.Server_HostAddress = http://localhost:5157
+GET {{AngularApp1.Server_HostAddress}}/openapi/v1.json
+
+###
+GET {{AngularApp1.openapi.def}}
+
+
+###
+
+GET https://localhost:7220/weatherforecast?date=2023-05-11&location=98006
+
+###
+
+GET {{AngularApp1.Server_HostAddress}}/weatherforecast HTTP/3
 
 ###

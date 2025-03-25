@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AngularApp1.Server.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ErpDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ErpDbContext") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
 
 // Add services to the container.
 

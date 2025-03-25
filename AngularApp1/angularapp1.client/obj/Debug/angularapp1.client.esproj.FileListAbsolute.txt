@@ -1,2 +1,3 @@
 C:\Project\App2025\AngularApp1\angularapp1.client\obj\Debug\angularapp1.client.esproj.CoreCompileInputs.cache
 C:\Data\App2025\AngularApp1\angularapp1.client\obj\Debug\angularapp1.client.esproj.CoreCompileInputs.cache
+C:\Users\Acer-PC\source\repos\App2025\AngularApp1\angularapp1.client\obj\Debug\angularapp1.client.esproj.CoreCompileInputs.cache

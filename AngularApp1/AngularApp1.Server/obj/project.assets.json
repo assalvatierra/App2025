@@ -7786,23 +7786,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Abel\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Acer-PC\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages": {},
+    "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Data\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
+      "projectUniqueName": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
       "projectName": "AngularApp1.Server",
-      "projectPath": "C:\\Data\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
-      "packagesPath": "C:\\Users\\Abel\\.nuget\\packages\\",
-      "outputPath": "C:\\Data\\App2025\\AngularApp1\\AngularApp1.Server\\obj\\",
+      "projectPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
+      "packagesPath": "C:\\Users\\Acer-PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
+        "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Abel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Acer-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.1.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7811,14 +7819,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 24.1\\Components\\System\\Components\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Data\\App2025\\Erp.Domain\\Erp.Domain.csproj": {
-              "projectPath": "C:\\Data\\App2025\\Erp.Domain\\Erp.Domain.csproj"
+            "C:\\Users\\Acer-PC\\source\\repos\\App2025\\Erp.Domain\\Erp.Domain.csproj": {
+              "projectPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\Erp.Domain\\Erp.Domain.csproj"
             }
           }
         }
@@ -7833,7 +7842,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -7877,7 +7886,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

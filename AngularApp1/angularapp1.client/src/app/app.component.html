@@ -1,16 +1,24 @@
 
-<mat-toolbar class="mat-elevation-z2">
-  <button mat-icon-button>
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button (click)="collapsed.set(!collapsed())"> 
     <mat-icon>menu</mat-icon>
   </button>
 </mat-toolbar>
+    <mat-sidenav-container>
+        <mat-sidenav opened mode="side"  [style.width]="sidenavWidth()"> 
+            <app-navigation [collapsed]="collapsed()"> 
 
-
-<app-navigation>
-</app-navigation>
-
-
-
+            </app-navigation>
+        </mat-sidenav>
+        <mat-sidenav-content class="content"  [style.margin-left]="sidenavWidth()">
+            <router-outlet>
+                Main Content
+                <p>
+                    have collpase: {{ collapsed() }}
+                </p>
+            </router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 
 <!--<h1 id="tableLabel">Weather forecast</h1>
 

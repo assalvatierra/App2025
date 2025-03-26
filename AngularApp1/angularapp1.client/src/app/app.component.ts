@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 
 interface WeatherForecast {
   date: string;
@@ -35,4 +37,9 @@ export class AppComponent implements OnInit {
   }
 
   title = 'angularapp1.client001';
+
+  
+  collapsed = signal(false);
+
+  sidenavWidth = computed(()=> this.collapsed() ? '65px' : '250px');
 }

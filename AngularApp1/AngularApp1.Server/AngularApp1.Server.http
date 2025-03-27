@@ -10,6 +10,10 @@ Accept: application/json
 GET {{AngularApp1.Server_HostAddress}}/openapi/v1.json
 
 ###
+@AngularApp1.Server_HostAddress = http://localhost:5157
+GET {{AngularApp1.Server_HostAddress}}/api/RefCountries
+
+###
 GET {{AngularApp1.openapi.def}}
 
 

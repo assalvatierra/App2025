@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "q1ucVnId7z2inJVnzlc4jO6FKajaW00NGGvI/URmFw0=",
+  "Hash": "qDEozNi+DFudFyKwfL95pAVZ1o7kjzPOuqqTLGryl7M=",
   "Source": "AngularApp1.Server",
   "BasePath": "_content/AngularApp1.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Data\\App2025\\AngularApp1\\angularapp1.client\\angularapp1.client.esproj",
+      "Identity": "C:\\DATA\\GitHub\\App2025\\AngularApp1\\angularapp1.client\\angularapp1.client.esproj",
       "Version": 2,
       "Source": "angularapp1.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

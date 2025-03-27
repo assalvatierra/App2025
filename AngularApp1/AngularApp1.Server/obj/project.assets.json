@@ -7786,8 +7786,10 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Acer-PC\\.nuget\\packages\\": {},
+    "C:\\Users\\Abel\\.nuget\\packages\\": {},
     "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages": {},
+    "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages": {},
+    "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages": {},
     "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
@@ -7795,21 +7797,25 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
+      "projectUniqueName": "C:\\DATA\\GitHub\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
       "projectName": "AngularApp1.Server",
-      "projectPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
-      "packagesPath": "C:\\Users\\Acer-PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\AngularApp1\\AngularApp1.Server\\obj\\",
+      "projectPath": "C:\\DATA\\GitHub\\App2025\\AngularApp1\\AngularApp1.Server\\AngularApp1.Server.csproj",
+      "packagesPath": "C:\\Users\\Abel\\.nuget\\packages\\",
+      "outputPath": "C:\\DATA\\GitHub\\App2025\\AngularApp1\\AngularApp1.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
+        "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
+        "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
         "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Acer-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Abel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.1.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -7819,15 +7825,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files\\DevExpress 24.1\\Components\\System\\Components\\Packages": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.devexpress.com/vknJXdbukQSlqbGsGyZiAmXK1iLOCRnFxKObAgSexnbVRYwjSw/api": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Acer-PC\\source\\repos\\App2025\\Erp.Domain\\Erp.Domain.csproj": {
-              "projectPath": "C:\\Users\\Acer-PC\\source\\repos\\App2025\\Erp.Domain\\Erp.Domain.csproj"
+            "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj": {
+              "projectPath": "C:\\DATA\\GitHub\\App2025\\Erp.Domain\\Erp.Domain.csproj"
             }
           }
         }
@@ -7842,7 +7851,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -7886,8 +7895,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\DATA\\GitHub\\App2025\\AngularApp1\\AngularApp1.Server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

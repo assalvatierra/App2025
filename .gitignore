@@ -99,3 +99,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/AngularApp1/AngularApp1.Server/obj
+/AngularApp1/AngularApp1.Server/obj
+/AngularApp1/AngularApp1.Server/bin
+/.vs

@@ -19,3 +19,5 @@
 /AngularApp1/AngularApp1.Server/obj
 .vs/Erp2025/CopilotIndices/17.13.430.18484/SemanticSymbols.db
 .vs/Erp2025/CopilotIndices/17.13.430.18484/CodeChunks.db
+/Erp.Domain/obj
+/Erp.Domain/bin/Debug

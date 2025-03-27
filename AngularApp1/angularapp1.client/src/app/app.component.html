@@ -3,6 +3,9 @@
   <button mat-icon-button (click)="collapsed.set(!collapsed())"> 
     <mat-icon>menu</mat-icon>
   </button>
+  <h4 class="App-Title">
+      MyApp2025
+  </h4>
 </mat-toolbar>
     <mat-sidenav-container>
         <mat-sidenav opened mode="side"  [style.width]="sidenavWidth()"> 
@@ -12,10 +15,7 @@
         </mat-sidenav>
         <mat-sidenav-content class="content"  [style.margin-left]="sidenavWidth()">
             <router-outlet>
-                Main Content
-                <p>
-                    have collpase: {{ collapsed() }}
-                </p>
+               
             </router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>

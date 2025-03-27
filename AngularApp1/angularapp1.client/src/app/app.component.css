@@ -12,6 +12,10 @@ table {
     margin: 0 auto;
 }
 
+.App-Title {
+    margin-left:20px;
+}
+
 mat-toolbar {
   position: relative;
   z-index: 5;
@@ -23,14 +27,14 @@ mat-toolbar {
     background-color: rgb(240, 240, 240);
     border-color: lightgray;
     border:1px;
+    text-align: left;
 }
 
 mat-sidenav-container {
     height: calc(100vh - 54px);
 }
 
-mat-sidenav {
-   padding-top:20px;
-   width: 250px;
-  
-}
+mat-sidenav,
+mat-sidenav-content {
+    transition: all 500ms ease-in-out;
+ }

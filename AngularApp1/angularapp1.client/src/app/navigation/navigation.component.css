@@ -1,3 +1,11 @@
+:host * {
+  transition: all 500ms ease-in-out;  
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0 ;
+  --mat-focus-indicator-border-radius: 0;
+}
 
 .sidenav-header{
   padding-top: 24px;
@@ -26,5 +34,17 @@
 
 .hide-header-text{
   opacity: 0;
-  height: 0px;
+  height: 0px !important;
+}
+
+.menu-item{
+  border-left: 5px solid;
+  border-left-color: rgba(0, 0, 0, 0);
+  border-radius: 0 !important;
+}
+
+.selected-menu-item {
+  border-left: 3px solid;
+  border-left-color:blue;
+  color:blue;
 }

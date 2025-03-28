@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Data;
 using Erp.Domain.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace AngularApp1.Server.Controllers
 {

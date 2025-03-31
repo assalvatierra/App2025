@@ -4,6 +4,7 @@ import { ContentComponent } from "./pages/content/content.component";
 import { AnalyticsComponent } from "./pages/analytics/analytics.component";
 import { CommentsComponent } from "./pages/comments/comments.component";
 import { VideosComponent } from "./pages/content/videos/videos.component";
+import { CountriesComponent } from "./pages/countries/countries.component"; 
 
 const routeConfig: Routes = [
 
@@ -31,7 +32,12 @@ const routeConfig: Routes = [
     {
         path: 'content/videos',
         component: VideosComponent
+    },
+    {
+      path: 'references/countries',
+      component: CountriesComponent
     }
+
 ];
 
 export default routeConfig;

@@ -16,6 +16,10 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { CommentsComponent } from './pages/comments/comments.component';
 import { MenuItemComponent } from './core/navigation/menu-item/menu-item.component';
 import { VideosComponent } from './pages/content/videos/videos.component';
+import { CountriesComponent } from './pages/countries/countries.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { VideosComponent } from './pages/content/videos/videos.component';
     AnalyticsComponent,
     CommentsComponent,
     MenuItemComponent,
-    VideosComponent
+    VideosComponent,
+    CountriesComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -35,7 +40,10 @@ import { VideosComponent } from './pages/content/videos/videos.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

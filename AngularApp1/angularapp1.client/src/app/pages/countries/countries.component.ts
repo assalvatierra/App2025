@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { CountriesDataSource, CountriesItem } from './countries-datasource';
 import { ApiService } from '../../core/api.service';
+import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 
 @Component({
   selector: 'app-countries',
@@ -12,20 +13,16 @@ import { ApiService } from '../../core/api.service';
   standalone: false
 })
 export class CountriesComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<CountriesItem>;
-  dataSource: CountriesDataSource;
+  @ViewChild('ListTable') TableList !: EntityListTableComponent;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
   constructor(private api: ApiService) {
-    this.dataSource = new CountriesDataSource();
-    this.initializeData();
   }
 
+  ngAfterViewInit(): void {
+    this.getEntities();
+  }
 
-  initializeData() {
+  getEntities() {
     this.api.getCountries().subscribe((res) => {
       if (res) {
         var data: any[];
@@ -33,15 +30,13 @@ export class CountriesComponent implements AfterViewInit {
           id: item.id,
           name: item.name
         }));
-
-        this.dataSource.data = data;
-        this.table.dataSource = this.dataSource;
+        this.initializeEntityList(data);
       }
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  initializeEntityList(param: any[]) {
+    this.TableList.initialize(param);
   }
+
 }

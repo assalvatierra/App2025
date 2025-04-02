@@ -20,6 +20,7 @@ import { CountriesComponent } from './pages/countries/countries.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatSortModule } from '@angular/material/sort';
     CommentsComponent,
     MenuItemComponent,
     VideosComponent,
-    CountriesComponent
+    CountriesComponent,
+    EntityListTableComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

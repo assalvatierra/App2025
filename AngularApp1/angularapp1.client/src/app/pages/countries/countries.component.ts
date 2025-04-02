@@ -20,12 +20,28 @@ export class CountriesComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name'];
   constructor(private api: ApiService) {
-    this.dataSource = new CountriesDataSource(this.api);
+    this.dataSource = new CountriesDataSource();
+    this.initializeData();
+  }
+
+
+  initializeData() {
+    this.api.getCountries().subscribe((res) => {
+      if (res) {
+        var data: any[];
+        data = res.map((item: any) => ({
+          id: item.id,
+          name: item.name
+        }));
+
+        this.dataSource.data = data;
+        this.table.dataSource = this.dataSource;
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 }

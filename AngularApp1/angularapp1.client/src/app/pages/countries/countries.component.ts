@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { CountriesDataSource, CountriesItem } from './countries-datasource';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 

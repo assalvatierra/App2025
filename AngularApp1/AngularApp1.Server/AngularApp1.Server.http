@@ -18,6 +18,31 @@ GET {{AngularApp1.Server_HostAddress}}/api/RefCountries
 ###
 GET {{AngularApp1.Server_HostAddress}}/api/RefCities
 
+###
+GET {{AngularApp1.Server_HostAddress}}/api/ItemTypes
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/ItemStatus
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/Contacts
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/Entities
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/BusinessUnits
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/ServiceItems
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/JobMains
+
+###
+GET {{AngularApp1.Server_HostAddress}}/api/JobServices
+
+
 
 
 

@@ -28,7 +28,7 @@ export class EntityListTableComponent implements AfterViewInit {
   dataSource = new EntityListTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['actions','id', 'name'];
 
   constructor() {
 

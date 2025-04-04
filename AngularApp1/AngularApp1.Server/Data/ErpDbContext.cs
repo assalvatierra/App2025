@@ -15,5 +15,6 @@ namespace AngularApp1.Server.Data
         }
 
         public DbSet<Erp.Domain.Models.RefCountry> RefCountry { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.RefCity> RefCity { get; set; } = default!;
     }
 }

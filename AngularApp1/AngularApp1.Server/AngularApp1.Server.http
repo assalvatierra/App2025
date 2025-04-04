@@ -10,15 +10,20 @@ Accept: application/json
 GET {{AngularApp1.Server_HostAddress}}/openapi/v1.json
 
 ###
-@AngularApp1.Server_HostAddress = http://localhost:5157
+GET {{AngularApp1.openapi.def}}
+
+###
 GET {{AngularApp1.Server_HostAddress}}/api/RefCountries
 
 ###
-GET {{AngularApp1.openapi.def}}
+GET {{AngularApp1.Server_HostAddress}}/api/RefCities
+
+
+
+
 
 
 ###
-
 GET https://localhost:7220/weatherforecast?date=2023-05-11&location=98006
 
 ###

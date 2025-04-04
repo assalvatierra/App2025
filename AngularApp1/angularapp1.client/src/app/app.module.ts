@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
+import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-menu/item-popup-menu.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { EntityListTableComponent } from './shared/entity-list-table/entity-list
     MenuItemComponent,
     VideosComponent,
     CountriesComponent,
-    EntityListTableComponent
+    EntityListTableComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -45,7 +46,8 @@ import { EntityListTableComponent } from './shared/entity-list-table/entity-list
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    ItemPopupMenuComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

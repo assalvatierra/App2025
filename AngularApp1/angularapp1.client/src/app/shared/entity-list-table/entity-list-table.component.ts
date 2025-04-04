@@ -3,6 +3,7 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EntityListTableDataSource, EntityListTableItem } from './entity-list-table-datasource';
+import { ItemPopupMenuComponent } from './item-popup-menu/item-popup-menu.component';
 
 @Component({
   selector: 'app-entity-list-table',

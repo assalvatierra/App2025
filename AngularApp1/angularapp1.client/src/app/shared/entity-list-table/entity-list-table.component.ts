@@ -16,6 +16,10 @@ export class EntityListTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<EntityListTableItem>;
 
+  @Output() addRecordClicked = new EventEmitter();
+
+  @Input() showEdit: boolean = true;
+  @Input() editTitle: string = 'Edit Record';
   @Output() editRecordClicked = new EventEmitter<any>();
   @Output() editDetailClicked = new EventEmitter<any>();
   @Output() archiveClicked = new EventEmitter<any>();
@@ -41,6 +45,9 @@ export class EntityListTableComponent implements AfterViewInit {
 
   }
 
+  onAddRecord() {
+    this.addRecordClicked.emit();
+  }
   onEditRecord(param:any) {
     this.editRecordClicked.emit(param);
   }

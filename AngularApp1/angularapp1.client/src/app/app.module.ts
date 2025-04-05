@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -37,7 +38,7 @@ import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-me
     EntityListTableComponent,    
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule, HttpClientModule, CommonModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,

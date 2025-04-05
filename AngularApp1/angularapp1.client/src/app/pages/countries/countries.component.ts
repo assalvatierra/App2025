@@ -13,7 +13,7 @@ import { EntityListTableComponent } from '../../shared/entity-list-table/entity-
 })
 export class CountriesComponent implements AfterViewInit {
   @ViewChild('ListTable') TableList !: EntityListTableComponent;
-
+  public showEdit: boolean = true;
   constructor(private api: ApiService) {
   }
 
@@ -38,12 +38,18 @@ export class CountriesComponent implements AfterViewInit {
     this.TableList.initialize(param);
   }
 
+  onAddRecord() {
+    console.log('Add record clicked');
+  }
+
   onEdit(param: any) {
     console.log('Edit record clicked', param);
   }
+
   onEditDetails(param: any) {
     console.log('Edit details clicked', param);
   }
+
   onArchive(param: any) {
     console.log('Archive clicked', param);
   }

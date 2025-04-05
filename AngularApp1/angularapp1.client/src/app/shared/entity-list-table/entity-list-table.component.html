@@ -1,41 +1,41 @@
 
 <div class="mat-elevation-z2">
   <table mat-table class="full-width-table" matSort aria-label="Elements">
-
     <!-- Row Actions -->
     <ng-container matColumnDef="actions" stickyEnd>
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+        <button mat-menu-item (click)="onAddRecord()">Add</button>
+      </th>
       <td mat-cell *matCellDef="let row">
-        <app-item-popup-menu
-          (editRecordClicked)="onEditRecord(row.id)"
-          (editDetailClicked)="onEditDetails(row.id)"
-          (archiveClicked)="onArchiveRecord(row.id)"
-        >
+        <app-item-popup-menu [showEdit]="showEdit" [editTitle]="editTitle"
+                             (editRecordClicked)="onEditRecord(row.id)"
+                             (editDetailClicked)="onEditDetails(row.id)"
+                             (archiveClicked)="onArchiveRecord(row.id)">
         </app-item-popup-menu>
       </td>
     </ng-container>
-
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+      <td mat-cell *matCellDef="let row">{{row.id
+  }}</td>
+  </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
-    </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
   <mat-paginator #paginator
-      [length]="dataSource.data.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]"
-      aria-label="Select page">
+                 [length]="dataSource.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 aria-label="Select page">
   </mat-paginator>
-</div>
+  </div>

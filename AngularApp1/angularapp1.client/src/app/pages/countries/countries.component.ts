@@ -38,4 +38,14 @@ export class CountriesComponent implements AfterViewInit {
     this.TableList.initialize(param);
   }
 
+  onEdit(param: any) {
+    console.log('Edit record clicked', param);
+  }
+  onEditDetails(param: any) {
+    console.log('Edit details clicked', param);
+  }
+  onArchive(param: any) {
+    console.log('Archive clicked', param);
+  }
+
 }

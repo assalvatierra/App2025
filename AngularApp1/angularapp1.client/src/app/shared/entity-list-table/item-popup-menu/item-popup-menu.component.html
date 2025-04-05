@@ -1,6 +1,8 @@
 <button mat-button [matMenuTriggerFor]="menu">Menu</button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>Edit Record</button>
-  <button mat-menu-item>Edit Details</button>
-  <button mat-menu-item>Archive</button>
+  <button mat-menu-item (click)="onActionClicked(MenuActionTypes.editRecord)">Edit Record</button>
+  <button mat-menu-item (click)="onActionClicked(MenuActionTypes.editDetails)">Edit Details</button>
+  <button mat-menu-item (click)="onActionClicked(MenuActionTypes.archive)">Archive</button>
+  <button mat-menu-item (click)="onActionClicked(MenuActionTypes.customAction1)">Custom1</button>
+  <button mat-menu-item (click)="onActionClicked(MenuActionTypes.customAction2)">Custom2</button>
 </mat-menu>

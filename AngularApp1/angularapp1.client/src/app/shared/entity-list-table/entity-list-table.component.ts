@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -16,14 +16,9 @@ export class EntityListTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<EntityListTableItem>;
 
-  //@Input()
-  //public get data(): EntityListTableItem[] {
-  //  return this._data;
-  //}
-  //public set data(param: EntityListTableItem[]) {
-  //  this.data = param;
-  //}
-  //private _data: EntityListTableItem[] = [];
+  @Output() editRecordClicked = new EventEmitter<any>();
+  @Output() editDetailClicked = new EventEmitter<any>();
+  @Output() archiveClicked = new EventEmitter<any>();
 
   dataSource = new EntityListTableDataSource();
 
@@ -45,4 +40,18 @@ export class EntityListTableComponent implements AfterViewInit {
     this.table.dataSource = this.dataSource;
 
   }
+
+  onEditRecord(param:any) {
+    this.editRecordClicked.emit(param);
+  }
+
+  onEditDetails(param: any) {
+    this.editDetailClicked.emit(param);
+  }
+
+  onArchiveRecord(param: any) {
+    this.archiveClicked.emit(param);
+  }
+
+  
 }

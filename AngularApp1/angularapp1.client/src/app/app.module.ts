@@ -23,6 +23,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
 import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-menu/item-popup-menu.component';
+import { CountryFormComponent } from './pages/countries/country-form/country-form.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +41,8 @@ import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-me
     MenuItemComponent,
     VideosComponent,
     CountriesComponent,
-    EntityListTableComponent,    
+    EntityListTableComponent,
+    CountryFormComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,
@@ -49,6 +56,11 @@ import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-me
     MatPaginatorModule,
     MatSortModule,
     ItemPopupMenuComponent,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

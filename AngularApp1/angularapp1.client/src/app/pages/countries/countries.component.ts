@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-countries',
@@ -14,7 +15,7 @@ import { EntityListTableComponent } from '../../shared/entity-list-table/entity-
 export class CountriesComponent implements AfterViewInit {
   @ViewChild('ListTable') TableList !: EntityListTableComponent;
   public showEdit: boolean = true;
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private router: Router) {
   }
 
   ngAfterViewInit(): void {
@@ -43,6 +44,7 @@ export class CountriesComponent implements AfterViewInit {
   }
 
   onEdit(param: any) {
+    this.router.navigate(['/references/countries/form']);
     console.log('Edit record clicked', param);
   }
 

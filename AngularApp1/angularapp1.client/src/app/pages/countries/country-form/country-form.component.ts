@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-
 import { FormBuilder, Validators } from '@angular/forms';
+import { ApiService } from '../../../core/api.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class CountryFormComponent {
   private fb = inject(FormBuilder);
   addressForm = this.fb.group({
-    company: '',
+    name: '',
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
     address: [null, Validators.required],
@@ -88,10 +89,32 @@ export class CountryFormComponent {
     {name: 'Wisconsin', abbreviation: 'WI'},
     {name: 'Wyoming', abbreviation: 'WY'}
   ];
+  constructor(private api: ApiService, private router: Router) {
+    this.retrieveData();
+  }
 
   onSubmit(): void {
     alert('Thanks!');
-    this.addressForm.controls['company'].setValue ('test');
+    this.addressForm.controls['name'].setValue ('test');
     debugger;
   }
+  
+  private retrieveData(): void {
+    this.api.getCountry(1)
+      .subscribe((res: any) => {
+        // Assuming res has a structure matching the template structure
+        // above, e.g.:
+        // res = {
+        //     field1: "some-string",
+        //     field2: "other-string",
+        //     subgroupName: {
+        //         subfield2: "another-string"
+        //     },
+        // }
+        // Values in res that don't line up to the form structure
+        // are discarded. You can also pass in your own object you
+        // construct ad-hoc.
+        this.addressForm.patchValue(res);
+      });
+  }    
 }

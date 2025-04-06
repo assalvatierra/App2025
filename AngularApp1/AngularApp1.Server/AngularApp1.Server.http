@@ -16,6 +16,10 @@ GET {{AngularApp1.openapi.def}}
 GET {{AngularApp1.Server_HostAddress}}/api/RefCountries
 
 ###
+GET {{AngularApp1.Server_HostAddress}}/api/RefCountries/
+
+
+###
 GET {{AngularApp1.Server_HostAddress}}/api/RefCities
 
 ###

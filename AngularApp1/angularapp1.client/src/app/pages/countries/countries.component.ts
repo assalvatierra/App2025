@@ -25,14 +25,10 @@ export class CountriesComponent implements AfterViewInit {
   getEntities() {
     this.api.getCountries().subscribe((res) => {
       if (res) {
-        var data: any[];
-        data = res.map((item: any) => ({
-          id: item.id,
-          name: item.name
-        }));
-        this.initializeEntityList(data);
+        this.initializeEntityList(res);
       }
     });
+
   }
 
   initializeEntityList(param: any[]) {

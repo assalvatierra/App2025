@@ -13,17 +13,17 @@ import { Router } from '@angular/router';
 export class CountryFormComponent {
   private fb = inject(FormBuilder);
   addressForm = this.fb.group({
-    name: '',
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
+    name: ['', Validators.required],
+    description: '',
+    remarks: '',
+    code: '',
+    sortOrder: 0
+    //city: [null, Validators.required],
+    //state: [null, Validators.required],
+    //postalCode: [null, Validators.compose([
+    //  Validators.required, Validators.minLength(5), Validators.maxLength(5)])
+    //],
+    //shipping: ['free', Validators.required]
   });
 
   hasUnitNumber = false;
@@ -100,7 +100,7 @@ export class CountryFormComponent {
   }
   
   private retrieveData(): void {
-    this.api.getCountry(1)
+    this.api.getCountry(2)
       .subscribe((res: any) => {
         // Assuming res has a structure matching the template structure
         // above, e.g.:

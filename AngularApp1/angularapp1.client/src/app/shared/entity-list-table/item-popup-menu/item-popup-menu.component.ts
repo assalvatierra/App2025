@@ -24,6 +24,7 @@ export class ItemPopupMenuComponent {
   @Input() editTitle: string = '';
   @Output() editRecordClicked = new EventEmitter<any>();
 
+  @Input() showEditDetails: boolean = true;
   @Output() editDetailClicked = new EventEmitter<any>();
   @Output() archiveClicked = new EventEmitter<any>();
   @Output() customAClicked = new EventEmitter<any>();

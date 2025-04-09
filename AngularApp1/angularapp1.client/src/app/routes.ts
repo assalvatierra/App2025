@@ -43,7 +43,7 @@ const routeConfig: Routes = [
       component: CountriesComponent
     },
     {
-        path: 'references/countries/form',
+        path: 'references/countries/form/:id',
         component: CountryFormComponent
     }
 

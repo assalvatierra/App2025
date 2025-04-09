@@ -15,32 +15,22 @@ import { Router } from '@angular/router';
 export class CountriesComponent implements AfterViewInit {
   @ViewChild('ListTable') TableList !: EntityListTableComponent;
   public showEdit: boolean = true;
+  public dataloading: boolean = true;
+
   constructor(private api: ApiService, private router: Router) {
   }
 
   ngAfterViewInit(): void {
-    this.getEntities();
+    this.retrieveApiData();
   }
 
-  getEntities() {
-    this.api.getCountries().subscribe((res) => {
-      if (res) {
-        this.initializeEntityList(res);
-      }
-    });
-
-  }
-
-  initializeEntityList(param: any[]) {
-    this.TableList.initialize(param);
-  }
-
+  /* Event Handlers */
   onAddRecord() {
     console.log('Add record clicked');
   }
 
   onEdit(param: any) {
-    this.router.navigate(['/references/countries/form']);
+    this.router.navigate(['/references/countries/form', param]);
     console.log('Edit record clicked', param);
   }
 
@@ -51,5 +41,38 @@ export class CountriesComponent implements AfterViewInit {
   onArchive(param: any) {
     console.log('Archive clicked', param);
   }
+
+
+  /* API Calls */
+  private retrieveApiData() {
+    this.dataloading = true;
+
+    this.api.getCountries()
+      .subscribe({
+        next:
+          (res: any) => {
+            this.initializeEntityList(res);
+          },
+
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+
+        complete: () => {
+          console.log('API call complete');
+          this.dataloading = false;
+        }
+
+
+      });
+
+
+  }
+
+  /* Methods */
+  private initializeEntityList(param: any[]) {
+    this.TableList.initialize(param);
+  }
+
 
 }

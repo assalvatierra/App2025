@@ -1,42 +1,16 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="shipping-card">
+<mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Details</mat-card-title>
+      <mat-card-title>Country Info</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Name" formControlName="name">
-            @if (addressForm.controls['name'].hasError('required')) {
-            <mat-error>Name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Remarks" formControlName="remarks">
-            <textarea matInput placeholder="Remarks" formControlName="remarks"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Code" formControlName="code" />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Order" formControlName="sortOrder" />
-          </mat-form-field>
-        </div>
-      </div>
+      <app-entity-form #entityForm
+                       *ngIf="!dataloading"
+                       [modelData]="currentData">
+      </app-entity-form>
+
+
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
     </mat-card-actions>
   </mat-card>
-</form>

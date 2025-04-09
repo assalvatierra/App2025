@@ -29,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EntityFormComponent } from './shared/entity-form/entity-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     VideosComponent,
     CountriesComponent,
     EntityListTableComponent,
-    CountryFormComponent,    
+    CountryFormComponent,
+    EntityFormComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

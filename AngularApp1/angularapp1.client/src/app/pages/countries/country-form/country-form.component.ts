@@ -15,26 +15,29 @@ export class CountryFormComponent implements AfterViewInit {
   @ViewChild('entityForm') entityInfo!: EntityFormComponent;
   public currentData: any;
   public dataloading: boolean = true;
-
+  private paramId: number=0;
   constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngAfterViewInit(): void {
-    const paramId = this.route.snapshot.paramMap.get('id');
-    this.retrieveApiData(paramId);
+    this.paramId = Number(this.route.snapshot.paramMap.get('id'));
+    this.retrieveApiData(this.paramId);
   }
 
   /* Event Handlers */
   onSubmit(): void {
     this.updateCurrentDataValues();
+
+    this.updateApiData(this.paramId, this.currentData);
+
     alert('Thanks!');
     debugger;
   }
 
   /* API calls */
-  private retrieveApiData(paramId: any): void {
+  private retrieveApiData(paramId: number): void {
     this.dataloading = true;
-    this.api.getCountry(+paramId)
+    this.api.getCountry(paramId)
       .subscribe({
         next:
           (res: any) => {
@@ -49,6 +52,28 @@ export class CountryFormComponent implements AfterViewInit {
           console.log('API call complete');
           this.dataloading = false;
           }
+
+
+      });
+  }
+
+  private updateApiData(Id: number, data: any): void {
+    this.dataloading = true;
+    this.api.updateCountry(this.paramId, data)
+      .subscribe({
+        next:
+          (res: any) => {
+            console.log('API Response:', res);
+          },
+
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+
+        complete: () => {
+          console.log('API call complete');
+          this.dataloading = false;
+        }
 
 
       });

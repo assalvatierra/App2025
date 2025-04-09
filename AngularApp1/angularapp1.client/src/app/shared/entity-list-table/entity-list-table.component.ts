@@ -24,10 +24,12 @@ export class EntityListTableComponent implements AfterViewInit {
   @Output() editDetailClicked = new EventEmitter<any>();
   @Output() archiveClicked = new EventEmitter<any>();
 
+  @Input() showEditDetails: boolean = true;
+
   dataSource = new EntityListTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['actions','id', 'name'];
+  displayedColumns = ['actions','id', 'name', 'description', 'remarks', 'code', 'sortOrder'];
 
   constructor() {
 
@@ -54,6 +56,7 @@ export class EntityListTableComponent implements AfterViewInit {
 
   onEditDetails(param: any) {
     this.editDetailClicked.emit(param);
+    console.log('Edit details clicked', param);
   }
 
   onArchiveRecord(param: any) {

@@ -35,13 +35,17 @@ const routeConfig: Routes = [
         component: VideosComponent
     },
     {
+        path: 'references',
+        component: CountriesComponent
+    },
+    {
       path: 'references/countries',
       component: CountriesComponent
-  },
-  {
-    path: 'references/countries/form',
-    component: CountryFormComponent
-  }
+    },
+    {
+        path: 'references/countries/form',
+        component: CountryFormComponent
+    }
 
 
 ];

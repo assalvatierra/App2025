@@ -17,7 +17,13 @@ export class ApiService {
       map((res: any) => {
         return res.map((item: any) => ({
           id: item.id,
-          name: item.name
+          name: item.name,
+
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+          
         }));
       })
     );

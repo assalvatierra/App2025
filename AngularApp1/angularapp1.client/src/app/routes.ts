@@ -6,6 +6,7 @@ import { CommentsComponent } from "./pages/comments/comments.component";
 import { VideosComponent } from "./pages/content/videos/videos.component";
 import { CountriesComponent } from "./pages/countries/countries.component";
 import { CountryFormComponent } from "./pages/countries/country-form/country-form.component";
+import { CitiesComponent } from "./pages/cities/cities.component";
 
 const routeConfig: Routes = [
 
@@ -45,7 +46,11 @@ const routeConfig: Routes = [
     {
         path: 'references/countries/form/:id',
         component: CountryFormComponent
-    }
+    },
+    {
+      path: 'references/cities',
+      component: CitiesComponent
+    },
 
 
 ];

@@ -30,6 +30,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
+import { CitiesComponent } from './pages/cities/cities.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { EntityFormComponent } from './shared/entity-form/entity-form.component'
     CountriesComponent,
     EntityListTableComponent,
     CountryFormComponent,
-    EntityFormComponent,    
+    EntityFormComponent,
+    CitiesComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

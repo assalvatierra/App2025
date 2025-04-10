@@ -39,6 +39,7 @@ export class NavigationComponent {
       icon: 'analytics', label: 'References', route: 'references',
       subItems: [
         { icon: 'comment', label: 'Countries', route: 'countries'},
+        { icon: 'comment', label: 'Cities', route: 'cities'},
       ]
     },
     {

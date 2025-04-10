@@ -42,4 +42,22 @@ export class ApiService {
     return this.http.delete<any>(`${this.url}/api/RefCountries/${id}`);
   }
 
+  
+  getCities(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/api/RefCities`).pipe(
+      map((res: any) => {
+        return res.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+          
+        }));
+      })
+    );
+  }
+
 }

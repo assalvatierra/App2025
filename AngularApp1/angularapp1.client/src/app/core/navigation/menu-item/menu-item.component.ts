@@ -1,6 +1,7 @@
 import { Component,input, signal } from '@angular/core';
 import { MenuItem } from '../navigation.component';
 
+
 @Component({
   selector: 'app-menu-item',
   standalone: false,

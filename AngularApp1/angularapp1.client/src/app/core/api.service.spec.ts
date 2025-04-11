@@ -9,7 +9,7 @@ describe('ApiService', () => {
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
-      declarations: [ApiService],
+      providers: [ApiService],
       imports: [
         HttpClientTestingModule, AppModule,
       ],

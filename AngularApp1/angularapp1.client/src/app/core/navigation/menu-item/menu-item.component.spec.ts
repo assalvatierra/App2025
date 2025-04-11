@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuItemComponent } from './menu-item.component';
-import { signal } from '@angular/core';
+//import { signal, input } from '@angular/core';
 
 describe('MenuItemComponent', () => {
   let component: MenuItemComponent;
@@ -20,11 +20,8 @@ describe('MenuItemComponent', () => {
 
     fixture = TestBed.createComponent(MenuItemComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    component.item.apply([
+    var itemdata = [
       { icon: 'dashboard', label: 'Dashboard', route: 'dashboard' },
       {
         icon: 'analytics', label: 'References', route: 'references',
@@ -37,10 +34,16 @@ describe('MenuItemComponent', () => {
           { icon: 'post_add', label: 'Posts', route: 'posts' },
         ]
       },
-    ]);
+    ];
 
+    fixture.componentRef.setInput('item', itemdata); 
+    fixture.componentRef.setInput('collapsed', false);
 
-    component.collapsed.apply(false);
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+
 
     expect(component).toBeTruthy();
   });

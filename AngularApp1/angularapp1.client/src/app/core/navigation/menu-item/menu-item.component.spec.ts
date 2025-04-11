@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { MenuItemComponent } from './menu-item.component';
+import { signal } from '@angular/core';
 
 describe('MenuItemComponent', () => {
   let component: MenuItemComponent;
@@ -8,7 +10,11 @@ describe('MenuItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MenuItemComponent]
+      declarations: [MenuItemComponent],
+      imports: [
+        MatIconModule,
+        RouterModule.forRoot([]),
+      ],
     })
     .compileComponents();
 
@@ -18,6 +24,24 @@ describe('MenuItemComponent', () => {
   });
 
   it('should create', () => {
+    component.item.apply([
+      { icon: 'dashboard', label: 'Dashboard', route: 'dashboard' },
+      {
+        icon: 'analytics', label: 'References', route: 'references',
+      },
+      {
+        icon: 'video_library', label: 'Content', route: 'content',
+        subItems: [
+          { icon: 'play_arrow', label: 'Videos', route: 'videos' },
+          { icon: 'playlist_play', label: 'Playlists', route: 'playlists' },
+          { icon: 'post_add', label: 'Posts', route: 'posts' },
+        ]
+      },
+    ]);
+
+
+    component.collapsed.apply(false);
+
     expect(component).toBeTruthy();
   });
 });

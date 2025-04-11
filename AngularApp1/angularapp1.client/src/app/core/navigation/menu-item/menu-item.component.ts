@@ -8,7 +8,7 @@ import { MenuItem } from '../navigation.component';
   styleUrl: './menu-item.component.css'
 })
 export class MenuItemComponent {
-  item = input.required<MenuItem>()
+  item = input.required<MenuItem>();
   collapsed = input(false);
 
   nestedMenuOpen = signal(false);

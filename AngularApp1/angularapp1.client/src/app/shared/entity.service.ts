@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { tableField } from './models/entityListTableField';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class EntityService {
 
   constructor() { }
 
-  getDefaultEntityFields(): any {
+  getDefaultEntityFields(): tableField[] {
     return [
       { key: 'id', label: 'Id' },
       { key: 'name', label: 'Name' },
@@ -18,3 +19,5 @@ export class EntityService {
     ];
   }
 }
+
+

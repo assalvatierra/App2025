@@ -6,6 +6,7 @@ import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 import { Router } from '@angular/router';
 import { EntityService } from '../../shared/entity.service';
+import { tableField } from '../../shared/models/entityListTableField';
 
 @Component({
   selector: 'app-cities',
@@ -82,7 +83,7 @@ export class CitiesComponent {
     this.TableList.initialize(param);
   }
 
-  private getTableFields(): any[] {
+  private getTableFields(): tableField[] {
     return this.entityService.getDefaultEntityFields();
   }
 

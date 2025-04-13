@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 import { Router } from '@angular/router';
+import { EntityService } from '../../shared/entity.service';
 
 @Component({
   selector: 'app-cities',
@@ -17,8 +18,15 @@ export class CitiesComponent {
   public showEdit: boolean = true;
   public dataloading: boolean = true;
 
-  constructor(private api: ApiService, private router: Router) {
+  public get tableFields() {
+    return this.getTableFields();
   }
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private entityService: EntityService) {
+  }
+
 
   ngAfterViewInit(): void {
     this.retrieveApiData();
@@ -73,5 +81,10 @@ export class CitiesComponent {
   private initializeEntityList(param: any[]) {
     this.TableList.initialize(param);
   }
+
+  private getTableFields(): any[] {
+    return this.entityService.getDefaultEntityFields();
+  }
+
 
 }

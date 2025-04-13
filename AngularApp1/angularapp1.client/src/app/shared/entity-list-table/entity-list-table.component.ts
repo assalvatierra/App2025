@@ -37,7 +37,8 @@ export class EntityListTableComponent implements AfterViewInit {
     return this._tableFields;
   }
   public set tableFields(value: any) {
-    //this._tableFields =[
+    // Format of table fields 
+    // this._tableFields = [
     //  { key: 'id', label: 'Id' },
     //  { key: 'name', label: 'Name' },
     //  { key: 'description', label: 'Description' },
@@ -45,39 +46,17 @@ export class EntityListTableComponent implements AfterViewInit {
     //  { key: 'code', label: 'Code' },
     //  { key: 'sortOrder', label: 'Sort Order' }
     //];
-
     this._tableFields = value;
-
-    this.displayedColumns.push('actions'); // Add actions column at the end
-    this._tableFields.forEach((field: any) => {
-      this.displayedColumns.push(field.key);
-    });
-
-    //this.displayedColumns = value.map((field: any) => field.key);
-    //this.displayedColumns.push('actions'); // Add actions column at the end
-
-    //this.displayedColumns = [...this.displayedColumns, ...value.map((field: any) => field.key)];
-
   }
   private _tableFields: any[] = [];
-
-
-
   constructor() {
 
   }
 
   ngAfterViewInit(): void {
-
+    this.initializeFields();
   }
 
-  initialize(param: EntityListTableItem[]): void {
-    this.dataSource.data = param;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-
-  }
 
   onAddRecord() {
     this.addRecordClicked.emit();
@@ -95,5 +74,22 @@ export class EntityListTableComponent implements AfterViewInit {
     this.archiveClicked.emit(param);
   }
 
-  
+  /* Methods */
+
+  initialize(param: EntityListTableItem[]): void {
+    this.dataSource.data = param;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
+
+  }
+
+  initializeFields(): void {
+    this.displayedColumns = [('actions')]; // Add first column 
+    this._tableFields.forEach((field: any) => {
+      this.displayedColumns.push(field.key);
+    });
+
+  }
+
 }

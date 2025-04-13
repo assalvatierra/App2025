@@ -20,7 +20,7 @@ export class CountriesComponent implements AfterViewInit {
 
   public get tableFields()
   {
-    return this.entityService.getDefaultEntityFields();
+    return this.getTableFields();
   }
 
 
@@ -85,6 +85,16 @@ export class CountriesComponent implements AfterViewInit {
     this.TableList.initialize(param);
   }
 
+  private getTableFields(): any[] {
+    var fields = this.entityService.getDefaultEntityFields();
+
+    //sample customizition
+    //remove sortOrder field in the list
+    fields = fields.filter((item: { key: string, value: string }) => item.key != 'sortOrder');
+    
+
+    return fields;
+  }
 
 
 }

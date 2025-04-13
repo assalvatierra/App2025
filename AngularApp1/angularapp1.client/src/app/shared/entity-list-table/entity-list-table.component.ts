@@ -29,7 +29,39 @@ export class EntityListTableComponent implements AfterViewInit {
   dataSource = new EntityListTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['actions','id', 'name', 'description', 'remarks', 'code', 'sortOrder'];
+  displayedColumns: any[] = [];
+  //displayedColumns = ['actions', 'id', 'name', 'description', 'remarks', 'code', 'sortOrder'];
+
+  @Input()
+  public get tableFields(): any {
+    return this._tableFields;
+  }
+  public set tableFields(value: any) {
+    //this._tableFields =[
+    //  { key: 'id', label: 'Id' },
+    //  { key: 'name', label: 'Name' },
+    //  { key: 'description', label: 'Description' },
+    //  { key: 'remarks', label: 'Remarks' },
+    //  { key: 'code', label: 'Code' },
+    //  { key: 'sortOrder', label: 'Sort Order' }
+    //];
+
+    this._tableFields = value;
+
+    this.displayedColumns.push('actions'); // Add actions column at the end
+    this._tableFields.forEach((field: any) => {
+      this.displayedColumns.push(field.key);
+    });
+
+    //this.displayedColumns = value.map((field: any) => field.key);
+    //this.displayedColumns.push('actions'); // Add actions column at the end
+
+    //this.displayedColumns = [...this.displayedColumns, ...value.map((field: any) => field.key)];
+
+  }
+  private _tableFields: any[] = [];
+
+
 
   constructor() {
 

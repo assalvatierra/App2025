@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 import { Router } from '@angular/router';
+import { EntityService } from '../../shared/entity.service';
 
 @Component({
   selector: 'app-countries',
@@ -17,7 +18,17 @@ export class CountriesComponent implements AfterViewInit {
   public showEdit: boolean = true;
   public dataloading: boolean = true;
 
-  constructor(private api: ApiService, private router: Router) {
+  public get tableFields()
+  {
+    return this.entityService.getDefaultEntityFields();
+  }
+
+
+
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private entityService: EntityService) {
   }
 
   ngAfterViewInit(): void {
@@ -73,6 +84,7 @@ export class CountriesComponent implements AfterViewInit {
   private initializeEntityList(param: any[]) {
     this.TableList.initialize(param);
   }
+
 
 
 }

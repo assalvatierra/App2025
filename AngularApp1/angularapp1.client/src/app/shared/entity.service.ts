@@ -18,6 +18,22 @@ export class EntityService {
       { key: 'sortOrder', label: 'Sort Order' }
     ];
   }
+
+  getDefaultContactInfoFields(): tableField[] {
+    return [
+      { key: 'id', label: 'Id' },
+      { key: 'ContactNo1', label: 'ContactNo1' },
+      { key: 'ContactNo1', label: 'ContactNo1' },
+      { key: 'Address1', label: 'Address1' },
+      { key: 'Address1', label: 'Address1' },
+      { key: 'Email1', label: 'Email1' },
+      { key: 'Email2', label: 'Email2' }
+    ];
+  }
+
+
+
+
 }
 
-
+ 

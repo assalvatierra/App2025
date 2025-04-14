@@ -31,6 +31,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
 import { CitiesComponent } from './pages/cities/cities.component';
+import { EntityComponent } from './pages/entity/entity.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CitiesComponent } from './pages/cities/cities.component';
     EntityListTableComponent,
     CountryFormComponent,
     EntityFormComponent,
-    CitiesComponent,    
+    CitiesComponent,
+    EntityComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

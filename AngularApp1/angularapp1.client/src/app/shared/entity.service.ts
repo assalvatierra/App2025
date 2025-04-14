@@ -22,12 +22,12 @@ export class EntityService {
   getDefaultContactInfoFields(): tableField[] {
     return [
       { key: 'id', label: 'Id' },
-      { key: 'ContactNo1', label: 'ContactNo1' },
-      { key: 'ContactNo1', label: 'ContactNo1' },
-      { key: 'Address1', label: 'Address1' },
-      { key: 'Address1', label: 'Address1' },
-      { key: 'Email1', label: 'Email1' },
-      { key: 'Email2', label: 'Email2' }
+      { key: 'contactNo1', label: 'ContactNo1' },
+      { key: 'contactNo2', label: 'ContactNo2' },
+      { key: 'address1', label: 'Address1' },
+      { key: 'address2', label: 'Address2' },
+      { key: 'email1', label: 'Email1' },
+      { key: 'email2', label: 'Email2' }
     ];
   }
 

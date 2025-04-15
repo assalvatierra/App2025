@@ -7,11 +7,14 @@
         <button mat-menu-item (click)="onAddRecord()">Add</button>
       </th>
       <td mat-cell *matCellDef="let row">
-        <app-item-popup-menu [showEdit]="showEdit" [editTitle]="editTitle"
+        <app-item-popup-menu
+                             [menuLabel]="menuLabel"
+                             [showEdit]="showEdit" [editTitle]="editTitle"
                              (editRecordClicked)="onEditRecord(row.id)"
                              (editDetailClicked)="onEditDetails(row.id)"
                              (archiveClicked)="onArchiveRecord(row.id)"
-                             [showEditDetails]="showEditDetails">
+                             [showEditDetails]="showEditDetails"
+                             >
         </app-item-popup-menu>
       </td>
     </ng-container>

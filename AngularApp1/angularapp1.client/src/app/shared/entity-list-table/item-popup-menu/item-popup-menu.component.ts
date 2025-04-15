@@ -20,6 +20,8 @@ export enum actionTypes {
 export class ItemPopupMenuComponent {
   public MenuActionTypes = actionTypes;
 
+  @Input() menuLabel: string = 'Actions';
+
   @Input() showEdit: boolean = true;
   @Input() editTitle: string = '';
   @Output() editRecordClicked = new EventEmitter<any>();

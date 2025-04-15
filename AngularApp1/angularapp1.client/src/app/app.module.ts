@@ -17,21 +17,22 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { CommentsComponent } from './pages/comments/comments.component';
 import { MenuItemComponent } from './core/navigation/menu-item/menu-item.component';
 import { VideosComponent } from './pages/content/videos/videos.component';
-import { CountriesComponent } from './pages/countries/countries.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
 import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-menu/item-popup-menu.component';
-import { CountryFormComponent } from './pages/countries/country-form/country-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
+import { CountriesComponent } from './pages/countries/countries.component';
+import { CountryFormComponent } from './pages/countries/country-form/country-form.component';
 import { CitiesComponent } from './pages/cities/cities.component';
 import { EntityComponent } from './pages/entity/entity.component';
+import { EntityFormPageComponent } from './pages/entity/entity-form-page/entity-form-page.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { EntityComponent } from './pages/entity/entity.component';
     EntityListTableComponent,
     CountryFormComponent,
     EntityFormComponent,
+    EntityFormPageComponent,
     CitiesComponent,
     EntityComponent,    
   ],

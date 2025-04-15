@@ -51,6 +51,10 @@ export class ApiEntityService {
     );
   }
 
+  getEntity(id: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/api/Entities/${id}`);
+  }
+
 
 }
 

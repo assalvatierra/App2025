@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ApiEntityService } from '../../../core/services/api-entity.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
+import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
 
 @Component({
   selector: 'app-entity-form-page',
@@ -12,6 +13,7 @@ import { EntityFormComponent } from '../../../shared/entity-form/entity-form.com
 })
 export class EntityFormPageComponent implements AfterViewInit {
   @ViewChild('entityForm') entityInfo!: EntityFormComponent;
+  @ViewChild('ContactForm') contactInfo!: ContactInfoFormComponent;
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number = 0;
@@ -59,24 +61,24 @@ export class EntityFormPageComponent implements AfterViewInit {
 
   private updateApiData(Id: number, data: any): void {
     this.dataloading = true;
-    //this.api.updateCountry(this.paramId, data)
-    //  .subscribe({
-    //    next:
-    //      (res: any) => {
-    //        console.log('API Response:', res);
-    //      },
+    this.api.updateEntity(this.paramId, data)
+      .subscribe({
+        next:
+          (res: any) => {
+            console.log('API Response:', res);
+          },
 
-    //    error: (err) => {
-    //      console.error('API Error:', err);
-    //    },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
 
-    //    complete: () => {
-    //      console.log('API call complete');
-    //      this.dataloading = false;
-    //    }
+        complete: () => {
+          console.log('API call complete');
+          this.dataloading = false;
+        }
 
 
-    //  });
+      });
   }
 
   /* Methods */
@@ -92,6 +94,15 @@ export class EntityFormPageComponent implements AfterViewInit {
       this.currentData.remarks = this.entityInfo.dataForm.get('remarks')?.value;
       this.currentData.code = this.entityInfo.dataForm.get('code')?.value;
       this.currentData.sortOrder = this.entityInfo.dataForm.get('sortOrder')?.value;
+    }
+
+    if (this.contactInfo && this.contactInfo.modelData) {
+      this.currentData.contactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
+      this.currentData.contactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
+      this.currentData.email1 = this.contactInfo.dataForm.get('email1')?.value;
+      this.currentData.email2 = this.contactInfo.dataForm.get('email2')?.value;
+      this.currentData.address1 = this.contactInfo.dataForm.get('address1')?.value;
+      this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
     }
   }
 

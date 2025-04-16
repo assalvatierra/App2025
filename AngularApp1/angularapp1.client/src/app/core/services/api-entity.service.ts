@@ -54,6 +54,15 @@ export class ApiEntityService {
   getEntity(id: number): Observable<any> {
     return this.http.get<any>(`${this.url}/api/Entities/${id}`);
   }
+  addEntity(data: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/api/Entities`, data);
+  }
+  updateEntity(id: number, data: any): Observable<any> {
+    return this.http.put<any>(`${this.url}/api/Entities/${id}`, data);
+  }
+  deleteEntity(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/api/Entities/${id}`);
+  }
 
 
 }

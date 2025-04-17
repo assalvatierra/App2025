@@ -8,6 +8,8 @@ import { CountryFormComponent } from "./pages/countries/country-form/country-for
 import { CitiesComponent } from "./pages/cities/cities.component";
 import { EntityComponent } from "./pages/entity/entity.component";
 import { EntityFormPageComponent } from "./pages/entity/entity-form-page/entity-form-page.component";
+import { BusinessUnitComponent } from "./pages/business-unit/business-unit.component";
+import { BusinessUnitFormComponent } from "./pages/business-unit/business-unit-form/business-unit-form.component";
 
 const routeConfig: Routes = [
 
@@ -25,8 +27,12 @@ const routeConfig: Routes = [
       component: EntityFormPageComponent
     },
     {
-        path: 'content',
-        component: ContentComponent
+        path: 'businessunits',
+      component: BusinessUnitComponent
+    },
+    {
+      path: 'businessunits/form/:id',
+      component: BusinessUnitFormComponent
     },
     {
         path: 'analytics',

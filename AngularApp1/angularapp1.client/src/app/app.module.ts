@@ -34,6 +34,8 @@ import { CitiesComponent } from './pages/cities/cities.component';
 import { EntityComponent } from './pages/entity/entity.component';
 import { EntityFormPageComponent } from './pages/entity/entity-form-page/entity-form-page.component';
 import { ContactInfoFormComponent } from './shared/contact-info-form/contact-info-form.component';
+import { BusinessUnitComponent } from './pages/business-unit/business-unit.component';
+import { BusinessUnitFormComponent } from './pages/business-unit/business-unit-form/business-unit-form.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ContactInfoFormComponent } from './shared/contact-info-form/contact-inf
     EntityFormPageComponent,
     CitiesComponent,
     EntityComponent,
-    ContactInfoFormComponent,    
+    ContactInfoFormComponent,
+    BusinessUnitComponent,
+    BusinessUnitFormComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

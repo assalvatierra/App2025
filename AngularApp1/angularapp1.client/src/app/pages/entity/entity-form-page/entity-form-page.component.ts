@@ -4,6 +4,8 @@ import { ApiEntityService } from '../../../core/services/api-entity.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
 import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EntityListTableComponent } from '../../../shared/entity-list-table/entity-list-table.component';
 
 @Component({
   selector: 'app-entity-form-page',
@@ -18,8 +20,12 @@ export class EntityFormPageComponent implements AfterViewInit {
   public dataloading: boolean = true;
   private paramId: number = 0;
 
-  constructor(private api: ApiEntityService, private router: Router, private route: ActivatedRoute) {
-  }
+  constructor(
+    private api: ApiEntityService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog // Inject MatDialog
+  ) { }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
@@ -34,6 +40,10 @@ export class EntityFormPageComponent implements AfterViewInit {
 
     alert('Thanks!');
     debugger;
+  }
+
+  onOpenTypeDialog(): void {
+    this.openEntityFormDialog();
   }
 
   /* API calls */
@@ -106,5 +116,23 @@ export class EntityFormPageComponent implements AfterViewInit {
     }
   }
 
+  openEntityFormDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '600px'; // Set dialog width
+    dialogConfig.data = { entityData: this.currentData }; // Pass data to the dialog
+    //dialogConfig.data = {
+    //  entityData: this.currentData, // Pass current data
+    //  tableFields: ['field1', 'field2', 'field3'] // Pass tableFields
+    //};
+
+    const dialogRef = this.dialog.open(EntityListTableComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog result:', result);
+        this.currentData = result; // Update current data with dialog result
+      }
+    });
+  }
 
 }

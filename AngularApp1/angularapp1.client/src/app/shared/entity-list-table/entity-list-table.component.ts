@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, Inject, OnInit } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EntityListTableDataSource, EntityListTableItem } from './entity-list-table-datasource';
 import { ItemPopupMenuComponent } from './item-popup-menu/item-popup-menu.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-entity-list-table',
@@ -11,7 +13,7 @@ import { ItemPopupMenuComponent } from './item-popup-menu/item-popup-menu.compon
   styleUrl: './entity-list-table.component.css',
   standalone: false
 })
-export class EntityListTableComponent implements AfterViewInit {
+export class EntityListTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<EntityListTableItem>;
@@ -51,8 +53,14 @@ export class EntityListTableComponent implements AfterViewInit {
     this._tableFields = value;
   }
   private _tableFields: any[] = [];
-  constructor() {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  ngOnInit(): void {
+    // Bind tableFields from the dialog data
+    //if (this.data && this.data.tableFields) {
+    //  this.tableFields = this.data.tableFields;
+    //  this.initialize(this.data);
+    //}
   }
 
   ngAfterViewInit(): void {

@@ -5,7 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
 import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { EntityListTableComponent } from '../../../shared/entity-list-table/entity-list-table.component';
+//import { EntityListTableComponent } from '../../../shared/entity-list-table/entity-list-table.component';
+import { ListDialogComponent } from '../../../shared/list-dialog/list-dialog.component';
+import { ApiBusinessUnitService } from '../../../core/services/api-business-unit.service';
+import { EntityService } from '../../../shared/entity.service';
 
 @Component({
   selector: 'app-entity-form-page',
@@ -24,12 +27,16 @@ export class EntityFormPageComponent implements AfterViewInit {
     private api: ApiEntityService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog // Inject MatDialog
+    private dialog: MatDialog, // Inject MatDialog
+    private apiBusinessUnitlookupService: ApiBusinessUnitService,
+    private entityService: EntityService,
   ) { }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
     this.retrieveApiData(this.paramId);
+
+    this.getApiBusinessUnitLookupData();
   }
 
   /* Event Handlers */
@@ -43,7 +50,7 @@ export class EntityFormPageComponent implements AfterViewInit {
   }
 
   onOpenTypeDialog(): void {
-    this.openEntityFormDialog();
+    this.openBusinessUnitLookupDialog();
   }
 
   /* API calls */
@@ -91,6 +98,31 @@ export class EntityFormPageComponent implements AfterViewInit {
       });
   }
 
+  private getApiBusinessUnitLookupData(): void {
+    this.dataloading = true;
+
+    this.apiBusinessUnitlookupService.getList()
+      .subscribe({
+        next:
+          (res: any) => {
+            this.businessUnitLookupData = res;
+            //this.initializeEntityList(res);
+          },
+
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+
+        complete: () => {
+          console.log('API call complete');
+          this.dataloading = false;
+        }
+
+
+      });
+
+  }
+
   /* Methods */
   private initializeData(param: any): void {
     this.currentData = param;
@@ -114,25 +146,37 @@ export class EntityFormPageComponent implements AfterViewInit {
       this.currentData.address1 = this.contactInfo.dataForm.get('address1')?.value;
       this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
     }
+
   }
 
-  openEntityFormDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '600px'; // Set dialog width
-    dialogConfig.data = { entityData: this.currentData }; // Pass data to the dialog
-    //dialogConfig.data = {
-    //  entityData: this.currentData, // Pass current data
-    //  tableFields: ['field1', 'field2', 'field3'] // Pass tableFields
-    //};
 
-    const dialogRef = this.dialog.open(EntityListTableComponent, dialogConfig);
+  /* Dialogs */
+  private businessUnitLookupData: any[] = [];
+  openBusinessUnitLookupDialog(): void {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '700px'; // Set dialog width
+    dialogConfig.data = {
+      entityData: this.businessUnitLookupData, // Pass current data
+      tableFields: this.entityService.getDefaultEntityFields(),// Pass tableFields
+      showCheckbox: false, // Show checkbox for multiple selection
+    //  MultipleSelection: false, // Enable multiple selection
+    };
+
+    const dialogRef = this.dialog.open(ListDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog result:', result);
-        this.currentData = result; // Update current data with dialog result
+        this.processBusinessUnitLookupDialogResult(result);
       }
     });
+  }
+
+  processBusinessUnitLookupDialogResult(result: any): void {
+    console.log('Dialog result:', result);
+    debugger;
+    this.currentData.entityTypeId = result[0].id; // Update current data with dialog result
+
   }
 
 }

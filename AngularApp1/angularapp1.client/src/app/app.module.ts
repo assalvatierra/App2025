@@ -36,6 +36,8 @@ import { EntityFormPageComponent } from './pages/entity/entity-form-page/entity-
 import { ContactInfoFormComponent } from './shared/contact-info-form/contact-info-form.component';
 import { BusinessUnitComponent } from './pages/business-unit/business-unit.component';
 import { BusinessUnitFormComponent } from './pages/business-unit/business-unit-form/business-unit-form.component';
+import { ListDialogComponent } from './shared/list-dialog/list-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { BusinessUnitFormComponent } from './pages/business-unit/business-unit-f
     EntityComponent,
     ContactInfoFormComponent,
     BusinessUnitComponent,
-    BusinessUnitFormComponent,    
+    BusinessUnitFormComponent,
+    ListDialogComponent,    
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,
@@ -75,6 +78,7 @@ import { BusinessUnitFormComponent } from './pages/business-unit/business-unit-f
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

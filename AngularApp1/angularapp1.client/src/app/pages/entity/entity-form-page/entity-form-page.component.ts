@@ -23,6 +23,9 @@ export class EntityFormPageComponent implements AfterViewInit {
   public dataloading: boolean = true;
   private paramId: number = 0;
 
+  public dataForm: any;
+
+
   constructor(
     private api: ApiEntityService,
     private router: Router,
@@ -30,7 +33,10 @@ export class EntityFormPageComponent implements AfterViewInit {
     private dialog: MatDialog, // Inject MatDialog
     private apiBusinessUnitlookupService: ApiBusinessUnitService,
     private entityService: EntityService,
-  ) { }
+    private fb: FormBuilder
+  ) {
+    this.initForm();
+  }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
@@ -42,11 +48,8 @@ export class EntityFormPageComponent implements AfterViewInit {
   /* Event Handlers */
   onSubmit(): void {
     this.updateCurrentDataValues();
-
     this.updateApiData(this.paramId, this.currentData);
-
-    alert('Thanks!');
-    debugger;
+    alert('Update Submitted!');
   }
 
   onOpenTypeDialog(): void {
@@ -126,6 +129,20 @@ export class EntityFormPageComponent implements AfterViewInit {
   /* Methods */
   private initializeData(param: any): void {
     this.currentData = param;
+    this.setFormData(this.currentData);
+
+  }
+
+  private initForm() {
+    this.dataForm = this.fb.group({
+      entityTypeId: 0,
+      entityStatusId: 0,
+      businessUnitId: 0
+    });
+  }
+
+  public setFormData(param: any) {
+    this.dataForm.patchValue(param);
   }
 
 
@@ -149,6 +166,7 @@ export class EntityFormPageComponent implements AfterViewInit {
 
   }
 
+  
 
   /* Dialogs */
   private businessUnitLookupData: any[] = [];
@@ -174,9 +192,8 @@ export class EntityFormPageComponent implements AfterViewInit {
 
   processBusinessUnitLookupDialogResult(result: any): void {
     console.log('Dialog result:', result);
-    debugger;
-    this.currentData.entityTypeId = result[0].id; // Update current data with dialog result
-
+    this.currentData.businessUnitId = result[0].id; // Update current data with dialog result
+    this.dataForm.patchValue(this.currentData);
   }
 
 }

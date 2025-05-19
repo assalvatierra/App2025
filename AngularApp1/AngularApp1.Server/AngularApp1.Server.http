@@ -13,6 +13,9 @@ GET {{AngularApp1.Server_HostAddress}}/openapi/v1.json
 GET {{AngularApp1.openapi.def}}
 
 ###
+GET {{AngularApp1.Server_HostAddress}}/user/Login
+
+###
 GET {{AngularApp1.Server_HostAddress}}/api/RefCountries
 
 ###

@@ -9,6 +9,8 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularapp1.client", "Angul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularApp1.Server", "AngularApp1\AngularApp1.Server\AngularApp1.Server.csproj", "{88BCF4BF-7602-44F2-9877-64745A6E1CCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSecurity", "WebSecurity\WebSecurity.csproj", "{0005A681-D169-464F-937E-689145181FC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88BCF4BF-7602-44F2-9877-64745A6E1CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0005A681-D169-464F-937E-689145181FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0005A681-D169-464F-937E-689145181FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0005A681-D169-464F-937E-689145181FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0005A681-D169-464F-937E-689145181FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

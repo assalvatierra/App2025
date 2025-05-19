@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AngularApp1.Server.Areas.Identity.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,10 +14,21 @@ namespace AngularApp1.Server.Controllers
     public class UserController : ControllerBase
     {
 
+        private readonly SignInManager<ErpIdentityUser> _signInManager;
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public UserController(SignInManager<ErpIdentityUser> signInManager, ILogger<WeatherForecastController> logger)
+        {
+            _signInManager = signInManager;
+            _logger = logger;
+        }
+
 
         [HttpPost("login")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            var result = await _signInManager.PasswordSignInAsync("admin@gmail.com", "Admin123!", true, lockoutOnFailure: false);
+
             var token = GenerateJwtToken();
             return Ok(new { token });
         }

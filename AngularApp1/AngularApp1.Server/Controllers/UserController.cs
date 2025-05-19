@@ -27,10 +27,18 @@ namespace AngularApp1.Server.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login()
         {
-            var result = await _signInManager.PasswordSignInAsync("admin@gmail.com", "Admin123!", true, lockoutOnFailure: false);
-
-            var token = GenerateJwtToken();
-            return Ok(new { token });
+            string email = "admin@gmail.com";
+            string password = "Admin123!";
+            var result = await _signInManager.PasswordSignInAsync(email, password, true, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                var token = GenerateJwtToken();
+                return Ok(new { token });
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         private string GenerateJwtToken()

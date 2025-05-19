@@ -3,9 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using AngularApp1.Server.Data;
 //using System.IdentityModel.Tokens.Jwt;
 //using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.AspNetCore.Authentication.BearerToken;
-
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,25 +16,25 @@ builder.Services.AddDbContext<ErpIdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
 builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
 
-//builder.Services.AddAuthentication(
-////    options =>
-////{
-////    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-////    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-////}
-//).AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = "ABC",
-//        ValidAudience = "ALL",
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
-//    };
-//});
+builder.Services.AddAuthentication(
+    options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "ABC",
+        ValidAudience = "ALL",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
+    };
+});
 
 
 builder.Services.AddDbContext<ErpDbContext>(options =>

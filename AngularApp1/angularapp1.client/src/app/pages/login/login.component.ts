@@ -10,8 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './login.component.css'
 })
 export class LoginComponent  implements OnInit  {
-  username = '';
-  password = '';
+  username = 'admin@gmail.com';
+  password = 'Admin123!';
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -19,6 +19,9 @@ export class LoginComponent  implements OnInit  {
   }
 
   onSubmit() {
+
+    console.log({ username: this.username, password: this.password });
+
     this.authService.login({ username: this.username, password: this.password })
       .subscribe({
         next: (response: any) => {

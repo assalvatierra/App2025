@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(user: { username: string, password: string }) {
-    return this.http.post(`${this.BASE_URL}/api/User/Login`, null);
+    return this.http.post(`${this.BASE_URL}/api/User/Login`, user);
   }
 
   register(user: { username: string, password: string }) {

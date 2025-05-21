@@ -98,4 +98,5 @@ export class EntityComponent {
     return fields;
   }
 
+
 }

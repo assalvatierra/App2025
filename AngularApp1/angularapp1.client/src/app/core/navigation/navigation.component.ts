@@ -53,6 +53,7 @@ export class NavigationComponent {
     },
     { icon: 'analytics', label: 'Analytics', route: 'analytics' },
     { icon: 'comment', label: 'Comments', route: 'comments' },
+    { icon: 'comment', label: 'login', route: 'Login' },
   ]);
 
   profilePicSize = computed(() => this.sideNaveCollapsed() ? '32' : '100')

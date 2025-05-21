@@ -38,7 +38,9 @@ import { BusinessUnitComponent } from './pages/business-unit/business-unit.compo
 import { BusinessUnitFormComponent } from './pages/business-unit/business-unit-form/business-unit-form.component';
 import { ListDialogComponent } from './shared/list-dialog/list-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ContactInfoFormComponent,
     BusinessUnitComponent,
     BusinessUnitFormComponent,
-    ListDialogComponent,    
+    ListDialogComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,
@@ -79,6 +82,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     ReactiveFormsModule,
     MatDialogModule,
+    FormsModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

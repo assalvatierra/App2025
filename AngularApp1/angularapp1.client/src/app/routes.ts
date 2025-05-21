@@ -10,6 +10,8 @@ import { EntityComponent } from "./pages/entity/entity.component";
 import { EntityFormPageComponent } from "./pages/entity/entity-form-page/entity-form-page.component";
 import { BusinessUnitComponent } from "./pages/business-unit/business-unit.component";
 import { BusinessUnitFormComponent } from "./pages/business-unit/business-unit-form/business-unit-form.component";
+import { LoginComponent } from "./pages/login/login.component";
+import { AuthGuard } from "./core/auth.guard";
 
 const routeConfig: Routes = [
 
@@ -20,7 +22,8 @@ const routeConfig: Routes = [
     },
     {
         path: 'Entities',
-      component: EntityComponent
+      component: EntityComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'entities/form/:id',
@@ -61,6 +64,10 @@ const routeConfig: Routes = [
     {
       path: 'references/cities',
       component: CitiesComponent
+    },
+    {
+      path: 'Login',
+      component: LoginComponent
     },
 
 

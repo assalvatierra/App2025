@@ -31,6 +31,13 @@ export class EntityService {
     ];
   }
 
+  getCitiesFields(): tableField[] {
+    return [
+     { key: 'countryId', label: 'CountryId' },
+     { key: 'refCountry', label: 'Country' },
+    ];
+  }
+
 
 
 

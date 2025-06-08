@@ -8,12 +8,12 @@ import { map } from 'rxjs/operators';
 })
 export class ApiService {
 
-  private url = 'http://localhost:5157';
+  private baseUrl = 'http://localhost:5157';
 
   constructor(private http: HttpClient) { }
 
   getCountries(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/api/RefCountries`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/RefCountries`).pipe(
       map((res: any) => {
         return res.map((item: any) => ({
           id: item.id,
@@ -30,21 +30,21 @@ export class ApiService {
   }
 
   getCountry(id: number): Observable<any> {
-    return this.http.get<any>(`${this.url}/api/RefCountries/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/api/RefCountries/${id}`);
   }
   addCountry(country: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/api/RefCountries`, country);
+    return this.http.post<any>(`${this.baseUrl}/api/RefCountries`, country);
   }
   updateCountry(id: number, country: any): Observable<any> {
-    return this.http.put<any>(`${this.url}/api/RefCountries/${id}`, country);
+    return this.http.put<any>(`${this.baseUrl}/api/RefCountries/${id}`, country);
   }
   deleteCountry(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.url}/api/RefCountries/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/api/RefCountries/${id}`);
   }
 
   
   getCities(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/api/RefCities`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/RefCities`).pipe(
       map((res: any) => {
         return res.map((item: any) => ({
           id: item.id,
@@ -59,5 +59,53 @@ export class ApiService {
       })
     );
   }
+
+  getCity(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Api/RefCities/${id}`);
+  }
+
+  updateCity(id: number, data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/Api/RefCities/${id}`, data);
+  }
+
+
+
+  // CONTACTS API
+
+  getContacts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/Contacts`).pipe(
+      map((res: any) => {
+        return res.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+        }));
+      })
+    );
+  }
+
+  getContact(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/Contacts/${id}`);
+  }
+
+  addContact(contact: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/Contacts`, contact);
+  }
+
+  updateContact(id: number, contact: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/Contacts/${id}`, contact);
+  }
+
+  deleteContact(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/Contacts/${id}`);
+  }
+
+
+
+
+
 
 }

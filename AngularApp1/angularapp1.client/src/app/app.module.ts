@@ -41,6 +41,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CityFormComponent } from './pages/cities/city-form/city-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     BusinessUnitFormComponent,
     ListDialogComponent,
     LoginComponent,
+    CityFormComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

@@ -42,6 +42,8 @@ export class ApiService {
     return this.http.delete<any>(`${this.baseUrl}/api/RefCountries/${id}`);
   }
 
+  // CITIES API
+
   
   getCities(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/api/RefCities`).pipe(
@@ -49,7 +51,6 @@ export class ApiService {
         return res.map((item: any) => ({
           id: item.id,
           name: item.name,
-
           description: item.description,
           remarks: item.remarks,
           code: item.code,
@@ -60,12 +61,19 @@ export class ApiService {
     );
   }
 
+  addCity(city: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/RefCities`, city);
+  }
+
   getCity(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Api/RefCities/${id}`);
   }
 
-  updateCity(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/Api/RefCities/${id}`, data);
+  updateCity(id: number, city: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/Api/RefCities/${id}`, city);
+  }
+  deleteCity(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/RefCities/${id}`);
   }
 
 

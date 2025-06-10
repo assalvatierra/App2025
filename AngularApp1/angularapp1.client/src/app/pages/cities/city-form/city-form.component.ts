@@ -15,6 +15,7 @@ export class CityFormComponent implements AfterViewInit {
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number = 0;
+  public ShowAddBtn:  boolean = false;
 
   constructor(
     private api: ApiService,
@@ -24,15 +25,56 @@ export class CityFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
-    this.retrieveApiData(this.paramId);
+
+    if (isNaN(this.paramId)) {
+      console.error('Invalid parameter ID:', this.paramId);
+      return;
+    }
+
+    if(this.paramId != 0) {
+      this.retrieveApiData(this.paramId);
+      console.log('display current data: ');
+      console.log(this.currentData);
+    }
+
+    if(this.paramId == 0) {
+      
+      this.currentData = {
+        id: 0,
+        name: '',
+        description: '',
+        remarks: '',
+        code: '',
+        sortOrder: 0
+      };
+
+      console.log('display current data: ');
+      console.log(this.currentData);
+
+      this.dataloading = false;
+      this.ShowAddBtn = true;
+    }
+
+
   }
 
   /* Event Handlers */
   onSubmit(): void {
     this.updateCurrentDataValues();
     this.updateApiData(this.paramId, this.currentData);
-    alert('City updated!');
+    //alert('City updated!');
+    this.router.navigate(['/references/cities']);
   }
+
+  onAdd(): void{
+    //console.log('adding new city...');
+    this.updateCurrentDataValues();
+    //console.log(this.currentData)
+    this.addApiData(this.currentData)
+    //alert('City Added!');
+    this.router.navigate(['/references/cities']);
+  }
+
 
   /* API calls */
   private retrieveApiData(paramId: number): void {
@@ -67,6 +109,24 @@ export class CityFormComponent implements AfterViewInit {
       });
   }
 
+  
+  private addApiData(data: any): void {
+    this.dataloading = true;
+    this.api.addCity(data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
+
   /* Methods */
   private initializeData(param: any): void {
     this.currentData = param;
@@ -82,5 +142,6 @@ export class CityFormComponent implements AfterViewInit {
     }
   }
 
+  
 
 }

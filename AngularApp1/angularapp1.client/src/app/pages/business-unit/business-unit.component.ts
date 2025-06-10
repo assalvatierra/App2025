@@ -31,6 +31,7 @@ export class BusinessUnitComponent {
 
   /* Event Handlers */
   onAddRecord() {
+    this.router.navigate(['/businessunits/form', 0]);
     console.log('Add record clicked');
   }
 

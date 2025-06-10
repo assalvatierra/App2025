@@ -33,6 +33,8 @@ export class EntityFormComponent implements AfterViewInit {
 
   public setFormData(param: any) {
     this.dataForm.patchValue(param);
+    console.log('entity form data:');
+    console.log(param);
   }
 
 

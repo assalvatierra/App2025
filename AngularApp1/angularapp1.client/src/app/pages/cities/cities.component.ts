@@ -35,6 +35,7 @@ export class CitiesComponent {
 
   /* Event Handlers */
   onAddRecord() {
+    this.router.navigate(['/references/cities/form', 0]);
     console.log('Add record clicked');
   }
 

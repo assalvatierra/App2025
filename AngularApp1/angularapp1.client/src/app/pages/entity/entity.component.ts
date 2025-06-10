@@ -32,6 +32,7 @@ export class EntityComponent {
 
   /* Event Handlers */
   onAddRecord() {
+    this.router.navigate(['entities/form', 2]);
     console.log('Add record clicked');
   }
 

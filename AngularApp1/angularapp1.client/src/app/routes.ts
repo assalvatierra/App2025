@@ -13,6 +13,8 @@ import { BusinessUnitFormComponent } from "./pages/business-unit/business-unit-f
 import { LoginComponent } from "./pages/login/login.component";
 import { AuthGuard } from "./core/auth.guard";
 import { CityFormComponent } from "./pages/cities/city-form/city-form.component";
+import { ContactsComponent } from "./pages/contacts/contacts.component";
+import { ContactsFormComponent } from "./pages/contacts/contacts-form/contacts-form.component";
 
 const routeConfig: Routes = [
 
@@ -73,6 +75,14 @@ const routeConfig: Routes = [
     {
       path: 'Login',
       component: LoginComponent
+    },
+    {
+      path: 'contacts',
+      component: ContactsComponent
+    },
+    {
+      path: 'contacts/form/:id',
+      component: ContactsFormComponent
     },
 
 

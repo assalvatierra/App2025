@@ -42,6 +42,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CityFormComponent } from './pages/cities/city-form/city-form.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
+import { ContactsFormComponent } from './pages/contacts/contacts-form/contacts-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,8 @@ import { CityFormComponent } from './pages/cities/city-form/city-form.component'
     ListDialogComponent,
     LoginComponent,
     CityFormComponent,
+    ContactsComponent,
+    ContactsFormComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,
@@ -85,7 +89,8 @@ import { CityFormComponent } from './pages/cities/city-form/city-form.component'
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,12 +16,33 @@ export class CountryFormComponent implements AfterViewInit {
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number=0;
+  public ShowAddBtn:  boolean = false;
+
   constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
-    this.retrieveApiData(this.paramId);
+    //this.retrieveApiData(this.paramId);
+
+    
+    if(this.paramId != 0) {
+      this.retrieveApiData(this.paramId);
+      console.log('display current data: ');
+      console.log(this.currentData);
+    }
+
+    if(this.paramId == 0) {
+ 
+      this.SetDefaultData();
+
+      console.log('display current data: ');
+      console.log(this.currentData);
+
+      this.dataloading = false;
+      this.ShowAddBtn = true;
+    }
+
   }
 
   /* Event Handlers */
@@ -31,7 +52,21 @@ export class CountryFormComponent implements AfterViewInit {
     this.updateApiData(this.paramId, this.currentData);
 
     alert('Thanks!');
+    //this.router.navigate(['/references/countries']);
     debugger;
+  }
+
+  onAdd(): void{
+    //console.log('adding new city...');
+    this.updateCurrentDataValues();
+    //console.log(this.currentData)
+    this.addApiData(this.currentData)
+    //alert('City Added!');
+    this.router.navigate(['/references/countries']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/references/countries']);
   }
 
   /* API calls */
@@ -79,6 +114,22 @@ export class CountryFormComponent implements AfterViewInit {
       });
   }
 
+  private addApiData(data: any): void {
+    this.dataloading = true;
+    this.api.addCountry(data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
   /* Methods */
   private initializeData(param:any): void {
     this.currentData = param;
@@ -94,5 +145,18 @@ export class CountryFormComponent implements AfterViewInit {
       this.currentData.sortOrder = this.entityInfo.dataForm.get('sortOrder')?.value;
     }
   }
+
+  private SetDefaultData(){
+    this.currentData = {
+      id: 0,
+      name: '',
+      description: '',
+      remarks: '',
+      code: '',
+      sortOrder: 0
+    };
+
+  }
+
 
 }

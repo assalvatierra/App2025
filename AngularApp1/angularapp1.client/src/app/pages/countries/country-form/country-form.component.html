@@ -1,6 +1,14 @@
 <mat-card>
     <mat-card-header>
-      <mat-card-title>Country Info</mat-card-title>
+      <div>
+        <mat-card-title  *ngIf="ShowAddBtn">Add - </mat-card-title> 
+      </div>
+      <div>
+        <mat-card-title  *ngIf="!ShowAddBtn">Update - </mat-card-title> 
+      </div>
+      <div>
+        <mat-card-title> Country Info</mat-card-title>
+      </div>
     </mat-card-header>
     <mat-card-content>
       <app-entity-form #entityForm
@@ -11,6 +19,14 @@
 
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      <div *ngIf="!ShowAddBtn">
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      </div>
+      
+      <div *ngIf="ShowAddBtn">
+          <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+      </div>
+      
+    <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>

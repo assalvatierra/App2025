@@ -38,16 +38,7 @@ export class CityFormComponent implements AfterViewInit {
     }
 
     if(this.paramId == 0) {
-      
-      this.currentData = {
-        id: 0,
-        name: '',
-        description: '',
-        remarks: '',
-        code: '',
-        sortOrder: 0
-      };
-
+      this.SetDefaultData();
       console.log('display current data: ');
       console.log(this.currentData);
 
@@ -72,6 +63,10 @@ export class CityFormComponent implements AfterViewInit {
     //console.log(this.currentData)
     this.addApiData(this.currentData)
     //alert('City Added!');
+    this.router.navigate(['/references/cities']);
+  }
+
+  onCancel(): void {
     this.router.navigate(['/references/cities']);
   }
 
@@ -140,6 +135,18 @@ export class CityFormComponent implements AfterViewInit {
       this.currentData.code = this.entityInfo.dataForm.get('code')?.value;
       this.currentData.sortOrder = this.entityInfo.dataForm.get('sortOrder')?.value;
     }
+  }
+
+  private SetDefaultData(){
+    this.currentData = {
+      id: 0,
+      name: '',
+      description: '',
+      remarks: '',
+      code: '',
+      sortOrder: 0
+    };
+
   }
 
   

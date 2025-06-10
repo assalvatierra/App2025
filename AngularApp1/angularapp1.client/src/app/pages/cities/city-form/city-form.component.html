@@ -1,11 +1,13 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>City Info</mat-card-title> 
-    <div *ngIf="ShowAddBtn">
-      <mat-card-title> - ADD</mat-card-title> 
+    <div>
+      <mat-card-title  *ngIf="ShowAddBtn">Add - </mat-card-title> 
     </div>
-    <div *ngIf="!ShowAddBtn">
-      <mat-card-title> - UPDATE</mat-card-title> 
+    <div>
+      <mat-card-title  *ngIf="!ShowAddBtn">Update - </mat-card-title> 
+    </div>
+    <div>
+      <mat-card-title> City Info</mat-card-title> 
     </div>
   </mat-card-header>
   <mat-card-content>
@@ -24,5 +26,6 @@
         <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
     </div>
     
+    <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
   </mat-card-actions>
 </mat-card>

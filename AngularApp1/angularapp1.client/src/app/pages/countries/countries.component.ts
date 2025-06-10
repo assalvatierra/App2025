@@ -38,6 +38,7 @@ export class CountriesComponent implements AfterViewInit {
 
   /* Event Handlers */
   onAddRecord() {
+    this.router.navigate(['/references/countries/form', 0]);
     console.log('Add record clicked');
   }
 

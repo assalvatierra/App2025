@@ -53,7 +53,21 @@ export class ContactsFormComponent implements AfterViewInit {
   }
 
   private updateApiData(paramId: number, data: any): void {
-    this.api.updateContact(paramId, data).subscribe();
+    // this.api.updateContact(paramId, data).subscribe();
+    this.dataloading = true;
+    this.api.updateContact(this.paramId, data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+
   }
 
   private initializeData(data: any): void {

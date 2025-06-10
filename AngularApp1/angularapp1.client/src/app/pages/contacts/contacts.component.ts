@@ -51,7 +51,7 @@ export class ContactsComponent implements AfterViewInit {
     this.dataloading = true;
     this.api.getContacts().subscribe({
       next: (res: any) => {
-        // You may want to set data in the table here
+          this.initializeEntityList(res);
       },
       error: (err) => {
         console.error('API Error:', err);
@@ -74,4 +74,11 @@ export class ContactsComponent implements AfterViewInit {
       { key: 'isArchived', label: 'Archived' }
     ];
   }
+
+   /* Methods */
+  private initializeEntityList(param: any[]) {
+    this.TableList.initialize(param);
+  }
+
+
 }

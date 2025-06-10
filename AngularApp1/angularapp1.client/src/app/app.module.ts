@@ -44,6 +44,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CityFormComponent } from './pages/cities/city-form/city-form.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ContactsFormComponent } from './pages/contacts/contacts-form/contacts-form.component';
+import { ItemTypesComponent } from './pages/itemtypes/itemtypes.component';
+import { ItemTypesFormComponent } from './pages/itemtypes/itemtypes-form/itemtypes-form.component';
+import { ItemStatusComponent } from './pages/itemstatus/itemstatus.component';
+import { ItemStatusFormComponent } from './pages/itemstatus/itemstatus-form/itemstatus-form.component';
+import { ServiceItemsComponent } from './pages/serviceitems/serviceitems.component';
+import { ServiceItemsFormComponent } from './pages/serviceitems/serviceitems-form/serviceitems-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +75,12 @@ import { ContactsFormComponent } from './pages/contacts/contacts-form/contacts-f
     CityFormComponent,
     ContactsComponent,
     ContactsFormComponent,
+    ItemTypesComponent,
+    ItemTypesFormComponent,
+    ItemStatusComponent,
+    ItemStatusFormComponent,
+    ServiceItemsComponent,
+    ServiceItemsFormComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,
@@ -89,8 +101,7 @@ import { ContactsFormComponent } from './pages/contacts/contacts-form/contacts-f
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
-    MatFormFieldModule,
-
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

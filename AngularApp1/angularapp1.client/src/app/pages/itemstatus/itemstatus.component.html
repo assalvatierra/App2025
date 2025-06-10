@@ -1,0 +1,9 @@
+<app-entity-list-table #ListTable
+        (addRecordClicked)="onAddRecord()"
+        [showEdit]="showEdit"
+        [editTitle]="'Edit ItemStatus'"
+        (editRecordClicked)="onEdit($event)"
+        (onEditDetails)="onEditDetails($event)"
+        (onArchiveRecord)="onArchive($event)"
+        [tableFields]="tableFields">
+</app-entity-list-table>

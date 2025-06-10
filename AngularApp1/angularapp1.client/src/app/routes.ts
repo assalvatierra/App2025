@@ -15,6 +15,12 @@ import { AuthGuard } from "./core/auth.guard";
 import { CityFormComponent } from "./pages/cities/city-form/city-form.component";
 import { ContactsComponent } from "./pages/contacts/contacts.component";
 import { ContactsFormComponent } from "./pages/contacts/contacts-form/contacts-form.component";
+import { ItemTypesComponent } from "./pages/itemtypes/itemtypes.component";
+import { ItemTypesFormComponent } from "./pages/itemtypes/itemtypes-form/itemtypes-form.component";
+import { ItemStatusComponent } from "./pages/itemstatus/itemstatus.component";
+import { ItemStatusFormComponent } from "./pages/itemstatus/itemstatus-form/itemstatus-form.component";
+import { ServiceItemsComponent } from "./pages/serviceitems/serviceitems.component";
+import { ServiceItemsFormComponent } from "./pages/serviceitems/serviceitems-form/serviceitems-form.component";
 
 const routeConfig: Routes = [
 
@@ -83,6 +89,30 @@ const routeConfig: Routes = [
     {
       path: 'contacts/form/:id',
       component: ContactsFormComponent
+    },
+    {
+      path: 'references/itemtypes',
+      component: ItemTypesComponent
+    },
+    {
+      path: 'references/itemtypes/form/:id',
+      component: ItemTypesFormComponent
+    },
+    {
+      path: 'references/itemstatus',
+      component: ItemStatusComponent
+    },
+    {
+      path: 'references/itemstatus/form/:id',
+      component: ItemStatusFormComponent
+    },
+    {
+      path: 'references/serviceitems',
+      component: ServiceItemsComponent
+    },
+    {
+      path: 'references/serviceitems/form/:id',
+      component: ServiceItemsFormComponent
     },
 
 

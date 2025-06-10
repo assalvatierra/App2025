@@ -42,6 +42,9 @@ export class NavigationComponent {
       subItems: [
         { icon: 'comment', label: 'Countries', route: 'countries'},
         { icon: 'comment', label: 'Cities', route: 'cities'},
+        { icon: 'comment', label: 'Item Types', route: 'itemtypes'},
+        { icon: 'comment', label: 'Item Status', route: 'itemstatus'},
+        { icon: 'comment', label: 'Service Items', route: 'serviceitems'},
       ]
     },
     {

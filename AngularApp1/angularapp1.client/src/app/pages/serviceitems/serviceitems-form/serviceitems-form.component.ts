@@ -14,6 +14,8 @@ export class ServiceItemsFormComponent implements AfterViewInit {
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number = 0;
+  public ShowAddBtn:  boolean = false;
+  public TitleInfo: string = 'Edit Service Items Form';
 
   constructor(
     private api: ApiService,
@@ -23,7 +25,25 @@ export class ServiceItemsFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
-    this.retrieveApiData(this.paramId);
+   
+    if (isNaN(this.paramId)) {
+      console.error('Invalid parameter ID:', this.paramId);
+      return;
+    }
+
+    if(this.paramId != 0) {
+      this.TitleInfo = 'Edit Service Items Form';
+      this.retrieveApiData(this.paramId);
+    }
+
+    if(this.paramId == 0) {
+      this.TitleInfo = 'Add New Service Items Form';
+      this.SetDefaultData();
+
+      this.dataloading = false;
+      this.ShowAddBtn = true;
+    }
+
   }
 
   onSubmit(): void {
@@ -31,6 +51,20 @@ export class ServiceItemsFormComponent implements AfterViewInit {
     this.updateApiData(this.paramId, this.currentData);
     alert('Service Item updated!');
   }
+
+  onAdd(): void{
+    //console.log('adding new city...');
+    this.updateCurrentDataValues();
+    //console.log(this.currentData)
+    this.addApiData(this.currentData)
+    //alert('City Added!');
+    this.router.navigate(['/references/serviceitems']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/references/serviceitems']);
+  }
+
 
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;
@@ -48,6 +82,23 @@ export class ServiceItemsFormComponent implements AfterViewInit {
       });
   }
 
+  private addApiData(data: any): void {
+    this.dataloading = true;
+    this.api.addServiceItem(data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
+
   private updateCurrentDataValues(): void {
     if (this.entityInfo && this.entityInfo.dataForm) {
       this.currentData = {
@@ -64,4 +115,17 @@ export class ServiceItemsFormComponent implements AfterViewInit {
   private initializeData(data: any): void {
     this.currentData = data;
   }
+  
+  private SetDefaultData(){
+    this.currentData = {
+      id: 0,
+      name: '',
+      description: '',
+      remarks: '',
+      code: '',
+      sortOrder: 0
+    };
+
+  }
+
 }

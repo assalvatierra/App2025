@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>ItemType Info</mat-card-title>
+    <mat-card-title>{{TitleInfo}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <app-entity-form #entityForm
@@ -9,6 +9,14 @@
     </app-entity-form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    <div *ngIf="!ShowAddBtn">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </div>
+    
+    <div *ngIf="ShowAddBtn">
+        <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+    </div>
+    
+    <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
   </mat-card-actions>
 </mat-card>

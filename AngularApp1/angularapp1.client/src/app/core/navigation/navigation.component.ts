@@ -47,8 +47,6 @@ export class NavigationComponent {
         { icon: 'comment', label: 'Service Items', route: 'serviceitems'},
       ]
     },
-    { icon: 'analytics', label: 'Analytics', route: 'analytics' },
-    { icon: 'comment', label: 'Comments', route: 'comments' },
     { icon: 'comment', label: 'login', route: 'Login' },
   ]);
 

@@ -17,6 +17,7 @@ export class CountryFormComponent implements AfterViewInit {
   public dataloading: boolean = true;
   private paramId: number=0;
   public ShowAddBtn:  boolean = false;
+  public TitleInfo: string = 'Edit Country Form';
 
   constructor(private api: ApiService, private router: Router, private route: ActivatedRoute) {
   }
@@ -27,17 +28,14 @@ export class CountryFormComponent implements AfterViewInit {
 
     
     if(this.paramId != 0) {
+      this.TitleInfo = 'Edit Country Form';
       this.retrieveApiData(this.paramId);
-      console.log('display current data: ');
-      console.log(this.currentData);
     }
 
     if(this.paramId == 0) {
- 
+      
+      this.TitleInfo = 'Add New Country Form';
       this.SetDefaultData();
-
-      console.log('display current data: ');
-      console.log(this.currentData);
 
       this.dataloading = false;
       this.ShowAddBtn = true;
@@ -51,8 +49,8 @@ export class CountryFormComponent implements AfterViewInit {
 
     this.updateApiData(this.paramId, this.currentData);
 
-    alert('Thanks!');
-    //this.router.navigate(['/references/countries']);
+    //alert('Thanks!');
+    this.router.navigate(['/references/countries']);
     debugger;
   }
 

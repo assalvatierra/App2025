@@ -14,6 +14,8 @@ export class ItemStatusFormComponent implements AfterViewInit {
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number = 0;
+  public ShowAddBtn:  boolean = false;
+  public TitleInfo: string = 'Edit Item Status Form';
 
   constructor(
     private api: ApiService,
@@ -23,7 +25,25 @@ export class ItemStatusFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
-    this.retrieveApiData(this.paramId);
+   
+    if (isNaN(this.paramId)) {
+      console.error('Invalid parameter ID:', this.paramId);
+      return;
+    }
+
+    if(this.paramId != 0) {
+      this.TitleInfo = 'Edit Item Status Form';
+      this.retrieveApiData(this.paramId);
+    }
+
+    if(this.paramId == 0) {
+      this.TitleInfo = 'Add New Item Status Form';
+      this.SetDefaultData();
+
+      this.dataloading = false;
+      this.ShowAddBtn = true;
+    }
+
   }
 
   onSubmit(): void {
@@ -32,12 +52,42 @@ export class ItemStatusFormComponent implements AfterViewInit {
     alert('ItemStatus updated!');
   }
 
+  onAdd(): void{
+    //console.log('adding new city...');
+    this.updateCurrentDataValues();
+    //console.log(this.currentData)
+    this.addApiData(this.currentData)
+    //alert('City Added!');
+    this.router.navigate(['/references/itemstatus']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/references/itemstatus']);
+  }
+
+
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;
     this.api.getItemStatus(paramId)
       .subscribe({
         next: (res: any) => {
           this.initializeData(res);
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
+  private addApiData(data: any): void {
+    this.dataloading = true;
+    this.api.addItemStatus(data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
         },
         error: (err) => {
           console.error('API Error:', err);
@@ -64,4 +114,17 @@ export class ItemStatusFormComponent implements AfterViewInit {
   private initializeData(data: any): void {
     this.currentData = data;
   }
+
+  private SetDefaultData(){
+    this.currentData = {
+      id: 0,
+      name: '',
+      description: '',
+      remarks: '',
+      code: '',
+      sortOrder: 0
+    };
+
+  }
+
 }

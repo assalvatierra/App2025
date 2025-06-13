@@ -117,13 +117,22 @@ export class ServiceItemsFormComponent implements AfterViewInit {
   }
   
   private SetDefaultData(){
+    var today = new Date();
+    var todayFormatted = today.toISOString();
     this.currentData = {
       id: 0,
       name: '',
       description: '',
       remarks: '',
       code: '',
-      sortOrder: 0
+      sortOrder: 0,
+      CreatedBy: 'admin',
+      CreatedOn: todayFormatted,
+      LastEditBy: 'admin',
+      LastEditOn: todayFormatted,
+      IsArchived: false,
+      IsPrivate: false,
+      IsActive: true
     };
 
   }

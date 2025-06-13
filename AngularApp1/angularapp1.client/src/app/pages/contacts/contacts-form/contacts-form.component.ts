@@ -1,8 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../../core/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
 
 @Component({
@@ -12,21 +11,40 @@ import { ContactInfoFormComponent } from '../../../shared/contact-info-form/cont
   standalone: false
 })
 export class ContactsFormComponent implements AfterViewInit {
-  @ViewChild('entityForm') entityInfo!: EntityFormComponent;
   @ViewChild('ContactForm') contactInfo!: ContactInfoFormComponent;
   public currentData: any;
   public dataloading: boolean = true;
   private paramId: number = 0;
   public ShowAddBtn:  boolean = false;
-  public TitleInfo: string = 'Edit Contact Form';
+  public TitleInfo: string | undefined;
+  public dataFormName: any;
 
   constructor(
     private api: ApiService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+    private fb: FormBuilder
+  ) { 
+    
+    this.dataFormName = this.fb.group({
+      name: new FormControl(),
+    });
+
+  }
 
   ngAfterViewInit(): void {
+    console.log("Initialize...");
+
+  }
+
+
+  ngAfterContentInit(): void {
+    console.log("After Initialize...");
+   
+    this.dataFormName.patchValue({
+      name: "john doe"
+    });   
+
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
     
     if (isNaN(this.paramId)) {
@@ -40,28 +58,47 @@ export class ContactsFormComponent implements AfterViewInit {
     }
 
     if(this.paramId == 0) {
+      
       this.TitleInfo = 'Add New Contact Form';
       this.SetDefaultData();
 
       this.dataloading = false;
       this.ShowAddBtn = true;
     }
-
   }
 
   onSubmit(): void {
-    this.updateCurrentDataValues();
-    this.updateApiData(this.paramId, this.currentData);
-    alert('Contact updated!');
-    this.router.navigate(['/contacts']);
+    this.paramId = Number(this.route.snapshot.paramMap.get('id'));
+
+
+    if(this.paramId == 0) {
+      this.onAdd();
+    }else{
+      this.TitleInfo = 'Edit Contact Form';
+      this.updateCurrentDataValues();
+      this.updateApiData(this.paramId, this.currentData);
+      //alert('Contact updated!');
+      this.router.navigate(['/contacts']);
+    }
   }
 
   onAdd(): void{
-    //console.log('adding new city...');
+
+    this.TitleInfo = 'Add New Contact Form';
+    this.SetDefaultData();
+
+    this.dataloading = false;
+    this.ShowAddBtn = true;
+
+    //console.log('onAdd contact name...');
+    //console.log(this.dataFormName.get('name').value);
+
     this.updateCurrentDataValues();
-    console.log(this.currentData)
-    //this.addApiData(this.currentData)
-    alert('contacts Added!');
+    //console.log('currentData before adding...');
+    //console.log(this.currentData)
+
+    this.addApiData(this.currentData)
+    //alert('contacts Added!');
     //this.router.navigate(['/contacts']);
   }
 
@@ -87,18 +124,17 @@ export class ContactsFormComponent implements AfterViewInit {
   }
 
   private updateCurrentDataValues(): void {
-    if (this.entityInfo && this.entityInfo.modelData) {
-      this.currentData.name = this.entityInfo.dataForm.get('name')?.value;
-    }
-
-    if (this.contactInfo && this.contactInfo.modelData) {
-      this.currentData.contactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
-      this.currentData.contactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
-      this.currentData.email1 = this.contactInfo.dataForm.get('email1')?.value;
-      this.currentData.email2 = this.contactInfo.dataForm.get('email2')?.value;
-      this.currentData.address1 = this.contactInfo.dataForm.get('address1')?.value;
-      this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
-    }
+   
+      console.log("updating contact name...");
+      this.currentData.Name = this.dataFormName.get('name')?.value;
+    
+      console.log("updating contact...");
+      this.currentData.ContactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
+      this.currentData.ContactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
+      this.currentData.Email1 = this.contactInfo.dataForm.get('email1')?.value;
+      this.currentData.Email2 = this.contactInfo.dataForm.get('email2')?.value;
+      this.currentData.Address1 = this.contactInfo.dataForm.get('address1')?.value;
+      this.currentData.Address2 = this.contactInfo.dataForm.get('address2')?.value;
   }
 
   private updateApiData(paramId: number, data: any): void {
@@ -141,15 +177,26 @@ export class ContactsFormComponent implements AfterViewInit {
 
   
   private SetDefaultData(){
+    var today = new Date();
+    var todayFormatted = today.toISOString();
     this.currentData = {
-      id: 0,
-      name: ['', Validators.required],
-      contactNo1: '',
-      contactNo2: '',
-      email1: '',
-      email2: '',
-      address1: '',
-      address2: ''
+      Id: 0,
+      Name: '',
+      ContactNo1: '',
+      ContactNo2: '',
+      Email1: '',
+      Email2: '',
+      Address1: '',
+      Address2: '',
+      Remarks: '',
+      CreatedBy: 'admin',
+      CreatedOn: todayFormatted,
+      LastEditBy: 'admin',
+      LastEditOn: todayFormatted,
+      IsArchived: false,
+      IsPrivate: false,
+      IsActive: true,
+      StatusId: 1
     };
 
   }

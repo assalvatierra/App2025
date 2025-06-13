@@ -51,7 +51,7 @@ public partial class Contact
 
     public virtual RefCity? RefCity { get; set; }
 
-    public virtual ItemStatus Status { get; set; } = null!;
+    public virtual ItemStatus? Status { get; set; } = null!;
 
     public virtual ItemType? Type { get; set; }
 }

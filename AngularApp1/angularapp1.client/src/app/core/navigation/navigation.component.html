@@ -1,11 +1,5 @@
 <div class="sidenav-header">
-  <img [width]="profilePicSize()" [height]="profilePicSize()" src="" alt="">
-  <div class="header-text" [class.hide-header-text]="sideNaveCollapsed()">
-    <h2> Channel  </h2>
-    <p> User Name </p>
-  </div>
-
-
+  
   <mat-nav-list>
 
     @for (item of menuItems(); track item.label){

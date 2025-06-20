@@ -38,16 +38,15 @@ export class NavigationComponent {
     { icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
     { icon: 'dashboard', label: 'Contacts', route: 'contacts' },
     {
-      icon: 'analytics', label: 'References', route: 'references',
+      icon: 'analytics', label: 'References', route: '',
       subItems: [
-        { icon: 'comment', label: 'Countries', route: 'countries'},
-        { icon: 'comment', label: 'Cities', route: 'cities'},
-        { icon: 'comment', label: 'Item Types', route: 'itemtypes'},
-        { icon: 'comment', label: 'Item Status', route: 'itemstatus'},
-        { icon: 'comment', label: 'Service Items', route: 'serviceitems'},
+        { icon: 'comment', label: 'Countries', route: 'references/countries'},
+        { icon: 'comment', label: 'Cities', route: 'references/cities'},
+        { icon: 'comment', label: 'Item Types', route: 'references/itemtypes'},
+        { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'},
+        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},
       ]
-    },
-    { icon: 'comment', label: 'login', route: 'Login' },
+    }
   ]);
 
   profilePicSize = computed(() => this.sideNaveCollapsed() ? '32' : '100')

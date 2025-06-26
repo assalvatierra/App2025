@@ -5,15 +5,28 @@
     <Generation>
       <GeneratedFiles>
         <File Name="Erp2025.Models.cs" />
-        <File Name="Erp2025.Customer.cs" />
         <File Name="Erp2025.Contact.cs" />
-        <File Name="Erp2025.Supplier.cs" />
-        <File Name="Erp2025.Customer_Contact.cs" />
-        <File Name="Erp2025.Supplier_Contact.cs" />
+        <File Name="Erp2025.JobMain.cs" />
+        <File Name="Erp2025.JobService.cs" />
+        <File Name="Erp2025.ServiceItem.cs" />
+        <File Name="Erp2025.JobCustomer.cs" />
+        <File Name="Erp2025.JobContact.cs" />
+        <File Name="Erp2025.JobServiceContact.cs" />
+        <File Name="Erp2025.Entity.cs" />
+        <File Name="Erp2025.ItemType.cs" />
+        <File Name="Erp2025.EntityContact.cs" />
+        <File Name="Erp2025.ItemStatus.cs" />
+        <File Name="Erp2025.ItemTypeClass.cs" />
+        <File Name="Erp2025.ItemStatusClass.cs" />
+        <File Name="Erp2025.BusinessUnit.cs" />
         <File Name="Erp2025.RefCity.cs" />
         <File Name="Erp2025.RefCountry.cs" />
+        <File Name="Erp2025.Agent.cs" />
+        <File Name="Erp2025.Agent_instructions.cs" />
+        <File Name="Erp2025.Agent_bin.cs" />
         <File Name="Erp2025.ContactInfo.cs" />
         <File Name="Erp2025.RecordInfo.cs" />
+        <File Name="Erp2025.EntityInfo.cs" />
       </GeneratedFiles>
     </Generation>
     <DatabaseFirstNamingRules>

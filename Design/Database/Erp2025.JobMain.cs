@@ -18,13 +18,14 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Contact {
+    public partial class JobMain {
 
-        public Contact()
+        public JobMain()
         {
-            this.ContactInfo = new ContactInfo();
             this.RecordInfo = new RecordInfo();
-            this.EntityContacts = new List<EntityContact>();
+            this.JobServices = new List<JobService>();
+            this.JobCustomers = new List<JobCustomer>();
+            this.JobContacts = new List<JobContact>();
             OnCreated();
         }
 
@@ -34,19 +35,13 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Name
+        public virtual System.DateTime JobDate
         {
             get;
             set;
         }
 
-        public virtual string Remarks
-        {
-            get;
-            set;
-        }
-
-        public virtual ContactInfo ContactInfo
+        public virtual string Description
         {
             get;
             set;
@@ -58,31 +53,31 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual int TypeId
+        public virtual int ItemStatusId
         {
             get;
             set;
         }
 
-        public virtual int StatusId
+        public virtual int BusinessUnitId
         {
             get;
             set;
         }
 
-        public virtual int RefCityId
+        public virtual IList<JobService> JobServices
         {
             get;
             set;
         }
 
-        public virtual IList<EntityContact> EntityContacts
+        public virtual IList<JobCustomer> JobCustomers
         {
             get;
             set;
         }
 
-        public virtual ItemType ItemType
+        public virtual IList<JobContact> JobContacts
         {
             get;
             set;
@@ -94,7 +89,7 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual RefCity RefCity
+        public virtual BusinessUnit BusinessUnit
         {
             get;
             set;

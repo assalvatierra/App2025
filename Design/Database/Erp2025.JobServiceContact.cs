@@ -18,13 +18,10 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Contact {
+    public partial class JobServiceContact {
 
-        public Contact()
+        public JobServiceContact()
         {
-            this.ContactInfo = new ContactInfo();
-            this.RecordInfo = new RecordInfo();
-            this.EntityContacts = new List<EntityContact>();
             OnCreated();
         }
 
@@ -34,67 +31,31 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Name
+        public virtual int ContactId
         {
             get;
             set;
         }
 
-        public virtual string Remarks
+        public virtual int JobServiceId
         {
             get;
             set;
         }
 
-        public virtual ContactInfo ContactInfo
+        public virtual string Notes
         {
             get;
             set;
         }
 
-        public virtual RecordInfo RecordInfo
+        public virtual bool IsPrimary
         {
             get;
             set;
         }
 
-        public virtual int TypeId
-        {
-            get;
-            set;
-        }
-
-        public virtual int StatusId
-        {
-            get;
-            set;
-        }
-
-        public virtual int RefCityId
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<EntityContact> EntityContacts
-        {
-            get;
-            set;
-        }
-
-        public virtual ItemType ItemType
-        {
-            get;
-            set;
-        }
-
-        public virtual ItemStatus ItemStatus
-        {
-            get;
-            set;
-        }
-
-        public virtual RefCity RefCity
+        public virtual Contact Contact
         {
             get;
             set;

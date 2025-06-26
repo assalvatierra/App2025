@@ -18,13 +18,12 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Contact {
+    public partial class JobService {
 
-        public Contact()
+        public JobService()
         {
-            this.ContactInfo = new ContactInfo();
             this.RecordInfo = new RecordInfo();
-            this.EntityContacts = new List<EntityContact>();
+            this.JobServiceContacts = new List<JobServiceContact>();
             OnCreated();
         }
 
@@ -34,19 +33,37 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Name
+        public virtual int JobMainId
         {
             get;
             set;
         }
 
-        public virtual string Remarks
+        public virtual string Particulars
         {
             get;
             set;
         }
 
-        public virtual ContactInfo ContactInfo
+        public virtual System.DateTime? DateStart
+        {
+            get;
+            set;
+        }
+
+        public virtual System.DateTime? DateEnd
+        {
+            get;
+            set;
+        }
+
+        public virtual decimal? QuotedAmt
+        {
+            get;
+            set;
+        }
+
+        public virtual decimal? SupplierAmt
         {
             get;
             set;
@@ -58,43 +75,49 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual int TypeId
+        public virtual int? ServiceItemId
         {
             get;
             set;
         }
 
-        public virtual int StatusId
+        public virtual int? SupplierId
         {
             get;
             set;
         }
 
-        public virtual int RefCityId
+        public virtual int ItemStatusId
         {
             get;
             set;
         }
 
-        public virtual IList<EntityContact> EntityContacts
+        public virtual int SortOrder
         {
             get;
             set;
         }
 
-        public virtual ItemType ItemType
+        public virtual ServiceItem ServiceItem
+        {
+            get;
+            set;
+        }
+
+        public virtual IList<JobServiceContact> JobServiceContacts
+        {
+            get;
+            set;
+        }
+
+        public virtual Entity Entity
         {
             get;
             set;
         }
 
         public virtual ItemStatus ItemStatus
-        {
-            get;
-            set;
-        }
-
-        public virtual RefCity RefCity
         {
             get;
             set;

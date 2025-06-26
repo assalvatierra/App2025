@@ -411,6 +411,9 @@
     <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="84313fcf-47d0-484e-aa7f-28f697d63a90">
       <column name="" />
     </property>
+    <property name="Roles" type="String" p1:nullable="True" p1:ValidateMaxLength="8000" p1:ValidateRequired="false" p1:Guid="186e8622-e83e-470c-af54-493b7d4feb95">
+      <column name="" length="8000" />
+    </property>
   </class>
   <class name="Agent_instructions" entity-set="Agent_instructions" p1:Guid="353a9667-3cdb-45ca-b134-18e5fe3c0b8c">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="434917df-831d-467b-a597-4da4a94ae7a1">
@@ -422,27 +425,11 @@
     <property name="Title" type="String" p1:ValidateRequired="true" p1:Guid="3b66639f-e6e1-470b-b370-8f1c14af2875">
       <column name="" />
     </property>
-    <property name="Content" type="String" p1:ValidateRequired="true" p1:Guid="25d11072-5a0f-482b-aece-edc97e4b7348">
-      <column name="" />
+    <property name="Content" type="String" p1:nullable="True" p1:ValidateMaxLength="8000" p1:ValidateRequired="false" p1:Guid="25d11072-5a0f-482b-aece-edc97e4b7348">
+      <column name="" length="8000" />
     </property>
-  </class>
-  <class name="Agent_tags" entity-set="Agent_tags" p1:Guid="d8d42923-8544-49ec-af45-c450fbbdd347">
-    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0746cfb2-e17b-4c63-95eb-d9eb9ff6c305">
+    <property name="keywords" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0330ac2e-0695-49e9-9ff3-f447310e5283">
       <column name="" />
-    </id>
-    <property name="Content" type="String" p1:ValidateRequired="true" p1:Guid="ce223a4b-3fd8-4175-b74d-550251b5b4a2">
-      <column name="" />
-    </property>
-  </class>
-  <class name="Agent_Ins_x_Tags" entity-set="Agent_Ins_x_Tags" p1:Guid="da19ad1f-2d5e-4803-abae-25234f4ec1fb">
-    <id name="Property1" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5e147bd8-d7cb-4f54-8246-cf86201b076a">
-      <column name="" />
-    </id>
-    <property name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="5b843d26-ea28-4c63-ae9b-19c9fe3b63f9">
-      <column name="" not-null="False" />
-    </property>
-    <property name="Agent_Instruction_tagsId" type="Int32" p1:ValidateRequired="true" p1:Guid="3ff07600-8b43-4325-aaab-e935e42a735e">
-      <column name="" not-null="False" />
     </property>
   </class>
   <class name="Agent_bin" entity-set="Agent_bin" p1:Guid="1608dafa-bb22-457d-989e-b699e04ffb02">
@@ -452,8 +439,8 @@
     <property name="AgentId" type="Int32" p1:ValidateRequired="true" p1:Guid="5b53e271-8161-48da-816f-70270ab777c1">
       <column name="" not-null="False" />
     </property>
-    <property name="Data" type="String" p1:ValidateRequired="true" p1:Guid="cacc71a6-70a9-41f2-a1bd-452234eaf757">
-      <column name="" />
+    <property name="Data" type="String" p1:nullable="True" p1:ValidateMaxLength="8000" p1:ValidateRequired="false" p1:Guid="cacc71a6-70a9-41f2-a1bd-452234eaf757">
+      <column name="" not-null="False" length="8000" />
     </property>
     <property name="dtAdded" type="DateTime" p1:ValidateRequired="true" p1:Guid="e5f0fe11-6cc2-4b41-8a07-173c68e75470">
       <column name="" />
@@ -674,22 +661,6 @@
       </end1>
       <end2 multiplicity="Many" name="Agent_instructions" class="Agent" relation-class="Agent_instructions" lazy="False" p1:Guid="1a3bbcab-9616-4981-b562-1a41035f5ec5">
         <property name="AgentId" />
-      </end2>
-    </association>
-    <association name="Agent_instructions_Agent_Ins_x_Tags" cardinality="OneToMany" p1:Guid="69046326-38b8-4a1a-99ea-95ed09af1aa3">
-      <end1 multiplicity="One" name="Agent_instructions" class="Agent_Ins_x_Tags" relation-class="Agent_instructions" constrained="True" lazy="False" p1:Guid="b30eb6d1-fd9b-47db-a701-f3f365d1e281">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="Agent_Ins_x_Tags" class="Agent_instructions" relation-class="Agent_Ins_x_Tags" lazy="False" p1:Guid="e0532830-5c95-4671-90f9-1b1f9030fb68">
-        <property name="Id" />
-      </end2>
-    </association>
-    <association name="Agent_Instruction_tags_Agent_Ins_x_Tags" cardinality="OneToMany" p1:Guid="bcff64ac-e778-4cb4-85de-7a82bc66cc9c">
-      <end1 multiplicity="One" name="Agent_Instruction_tags" class="Agent_Ins_x_Tags" relation-class="Agent_tags" constrained="True" lazy="False" p1:Guid="c4facb7f-a241-4adc-9522-ee1864c91f89">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="Agent_Ins_x_Tags" class="Agent_tags" relation-class="Agent_Ins_x_Tags" lazy="False" p1:Guid="fae2ba98-fd83-4002-b131-86d03623a97e">
-        <property name="Agent_Instruction_tagsId" />
       </end2>
     </association>
     <association name="Agent_Agent_bin" cardinality="OneToMany" p1:Guid="fc0a55a7-3761-4e7a-8884-c1fe313c8c9a">

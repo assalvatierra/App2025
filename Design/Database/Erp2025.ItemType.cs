@@ -18,13 +18,11 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class Contact {
+    public partial class ItemType {
 
-        public Contact()
+        public ItemType()
         {
-            this.ContactInfo = new ContactInfo();
-            this.RecordInfo = new RecordInfo();
-            this.EntityContacts = new List<EntityContact>();
+            this.EntityInfo = new EntityInfo();
             OnCreated();
         }
 
@@ -34,67 +32,19 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual string Name
+        public virtual EntityInfo EntityInfo
         {
             get;
             set;
         }
 
-        public virtual string Remarks
+        public virtual int ItemTypeClassId
         {
             get;
             set;
         }
 
-        public virtual ContactInfo ContactInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual RecordInfo RecordInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual int TypeId
-        {
-            get;
-            set;
-        }
-
-        public virtual int StatusId
-        {
-            get;
-            set;
-        }
-
-        public virtual int RefCityId
-        {
-            get;
-            set;
-        }
-
-        public virtual IList<EntityContact> EntityContacts
-        {
-            get;
-            set;
-        }
-
-        public virtual ItemType ItemType
-        {
-            get;
-            set;
-        }
-
-        public virtual ItemStatus ItemStatus
-        {
-            get;
-            set;
-        }
-
-        public virtual RefCity RefCity
+        public virtual ItemTypeClass ItemTypeClass
         {
             get;
             set;

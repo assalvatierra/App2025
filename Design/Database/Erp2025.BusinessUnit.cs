@@ -18,9 +18,9 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class RefCity {
+    public partial class BusinessUnit {
 
-        public RefCity()
+        public BusinessUnit()
         {
             this.EntityInfo = new EntityInfo();
             OnCreated();
@@ -33,24 +33,6 @@ namespace Erp.Domain.Models
         }
 
         public virtual EntityInfo EntityInfo
-        {
-            get;
-            set;
-        }
-
-        public virtual int CountryId
-        {
-            get;
-            set;
-        }
-
-        public virtual int RefCountryId
-        {
-            get;
-            set;
-        }
-
-        public virtual RefCountry RefCountry
         {
             get;
             set;

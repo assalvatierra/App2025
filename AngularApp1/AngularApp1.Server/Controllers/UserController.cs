@@ -1,9 +1,11 @@
 ﻿using AngularApp1.Server.Areas.Identity.Data;
 using Erp.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Common;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,7 +20,7 @@ namespace AngularApp1.Server.Controllers
         private readonly SignInManager<ErpIdentityUser> _signInManager;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public UserController(SignInManager<ErpIdentityUser> signInManager, ILogger<WeatherForecastController> logger)
+        public UserController( SignInManager<ErpIdentityUser> signInManager, ILogger<WeatherForecastController> logger)
         {
             _signInManager = signInManager;
             _logger = logger;

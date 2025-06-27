@@ -27,10 +27,10 @@ const routeConfig: Routes = [
     {
         path: '',
         pathMatch: 'full',
-    redirectTo: 'Entities'
+        redirectTo: ''
     },
     {
-        path: 'Entities',
+      path: 'Entities',
       component: EntityComponent,
       canActivate: [AuthGuard]
     },
@@ -39,24 +39,12 @@ const routeConfig: Routes = [
       component: EntityFormPageComponent
     },
     {
-        path: 'businessunits',
+      path: 'businessunits',
       component: BusinessUnitComponent
     },
     {
       path: 'businessunits/form/:id',
       component: BusinessUnitFormComponent
-    },
-    {
-        path: 'analytics',
-        component: AnalyticsComponent
-    },
-    {
-        path: 'comments',
-        component: CommentsComponent
-    },
-    {
-        path: 'content/videos',
-        component: VideosComponent
     },
     {
         path: 'references',
@@ -79,7 +67,7 @@ const routeConfig: Routes = [
       component: CityFormComponent
     },
     {
-      path: 'Login',
+      path: 'login',
       component: LoginComponent
     },
     {
@@ -113,8 +101,7 @@ const routeConfig: Routes = [
     {
       path: 'references/serviceitems/form/:id',
       component: ServiceItemsFormComponent
-    },
-
+    }
 
 ];
 

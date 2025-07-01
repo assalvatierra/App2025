@@ -415,7 +415,7 @@
       <column name="" length="8000" />
     </property>
   </class>
-  <class name="Agent_instructions" entity-set="Agent_instructions" p1:Guid="353a9667-3cdb-45ca-b134-18e5fe3c0b8c">
+  <class name="AgentInstruction" entity-set="AgentInstruction" p1:Guid="353a9667-3cdb-45ca-b134-18e5fe3c0b8c">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="434917df-831d-467b-a597-4da4a94ae7a1">
       <column name="" />
     </id>
@@ -432,7 +432,7 @@
       <column name="" />
     </property>
   </class>
-  <class name="Agent_bin" entity-set="Agent_bin" p1:Guid="1608dafa-bb22-457d-989e-b699e04ffb02">
+  <class name="AgentBin" entity-set="AgentBin" p1:Guid="1608dafa-bb22-457d-989e-b699e04ffb02">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="d6f20327-7d49-43f6-ba49-c59515b59ce9">
       <column name="" />
     </id>
@@ -656,18 +656,18 @@
       </end2>
     </association>
     <association name="Agent_Agent_instructions" cardinality="OneToMany" p1:Guid="1376c3ec-1332-4cf1-bc8a-bbfe7f78819b">
-      <end1 multiplicity="One" name="Agent" class="Agent_instructions" relation-class="Agent" constrained="True" lazy="False" p1:Guid="4895baa3-1092-4c05-896f-cee8698596b1">
+      <end1 multiplicity="One" name="Agent" class="AgentInstruction" relation-class="Agent" constrained="True" lazy="False" p1:Guid="4895baa3-1092-4c05-896f-cee8698596b1">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Agent_instructions" class="Agent" relation-class="Agent_instructions" lazy="False" p1:Guid="1a3bbcab-9616-4981-b562-1a41035f5ec5">
+      <end2 multiplicity="Many" name="Agent_instructions" class="Agent" relation-class="AgentInstruction" lazy="False" p1:Guid="1a3bbcab-9616-4981-b562-1a41035f5ec5">
         <property name="AgentId" />
       </end2>
     </association>
     <association name="Agent_Agent_bin" cardinality="OneToMany" p1:Guid="fc0a55a7-3761-4e7a-8884-c1fe313c8c9a">
-      <end1 multiplicity="One" name="Agent" class="Agent_bin" relation-class="Agent" constrained="True" lazy="False" p1:Guid="d960bcd7-5792-44e6-8a6d-17dae0b4a35c">
+      <end1 multiplicity="One" name="Agent" class="AgentBin" relation-class="Agent" constrained="True" lazy="False" p1:Guid="d960bcd7-5792-44e6-8a6d-17dae0b4a35c">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="Agent_bins" class="Agent" relation-class="Agent_bin" lazy="False" p1:Guid="1d689a46-5d26-4190-b089-daaf01304a42">
+      <end2 multiplicity="Many" name="Agent_bins" class="Agent" relation-class="AgentBin" lazy="False" p1:Guid="1d689a46-5d26-4190-b089-daaf01304a42">
         <property name="AgentId" />
       </end2>
     </association>

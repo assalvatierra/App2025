@@ -21,6 +21,7 @@ import { ItemStatusComponent } from "./pages/itemstatus/itemstatus.component";
 import { ItemStatusFormComponent } from "./pages/itemstatus/itemstatus-form/itemstatus-form.component";
 import { ServiceItemsComponent } from "./pages/serviceitems/serviceitems.component";
 import { ServiceItemsFormComponent } from "./pages/serviceitems/serviceitems-form/serviceitems-form.component";
+import { AgentChatComponent } from "./pages/agent-chat/agent-chat.component";
 
 const routeConfig: Routes = [
 
@@ -28,6 +29,10 @@ const routeConfig: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: ''
+    },
+    {
+      path: 'agents/form/:id',
+      component: AgentChatComponent
     },
     {
       path: 'Entities',

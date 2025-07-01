@@ -50,6 +50,7 @@ import { ItemStatusComponent } from './pages/itemstatus/itemstatus.component';
 import { ItemStatusFormComponent } from './pages/itemstatus/itemstatus-form/itemstatus-form.component';
 import { ServiceItemsComponent } from './pages/serviceitems/serviceitems.component';
 import { ServiceItemsFormComponent } from './pages/serviceitems/serviceitems-form/serviceitems-form.component';
+import { AgentChatComponent } from './pages/agent-chat/agent-chat.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { ServiceItemsFormComponent } from './pages/serviceitems/serviceitems-for
     ItemStatusComponent,
     ItemStatusFormComponent,
     ServiceItemsComponent,
-    ServiceItemsFormComponent
+    ServiceItemsFormComponent,
+    AgentChatComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

@@ -87,7 +87,14 @@ export class AgentsComponent {
   }
 
   private getTableFields(): tableField[] {
-    return this.entityService.getDefaultEntityFields();
+    return [
+      { key: 'id', label: 'ID' },
+      { key: 'name', label: 'Name' },
+      { key: 'description', label: 'Description' },
+      { key: 'roles', label: 'Role' }
+    ];
   }
 
+
+  
 }

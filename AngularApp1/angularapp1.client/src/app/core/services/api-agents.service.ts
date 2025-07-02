@@ -20,7 +20,7 @@ export class ApiAgentsService {
           id: agent.id,
           name: agent.name,
           description: agent.description,
-          roles: agent.Roles
+          roles: agent.roles
         }));
       })
     );

@@ -22,6 +22,8 @@ import { ItemStatusFormComponent } from "./pages/itemstatus/itemstatus-form/item
 import { ServiceItemsComponent } from "./pages/serviceitems/serviceitems.component";
 import { ServiceItemsFormComponent } from "./pages/serviceitems/serviceitems-form/serviceitems-form.component";
 import { AgentChatComponent } from "./pages/agent-chat/agent-chat.component";
+import { AgentsComponent } from "./pages/agents/agents.component";
+import { AgentFormComponent } from "./pages/agents/agent-form/agent-form.component";
 
 const routeConfig: Routes = [
 
@@ -106,7 +108,15 @@ const routeConfig: Routes = [
     {
       path: 'references/serviceitems/form/:id',
       component: ServiceItemsFormComponent
-    }
+    },
+    {
+      path: 'agents',
+      component: AgentsComponent
+    },
+    {
+      path: 'agents/add/form/:id',
+      component: AgentFormComponent
+    },
 
 ];
 

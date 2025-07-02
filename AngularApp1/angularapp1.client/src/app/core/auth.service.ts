@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
+//import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthService {
 
   private BASE_URL = 'http://localhost:5157';
 
-  private jwtHelper = new JwtHelperService();
+  //private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +42,7 @@ export class AuthService {
 
   silentRefresh(): void {
     const token = localStorage.getItem('auth-token');
-    if (token && this.jwtHelper.isTokenExpired(token)) {
+    if (token) {
       this.http.post(`${this.BASE_URL}/refresh-token`, { token })
         .subscribe({
           next: (response) => {

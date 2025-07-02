@@ -1,0 +1,46 @@
+<mat-card>
+    <mat-card-header>
+      <div>
+        <mat-card-title> {{TitleInfo}} </mat-card-title> 
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+     
+    <form [formGroup]="dataFormAgent">
+        <mat-card class="shipping-card">
+          <mat-card-header>
+            <mat-card-title>Agent Name</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field class="full-width" style="width: 100%;">
+              <input matInput type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Name" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content>
+            <mat-form-field class="full-width" style="width: 100%;">
+              <input matInput type="text" id="description" formControlName="description" class="form-control" placeholder="Enter Description" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content>
+            <mat-form-field class="full-width" style="width: 100%;">
+              <input matInput type="text" id="roles" formControlName="roles" class="form-control" placeholder="Enter Roles" required>
+            </mat-form-field> 
+          </mat-card-content>
+        </mat-card>
+      </form>
+
+    </mat-card-content>
+    <mat-card-actions>
+  
+      <div *ngIf="!ShowAddBtn">
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      </div>
+      
+      <div *ngIf="ShowAddBtn">
+          <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+      </div>
+      
+      <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+  

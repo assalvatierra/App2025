@@ -44,7 +44,8 @@ export class NavigationComponent {
         { icon: 'comment', label: 'Cities', route: 'references/cities'},
         { icon: 'comment', label: 'Item Types', route: 'references/itemtypes'},
         { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'},
-        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},
+        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},  
+        { icon: 'comment', label: 'Agent List', route: 'agents'}
       ]
     },
     {

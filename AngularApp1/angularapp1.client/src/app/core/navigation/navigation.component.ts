@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatListModule } from '@angular/material/list';
 
-export type MenuItem = {
-  icon:string;
-  label:string;
-  route?:string;
+export interface MenuItem {
+  label: string;
+  icon?: string;
+  route?: string;
   subItems?: MenuItem[];
 }
 
@@ -46,6 +46,11 @@ export class NavigationComponent {
         { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'},
         { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},
       ]
+    },
+    {
+      label: 'Agent Form',
+      icon: 'person_add',
+      route: '/agents/form/0'
     }
   ]);
 

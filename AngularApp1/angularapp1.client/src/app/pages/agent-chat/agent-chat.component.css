@@ -4,7 +4,8 @@
 
 .shipping-card {
   min-width: 120px;
-  margin: 20px auto;
+  margin: 2rem auto;
+  max-width: 600px;
 }
 
 .mat-radio-button {
@@ -24,4 +25,14 @@
 
 .col:last-child {
   margin-right: 0;
+}
+
+mat-card-content {
+  padding-bottom: 0 !important;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
 }

@@ -1,8 +1,10 @@
 ﻿using AngularApp1.Server.Data;
+using AngularApp1.Server.Services;
 using Erp.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AngularApp1.Server.Services;
 
 namespace AngularApp1.Server.Controllers
 {
@@ -12,6 +14,7 @@ namespace AngularApp1.Server.Controllers
         public string Instructions { get; set; } = string.Empty;
         public string messageRequest { get; set; } = string.Empty;
         public string messageReply { get; set; } = string.Empty;
+        public string messageHistory { get; set;} = string.Empty;
 
         public AgentInfo() { }
         public AgentInfo(int agentId, string agentInstructions)
@@ -53,7 +56,10 @@ namespace AngularApp1.Server.Controllers
 
             var test = await _context.Agent.FindAsync(1);
 
-            info.messageReply = "hello from AI";
+            AgentBasic Agent = new AgentBasic();
+            var result = await Agent.processInstructions(info.messageRequest, info.messageHistory);
+            info.messageReply = result.Value ?? string.Empty;
+
             return CreatedAtAction("Process", new { id = info.AgentId }, info);
         }
 

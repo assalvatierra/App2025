@@ -44,15 +44,17 @@ export class AgentChatComponent {
     const chatInfo = {
       AgentId: 0,
       messageRequest: this.userChatMessage,
+      messageReply: '',
+      messageHistory: this.chatHistory.join('\n\n'),
     };
 
     return chatInfo;
   }
 
   processUserMessage(chatInfo: any): void {
+    this.userChatMessage = '';
     this.chatHistory.push('User >> ' + chatInfo.messageRequest);
-    this.chatHistory.push('processing....');
-    this.ChatMessage = this.chatHistory.join('\n\n');
+    this.ChatMessage = this.chatHistory.join('\n\n') + 'Processing...';
 
     this.apiAgentchatService.ProcessMessage(chatInfo).subscribe(response => {
       this.processAgentResponse(response);
@@ -63,13 +65,11 @@ export class AgentChatComponent {
   }
 
   processAgentResponse(response: any): void {
-    let iMsgCnt = this.chatHistory.length;
-    this.chatHistory[iMsgCnt - 1] = 'Agent>> ' + response.messageReply; 
+    this.chatHistory.push('Agent>> ' + response.messageReply); 
     this.ChatMessage = this.chatHistory.join('\n\n');
   }
   processErrorResponse(): void {
-    let iMsgCnt = this.chatHistory.length;
-    this.chatHistory[iMsgCnt - 1] = 'Error encountered...';
+    this.chatHistory.push('Error encountered!!!');
     this.ChatMessage = this.chatHistory.join('\n\n');
   }
 

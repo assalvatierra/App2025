@@ -1,4 +1,5 @@
 ﻿using AngularApp1.Server.Controllers;
+using Erp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,22 +19,25 @@ namespace AngularApp1.Server.Services
 
         string MainInstruction=string.Empty;
         Kernel kernel;
+        Agent agent;
 
         public AgentBasic()
         {
-            this.kernel  = Kernel.CreateBuilder()
+            this.initializeKernel();
+        }
+
+        public AgentBasic(Agent agent)
+        {
+            this.initializeKernel();
+            this.agent = agent;
+        }
+
+        private void initializeKernel()
+        {
+            kernel = Kernel.CreateBuilder()
                 .AddAzureOpenAIChatCompletion(modelId, endpoint, apiKey)
                 .Build();
-
-
-
-            // Add a plugin (the LightsPlugin class is defined below)
-            //kernel.Plugins.AddFromType<LightsPlugin>("Lights");
-
-
             var history = new ChatHistory();
-
-
         }
 
 
@@ -72,8 +76,10 @@ namespace AngularApp1.Server.Services
 
         private string getInstructions()
         {
+            string strInstructions = string.Empty;
             #region // Add system message to the history
-            return @"Instruction#
+            /*
+            strInstructions = @"Instruction#
 Reply to car rental rate inquiries. 
 # Requirements  
 - Use customer-friendly language; maintain professionalism, clarity.
@@ -93,6 +99,8 @@ Driver's Accommodation - either renter will shoulder the cost or include the cos
 Other conditions 
 Barge fees, if applicable,  if shouldered by renter or include the cost in the rate 
 
+- When use ask for hint, by typing HINT, give a guide how what you can do and give sample request to for car rental inquiry: 
+Example: How much is 2 days SUV rental to Gensan. Renter will should fuel cost, driver's meals and accommodation.
 
 
 ### Calculation instructions 
@@ -189,10 +197,27 @@ The response must be organized as follows:
 - driver’s accommodation
 - parking fees, barge fees
 ";
-
+            */
             #endregion
 
+            string section = string.Empty;
+            foreach (var instruction in agent.AgentInstructions)
+            {
+                if (section != instruction.Title)
+                {
+                    if (!string.IsNullOrEmpty(section))
+                    {
+                        strInstructions += "\n";
+                    }
+                    section = instruction.Title;
+                    strInstructions += $"### {section}\n";
 
+                }
+
+                strInstructions += instruction.Content + "\n\n";
+            }
+
+            return strInstructions;
         }
 
     }

@@ -2,10 +2,10 @@
   width: 100%;
 }
 
-.shipping-card {
-  min-width: 120px;
+.chat-card {
+  min-width: 220px;
   margin: 2rem auto;
-  max-width: 600px;
+  max-width: 1500px;
 }
 
 .mat-radio-button {

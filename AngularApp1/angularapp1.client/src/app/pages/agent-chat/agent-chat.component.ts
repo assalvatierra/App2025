@@ -1,4 +1,4 @@
-import { Component, inject, HostListener } from '@angular/core';
+import { Component, ViewChild, HostListener, ElementRef } from '@angular/core';
 //import { FormBuilder, Validators } from '@angular/forms';
 import { ApiAgentchatService } from '../../core/services/api-agentchat.service';
 
@@ -9,8 +9,9 @@ import { ApiAgentchatService } from '../../core/services/api-agentchat.service';
   standalone: false
 })
 export class AgentChatComponent {
+  @ViewChild('chatArea') chatArea!: ElementRef<HTMLTextAreaElement>;
 
-  AgentId: number = 0; 
+  AgentId: number = 1; 
   ChatMessage: string = '';
   chatRows = 10; 
   userChatRows = 3; 
@@ -20,6 +21,8 @@ export class AgentChatComponent {
 
   constructor(private apiAgentchatService: ApiAgentchatService) {
     this.updateChatRows();
+
+    this.AgentId = 1;
   }
 
   @HostListener('window:resize')
@@ -39,10 +42,15 @@ export class AgentChatComponent {
     var chatInfo = this.prepareUserChatInfo();
     this.processUserMessage(chatInfo);
   }
+  onClickClearMessage(): void {
+    this.userChatMessage = '';
+    this.chatHistory = [];
+    this.ChatMessage = '';
+  }
 
   prepareUserChatInfo(): any {
     const chatInfo = {
-      AgentId: 0,
+      AgentId: this.AgentId,
       messageRequest: this.userChatMessage,
       messageReply: '',
       messageHistory: this.chatHistory.join('\n\n'),
@@ -54,7 +62,7 @@ export class AgentChatComponent {
   processUserMessage(chatInfo: any): void {
     this.userChatMessage = '';
     this.chatHistory.push('User >> ' + chatInfo.messageRequest);
-    this.ChatMessage = this.chatHistory.join('\n\n') + 'Processing...';
+    this.ChatMessage = this.chatHistory.join('\n\n') + '\n\n\nProcessing...';
 
     this.apiAgentchatService.ProcessMessage(chatInfo).subscribe(response => {
       this.processAgentResponse(response);
@@ -67,10 +75,18 @@ export class AgentChatComponent {
   processAgentResponse(response: any): void {
     this.chatHistory.push('Agent>> ' + response.messageReply); 
     this.ChatMessage = this.chatHistory.join('\n\n');
+    this.scrollToBottom();
   }
   processErrorResponse(): void {
     this.chatHistory.push('Error encountered!!!');
     this.ChatMessage = this.chatHistory.join('\n\n');
+    this.scrollToBottom();
   }
-
+  scrollToBottom() {
+    setTimeout(() => {
+      if (this.chatArea && this.chatArea.nativeElement) {
+        this.chatArea.nativeElement.scrollTop = this.chatArea.nativeElement.scrollHeight;
+      }
+    },0);
+  }
 }

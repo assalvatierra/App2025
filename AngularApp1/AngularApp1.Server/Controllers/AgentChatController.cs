@@ -51,12 +51,16 @@ namespace AngularApp1.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<AgentInfo>> Process(AgentInfo info)
         {
-            //_context.RefCountry.Add(refCountry);
-            //await _context.SaveChangesAsync();
+            var agentdata = await _context.Agent
+                .Include(a => a.AgentInstructions)
+                .FirstOrDefaultAsync(a=> a.Id == info.AgentId);
 
-            var test = await _context.Agent.FindAsync(1);
+            if (agentdata == null)
+            {
+                return NotFound($"Agent with ID {info.AgentId} not found.");
+            }
 
-            AgentBasic Agent = new AgentBasic();
+            AgentBasic Agent = new AgentBasic(agentdata);
             var result = await Agent.processInstructions(info.messageRequest, info.messageHistory);
             info.messageReply = result.Value ?? string.Empty;
 

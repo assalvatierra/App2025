@@ -1,5 +1,5 @@
 
-<mat-card class="shipping-card">
+<mat-card class="chat-card">
   <mat-card-header>
     <mat-card-title>Agent Chat</mat-card-title>
   </mat-card-header>
@@ -11,7 +11,8 @@
                     placeholder=""
                     [(ngModel)]="ChatMessage"
                     name="chatMessage"
-                    [rows]="chatRows"></textarea>
+                    [rows]="chatRows"
+                    #chatArea></textarea>
           <!-- Validation removed since we're not using Reactive Forms here -->
         </mat-form-field>
       </div>
@@ -30,6 +31,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onClickClearMessage()">Clear Chat</button>
     <button mat-raised-button color="primary" (click)="onClickSubmitMessage()">Submit</button>
   </mat-card-actions>
 </mat-card>

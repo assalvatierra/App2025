@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AngularApp1.Server.Controllers
 {
@@ -30,10 +31,12 @@ namespace AngularApp1.Server.Controllers
     public class AgentChatController : ControllerBase
     {
         private readonly ErpDbContext _context;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AgentChatController(ErpDbContext context)
+        public AgentChatController(ErpDbContext context, IServiceProvider serviceProvider)
         {
             _context = context;
+            _serviceProvider = serviceProvider;
         }
 
 
@@ -60,7 +63,7 @@ namespace AngularApp1.Server.Controllers
                 return NotFound($"Agent with ID {info.AgentId} not found.");
             }
 
-            AgentBasic Agent = new AgentBasic(agentdata);
+            AgentBasic Agent = new AgentBasic(agentdata, _context);
             var result = await Agent.processInstructions(info.messageRequest, info.messageHistory);
             info.messageReply = result.Value ?? string.Empty;
 

@@ -1,4 +1,6 @@
 ﻿using AngularApp1.Server.Controllers;
+using AngularApp1.Server.Data;
+using AngularApp1.Server.Services.Plugins;
 using Erp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
+using System;
 using System.Runtime.CompilerServices;
 
 
@@ -13,23 +16,27 @@ namespace AngularApp1.Server.Services
 {
     public class AgentBasic : IAgentBasic
     {
-        string modelId = "gpt-4.1";
-        string endpoint = "";
-        string apiKey = "";
+        //string modelId = "gpt-4.1";
+        //string endpoint = "";
+        //string apiKey = "";
+
 
         string MainInstruction=string.Empty;
         Kernel kernel;
         Agent agent;
+
+        private readonly ErpDbContext _context;
 
         public AgentBasic()
         {
             this.initializeKernel();
         }
 
-        public AgentBasic(Agent agent)
+        public AgentBasic(Agent agent, ErpDbContext context)
         {
-            this.initializeKernel();
+            _context = context;
             this.agent = agent;
+            this.initializeKernel();
         }
 
         private void initializeKernel()
@@ -37,11 +44,12 @@ namespace AngularApp1.Server.Services
             kernel = Kernel.CreateBuilder()
                 .AddAzureOpenAIChatCompletion(modelId, endpoint, apiKey)
                 .Build();
+
+            AgentBinPlugin p = new AgentBinPlugin(_context, this.agent.Id);
+            kernel.Plugins.AddFromObject(p);
+
             var history = new ChatHistory();
         }
-
-
-
 
 
         public async Task<ActionResult<string>> processInstructions(string userInput, string chatHistory)
@@ -217,6 +225,7 @@ The response must be organized as follows:
                 strInstructions += instruction.Content + "\n\n";
             }
 
+            //strInstructions = "get and show reminders";
             return strInstructions;
         }
 

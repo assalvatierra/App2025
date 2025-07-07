@@ -431,6 +431,9 @@
     <property name="keywords" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0330ac2e-0695-49e9-9ff3-f447310e5283">
       <column name="" />
     </property>
+    <property name="orderNo" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="df2f6e80-10d3-46b8-9fa0-556077c6cc10">
+      <column name="" />
+    </property>
   </class>
   <class name="AgentBin" entity-set="AgentBin" p1:Guid="1608dafa-bb22-457d-989e-b699e04ffb02">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="d6f20327-7d49-43f6-ba49-c59515b59ce9">
@@ -443,6 +446,12 @@
       <column name="" not-null="False" length="8000" />
     </property>
     <property name="dtAdded" type="DateTime" p1:ValidateRequired="true" p1:Guid="e5f0fe11-6cc2-4b41-8a07-173c68e75470">
+      <column name="" />
+    </property>
+    <property name="orderNo" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e69cb244-a242-4694-b254-0eb68668ec64">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f1f10ba0-8b43-49d7-a67b-a84a60fb3efe">
       <column name="" />
     </property>
   </class>

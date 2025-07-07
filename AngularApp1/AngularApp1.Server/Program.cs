@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.BearerToken;
 using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
 using Microsoft.OpenApi.Models;
+using AngularApp1.Server.Services.Plugins;
+using Microsoft.SemanticKernel;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +44,7 @@ builder.Services.AddAuthentication(
 
 builder.Services.AddDbContext<ErpDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ErpDbContext") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddCors(options =>

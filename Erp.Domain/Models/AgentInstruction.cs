@@ -15,5 +15,7 @@ public partial class AgentInstruction
 
     public string? Keywords { get; set; }
 
+    public int? orderNo { get; set; }
+
     public virtual Agent? Agent { get; set; }
 }

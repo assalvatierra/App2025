@@ -22,7 +22,7 @@ export class AgentChatComponent {
   constructor(private apiAgentchatService: ApiAgentchatService) {
     this.updateChatRows();
 
-    this.AgentId = 1;
+    this.AgentId = 3;
   }
 
   @HostListener('window:resize')

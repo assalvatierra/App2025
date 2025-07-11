@@ -50,8 +50,8 @@ namespace AngularApp1.Server.Services.Plugins
                 try
                 {
                     var maxOrderNo = _context.AgentBin
-                        .Where(b => b.AgentId == _agentId && b.orderNo.HasValue)
-                        .Select(b => b.orderNo.Value)
+                        .Where(b => b.AgentId == _agentId && b.OrderNo.HasValue)
+                        .Select(b => b.OrderNo.Value)
                         .DefaultIfEmpty(0)
                         .Max();
                     nextOrderNo = maxOrderNo + 1;
@@ -68,7 +68,7 @@ namespace AngularApp1.Server.Services.Plugins
                     AgentId = _agentId,
                     Data = Data,
                     DtAdded = DateTime.Now,
-                    orderNo = nextOrderNo
+                    OrderNo = nextOrderNo
                 };
                 _context.AgentBin.Add(bin);
                 _context.SaveChanges();

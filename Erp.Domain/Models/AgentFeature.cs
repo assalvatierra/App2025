@@ -3,19 +3,15 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models;
 
-public partial class AgentBin
+public partial class AgentFeature
 {
     public int Id { get; set; }
 
     public int? AgentId { get; set; }
 
-    public string? Data { get; set; }
+    public string Code { get; set; } = null!;
 
-    public DateTime DtAdded { get; set; }
-
-    public int? OrderNo { get; set; }
-
-    public string? Status { get; set; }
+    public string? Options { get; set; }
 
     public virtual Agent? Agent { get; set; }
 }

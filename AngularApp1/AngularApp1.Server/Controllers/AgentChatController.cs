@@ -56,6 +56,7 @@ namespace AngularApp1.Server.Controllers
         {
             var agentdata = await _context.Agent
                 .Include(a => a.AgentInstructions)
+                .Include(a => a.AgentFeatures)
                 .FirstOrDefaultAsync(a=> a.Id == info.AgentId);
 
             if (agentdata == null)

@@ -15,5 +15,7 @@ public partial class Agent
 
     public virtual ICollection<AgentBin> AgentBins { get; set; } = new List<AgentBin>();
 
+    public virtual ICollection<AgentFeature> AgentFeatures { get; set; } = new List<AgentFeature>();
+
     public virtual ICollection<AgentInstruction> AgentInstructions { get; set; } = new List<AgentInstruction>();
 }

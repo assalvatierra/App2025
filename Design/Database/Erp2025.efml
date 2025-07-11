@@ -445,13 +445,27 @@
     <property name="Data" type="String" p1:nullable="True" p1:ValidateMaxLength="8000" p1:ValidateRequired="false" p1:Guid="cacc71a6-70a9-41f2-a1bd-452234eaf757">
       <column name="" not-null="False" length="8000" />
     </property>
-    <property name="dtAdded" type="DateTime" p1:ValidateRequired="true" p1:Guid="e5f0fe11-6cc2-4b41-8a07-173c68e75470">
+    <property name="DtAdded" type="DateTime" p1:ValidateRequired="true" p1:Guid="e5f0fe11-6cc2-4b41-8a07-173c68e75470">
       <column name="" />
     </property>
-    <property name="orderNo" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e69cb244-a242-4694-b254-0eb68668ec64">
+    <property name="OrderNo" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e69cb244-a242-4694-b254-0eb68668ec64">
       <column name="" />
     </property>
     <property name="Status" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f1f10ba0-8b43-49d7-a67b-a84a60fb3efe">
+      <column name="" />
+    </property>
+  </class>
+  <class name="AgentFeature" entity-set="AgentFeature" p1:Guid="fe1e7060-6ee2-423e-9acf-77b390d3eb3e">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="3c491833-e222-446a-b981-99fe2ceefb24">
+      <column name="" />
+    </id>
+    <property name="AgentId" type="Int32" p1:ValidateRequired="true" p1:Guid="49ccd610-4747-4410-889d-c779ca996599">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Code" type="String" p1:ValidateRequired="true" p1:Guid="22a2dc98-8b25-4715-b4d0-d834ed076edb">
+      <column name="" />
+    </property>
+    <property name="Options" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6f1c1971-5496-4752-8ebc-4b60243ab0fa">
       <column name="" />
     </property>
   </class>
@@ -677,6 +691,14 @@
         <property name="Id" />
       </end1>
       <end2 multiplicity="Many" name="Agent_bins" class="Agent" relation-class="AgentBin" lazy="False" p1:Guid="1d689a46-5d26-4190-b089-daaf01304a42">
+        <property name="AgentId" />
+      </end2>
+    </association>
+    <association name="Agent_AgentFeature" cardinality="OneToMany" p1:Guid="c8dfa892-30fc-4ab1-acfa-2626000d935e">
+      <end1 multiplicity="One" name="Agent" class="AgentFeature" relation-class="Agent" constrained="True" lazy="False" p1:Guid="0b2a2203-76a5-482e-a481-d19abe9f1152">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="AgentFeatures" class="Agent" relation-class="AgentFeature" lazy="False" p1:Guid="957a638c-d2a9-4bb9-8676-7cf5f15a11ad">
         <property name="AgentId" />
       </end2>
     </association>

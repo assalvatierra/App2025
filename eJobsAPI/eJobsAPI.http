@@ -1,0 +1,6 @@
+@eJobsAPI_HostAddress = http://localhost:5089
+
+GET {{eJobsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

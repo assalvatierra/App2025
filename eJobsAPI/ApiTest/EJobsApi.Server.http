@@ -1,0 +1,18 @@
+
+@EjobsApi.Server_HostAddress = https://localhost:7129
+@EjobsApi.openapi.def = https://localhost:7252/openapi/v1.json
+
+GET {{EjobsApi.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+@EjobsApi.Server_HostAddress = https://localhost:7129
+GET {{EjobsApi.Server_HostAddress}}/openapi/v1.json
+
+###
+GET {{EjobsApi.openapi.def}}
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/today
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/5

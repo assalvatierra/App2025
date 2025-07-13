@@ -14,5 +14,9 @@ GET {{EjobsApi.openapi.def}}
 
 ###
 GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/today
+
 ###
-GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/5
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/DateRange/2025-07-12/2025-07-12
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/2950

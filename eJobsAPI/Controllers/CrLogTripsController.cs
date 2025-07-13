@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using eJobs.Data;
 using eJobs.Model;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 using eJobsAPI.Data;
 using eJobsAPI.Services;
 
@@ -30,14 +30,22 @@ namespace eJobsAPI.Controllers
 
 
         // GET: api/CrLogTrips/today
+        [HttpGet("DateRange/{dtFrom}/{dtTo}")]
+        public async Task<ActionResult<IEnumerable<TripLogData>>> ByDateRange(System.DateTime dtFrom, System.DateTime dtTo)
+        {
+            return await _tripLogServices.GetTripLogsByDate(dtFrom,dtTo);
+        }
+
         [HttpGet("today")]
         public async Task<ActionResult<IEnumerable<TripLogData>>> today()
         {
-          
+
 
             return await _tripLogServices.GetTripLogsToday();
 
         }
+
+
 
 
         // GET: api/CrLogTrips

@@ -14,7 +14,7 @@ export class AgentChatComponent {
   AgentId: number = 1; 
   ChatMessage: string = '';
   chatRows = 10; 
-  userChatRows = 3; 
+  userChatRows = 2; 
   userChatMessage: string = '';
 
   chatHistory: any[] = [];
@@ -22,7 +22,7 @@ export class AgentChatComponent {
   constructor(private apiAgentchatService: ApiAgentchatService) {
     this.updateChatRows();
 
-    this.AgentId = 3;
+    this.AgentId = 5;
   }
 
   @HostListener('window:resize')
@@ -38,10 +38,22 @@ export class AgentChatComponent {
     this.chatRows = Math.max(3, Math.floor(available / 24));
   }
 
+  
+  onKeydownEnter(event: any): void {
+    this.onClickSubmitMessage();
+
+    if (event) {
+      event.preventDefault();
+    }
+
+  }
+
   onClickSubmitMessage(): void {
     var chatInfo = this.prepareUserChatInfo();
     this.processUserMessage(chatInfo);
   }
+
+
   onClickClearMessage(): void {
     this.userChatMessage = '';
     this.chatHistory = [];

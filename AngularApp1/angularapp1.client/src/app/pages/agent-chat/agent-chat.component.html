@@ -24,6 +24,7 @@
                     placeholder="Type your message"
                     [(ngModel)]="userChatMessage"
                     name="userChatMessage"
+                    (keydown.enter)="onKeydownEnter($event)"
                     [rows]="userChatRows"></textarea>
           <!-- Validation removed since we're not using Reactive Forms here -->
         </mat-form-field>

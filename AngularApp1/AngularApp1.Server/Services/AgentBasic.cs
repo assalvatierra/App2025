@@ -20,7 +20,6 @@ namespace AngularApp1.Server.Services
         string endpoint = "";
         string apiKey = "";
 
-
         string MainInstruction =string.Empty;
         Kernel kernel;
         Agent agent;
@@ -55,6 +54,17 @@ namespace AngularApp1.Server.Services
                         kernel.Plugins.AddFromObject(p);
                     }
 
+                    if(feature.Code == "EJOBS")
+                    {
+                        eJobPlugin p = new eJobPlugin();
+                        kernel.Plugins.AddFromObject(p);
+                    }
+
+                    if (feature.Code == "MGR100")
+                    {
+                        AgentManagerPlugin p = new AgentManagerPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p);
+                    }
 
                 }
             }

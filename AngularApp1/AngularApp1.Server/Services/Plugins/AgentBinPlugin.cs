@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Erp.Domain.Models;
 using AngularApp1.Server.Data;
-using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 
 namespace AngularApp1.Server.Services.Plugins

@@ -5,5 +5,7 @@ namespace eJobsAPI.Services
     public interface ITripLogServices
     {
        public Task<List<TripLogData>> GetTripLogsToday();
+       public Task<List<TripLogData>> GetTripLogsByDate(System.DateTime dtFrom, System.DateTime dtTo);
+
     }
 }

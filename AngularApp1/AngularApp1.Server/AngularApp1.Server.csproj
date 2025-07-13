@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\eJobsAPI\eJobsAPI.csproj" />
     <ProjectReference Include="..\..\Erp.Domain\Erp.Domain.csproj" />
     <ProjectReference Include="..\angularapp1.client\angularapp1.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

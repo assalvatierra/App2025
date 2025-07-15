@@ -28,6 +28,15 @@ namespace eJobs.Data
         public DbSet<eJobs.Model.InvItem> InvItems { get; set; } = default!;
         public DbSet<eJobs.Model.Service> Services { get; set; } = default!;
         public DbSet<eJobs.Model.Supplier> Suppliers { get; set; } = default!;
+        public DbSet<eJobs.Model.ArTransaction> ArTransactions { get; set; } = default!;
+        public DbSet<eJobs.Model.ArPayment> ArPayments { get; set; } = default!;
+        public DbSet<eJobs.Model.ArDeposit> ArDeposits { get; set; } = default!;
+        public DbSet<eJobs.Model.ArTransStatus> ArTransStatus { get; set; } = default!;
+        public DbSet<eJobs.Model.ArCategory> arCategories { get; set; } = default!;
+        public DbSet<eJobs.Model.ArAccount> arAccounts  { get; set; } = default!;
+        public DbSet<eJobs.Model.ArAccContact> ArAccContacts { get; set; } = default!;
+        public DbSet<eJobs.Model.ArTransPayment> ArTransPayments { get; set; } = default!;
+
 
     }
 }

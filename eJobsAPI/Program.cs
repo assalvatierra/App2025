@@ -28,6 +28,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ITripLogServices,TripLogServices>();
 builder.Services.AddScoped<IJobsServices, JobsServices>();
+builder.Services.AddScoped<IReceivablesServices, ReceivablesServices>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

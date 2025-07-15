@@ -21,8 +21,12 @@ GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/DateRange/2025-07-12/2025-07-
 ###
 GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/2950
 
-
+System.InvalidOperationException: The client projection contains a reference to a constant expression of 'eJobsAPI.Controllers.ReceivablesController' through the instance method 'GetTotalPayments'. This could potentially cause a memory leak; consider making the method static so that it does not capture constant in the instance. See https://go.microsoft.com/fwlink/?linkid=2103067 for more information and examples.
 ### api/Jobs
-###
+### 
 GET {{EjobsApi.Server_HostAddress}}/api/Jobs/GetQuicklist
+
+
+### api/Receivables/GetList
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetList
 

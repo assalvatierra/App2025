@@ -36,6 +36,14 @@ namespace eJobs.Data
         public DbSet<eJobs.Model.ArAccount> arAccounts  { get; set; } = default!;
         public DbSet<eJobs.Model.ArAccContact> ArAccContacts { get; set; } = default!;
         public DbSet<eJobs.Model.ArTransPayment> ArTransPayments { get; set; } = default!;
+        public DbSet<eJobs.Model.ApTransaction> apTransactions { get; set; } = default!;
+        public DbSet<eJobs.Model.ApAccount> apAccounts { get; set; } = default!;
+        public DbSet<eJobs.Model.ApTransCategory> ApTransCategories { get; set; } = default!;
+        public DbSet<eJobs.Model.ApPaymentStatus> ApPaymentStatuses { get; set; } = default!;
+        public DbSet<eJobs.Model.ApPayment> ApPayments { get; set; } = default!;
+        public DbSet<eJobs.Model.ApTransPayment> ApTransPayments { get; set; } = default!;
+
+
 
 
     }

@@ -30,3 +30,7 @@ GET {{EjobsApi.Server_HostAddress}}/api/Jobs/GetQuicklist
 ### api/Receivables/GetList
 GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetList
 
+
+### api/Expenses/GetList
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/GetListByDate/2025-07-14/2025-07-16
+

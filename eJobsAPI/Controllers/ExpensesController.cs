@@ -31,7 +31,7 @@ namespace eJobsAPI.Controllers
         public ActionResult<IEnumerable<ExpensesListData>> GetList()
         {
 
-            var today = DateTime.Today;
+            var today = GetCurrentTime();
 
             var expensesList = _context
                 .apTransactions
@@ -39,7 +39,7 @@ namespace eJobsAPI.Controllers
                 .Include(ap => ap.ApTransCategory)
                 .Include(ap => ap.ApTransStatus)
                 .Include(ap => ap.ApTransPayments)
-                .Where(ap=>ap.DtInvoice == today).ToList();
+                .Where(ap=>ap.DtInvoice.Date == today.Date).ToList();
 
 
 
@@ -95,6 +95,16 @@ namespace eJobsAPI.Controllers
             return expensesListData;
 
         }
+
+
+        protected DateTime GetCurrentTime()
+        {
+            DateTime _localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time"));
+            _localTime = _localTime.Date;
+
+            return _localTime;
+        }
+
 
     }
 }

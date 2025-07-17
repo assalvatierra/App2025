@@ -13,6 +13,37 @@ namespace eJobsAPI.Services
             _context = context;
         }
 
+        public async Task<List<TripLogData>> Search(System.DateTime dtFrom, System.DateTime dtTo, string options = null)
+        {
+            var DbF = EF.Functions;
+
+            var query = _context.CrLogTrips
+                .Include(t => t.CrLogTripJobMains)
+                .Include(t => t.CrLogUnit)
+                .Include(t => t.CrLogDriver)
+                .Include(t => t.CrLogCompany)
+                .Where(t => t.DtTrip.Date >= dtFrom.Date && t.DtTrip.Date <= dtTo.Date);
+
+            var parsedOptions = ParseOptions(options);
+            if (parsedOptions.ContainsKey("company"))
+            {
+                query = query.Where(t => (t.CrLogCompany.Name != null) && t.CrLogCompany.Name.Contains(parsedOptions["company"]));
+            }
+            if (parsedOptions.ContainsKey("driver"))
+            {
+                query = query.Where(t => t.CrLogDriver.Name.Contains(parsedOptions["driver"]));
+            }
+            if (parsedOptions.ContainsKey("remarks"))
+            {
+                query = query.Where(t => (t.Remarks != null) && t.Remarks.Contains(parsedOptions["remarks"]));
+            }
+
+            var triplogList = await query.ToListAsync();
+            return this.toTripLogData(triplogList);
+
+        }
+
+
         public async Task<List<TripLogData>> GetTripLogsByDate(System.DateTime DateTripFrom, System.DateTime DateTripTo)
         {
             var DbF = EF.Functions;
@@ -26,8 +57,17 @@ namespace eJobsAPI.Services
                 //.Where(t => DbF.DateDiffDay(DateTripFrom, t.DtTrip ) >= 0 && DbF.DateDiffDay(t.DtTrip, DateTripTo) >= 0)
                 .ToListAsync();
 
-            List<TripLogData> tripLogFormatDataList = new List<TripLogData>();
+            return this.toTripLogData(triplogList);
+        }
 
+        public async Task<List<TripLogData>> GetTripLogsToday()
+        {
+            return  await this.GetTripLogsByDate(DateTime.Today, DateTime.Today);
+        }
+
+        private List<TripLogData> toTripLogData(List<eJobs.Model.CrLogTrip> triplogList)
+        {
+            List<TripLogData> tripLogFormatDataList = new List<TripLogData>();
             foreach (var trip in triplogList)
             {
                 TripLogData triplog = new TripLogData();
@@ -50,47 +90,31 @@ namespace eJobsAPI.Services
                 tripLogFormatDataList.Add(triplog);
             }
 
-
             return tripLogFormatDataList;
-
         }
 
-        public async Task<List<TripLogData>> GetTripLogsToday()
+
+        private Dictionary<string, string> ParseOptions(string options)
         {
-            return  await this.GetTripLogsByDate(DateTime.Today, DateTime.Today);
+            var parsedOptions = new Dictionary<string, string>();
 
-            //var DbF = EF.Functions;
-            //var today = DateTime.Today;
+            if (!string.IsNullOrEmpty(options))
+            {
+                var optionsArray = options.Split(';');
 
-            //var triplogToday = await _context.CrLogTrips
-            //    .Include(t => t.CrLogTripJobMains)
-            //    .Where(t => DbF.DateDiffDay(t.DtTrip, today) == 0).ToListAsync();
+                foreach (var option in optionsArray)
+                {
+                    var keyValue = option.Split('=');
 
-            //List<TripLogData> tripLogFormatDataList = new List<TripLogData>();
+                    if (keyValue.Length == 2)
+                    {
+                        parsedOptions.Add(keyValue[0].Trim(), keyValue[1].Trim());
+                    }
+                }
+            }
 
-            //foreach (var trip in triplogToday)
-            //{
-            //    TripLogData triplog = new TripLogData();
-            //    triplog.Id = trip.Id;
-            //    triplog.Date = trip.DtTrip;
-            //    triplog.jobRef = _context.CrLogTripJobMains.Where(t => t.CrLogTripId == trip.Id).FirstOrDefault().JobMainId.ToString() ?? "0";
-            //    triplog.Unit = _context.CrLogUnits.Find(trip.CrLogUnitId).Description ?? "";
-            //    triplog.Driver = _context.CrLogDrivers.Find(trip.CrLogDriverId).Name ?? "";
-            //    triplog.Company = _context.CrLogCompanies.Find(trip.CrLogCompanyId).Name ?? "";
-            //    triplog.Remarks = trip.Remarks ?? "";
-            //    triplog.Rate = trip.Rate;
-            //    triplog.Addon = trip.Addon;
-            //    triplog.OT = trip.AddonOt ?? 0;
-            //    triplog.Expenses = trip.Expenses;
-            //    triplog.DriverRate = trip.DriverFee;
-            //    triplog.DriverOT = trip.DriverOt;
-            //    triplog.Time = trip.StartTime + " - " + trip.EndTime;
-
-            //    tripLogFormatDataList.Add(triplog);
-            //}
-
-
-            //return tripLogFormatDataList;
+            return parsedOptions;
         }
+
     }
 }

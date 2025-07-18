@@ -16,34 +16,22 @@ namespace eJobsAPI.Controllers
 
 
         private readonly JobDbContext _context;
-        private readonly IReceivablesServices _receivablesServices;
+        private readonly IExpensesServices _expensesServices;
 
 
-        public ExpensesController(JobDbContext context, IReceivablesServices receivablesServices)
+        public ExpensesController(JobDbContext context, IExpensesServices expensesServices)
         {
             _context = context;
-            _receivablesServices = receivablesServices;
+            _expensesServices = expensesServices;
         }
 
 
         // GET: api/Expenses/GetList
         [HttpGet("GetList")]
-        public ActionResult<IEnumerable<ExpensesListData>> GetList()
+        public async Task<IEnumerable<ExpensesListData>> GetList()
         {
 
-            var today = GetCurrentTime();
-
-            var expensesList = _context
-                .apTransactions
-                .Include(ap => ap.ApAccount)
-                .Include(ap => ap.ApTransCategory)
-                .Include(ap => ap.ApTransStatus)
-                .Include(ap => ap.ApTransPayments)
-                .Where(ap=>ap.DtInvoice.Date == today.Date).ToList();
-
-
-
-            return FilteredData(expensesList);
+            return await _expensesServices.GetExpensesList();
 
         }
 
@@ -51,60 +39,23 @@ namespace eJobsAPI.Controllers
 
         // GET: api/Expenses/GetList
         [HttpGet("GetListByDate/{dateFrom}/{dateTo}")]
-        public ActionResult<IEnumerable<ExpensesListData>> GetListByDate(DateTime dateFrom, DateTime dateTo)
+        public async Task<IEnumerable<ExpensesListData>> GetListByDate(DateTime dateFrom, DateTime dateTo)
         {
-            var DbF = EF.Functions;
-            var expensesList = _context
-                .apTransactions
-                .Include(ap => ap.ApAccount)
-                .Include(ap => ap.ApTransCategory)
-                .Include(ap => ap.ApTransStatus)
-                .Include(ap => ap.ApTransPayments)
-                .Where(ap => ap.DtInvoice >= dateFrom && ap.DtInvoice <= dateTo).ToList();
 
-
-            return FilteredData(expensesList);
+            return await _expensesServices.GetExpensesListByDate(dateFrom, dateTo);
 
         }
 
 
-        private List<ExpensesListData> FilteredData(List<ApTransaction> apTransactions)
+
+
+        // GET: api/Expenses/GetList
+        [HttpGet("Search/{dateFrom}/{dateTo}/{options}")]
+        public async Task<IEnumerable<ExpensesListData>> Search(DateTime dateFrom, DateTime dateTo, string options)
         {
 
-            List<ExpensesListData> expensesListData = new List<ExpensesListData>();
-
-            foreach (var expenses in apTransactions)
-            {
-                ExpensesListData exp = new ExpensesListData();
-                exp.Id = expenses.Id;
-                exp.Date = expenses.DtInvoice.ToString("MMM dd yyyy");
-                exp.Account = expenses.ApAccount.Name;
-                exp.Description = expenses.Description;
-                exp.Remarks = expenses.Remarks;
-                exp.Requested = expenses.BudgetAmt;
-                exp.Released = expenses.ReleaseAmt;
-                exp.Amount = expenses.Amount;
-                exp.Payment = expenses.ApTransPayments.Sum(p => p.ApPayments == null ? 0: p.ApPayments.Amount);
-                exp.Category = expenses.ApTransCategory.Name;
-                exp.Status = expenses.ApTransStatus.Status;
-
-                expensesListData.Add(exp);
-
-            }
-
-            return expensesListData;
+            return await _expensesServices.Search(dateFrom, dateTo, options);
 
         }
-
-
-        protected DateTime GetCurrentTime()
-        {
-            DateTime _localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time"));
-            _localTime = _localTime.Date;
-
-            return _localTime;
-        }
-
-
     }
 }

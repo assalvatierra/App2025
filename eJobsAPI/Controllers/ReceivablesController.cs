@@ -31,6 +31,21 @@ namespace eJobsAPI.Controllers
            return await _receivablesServices.GetReceivablesList();
         }
 
+        // GET: api/Receivables/GetList
+        [HttpGet("GetListByDate/{dateFrom}/{dateTo}")]
+        public async Task<IEnumerable<ReceivablesListData>> GetListByDate(DateTime dateFrom, DateTime dateTo)
+        {
+            return await _receivablesServices.GetReceivablesList(dateFrom, dateTo);
+        }
+
+        // GET: api/Expenses/GetList
+        [HttpGet("Search/{dateFrom}/{dateTo}/{options}")]
+        public async Task<IEnumerable<ReceivablesListData>> Search(DateTime dateFrom, DateTime dateTo, string options)
+        {
+
+            return await _receivablesServices.Search(dateFrom, dateTo, options);
+
+        }
 
     }
 }

@@ -57,5 +57,20 @@ namespace eJobsAPI.Controllers
             return await _expensesServices.Search(dateFrom, dateTo, options);
 
         }
+
+
+        // GET: api/Expenses/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApTransaction>> GetExpenses(int id)
+        {
+            var expenses = await _context.apTransactions.FindAsync(id);
+
+            if (expenses == null)
+            {
+                return NotFound();
+            }
+
+            return expenses;
+        }
     }
 }

@@ -30,6 +30,9 @@ System.InvalidOperationException: The client projection contains a reference to 
 ### 
 GET {{EjobsApi.Server_HostAddress}}/api/Jobs/GetQuicklist
 
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Jobs/38260
+
 
 ### api/Receivables/GetList
 GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetList
@@ -39,6 +42,9 @@ GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetListByDate/2025-07-14/202
 
 ### search
 GET {{EjobsApi.Server_HostAddress}}/api/Receivables/Search/2025-07-01/2025-07-17/company=
+
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/5884
 
 
 ### api/Expenses/GetList
@@ -50,6 +56,9 @@ GET {{EjobsApi.Server_HostAddress}}/api/Expenses/GetListByDate/2025-07-14/2025-0
 ### search
 GET {{EjobsApi.Server_HostAddress}}/api/Expenses/Search/2025-07-01/2025-07-12/account=Real
 
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/19689
+
 
 ### api/Maintenance/GetList
 GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/GetList
@@ -60,6 +69,8 @@ GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/GetListByDate/2025-04-01/202
 ### search
 GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/Search/2025-05-01/2025-07-12/unit=Innova
 
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/3890
 
 
 

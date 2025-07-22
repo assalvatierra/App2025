@@ -30,6 +30,22 @@ namespace eJobsAPI.Controllers
             return await _jobsServices.GetActiveJobs();
         }
 
+
+
+        // GET: api/JobMain/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobMain>> GetExpenses(int id)
+        {
+            var JobMain = await _context.JobMains.FindAsync(id);
+
+            if (JobMain == null)
+            {
+                return NotFound();
+            }
+
+            return JobMain;
+        }
+
     }
 
 }

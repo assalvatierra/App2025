@@ -47,5 +47,20 @@ namespace eJobsAPI.Controllers
 
         }
 
+        // GET: api/receivables/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ArTransaction>> GetExpenses(int id)
+        {
+            var receivables = await _context.ArTransactions.FindAsync(id);
+
+            if (receivables == null)
+            {
+                return NotFound();
+            }
+
+            return receivables;
+        }
+
+
     }
 }

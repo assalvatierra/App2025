@@ -54,5 +54,19 @@ namespace eJobsAPI.Controllers
 
         }
 
+
+        // GET: api/Maintenance/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<InvCarRecord>> GetExpenses(int id)
+        {
+            var carRecords = await _context.InvCarRecords.FindAsync(id);
+
+            if (carRecords == null)
+            {
+                return NotFound();
+            }
+
+            return carRecords;
+        }
     }
 }

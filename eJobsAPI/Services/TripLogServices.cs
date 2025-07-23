@@ -13,7 +13,7 @@ namespace eJobsAPI.Services
             _context = context;
         }
 
-        public async Task<List<TripLogData>> Search(System.DateTime dtFrom, System.DateTime dtTo, string options = null)
+        public async Task<List<TripLogData>> Search(System.DateTime dtFrom, System.DateTime dtTo, string? options)
         {
             var DbF = EF.Functions;
 
@@ -24,18 +24,60 @@ namespace eJobsAPI.Services
                 .Include(t => t.CrLogCompany)
                 .Where(t => t.DtTrip.Date >= dtFrom.Date && t.DtTrip.Date <= dtTo.Date);
 
-            var parsedOptions = ParseOptions(options);
-            if (parsedOptions.ContainsKey("company"))
+            if (!string.IsNullOrEmpty(options))
             {
-                query = query.Where(t => (t.CrLogCompany.Name != null) && t.CrLogCompany.Name.Contains(parsedOptions["company"]));
-            }
-            if (parsedOptions.ContainsKey("driver"))
-            {
-                query = query.Where(t => t.CrLogDriver.Name.Contains(parsedOptions["driver"]));
-            }
-            if (parsedOptions.ContainsKey("remarks"))
-            {
-                query = query.Where(t => (t.Remarks != null) && t.Remarks.Contains(parsedOptions["remarks"]));
+                var parsedOptions = ParseOptions(options);
+                if (parsedOptions.ContainsKey("unit"))
+                {
+                    string value01 = parsedOptions["unit"];
+                    if(value01.StartsWith("NOT!", StringComparison.OrdinalIgnoreCase))
+                    {
+                        value01 = value01.Substring(4).Trim();
+                        query = query.Where(t => (t.CrLogUnit.Description != null) && !t.CrLogUnit.Description.Contains(value01));
+                    }
+                    else
+                        query = query.Where(t => (t.CrLogUnit.Description != null) && t.CrLogUnit.Description.Contains(value01));
+
+                }
+
+                if (parsedOptions.ContainsKey("company"))
+                {
+                    string value01 = parsedOptions["company"];
+                    if (value01.StartsWith("NOT!", StringComparison.OrdinalIgnoreCase))
+                    {
+                        value01 = value01.Substring(4).Trim();
+                        query = query.Where(t => (t.CrLogCompany.Name != null) && !t.CrLogCompany.Name.Contains(value01));
+                    }
+                    else
+                        query = query.Where(t => (t.CrLogCompany.Name != null) && t.CrLogCompany.Name.Contains(value01));
+
+                }
+
+                if (parsedOptions.ContainsKey("driver"))
+                {
+                    string value01 = parsedOptions["driver"];
+                    if (value01.StartsWith("NOT!", StringComparison.OrdinalIgnoreCase))
+                    {
+                        value01 = value01.Substring(4).Trim();
+                        query = query.Where(t => (t.CrLogDriver.Name != null) && !t.CrLogDriver.Name.Contains(value01));
+                    }
+                    else
+                        query = query.Where(t => (t.CrLogDriver.Name != null) && t.CrLogDriver.Name.Contains(value01));
+                }
+
+                if (parsedOptions.ContainsKey("remarks"))
+                {
+                    query = query.Where(t => t.CrLogDriver.Name.Contains(parsedOptions["remarks"]));
+                    string value01 = parsedOptions["remarks"];
+                    if (value01.StartsWith("NOT!", StringComparison.OrdinalIgnoreCase))
+                    {
+                        value01 = value01.Substring(4).Trim();
+                        query = query.Where(t => (t.Remarks != null) && !t.Remarks.Contains(parsedOptions["remarks"]));
+                    }
+                    else
+                        query = query.Where(t => (t.Remarks != null) && t.Remarks.Contains(parsedOptions["remarks"]));
+                }
+
             }
 
             var triplogList = await query.ToListAsync();

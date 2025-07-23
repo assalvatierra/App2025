@@ -38,7 +38,7 @@ namespace eJobsAPI.Controllers
 
         // GET: api/CrLogTrips/today
         [HttpGet("Search/{dtFrom}/{dtTo}/{options}")]
-        public async Task<ActionResult<IEnumerable<TripLogData>>> Search(System.DateTime dtFrom, System.DateTime dtTo, string options)
+        public async Task<ActionResult<IEnumerable<TripLogData>>> Search(System.DateTime dtFrom, System.DateTime dtTo, string? options)
         {
             return await _tripLogServices.Search(dtFrom, dtTo, options);
         }

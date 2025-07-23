@@ -7,13 +7,20 @@ namespace AngularApp1.Server.Services.Plugins
 {
     public class eJobPlugin
     {
-        private string hostUrl = "https://localhost:7129/api/CrLogTrips/";
+        //private string hostUrl = "https://localhost:7129/api/CrLogTrips/";
+        private string hostUrl = "http://assalvatierra-001-site15.stempurl.com/api/CrLogTrips/";
 
-        [KernelFunction("get_trips")]
-        [Description("Get the vehicle trips base on the given Date From and Date To Parameters. the rentalRate is the revenue or income amount for the trip. driversFee is driver's salary and additional expense for the trip")]
-        public async Task<string> getGetTripsToday(System.DateTime tripDateFrom, System.DateTime tripDateTo)
+        [KernelFunction("search_Trips")]
+        [Description("Get the vehicle trips base on the given tripDateFrom, tripDateTo and options Parameters. " +
+            "tripDateFrom and tripDateTo are the date range for the trip. Options parameter is used to filter the server query." +
+            "Options parameter is formatted string like 'key1=option1;key2=option2'. Use _ if no parameter option needed." +
+            "KEY values is limited to the following options: unit, company, driver, remarks. " +
+            "Values are the parameter for the search for the given Key. Prefix the value with word 'NOT!' if excluding the value is the entention."+
+            "Limitation: Currently supports Single Value per Key. Can not use same key multiple times."+
+            "The rentalRate is the revenue or income amount for the trip. driversFee is driver's salary and additional expense for the trip")]
+        public async Task<string> searchTrips(System.DateTime tripDateFrom, System.DateTime tripDateTo, string options)
         {
-            string strUrl = $"{this.hostUrl}DateRange/{tripDateFrom:yyyy-MM-dd}/{tripDateTo:yyyy-MM-dd}";
+            string strUrl = $"{this.hostUrl}Search/{tripDateFrom:yyyy-MM-dd}/{tripDateTo:yyyy-MM-dd}/{options}";
             using (var client = new HttpClient())
             {
                 var response = await client.GetAsync(strUrl);
@@ -23,5 +30,23 @@ namespace AngularApp1.Server.Services.Plugins
             }
 
         }
+
+        [KernelFunction("get_TripsToday")]
+        [Description("Get the current day vehicle trips. " +
+            "The rentalRate is the revenue or income amount for the trip. driversFee is driver's salary and additional expense for the trip")]
+        public async Task<string> getTripsToday(System.DateTime tripDateFrom, System.DateTime tripDateTo, string options)
+        {
+            string strUrl = $"{this.hostUrl}today";
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(strUrl);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+
+        }
+
+
     }
 }

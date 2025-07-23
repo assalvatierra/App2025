@@ -17,6 +17,7 @@ export class AgentChatComponent {
   userChatRows = 2; 
   userChatMessage: string = '';
 
+  HistoryCountToKeep: number = 5; // Number of chat history messages to keep  
   chatHistory: any[] = [];
 
   constructor(private apiAgentchatService: ApiAgentchatService) {
@@ -65,15 +66,22 @@ export class AgentChatComponent {
       AgentId: this.AgentId,
       messageRequest: this.userChatMessage,
       messageReply: '',
-      messageHistory: this.chatHistory.join('\n\n'),
+      messageHistory: this.getLatestChatHistory(),
     };
 
     return chatInfo;
   }
 
+  getLatestChatHistory(): string {
+    // Return the last N messages from chatHistory, where N is HistoryCountToKeep
+    const start = Math.max(0, this.chatHistory.length - this.HistoryCountToKeep);
+    return this.chatHistory.slice(start).join('\n\n');
+  }
+
   processUserMessage(chatInfo: any): void {
     this.userChatMessage = '';
     this.chatHistory.push('User >> ' + chatInfo.messageRequest);
+
     this.ChatMessage = this.chatHistory.join('\n\n') + '\n\n\nProcessing...';
 
     this.apiAgentchatService.ProcessMessage(chatInfo).subscribe(response => {

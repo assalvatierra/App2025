@@ -42,7 +42,12 @@ namespace eJobs.Data
         public DbSet<eJobs.Model.ApPaymentStatus> ApPaymentStatuses { get; set; } = default!;
         public DbSet<eJobs.Model.ApPayment> ApPayments { get; set; } = default!;
         public DbSet<eJobs.Model.ApTransPayment> ApTransPayments { get; set; } = default!;
-
+        public DbSet<eJobs.Model.InvCarRecord> InvCarRecords { get; set; } = default!;
+        public DbSet<eJobs.Model.InvCarRecordType> InvCarRecordTypes { get; set; } = default!;
+        public DbSet<eJobs.Model.InvCarMntRcmd> InvCarMntRcmds { get; set; } = default!;
+        public DbSet<eJobs.Model.InvCarRcmdRequest> InvCarRcmdRequests { get; set; } = default!;
+        public DbSet<eJobs.Model.InvCarRcmdStatus> InvCarRcmdStatus { get; set; } = default!;
+        public DbSet<eJobs.Model.InvCarGateControl> InvCarGateControls { get; set; } = default!;
 
 
 

@@ -20,7 +20,7 @@ namespace eJobsAPI.Services
         private int JOBRESERVATION = 2;
         private int JOBCONFIRMED = 3;
 
-        public async Task<ActionResult<IList<JobMain>>> GetActiveJobs()
+        public async Task<IEnumerable<JobMain>> GetActiveJobs()
         {
             DateTime dtFrom = System.DateTime.Today;
             DateTime dtTo = System.DateTime.Today.AddDays(2);
@@ -48,7 +48,7 @@ namespace eJobsAPI.Services
                 .OrderBy(d => d.JobDate)
                 .ToListAsync();
 
-            return new ActionResult<IList<JobMain>>(jobMains);
+            return jobMains;
 
             //return Ok(jobMains);
 

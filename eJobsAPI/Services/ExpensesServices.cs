@@ -99,9 +99,13 @@ namespace eJobsAPI.Services
             {
                 query = query.Where(t => (t.ApAccount.Name != null) && t.ApAccount.Name.Contains(parsedOptions["account"]));
             }
+            if (parsedOptions.ContainsKey("category"))
+            {
+                query = query.Where(t => (t.ApTransCategory.Name != null) && t.ApTransCategory.Name.Contains(parsedOptions["account"]));
+            }
             if (parsedOptions.ContainsKey("description"))
             {
-                query = query.Where(t => t.Description.Contains(parsedOptions["description"]));
+                query = query.Where(t => t.Description.Contains(parsedOptions["description"]) || ( !string.IsNullOrEmpty(t.Remarks) && t.Remarks.Contains(parsedOptions["description"])) );
             }
             if (parsedOptions.ContainsKey("remarks"))
             {

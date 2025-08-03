@@ -25,7 +25,7 @@ namespace eJobsAPI.Controllers
 
         // GET: api/Jobs/GetQuicklist
         [HttpGet("GetQuicklist")]
-        public async Task<ActionResult<IEnumerable<JobQuickListData>>> GetQuicklist()
+        public async Task<ActionResult<IList<JobMain>>> GetQuicklist()
         {
             return await _jobsServices.GetActiveJobs();
         }

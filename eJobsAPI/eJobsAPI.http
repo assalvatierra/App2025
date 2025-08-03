@@ -4,3 +4,14 @@ GET {{eJobsAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+
+GET {{eJobsAPI_HostAddress}}/api/Receivables/Search/2025-07-01/2025-07-31/clientname%3DPaul%20Wilson
+Accept: application/json
+
+
+GET {{eJobsAPI_HostAddress}}/api/CrLogTrips/Search/2025-06-01/2025-06-30/company%3DUHX%20Travel%20Central
+Accept: application/json
+
+
+

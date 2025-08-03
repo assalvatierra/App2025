@@ -127,8 +127,8 @@ namespace eJobsAPI.Services
                 .Include(ar => ar.ArTransStatus)
                 .Include(ar => ar.ArTransPayments)
                 .ThenInclude(ar => ar.ArPayment)
-                .Where(ar => ar.ArTransStatusId == STATUS_APPROVAL || ar.ArTransStatusId == STATUS_APPROVED || ar.ArTransStatusId == STATUS_BILLINGSENT 
-                          && ar.DtInvoice >= dateFrom && ar.DtInvoice <= dateTo)
+                .Where(ar => (ar.ArTransStatusId == STATUS_APPROVAL || ar.ArTransStatusId == STATUS_APPROVED || ar.ArTransStatusId == STATUS_BILLINGSENT)
+                          && (ar.DtInvoice >= dateFrom && ar.DtInvoice <= dateTo))
                 .OrderByDescending(ar => ar.DtInvoice)
                 .ToListAsync();
 
@@ -145,14 +145,29 @@ namespace eJobsAPI.Services
                 .Include(ar => ar.ArTransStatus)
                 .Include(ar => ar.ArTransPayments)
                 .ThenInclude(ar => ar.ArPayment)
-                .Where(ar => ar.ArTransStatusId == STATUS_APPROVAL || ar.ArTransStatusId == STATUS_APPROVED || ar.ArTransStatusId == STATUS_BILLINGSENT
-                          && ar.DtInvoice >= dateFrom && ar.DtInvoice <= dateTo);
+                .Where(ar=>(ar.DtInvoice >= dateFrom && ar.DtInvoice <= dateTo)  );
+
 
             var parsedOptions = ParseOptions(options);
             if (parsedOptions.ContainsKey("company"))
             {
-                query = query.Where(t => (t.ArAccount.Name != null) && t.ArAccount.Name.Contains(parsedOptions["company"]));
+                query = query.Where(t => 
+                       ( t.ArAccount.Company != null ) 
+                    && ( t.ArAccount.Company.Contains(parsedOptions["company"]) || t.ArAccount.Name.Contains(parsedOptions["company"]) )
+                );
             }
+            //if (parsedOptions.ContainsKey("clientname")) //implement in the future
+            //{
+            //    query = query.Where(t => t.ArAccount.Name.Contains(parsedOptions["clientname"]));
+
+                    //var arWithJob = _context.ArTransactions
+                    //.Select(ar => new {
+                    //    Ar = ar,
+                    //    Job = _context.JobMains.FirstOrDefault(j => j.Id.ToString() == ar.InvoiceRef)
+                    //})
+                    //.ToList();
+            //}
+
             if (parsedOptions.ContainsKey("description"))
             {
                 query = query.Where(t => t.Description.Contains(parsedOptions["description"]));
@@ -161,12 +176,13 @@ namespace eJobsAPI.Services
             {
                 query = query.Where(t => (t.Remarks != null) && t.Remarks.Contains(parsedOptions["remarks"]));
             }
+            if (parsedOptions.ContainsKey("status"))
+            {
+                query = query.Where(t => (t.ArTransStatus.Status != null) && t.ArTransStatus.Status.Contains(parsedOptions["status"]));
+            }
 
             var expenses = await query.ToListAsync();
             return this.FilteredData(expenses);
-
-
-            throw new NotImplementedException();
         }
 
 

@@ -46,9 +46,13 @@ namespace eJobsAPI.Services
             var query = _context.InvCarRecords
                 .Include(x => x.InvItem)
                 .Include(x => x.InvCarRecordType)
-                .Where(x => x.DtDone >= dateFrom && x.DtDone <= dateTo);
+                .Where(x => 
+                    (x.DtDone >= dateFrom && x.DtDone <= dateTo)
+                    && (!string.IsNullOrEmpty(x.InvItem.ViewLabel) && x.InvItem.ViewLabel.Trim().ToUpper()=="UNIT")
+                    && (x.InvItem.OrderNo!=null && x.InvItem.OrderNo <= 100)
+                );
 
-
+            
             var parsedOptions = ParseOptions(options);
             if (parsedOptions.ContainsKey("unit"))
             {

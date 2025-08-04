@@ -21,6 +21,8 @@ namespace eJobs.Data
         public DbSet<eJobs.Model.JobMain> JobMains { get; set; } = default!;
         public DbSet<eJobs.Model.JobService> JobServices { get; set; } = default!;
         public DbSet<eJobs.Model.JobStatus> JobStatus { get; set; } = default!;
+        public DbSet<eJobs.Model.JobThru> JobThrus { get; set; } = default!;
+        public DbSet<eJobs.Model.Branch> Branches { get; set; } = default!;
 
         public DbSet<eJobs.Model.CustEntMain> CustEntMains { get; set; } = default!;
         public DbSet<eJobs.Model.Customer> Customers { get; set; } = default!;

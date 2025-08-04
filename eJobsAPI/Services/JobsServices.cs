@@ -20,101 +20,73 @@ namespace eJobsAPI.Services
         private int JOBRESERVATION = 2;
         private int JOBCONFIRMED = 3;
 
-        public async Task<IEnumerable<JobMain>> GetActiveJobs()
+        public async Task<IEnumerable<JobQuickListData>> GetActiveJobs(DateTime DateFrom, DateTime DateTo)
         {
-            DateTime dtFrom = System.DateTime.Today;
-            DateTime dtTo = System.DateTime.Today.AddDays(2);
+            var query = _context.JobServices
+                .Include(js => js.Services)
+                .Include(js => js.Supplier)
+                .Include(j => j.JobMain)
+                    .ThenInclude(j => j.Customer)
+                .Include(js => js.JobMain)
+                    .ThenInclude(j => j.JobStatus)
+                .Include(js => js.JobServiceItems)
+                    .ThenInclude(j => j.InvItem)
+                .Include(j => j.JobServicePickups)
 
-            List<JobMain> jobMains = await _context.JobMains
-                .Include(j => j.Customer)
-                //.Include(j => j.Branch)
-                .Include(j => j.JobStatus)
-                //.Include(j => j.JobThru)
-                .Include(j => j.JobStatus)
-                .Include(j => j.JobServices)
-                    .ThenInclude(js => js.JobServiceItems)
-                    .ThenInclude(js => js.InvItem)
-                .Include(j => j.JobServices)
-                    .ThenInclude(js => js.Services)
-                .Include(j => j.JobServices)
-                    .ThenInclude(js => js.JobServicePickups)
-                .Include(j => j.JobServices)
-                    .ThenInclude(js => js.Supplier)
-                .Where(d => d.JobStatusId == JOBRESERVATION || d.JobStatusId == JOBCONFIRMED || d.JobStatusId == JOBINQUIRY)
-                .Where(j => j.JobServices.Any(js => js.DtStart.HasValue &&
-                                                    js.DtStart.Value.Date >= dtFrom &&
-                                                    js.DtStart.Value.Date <= dtTo))
+                .Where(d => (d.DtStart>= DateFrom && DateTo >= d.DtStart) 
+                    && (
+                        d.JobMain.JobStatusId == JOBRESERVATION 
+                        || d.JobMain.JobStatusId == JOBCONFIRMED 
+                        || d.JobMain.JobStatusId == JOBINQUIRY
+                    )
+                );
 
-                .OrderBy(d => d.JobDate)
-                .ToListAsync();
-
-            return jobMains;
-
-            //return Ok(jobMains);
-
-            ////get jobs from today to 2 days after
-            //data = data.Where(w => DateTime.Compare(w.DtStart.Value.Date, after2Days.Date) <= 0 && DateTime.Compare(w.DtStart.Value.Date, today.Date) >= 0)
-            //    .OrderBy(s => s.DtStart).ToList();
+            var data = await query.ToListAsync();
 
 
-            //jobMains = jobMains.Where(d => d.JobStatusId == JOBRESERVATION || d.JobStatusId == JOBCONFIRMED || d.JobStatusId == JOBINQUIRY);
+            List<JobQuickListData> jobQuickLists = new List<JobQuickListData>();
+            foreach (var job in data)
+            {
+                JobQuickListData jobQuickList = new JobQuickListData();
+                jobQuickList.JobServiceId = job.Id;
+                jobQuickList.JobMainId = job.JobMainId;
+                jobQuickList.Remarks = job.Remarks;
+                jobQuickList.ServiceType = job.Services.Name;
+                jobQuickList.Particulars = job.Particulars;
+                jobQuickList.Supplier = job.Supplier.Name;
+                jobQuickList.JobStatus = job.JobMain.JobStatus.Status;
+                jobQuickList.DateStart = job.DtStart?.ToString("MMM dd yyyy (ddd)") ?? "NA";
+                jobQuickList.DateEnd = job.DtEnd?.ToString("MMM dd yyyy (ddd)") ?? "NA";
 
-            //var p = jobMains.Select(s => s.Id);
+                jobQuickList.Contact = job.JobMain.Customer.Name ?? "";
+                jobQuickList.Company = GetJobCompanyAssigned(job.JobMainId);
 
-            //DateTime today = GetCurrentTime();
+                jobQuickList.JobServiceItems = new List<string>();
+                jobQuickList.JobServiceItems = job.JobServiceItems.Count > 0 ? job.JobServiceItems.Select(i => i.InvItem.Description).ToList() : new List<string>();
+                
+                jobQuickList.PickUpDetails = new List<JobPickUpData>();
+                foreach (var pickup in job.JobServicePickups)
+                {
+                    JobPickUpData newPickup = new JobPickUpData();
+                    newPickup.JsDate = pickup.JsDate; 
+                    newPickup.JsTime = pickup.JsTime; 
+                    newPickup.JsLocation = pickup.JsLocation; 
+                    newPickup.ClientName = pickup.ClientName; 
+                    newPickup.ClientContact = pickup.ClientContact; 
+                    newPickup.ProviderName = pickup.ProviderName;
+                    newPickup.ProviderContact = pickup.ProviderContact;
 
-            //List<JobService> data = _context.JobServices
-            //    .Include(j => j.JobMain)
-            //    .ThenInclude(j => j.Customer)
-            //    .Include(j => j.JobServiceItems)
-            //    .ThenInclude(j => j.InvItem)
-            //    .Include(j => j.JobServicePickups)
-            //    .Include(j => j.Services)
-            //    .Include(j => j.Supplier)
-            //    .Where(w => p.Contains(w.JobMainId)).ToList().OrderBy(s => s.DtStart).ToList();
+                    jobQuickList.PickUpDetails.Add(newPickup);
+                }
 
-            //DateTime tomorrow = today.AddDays(1);
-            //DateTime after2Days = today.AddDays(2);
+                jobQuickLists.Add(jobQuickList);
+            }
 
-            ////get jobs from today to 2 days after
-            //data = data.Where(w => DateTime.Compare(w.DtStart.Value.Date, after2Days.Date) <= 0 && DateTime.Compare(w.DtStart.Value.Date, today.Date) >= 0)
-            //    .OrderBy(s => s.DtStart).ToList();
-
-
-            //List<JobQuickListData> jobQuickLists = new List<JobQuickListData>();
-            //foreach (var job in data)
-            //{
-            //    JobQuickListData jobQuickList = new JobQuickListData();
-            //    jobQuickList.JobServiceId = job.Id;
-            //    jobQuickList.JobMainId = job.JobMainId;
-            //    jobQuickList.Remarks = job.Remarks;
-            //    jobQuickList.Service = job.Services.Name;
-            //    jobQuickList.Supplier = job.Supplier.Name;
-
-            //    jobQuickList.DateStart = job.DtStart?.ToString("MMM dd yyyy (ddd)") ?? "NA";
-            //    jobQuickList.DateEnd = job.DtEnd?.ToString("MMM dd yyyy (ddd)") ?? "NA";
-
-            //    jobQuickList.Contact = job.JobMain.Customer.Name ?? "";
-            //    jobQuickList.Company = GetJobCompanyAssigned(job.JobMainId);
-
-            //    jobQuickList.JobServiceItems = new List<string>();
-            //    jobQuickList.JobServiceItems = job.JobServiceItems.Count > 0 ? job.JobServiceItems.Select(i=>i.InvItem.Description).ToList(): new List<string>();
-            //    jobQuickList.PickUpDetails = new List<JobPickUpData>();
-
-            //    foreach (var pickup in job.JobServicePickups)
-            //    {
-            //        JobPickUpData newPickup = new JobPickUpData();
-            //        newPickup.Contact = pickup.ClientContact ?? "";
-            //        newPickup.Address = pickup.JsLocation ?? "";
-            //        newPickup.Date =  pickup.JsDate.ToShortDateString() ?? "";
-            //        newPickup.Time = pickup.JsTime ?? "";
-            //    }
-
-            //    jobQuickLists.Add(jobQuickList);
-            //}
-
-            //return jobQuickLists;
+            return jobQuickLists;
         }
+
+
+
         protected DateTime GetCurrentTime()
         {
             DateTime _localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time"));

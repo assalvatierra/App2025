@@ -6,6 +6,6 @@ namespace eJobsAPI.Services
 {
     public interface IJobsServices
     {
-        public Task<IEnumerable<JobMain>> GetActiveJobs();
+        public Task<IEnumerable<JobQuickListData>> GetActiveJobs(DateTime DateFrom, DateTime DateTo);
     }
 }

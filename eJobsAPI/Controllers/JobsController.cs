@@ -24,10 +24,10 @@ namespace eJobsAPI.Controllers
 
 
         // GET: api/Jobs/GetQuicklist
-        [HttpGet("GetQuicklist")]
-        public async Task<IEnumerable<JobMain>> GetQuicklist()
+        [HttpGet("GetQuicklist/{dateFrom}/{dateTo}")]
+        public async Task<IEnumerable<JobQuickListData>> GetQuicklist(DateTime dateFrom, DateTime dateTo)
         {
-            return await _jobsServices.GetActiveJobs();
+            return await _jobsServices.GetActiveJobs(dateFrom,dateTo);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.SemanticKernel;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.SemanticKernel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -138,11 +139,13 @@ namespace AngularApp1.Server.Services.Plugins
 
         //GetQuicklist / GetActiveJobs
         [KernelFunction("get_ActiveServices")]
-        [Description("Get Active job services as of current Day. " +
-            "Get the incoming active job services. ")]
-        public async Task<string> getActiveJobs()
+        [Description("Get Active job services in the given date range, dateFrom and dateTo. " )]
+        public async Task<string> getActiveJobs(System.DateTime dateFrom, System.DateTime dateTo)
         {
-            string strUrl = $"{this.hostUrl}/{this.jobsController}/GetQuicklist";
+            string encodedFrom = Uri.EscapeDataString(dateFrom.ToString("yyyy-MM-dd"));
+            string encodedTo = Uri.EscapeDataString(dateTo.ToString("yyyy-MM-dd"));
+
+            string strUrl = $"{this.hostUrl}/{this.jobsController}/GetQuicklist/{encodedFrom}/{encodedTo}";
             using (var client = new HttpClient())
             {
                 var response = await client.GetAsync(strUrl);

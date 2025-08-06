@@ -19,7 +19,9 @@ namespace AngularApp1.Server.Services.Plugins
         }
 
         [KernelFunction("get_agentbins")]
-        [Description("Gets all agents bins, notes, reminders. One record per reminder")]
+        [Description("agents database feature. " + 
+            "Gets all agents tasks, reminders, notes and info from agents database. One record per item"
+            )]
         public string GetAgentBins()
         {
             string reminders = "Reminder List \n";
@@ -39,7 +41,10 @@ namespace AngularApp1.Server.Services.Plugins
         }
 
         [KernelFunction("add_agentbins")]
-        [Description("Add bins, notes, reminders. One record per reminder")]
+        [Description("agents database feature. " +
+            "Save tasks, notes, reminders or infos in agent database. One record per item. "+
+            "Types of tasks accepted: (1) General office tasks (2) Vehicle registration renewal tasks. "
+            )]
         public string AddNewBin(string Data)
         {
             string binSaved = "Unable to save";
@@ -78,7 +83,7 @@ namespace AngularApp1.Server.Services.Plugins
         }
 
         [KernelFunction("update_agentbins")]
-        [Description("Update bins, notes, reminders")]
+        [Description("Update tasks, notes, reminders, info")]
         public string UpdateBin(int binId, string Data)
         {
             string binUpdated = "Unable to update";
@@ -96,7 +101,7 @@ namespace AngularApp1.Server.Services.Plugins
         }
 
         [KernelFunction("update_agentbinStatus")]
-        [Description("Update Status for bins, notes, reminders")]
+        [Description("Update Status for tasks, notes, reminders, info")]
         public string UpdateStatusBin(int binId, string Status)
         {
             string binUpdated = "Unable to update";
@@ -111,22 +116,6 @@ namespace AngularApp1.Server.Services.Plugins
                 }
             }
             return binUpdated;
-        }
-
-
-        [KernelFunction("env_gettime")]
-        [Description("get current date and time")]
-        public string getCurrentDateTime()
-        {
-            var dtfi = CultureInfo.CurrentCulture.DateTimeFormat;
-
-
-            string sret = $"Date: \"{System.DateTime.Now.ToLongDateString()}\"" 
-                + $",Date Format: \"{dtfi.LongDatePattern}\""
-                + $",Time:\"{System.DateTime.Now.ToLongTimeString()}\""
-                + $",Time Format: \"{dtfi.LongTimePattern}\"";
-
-            return sret;
         }
 
     }

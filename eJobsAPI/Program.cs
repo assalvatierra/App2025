@@ -1,8 +1,10 @@
 using eJobs.Data;
 using eJobs.Model;
+using eJobsAPI.Data;
 using eJobsAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JobDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("JobsDbContext") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
 
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 // Add services to the container.
 builder.Services.AddCors(options =>
@@ -30,7 +34,8 @@ builder.Services.AddScoped<ITripLogServices,TripLogServices>();
 builder.Services.AddScoped<IJobsServices, JobsServices>();
 builder.Services.AddScoped<IReceivablesServices, ReceivablesServices>();
 builder.Services.AddScoped<IExpensesServices, ExpensesServices>();
-builder.Services.AddScoped<IMaintenanceServices, MaintenanceServices>();
+builder.Services.AddScoped<IMaintenanceServices, MaintenanceServices>(); 
+builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

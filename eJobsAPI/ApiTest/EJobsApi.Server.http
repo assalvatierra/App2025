@@ -73,6 +73,8 @@ GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/Search/2025-05-01/2025-07-12
 GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/3890
 
 
+### api/Email/SendMailTest
+POST {{EjobsApi.Server_HostAddress}}/api/Email/SendMailTest
 
 
 
@@ -80,3 +82,7 @@ GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/3890
 @EjobsApi.LiveServer_HostAddress = http://assalvatierra-001-site15.stempurl.com/
 ### api/Expenses/GetList
 GET {{EjobsApi.LiveServer_HostAddress}}/api/Expenses/GetList
+
+
+
+

@@ -17,6 +17,8 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentBin> AgentBin { get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentInstruction> AgentInstruction { get; set; } = default!;
+        public DbSet<AgentTask> AgentTask { get; set; }
+        public DbSet<AgentTaskStatus> AgentTaskStatus { get; set; }
         public DbSet<Erp.Domain.Models.RefCountry> RefCountry { get; set; } = default!;
         public DbSet<Erp.Domain.Models.RefCity> RefCity { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemType> ItemType { get; set; } = default!;

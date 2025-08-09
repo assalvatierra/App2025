@@ -18,9 +18,9 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class JobServiceContact {
+    public partial class AgentFeature {
 
-        public JobServiceContact()
+        public AgentFeature()
         {
             OnCreated();
         }
@@ -31,31 +31,25 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual int ContactId
+        public virtual int AgentId
         {
             get;
             set;
         }
 
-        public virtual int JobServiceId
+        public virtual string Code
         {
             get;
             set;
         }
 
-        public virtual string Notes
+        public virtual string Options
         {
             get;
             set;
         }
 
-        public virtual bool IsPrimary
-        {
-            get;
-            set;
-        }
-
-        public virtual Contact Contact
+        public virtual Agent Agent
         {
             get;
             set;

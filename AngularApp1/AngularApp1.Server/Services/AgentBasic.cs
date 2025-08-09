@@ -67,8 +67,10 @@ namespace AngularApp1.Server.Services
 
                     if (feature.Code == "MGR100")
                     {
-                        AgentManagerPlugin p = new AgentManagerPlugin(_context, this.agent.Id);
-                        kernel.Plugins.AddFromObject(p);
+                        AgentManagerPlugin p1 = new AgentManagerPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p1);
+                        AgentTaskPlugin p2 = new AgentTaskPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p2);
                     }
 
                 }

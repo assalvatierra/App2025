@@ -18,9 +18,9 @@ using System.Collections.Generic;
 
 namespace Erp.Domain.Models
 {
-    public partial class JobServiceContact {
+    public partial class AgentTask {
 
-        public JobServiceContact()
+        public AgentTask()
         {
             OnCreated();
         }
@@ -31,31 +31,67 @@ namespace Erp.Domain.Models
             set;
         }
 
-        public virtual int ContactId
+        public virtual string Title
         {
             get;
             set;
         }
 
-        public virtual int JobServiceId
+        public virtual string Description
         {
             get;
             set;
         }
 
-        public virtual string Notes
+        public virtual string MonitoredBy
         {
             get;
             set;
         }
 
-        public virtual bool IsPrimary
+        public virtual string performedBy
         {
             get;
             set;
         }
 
-        public virtual Contact Contact
+        public virtual string Occurence
+        {
+            get;
+            set;
+        }
+
+        public virtual System.DateTime? DueDate
+        {
+            get;
+            set;
+        }
+
+        public virtual System.DateTime? ScheduleDate
+        {
+            get;
+            set;
+        }
+
+        public virtual string NextReminder
+        {
+            get;
+            set;
+        }
+
+        public virtual string OtherInfo
+        {
+            get;
+            set;
+        }
+
+        public virtual int AgentTaskStatusId
+        {
+            get;
+            set;
+        }
+
+        public virtual AgentTaskStatus AgentTaskStatus
         {
             get;
             set;

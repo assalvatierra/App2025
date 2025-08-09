@@ -752,7 +752,7 @@
       <end1 multiplicity="One" name="AgentTaskStatus" class="AgentTask" relation-class="AgentTaskStatus" constrained="True" lazy="False" p1:Guid="da1eac53-0850-4d3f-b60a-634e5d442a31">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="AgentTasks" class="AgentTaskStatus" relation-class="AgentTask" lazy="False" p1:Guid="f3658e32-1b4e-433a-854d-77f369a86be9">
+      <end2 multiplicity="Many" name="AgentTasks" class="AgentTaskStatus" relation-class="AgentTask" generate="False" lazy="False" p1:Guid="f3658e32-1b4e-433a-854d-77f369a86be9">
         <property name="AgentTaskStatusId" />
       </end2>
     </association>

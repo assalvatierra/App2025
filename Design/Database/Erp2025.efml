@@ -469,6 +469,52 @@
       <column name="" />
     </property>
   </class>
+  <class name="AgentTask" entity-set="AgentTask" p1:Guid="911f59ca-2513-4bb2-8074-db2aab0da1dd">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="1576fcca-69fd-4d0d-9ad0-d87f4ea106f3">
+      <column name="" not-null="False" />
+    </id>
+    <property name="Title" type="String" p1:ValidateRequired="true" p1:Guid="5da75c5a-8fb3-4bd4-a78b-a57ccef2c717">
+      <column name="" />
+    </property>
+    <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a2d356ca-fb86-4a6a-b7af-1cc01cd6a855">
+      <column name="" />
+    </property>
+    <property name="MonitoredBy" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="08e5e2fd-493e-4703-90a2-073f2f5f9040">
+      <column name="" />
+    </property>
+    <property name="performedBy" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="29a31b5d-ac00-44d3-b0f1-7b6b3e5d8b5e">
+      <column name="" />
+    </property>
+    <property name="Occurence" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d32065fe-3201-4f09-94c9-014e138b68b7">
+      <column name="" />
+    </property>
+    <property name="DueDate" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="844a5597-dd22-4ac2-93e5-0dfc3b15d3ed">
+      <column name="" />
+    </property>
+    <property name="ScheduleDate" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8b6da8e8-59f5-456a-bcec-47334cd68089">
+      <column name="" />
+    </property>
+    <property name="NextReminder" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="affb29ea-6adb-47ab-9f28-df492d38af63">
+      <column name="" />
+    </property>
+    <property name="OtherInfo" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1474a5a7-66a1-4802-8cd4-92eebf265caa">
+      <column name="" />
+    </property>
+    <property name="AgentTaskStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="7f8bb23e-803f-4aff-8f2a-b5a01227956c">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="AgentTaskStatus" entity-set="AgentTaskStatus" p1:Guid="be43047d-8990-4f17-a050-591fd0cbe091">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="04707da7-332c-4c5d-8772-b459f571aaf4">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="a791478a-cd3d-491a-a46c-9f1207f14c81">
+      <column name="" />
+    </property>
+    <property name="Active" type="Int32" p1:ValidateRequired="true" p1:Guid="f99a3f9e-0f54-471f-980a-3ec8a5339d5c">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -700,6 +746,14 @@
       </end1>
       <end2 multiplicity="Many" name="AgentFeatures" class="Agent" relation-class="AgentFeature" lazy="False" p1:Guid="957a638c-d2a9-4bb9-8676-7cf5f15a11ad">
         <property name="AgentId" />
+      </end2>
+    </association>
+    <association name="AgentTaskStatus_AgentTask" cardinality="OneToMany" p1:Guid="74cc5598-3d7e-46e6-8945-68f71b37c2e8">
+      <end1 multiplicity="One" name="AgentTaskStatus" class="AgentTask" relation-class="AgentTaskStatus" constrained="True" lazy="False" p1:Guid="da1eac53-0850-4d3f-b60a-634e5d442a31">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="AgentTasks" class="AgentTaskStatus" relation-class="AgentTask" lazy="False" p1:Guid="f3658e32-1b4e-433a-854d-77f369a86be9">
+        <property name="AgentTaskStatusId" />
       </end2>
     </association>
   </associations>

@@ -44,7 +44,12 @@ namespace AngularApp1.Server.Services
                 .AddAzureOpenAIChatCompletion(modelId, endpoint, apiKey)
                 .Build();
 
-            if(this.agent.AgentFeatures != null && this.agent.AgentFeatures.Count > 0)
+            //default plugins
+            EnvInfoPlugin envInfo = new EnvInfoPlugin();
+            kernel.Plugins.AddFromObject(envInfo);
+
+
+            if (this.agent.AgentFeatures != null && this.agent.AgentFeatures.Count > 0)
             {
                 foreach (var feature in this.agent.AgentFeatures)
                 {

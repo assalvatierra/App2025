@@ -42,7 +42,7 @@ namespace AngularApp1.Server.Services.Plugins
                         .ToList()
                         );
 
-                    StaffAgents += $"Id:{agent.Id},Name:{agent.Name}, Roles:{agent.Roles}, Instructions:{agentInstructions} \n";
+                    StaffAgents += $"Id:{agent.Id},Name:{agent.Name},Description:{agent.Description}, Roles:{agent.Roles}, Instructions:{agentInstructions} \n";
                 }
             }
 

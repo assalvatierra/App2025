@@ -22,7 +22,7 @@ namespace AngularApp1.Server.Services.Plugins
 
         [KernelFunction("get_agentTasks")]
         [Description("agents database feature. " +
-            "Gets task list."
+            "Gets task list. use ID for Task ID to reference for updating task."
             )]
         public string GetAgentTasks()
         {
@@ -49,7 +49,8 @@ namespace AngularApp1.Server.Services.Plugins
         [KernelFunction("add_agentTasks")]
         [Description("agents database feature. " +
             "Save tasks." +
-            "Types of tasks accepted: (1) General office tasks (2) Vehicle registration renewal tasks. "
+            "Types of tasks accepted: (1) General office tasks (2) Vehicle registration renewal tasks. "+
+            "Is new task has no defined or static status, use NEW as default status."
             )]
         public string AddNewTask(AgentTask task)
         {
@@ -73,16 +74,27 @@ namespace AngularApp1.Server.Services.Plugins
             {
                 var task = _context.AgentTask.FirstOrDefault(t => t.Id == taskId);
                 if (task != null) {
-                    task.Title = updateTask.Title;
-                    task.Description = updateTask.Description;
-                    task.MonitoredBy = updateTask.MonitoredBy;
-                    task.PerformedBy = updateTask.PerformedBy;
-                    task.Occurence = updateTask.Occurence;
-                    task.DueDate = updateTask.DueDate;
-                    task.ScheduleDate = updateTask.ScheduleDate;
-                    task.NextReminder = updateTask.NextReminder;
-                    task.OtherInfo = updateTask.OtherInfo;
-                    task.AgentTaskStatusId = updateTask.AgentTaskStatusId;
+                    if(!string.IsNullOrEmpty(updateTask.Title)) 
+                        task.Title = updateTask.Title;
+                    if (!string.IsNullOrEmpty(updateTask.Description))
+                        task.Description = updateTask.Description;
+                    if (!string.IsNullOrEmpty(updateTask.MonitoredBy))
+                        task.MonitoredBy = updateTask.MonitoredBy;
+                    if (!string.IsNullOrEmpty(updateTask.PerformedBy))
+                        task.PerformedBy = updateTask.PerformedBy;
+                    if (!string.IsNullOrEmpty(updateTask.Occurence))
+                        task.Occurence = updateTask.Occurence;
+                    if (updateTask.DueDate.HasValue)
+                        task.DueDate = updateTask.DueDate;
+                    if (updateTask.ScheduleDate.HasValue)
+                        task.ScheduleDate = updateTask.ScheduleDate;
+                    if (!string.IsNullOrEmpty(updateTask.NextReminder))
+                        task.NextReminder = updateTask.NextReminder;
+                    if (!string.IsNullOrEmpty(updateTask.OtherInfo))
+                        task.OtherInfo = updateTask.OtherInfo;
+                    if (updateTask.AgentTaskStatusId.HasValue && updateTask.AgentTaskStatusId > 0)
+                        task.AgentTaskStatusId = updateTask.AgentTaskStatusId;
+
                     _context.SaveChanges();
                     taskUpdated = "Task updated successfully";
                 }

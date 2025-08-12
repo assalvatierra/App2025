@@ -56,11 +56,15 @@ namespace AngularApp1.Server.Services.Plugins
 
         [KernelFunction("search_collectibles")]
         [Description("Get company collectibles base on the given DateFrom, DateTo and options Parameters. " +
-            "DateFrom and DateTo are the date range for the collectibles. Options parameter is used to filter the server query." +
+            "DateFrom and DateTo are the date range for the collectible's invoice date. Options parameter is used to filter the server query." +
             "Options parameter is formatted string like 'key1=option1;key2=option2'. Use _ if no parameter option needed." +
-            "KEY values is limited to the following options: company, description, remarks and status. " +
+            "KEY values is limited to the following options: company, description,remarks, DueDateFrom,DueDateTo, PaymentStatus. " +
             "Values are the parameter for the search for the given Key. "+
+            "PaymentStatus options are: PAID, UNPAID. " +
+            "DueDateFrom is start of date range filter for receivable's date due. Format is: yyyy-MM-dd. " +
+            "DueDateTo is end of date range filter for receivable's date due. Format is: yyyy-MM-dd. " +
             //"Prefix the value with word 'NOT!' if excluding the value is the entention." +
+            "Multiple keys is possible for multiple conditions."+
             "Limitation: Currently supports Single Value per Key. Can not use same key multiple times." +
             "We can use JobRef to retrieve job information")]
         public async Task<string> searchReceivables(System.DateTime dateFrom, System.DateTime dateTo, string options)

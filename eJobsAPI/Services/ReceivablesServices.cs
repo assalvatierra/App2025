@@ -3,6 +3,7 @@ using eJobs.Model;
 using eJobsAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace eJobsAPI.Services
@@ -176,10 +177,50 @@ namespace eJobsAPI.Services
             {
                 query = query.Where(t => (t.Remarks != null) && t.Remarks.Contains(parsedOptions["remarks"]));
             }
-            if (parsedOptions.ContainsKey("status"))
+            if (parsedOptions.ContainsKey("PaymentStatus"))
             {
-                query = query.Where(t => (t.ArTransStatus.Status != null) && t.ArTransStatus.Status.Contains(parsedOptions["status"]));
+                var status = parsedOptions["PaymentStatus"];
+                if(status=="PAID")
+                    query = query.Where(t => t.ArTransPayments.Sum(p => p.ArPayment.Amount) >= t.Amount);
+                if (status == "UNPAID")
+                    query = query.Where(t => t.ArTransPayments.Sum(p => p.ArPayment.Amount) < t.Amount);
+
             }
+            if (parsedOptions.ContainsKey("DueDateFrom"))
+            {
+                try
+                {
+                    var dt1 = DateTime.Parse(parsedOptions["DueDateFrom"]);
+                    query = query.Where(t => t.DtDue >= dt1);
+                }
+                catch(Exception ex)
+                {
+                    // Handle parsing error, log it or return an error response
+                    throw new ArgumentException("Invalid DueDateFrom format. Expected format is yyyy-MM-dd.", ex);
+                }
+            }
+            if (parsedOptions.ContainsKey("DueDateTo"))
+            {
+                try
+                {
+                    var dt1 = DateTime.Parse(parsedOptions["DueDateTo"]);
+                    query = query.Where(t => t.DtDue <= dt1);
+
+                }
+                catch (Exception ex)
+                {
+                    // Handle parsing error, log it or return an error response
+                    throw new ArgumentException("Invalid DueDateTo format. Expected format is yyyy-MM-dd.", ex);
+                }
+            }
+            
+            //
+
+            //if (parsedOptions.ContainsKey("status"))
+            //{
+            //    query = query.Where(t => (t.ArTransStatus.Status != null) && t.ArTransStatus.Status.Contains(parsedOptions["status"]));
+            //}
+
 
             var expenses = await query.ToListAsync();
             return this.FilteredData(expenses);

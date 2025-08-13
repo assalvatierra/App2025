@@ -16,6 +16,8 @@ namespace AngularApp1.Server.Services
 {
     public class AgentBasic : IAgentBasic
     {
+        private readonly IConfiguration _config;
+
         string modelId = "gpt-4.1";
         string endpoint = "";
         string apiKey = "";
@@ -29,6 +31,7 @@ namespace AngularApp1.Server.Services
         public AgentBasic()
         {
             this.initializeKernel();
+            this.GetApiKeySecrets();
         }
 
         public AgentBasic(Agent agent, ErpDbContext context)
@@ -36,6 +39,13 @@ namespace AngularApp1.Server.Services
             _context = context;
             this.agent = agent;
             this.initializeKernel();
+            this.GetApiKeySecrets();
+        }
+
+        public void GetApiKeySecrets()
+        {
+            endpoint = _config["Azure:endpoint"];
+            apiKey   = _config["Azure:apiKey"];
         }
 
         private void initializeKernel()

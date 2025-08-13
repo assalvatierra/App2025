@@ -56,7 +56,9 @@ namespace AngularApp1.Server.Services.Plugins
 
         [KernelFunction("search_collectibles")]
         [Description("Get company collectibles base on the given DateFrom, DateTo and options Parameters. " +
-            "DateFrom and DateTo are the date range for the collectible's invoice date. Options parameter is used to filter the server query." +
+            "DateFrom and DateTo are the date range for the collectible's invoice date. " +
+            "If not specified, use last 3 months for the invoice date range." +
+            "Options parameter is used to filter the server query." +
             "Options parameter is formatted string like 'key1=option1;key2=option2'. Use _ if no parameter option needed." +
             "KEY values is limited to the following options: company, description,remarks, DueDateFrom,DueDateTo, PaymentStatus. " +
             "Values are the parameter for the search for the given Key. "+

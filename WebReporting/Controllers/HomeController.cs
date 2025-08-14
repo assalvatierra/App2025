@@ -24,7 +24,7 @@ namespace WebReporting.Controllers {
             ds.Queries.Add(query);
             ds.RebuildResultSchema();
 
-            reportName = string.IsNullOrEmpty(reportName) ? "TestReport" : reportName;
+            reportName = string.IsNullOrEmpty(reportName) ? "Report1" : reportName;
             var designerModel = reportDesignerModelBuilder
                 .Report(reportName)
                 .DataSources(x => {
@@ -37,7 +37,7 @@ namespace WebReporting.Controllers {
         public IActionResult DocumentViewer(
             [FromServices] IWebDocumentViewerClientSideModelGenerator viewerModelGenerator,
             [FromQuery] string reportName) {
-            reportName = string.IsNullOrEmpty(reportName) ? "TestReport" : reportName;
+            reportName = string.IsNullOrEmpty(reportName) ? "Report1" : reportName;
             var viewerModel = viewerModelGenerator.GetModel(reportName, CustomWebDocumentViewerController.DefaultUri);
             return View(viewerModel);
         }

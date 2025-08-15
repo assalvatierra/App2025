@@ -34,6 +34,7 @@ export class NavigationComponent {
     );
 
   menuItems = signal<MenuItem[]>([
+    { icon: 'dashboard', label: 'Jobs', route: 'Jobs' },
     { icon: 'dashboard', label: 'Entities', route: 'Entities' },
     { icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
     { icon: 'dashboard', label: 'Contacts', route: 'contacts' },

@@ -53,6 +53,7 @@ import { ServiceItemsFormComponent } from './pages/serviceitems/serviceitems-for
 import { AgentChatComponent } from './pages/agent-chat/agent-chat.component';
 import { AgentsComponent } from './pages/agents/agents.component';
 import { AgentFormComponent } from './pages/agents/agent-form/agent-form.component';
+import { JobMainComponent } from './pages/job-main/job-main.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { AgentFormComponent } from './pages/agents/agent-form/agent-form.compone
     ServiceItemsFormComponent,
     AgentChatComponent,
     AgentsComponent,
-    AgentFormComponent
+    AgentFormComponent,
+    JobMainComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

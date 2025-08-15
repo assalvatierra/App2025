@@ -24,6 +24,7 @@ import { ServiceItemsFormComponent } from "./pages/serviceitems/serviceitems-for
 import { AgentChatComponent } from "./pages/agent-chat/agent-chat.component";
 import { AgentsComponent } from "./pages/agents/agents.component";
 import { AgentFormComponent } from "./pages/agents/agent-form/agent-form.component";
+import { JobMainComponent } from "./pages/job-main/job-main.component"; 
 
 const routeConfig: Routes = [
 
@@ -35,6 +36,11 @@ const routeConfig: Routes = [
     {
       path: 'agents/form/:id',
       component: AgentChatComponent
+    },
+    {
+      path: 'Jobs',
+      component: JobMainComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'Entities',

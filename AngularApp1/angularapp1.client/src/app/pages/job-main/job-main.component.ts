@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiJobMainService } from '../../core/services/api-job-main.service';
+import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 import { tableField } from '../../shared/models/entityListTableField';
 
 
@@ -11,6 +12,8 @@ import { tableField } from '../../shared/models/entityListTableField';
   styleUrls: ['./job-main.component.css']
 })
 export class JobMainComponent {
+  @ViewChild('ListTable') TableList !: EntityListTableComponent;
+
   public showEdit: boolean = true;
   public dataloading: boolean = true;
 
@@ -59,6 +62,7 @@ export class JobMainComponent {
   }
 
   private initializeJobMainList(param: any[]) {
+    this.TableList.initialize(param);
   }
 
   private getTableFields(): tableField[] {

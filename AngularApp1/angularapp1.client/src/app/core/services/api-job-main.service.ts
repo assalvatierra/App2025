@@ -14,7 +14,6 @@ export class ApiJobMainService {
   getJobMains(): Observable<any[]> {
     return this.http.get<any[]>(`${this.url}/api/JobMains`).pipe(
       map((res: any) => {
-        debugger;
         return res.map((item: any) => ({
           id: item.id,
           jobDate: item.jobDate,

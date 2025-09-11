@@ -41,6 +41,11 @@ builder.Services.AddAuthentication(
     };
 });
 
+builder.Services.AddHttpClient("AgentHttpClient", client =>
+{
+    client.Timeout = TimeSpan.FromMinutes(5); // Set your desired timeout
+});
+
 
 builder.Services.AddDbContext<ErpDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ErpDbContext") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));

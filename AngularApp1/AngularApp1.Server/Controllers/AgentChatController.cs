@@ -32,11 +32,15 @@ namespace AngularApp1.Server.Controllers
     {
         private readonly ErpDbContext _context;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AgentChatController(ErpDbContext context, IServiceProvider serviceProvider)
+        public AgentChatController(ErpDbContext context, IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _serviceProvider = serviceProvider;
+            _httpClientFactory = httpClientFactory;
+            var httpClient = _httpClientFactory.CreateClient("AgentHttpClient");
+
         }
 
 

@@ -35,7 +35,24 @@ namespace AngularApp1.Server.Services
         {
             _context = context;
             this.agent = agent;
-            this.initializeKernel();
+            this.initializeKernel2();
+        }
+
+        private void initializeKernel2()
+        {
+            #pragma warning disable SKEXP0070
+            IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
+            kernelBuilder.AddOllamaChatCompletion(
+                modelId: "gpt-oss:20b",           // E.g. "phi3" if phi3 was downloaded as described above.
+                endpoint: new Uri("http://localhost:11434"), // E.g. "http://localhost:11434" if Ollama has been started in docker as described above.
+                serviceId: ""             // Optional; for targeting specific services within Semantic Kernel
+            );
+
+
+            this.kernel = kernelBuilder.Build();
+
+            this.initializePlugins();
+            var history = new ChatHistory();
         }
 
         private void initializeKernel()
@@ -80,13 +97,48 @@ namespace AngularApp1.Server.Services
             var history = new ChatHistory();
         }
 
+        public void initializePlugins()
+        {
+            //default plugins
+            EnvInfoPlugin envInfo = new EnvInfoPlugin();
+            kernel.Plugins.AddFromObject(envInfo);
+
+
+            if (this.agent.AgentFeatures != null && this.agent.AgentFeatures.Count > 0)
+            {
+                foreach (var feature in this.agent.AgentFeatures)
+                {
+                    if (feature.Code == "BIN")
+                    {
+                        AgentBinPlugin p = new AgentBinPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p);
+                    }
+
+                    if (feature.Code == "EJOBS")
+                    {
+                        eJobPlugin p = new eJobPlugin();
+                        kernel.Plugins.AddFromObject(p);
+                    }
+
+                    if (feature.Code == "MGR100")
+                    {
+                        AgentManagerPlugin p1 = new AgentManagerPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p1);
+                        AgentTaskPlugin p2 = new AgentTaskPlugin(_context, this.agent.Id);
+                        kernel.Plugins.AddFromObject(p2);
+                    }
+
+                }
+            }
+
+        }
 
         public async Task<ActionResult<string>> processInstructions(string userInput, string chatHistory)
         {
             string agentFeedback = string.Empty;
 
             var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
-            
+
             // Enable planning
             OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
             {

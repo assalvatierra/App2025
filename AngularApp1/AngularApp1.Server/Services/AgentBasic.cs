@@ -40,19 +40,57 @@ namespace AngularApp1.Server.Services
 
         private void initializeKernel2()
         {
-            #pragma warning disable SKEXP0070
-            IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
-            kernelBuilder.AddOllamaChatCompletion(
-                modelId: "gpt-oss:20b",           // E.g. "phi3" if phi3 was downloaded as described above.
-                endpoint: new Uri("http://localhost:11434"), // E.g. "http://localhost:11434" if Ollama has been started in docker as described above.
-                serviceId: ""             // Optional; for targeting specific services within Semantic Kernel
-            );
+            //// Using Ollama local model
+            //#pragma warning disable SKEXP0070
+            //            IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
+            //            kernelBuilder.AddOllamaChatCompletion(
+            //                modelId: "gpt-oss:20b",           // E.g. "phi3" if phi3 was downloaded as described above.
+            //                endpoint: new Uri("http://localhost:11434"), // E.g. "http://localhost:11434" if Ollama has been started in docker as described above.
+            //                serviceId: ""             // Optional; for targeting specific services within Semantic Kernel
+            //            );
+
+            // Using LM-Studio local model
+            var modelId = "openai/gpt-oss-20b"; // Update the modelId if you chose a different model.
+            var endpoint = new Uri("http://localhost:1234/v1"); // Update the endpoint if you chose a different port.
+
+            var kernel = Kernel.CreateBuilder()
+                .AddOpenAIChatCompletion(
+                    modelId: modelId,
+                    apiKey: null,
+                    endpoint: endpoint)
+                .Build();
 
 
-            this.kernel = kernelBuilder.Build();
+             /////test kernel
+            string agentFeedback = string.Empty;
 
-            this.initializePlugins();
+            var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
+            OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
+            {
+                FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+            };
+
+
+
             var history = new ChatHistory();
+            history.AddUserMessage(getInstructions());
+            history.AddUserMessage("Say Hello to the world.");
+        
+            // Get the response from the AI
+            var result = chatCompletionService.GetChatMessageContentAsync(
+                history,
+                executionSettings: openAIPromptExecutionSettings,
+                kernel: kernel);
+
+
+            string test = result.Result.Content;
+
+            return;
+
+
+
+
+
         }
 
         private void initializeKernel()

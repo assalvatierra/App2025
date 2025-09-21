@@ -36,6 +36,7 @@ namespace AngularApp1.Server.Services
             _context = context;
             this.agent = agent;
             this.initializeKernel2();
+            this.initializePlugins();
         }
 
         private void initializeKernel2()
@@ -53,7 +54,7 @@ namespace AngularApp1.Server.Services
             var modelId = "openai/gpt-oss-20b"; // Update the modelId if you chose a different model.
             var endpoint = new Uri("http://localhost:1234/v1"); // Update the endpoint if you chose a different port.
 
-            var kernel = Kernel.CreateBuilder()
+            kernel = Kernel.CreateBuilder()
                 .AddOpenAIChatCompletion(
                     modelId: modelId,
                     apiKey: null,
@@ -70,6 +71,8 @@ namespace AngularApp1.Server.Services
                 FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
             };
 
+            //EnvInfoPlugin envInfo = new EnvInfoPlugin();
+            //kernel.Plugins.AddFromObject(envInfo);
 
 
             var history = new ChatHistory();

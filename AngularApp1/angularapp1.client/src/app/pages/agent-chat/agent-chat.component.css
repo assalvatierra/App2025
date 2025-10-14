@@ -1,0 +1,38 @@
+.full-width {
+  width: 100%;
+}
+
+.chat-card {
+  min-width: 220px;
+  margin: 2rem auto;
+  max-width: 1500px;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+mat-card-content {
+  padding-bottom: 0 !important;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+}

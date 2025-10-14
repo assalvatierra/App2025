@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "WebReporting": {
+      "commandName": "Project",
+      "launchBrowser": true
+    }}
+}

@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Entity Info</mat-card-title>
+  </mat-card-header>
+
+  <div style="margin:15px;">
+    <form [formGroup]="dataForm" novalidate>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Category</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Type" formControlName="entityTypeId" />
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Status" formControlName="entityStatusId" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Business Unit" formControlName="businessUnitId" />
+              </mat-form-field>
+              <button mat-raised-button color="primary" (click)="onOpenTypeDialog()">Browse</button>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+    <mat-card-content>
+      <app-entity-form #entityForm
+                       *ngIf="!dataloading"
+                       [modelData]="currentData">
+      </app-entity-form>
+    </mat-card-content>
+
+    <mat-card-content>
+      <app-contact-info-form #ContactForm
+                             *ngIf="!dataloading"
+                             [modelData]="currentData">
+      </app-contact-info-form>
+    </mat-card-content>
+
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-card-actions>
+
+</mat-card>
+

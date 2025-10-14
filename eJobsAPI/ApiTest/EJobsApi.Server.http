@@ -1,0 +1,82 @@
+
+@EjobsApi.Server_HostAddress = https://localhost:7129
+@EjobsApi.openapi.def = https://localhost:7252/openapi/v1.json
+
+GET {{EjobsApi.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+@EjobsApi.Server_HostAddress = https://localhost:7129
+GET {{EjobsApi.Server_HostAddress}}/openapi/v1.json
+
+###
+GET {{EjobsApi.openapi.def}}
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/today
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/DateRange/2025-07-12/2025-07-12
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/Search/2025-05-12/2025-07-12/remarks=Tour;company=Real
+
+
+###
+GET {{EjobsApi.Server_HostAddress}}/api/CrLogTrips/2950
+
+System.InvalidOperationException: The client projection contains a reference to a constant expression of 'eJobsAPI.Controllers.ReceivablesController' through the instance method 'GetTotalPayments'. This could potentially cause a memory leak; consider making the method static so that it does not capture constant in the instance. See https://go.microsoft.com/fwlink/?linkid=2103067 for more information and examples.
+### api/Jobs
+### 
+GET {{EjobsApi.Server_HostAddress}}/api/Jobs/GetQuicklist
+
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Jobs/38260
+
+
+### api/Receivables/GetList
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetList
+
+### filter by date
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/GetListByDate/2025-07-14/2025-07-16
+
+### search
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/Search/2025-07-01/2025-07-17/company=
+
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Receivables/5884
+
+
+### api/Expenses/GetList
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/GetList
+
+### filter by date
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/GetListByDate/2025-07-14/2025-07-16
+
+### search
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/Search/2025-07-01/2025-07-12/account=Real
+
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Expenses/19689
+
+
+### api/Maintenance/GetList
+GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/GetList
+
+### filter by date
+GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/GetListByDate/2025-04-01/2025-07-15
+
+### search
+GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/Search/2025-05-01/2025-07-12/unit=Innova
+
+### get by id
+GET {{EjobsApi.Server_HostAddress}}/api/Maintenance/3890
+
+
+
+
+
+###
+@EjobsApi.LiveServer_HostAddress = http://assalvatierra-001-site15.stempurl.com/
+### api/Expenses/GetList
+GET {{EjobsApi.LiveServer_HostAddress}}/api/Expenses/GetList

@@ -1,0 +1,19 @@
+--- Tasks / Features ----
+
+- Add items to menu navigation
+
+
+
+
+
+--- Bugs ----
+
+- unable to save Contact when changing Type
+
+
+
+
+
+--- Components ---
+
+(1) Modal Browse 

@@ -1,0 +1,15 @@
+@eJobsAPI_HostAddress = http://localhost:5089
+
+GET {{eJobsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+###
+
+
+GET {{eJobsAPI_HostAddress}}/api/Receivables/Search/2025-07-01/2025-07-31/clientname%3DPaul%20Wilson
+Accept: application/json
+###
+
+GET {{eJobsAPI_HostAddress}}/api/Jobs/GetQuicklist
+Accept: application/json
+
+

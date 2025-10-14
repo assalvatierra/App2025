@@ -1,0 +1,11 @@
+﻿using eJobs.Model;
+using eJobsAPI.Data;
+using Microsoft.AspNetCore.Mvc;
+
+namespace eJobsAPI.Services
+{
+    public interface IJobsServices
+    {
+        public Task<IEnumerable<JobQuickListData>> GetActiveJobs(DateTime DateFrom, DateTime DateTo);
+    }
+}

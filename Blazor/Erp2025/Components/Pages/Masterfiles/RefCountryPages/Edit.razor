@@ -1,0 +1,109 @@
+﻿@page "/refcountries/edit"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>RefCountry</h2>
+<hr />
+@if (RefCountry is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="RefCountry" OnValidSubmit="UpdateRefCountry" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="RefCountry.Id" value="@RefCountry.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="RefCountry.Name" class="form-control" />
+                    <ValidationMessage For="() => RefCountry.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <InputText id="description" @bind-Value="RefCountry.Description" class="form-control" />
+                    <ValidationMessage For="() => RefCountry.Description" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="remarks" class="form-label">Remarks:</label>
+                    <InputText id="remarks" @bind-Value="RefCountry.Remarks" class="form-control" />
+                    <ValidationMessage For="() => RefCountry.Remarks" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="code" class="form-label">Code:</label>
+                    <InputText id="code" @bind-Value="RefCountry.Code" class="form-control" />
+                    <ValidationMessage For="() => RefCountry.Code" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="sortorder" class="form-label">SortOrder:</label>
+                    <InputNumber id="sortorder" @bind-Value="RefCountry.SortOrder" class="form-control" />
+                    <ValidationMessage For="() => RefCountry.SortOrder" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/refcountries">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private RefCountry? RefCountry { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        RefCountry ??= await context.RefCountry.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (RefCountry is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateRefCountry()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(RefCountry!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!RefCountryExists(RefCountry!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/refcountries");
+    }
+
+    private bool RefCountryExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.RefCountry.Any(e => e.Id == id);
+    }
+}

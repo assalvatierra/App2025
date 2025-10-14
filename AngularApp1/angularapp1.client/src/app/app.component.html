@@ -1,0 +1,43 @@
+
+<mat-toolbar class="mat-elevation-z3">
+  <div class="nav-top">
+    <div class="nav-container">
+      <div class="nav-title">
+        <button mat-icon-button (click)="collapsed.set(!collapsed())"> 
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h4 class="App-Title">
+            MyApp2025
+        </h4>
+      </div>
+
+      <div class="pull-right">
+        @if(!isAuthenticated()) {
+            <button mat-button (click)="Login()" class="login-link">
+                <mat-icon>login</mat-icon>
+                Login
+              </button> 
+        } @else{
+
+            <button mat-button (click)="logout()" class="login-link">
+                <mat-icon>login</mat-icon>
+                Logout
+              </button> 
+        }
+        
+      </div>
+    </div>
+</div>
+</mat-toolbar>
+    <mat-sidenav-container>
+        <mat-sidenav opened mode="side"  [style.width]="sidenavWidth()"> 
+            <app-navigation [collapsed]="collapsed()"> 
+
+            </app-navigation>
+        </mat-sidenav>
+        <mat-sidenav-content class="content"  [style.margin-left]="sidenavWidth()">
+            <router-outlet>
+               
+            </router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>

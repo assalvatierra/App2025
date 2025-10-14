@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace eJobs.Model;
+
+public partial class ApAccStatus
+{
+    public int Id { get; set; }
+
+    public string Status { get; set; } = null!;
+
+    public virtual ICollection<ApAccount> ApAccounts { get; set; } = new List<ApAccount>();
+}

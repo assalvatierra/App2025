@@ -1,0 +1,94 @@
+﻿@page "/TestPages/Test101"
+@using Erp2025.Components.Common
+@using Erp.Domain.Models
+@using Erp.Component
+@rendermode InteractiveServer
+
+
+<h3>Test101</h3>
+
+
+<ErpCommonDialog Title="My first Modal dialog" Show="isDialogOpen" OnClickCallback="ShowMessage" OnConfirm="confirmDialog" OnCancel="cancelDialog">
+    <p>
+        This is my first modal dialog
+    </p>
+
+</ErpCommonDialog>
+
+<ErpRecordInfoContainer>
+    <dl class="row">
+        <dt class="col-sm-2">Created By</dt>
+        <dd class="col-sm-10">@contact.CreatedBy</dd>
+        <dt class="col-sm-2">Created On</dt>
+        <dd class="col-sm-10">@contact.CreatedOn</dd>
+        <dt class="col-sm-2">LastEdit By</dt>
+        <dd class="col-sm-10">@contact.LastEditBy</dd>
+        <dt class="col-sm-2">LastEdit On</dt>
+        <dd class="col-sm-10">@contact.LastEditOn</dd>
+        <dt class="col-sm-2">IsArchived</dt>
+        <dd class="col-sm-10">@contact.IsArchived</dd>
+        <dt class="col-sm-2">IsPrivate</dt>
+        <dd class="col-sm-10">@contact.IsPrivate</dd>
+        <dt class="col-sm-2">IsActive</dt>
+        <dd class="col-sm-10">@contact.IsActive</dd>
+    </dl>
+
+</ErpRecordInfoContainer>
+
+<div class="mb-3">
+    <label for="isactive" class="form-label">IsActive:</label>
+    <InputCheckbox id="isactive" @bind-Value="contact.IsActive" class="form-check-input" />
+</div>
+
+
+@* 
+<RecordInfo model="contact">
+
+</RecordInfo>
+ *@
+
+<p>isDialogOpen: @isDialogOpen</p>
+<p>message: @message</p>
+<button class="btn btn-primary" @onclick="showDialog">Open Dialog</button>
+<button class="btn btn-primary" @onclick="popupmsg" >Set data</button>
+
+@code {
+    public Boolean isDialogOpen = false;
+    public Contact contact { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.contact.IsActive = true;
+        this.contact.IsArchived = false;
+        this.contact.IsPrivate = true;
+        this.contact.CreatedOn = DateTime.Now;
+        this.contact.LastEditOn = DateTime.Now;
+        this.contact.CreatedBy = "Default";
+    }
+
+    private void showDialog()
+    {
+        this.isDialogOpen = true;
+    }
+
+    private void cancelDialog(MouseEventArgs e)
+    {
+        this.isDialogOpen = false;
+    }
+
+    private void confirmDialog(MouseEventArgs e)
+    {
+        this.isDialogOpen = false;
+    }
+
+    private void popupmsg(MouseEventArgs e)
+    {
+        message = "Active: " + this.contact.IsActive.ToString();
+    }
+
+    private string? message;
+    private void ShowMessage((MouseEventArgs e, string data) args) =>
+        message = $"data: ({args.data})";
+
+
+}

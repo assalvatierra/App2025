@@ -1,0 +1,6 @@
+/* Style as needed for your form */
+:host {
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+}

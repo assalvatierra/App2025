@@ -1,0 +1,80 @@
+﻿@page "/contacts/details"
+@using Microsoft.EntityFrameworkCore
+@using Erp.Domain.Models
+@inject IDbContextFactory<Erp2025.Data.Erp2025Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Contact</h2>
+    <hr />
+    @if (contact is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@contact.Name</dd>
+            <dt class="col-sm-2">Remarks</dt>
+            <dd class="col-sm-10">@contact.Remarks</dd>
+            <dt class="col-sm-2">ContactNo1</dt>
+            <dd class="col-sm-10">@contact.ContactNo1</dd>
+            <dt class="col-sm-2">ContactNo2</dt>
+            <dd class="col-sm-10">@contact.ContactNo2</dd>
+            <dt class="col-sm-2">Address1</dt>
+            <dd class="col-sm-10">@contact.Address1</dd>
+            <dt class="col-sm-2">Address2</dt>
+            <dd class="col-sm-10">@contact.Address2</dd>
+            <dt class="col-sm-2">Email1</dt>
+            <dd class="col-sm-10">@contact.Email1</dd>
+            <dt class="col-sm-2">Email2</dt>
+            <dd class="col-sm-10">@contact.Email2</dd>
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@contact.CreatedBy</dd>
+            <dt class="col-sm-2">CreatedOn</dt>
+            <dd class="col-sm-10">@contact.CreatedOn</dd>
+            <dt class="col-sm-2">LastEditBy</dt>
+            <dd class="col-sm-10">@contact.LastEditBy</dd>
+            <dt class="col-sm-2">LastEditOn</dt>
+            <dd class="col-sm-10">@contact.LastEditOn</dd>
+            <dt class="col-sm-2">IsArchived</dt>
+            <dd class="col-sm-10">@contact.IsArchived</dd>
+            <dt class="col-sm-2">IsPrivate</dt>
+            <dd class="col-sm-10">@contact.IsPrivate</dd>
+            <dt class="col-sm-2">IsActive</dt>
+            <dd class="col-sm-10">@contact.IsActive</dd>
+            <dt class="col-sm-2">TypeId</dt>
+            <dd class="col-sm-10">@contact.TypeId</dd>
+            <dt class="col-sm-2">StatusId</dt>
+            <dd class="col-sm-10">@contact.StatusId</dd>
+            <dt class="col-sm-2">RefCityId</dt>
+            <dd class="col-sm-10">@contact.RefCityId</dd>
+        </dl>
+        <div>
+            <a href="@($"/contacts/edit?id={contact.Id}")">Edit</a> |
+            <a href="@($"/contacts")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Contact? contact;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        contact = await context.Contact.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (contact is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

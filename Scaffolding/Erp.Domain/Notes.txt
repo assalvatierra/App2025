@@ -1,0 +1,5 @@
+﻿-- SCAFFOLD DBCONTEXT AND MODELS COMMAND
+
+Scaffold-DbContext 'Data source=SQL5113.site4now.net;Initial Catalog=db_a0a0ae_dev2025;User Id=db_a0a0ae_dev2025_admin;Password=DB_PASSWORD' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Namespace Erp.Domain.Models -force -NoOnConfiguring
+
+

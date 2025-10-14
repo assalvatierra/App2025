@@ -1,0 +1,7 @@
+﻿
+
+Scaffold-DbContext "Data source=SQL5028.myASP.NET;Initial Catalog=DB_A0A0AE_job;User Id=DB_A0A0AE_job_admin;Password=DevMain0124!;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Namespace eJobs.Model -Force -NoOnConfiguring
+
+
+
+Scaffold-DbContext 'Data source=SQL5028.myASP.NET;Initial Catalog=DB_A0A0AE_job;User Id=DB_A0A0AE_job_admin;Password=DevMain0124!' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Namespace eJobs.Model -Force -NoOnConfiguring 

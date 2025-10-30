@@ -31,12 +31,12 @@ export class JobMainComponent {
   }
 
   onAddRecord() {
-    this.router.navigate(['job-mains/form', 2]);
+    this.router.navigate(['jobs/form', 0]);
     console.log('Add record clicked');
   }
 
   onEdit(param: any) {
-    this.router.navigate(['job-mains/form', param]);
+    this.router.navigate(['jobs/form', param]);
     console.log('Edit record clicked', param);
   }
 

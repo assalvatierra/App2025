@@ -515,6 +515,17 @@
       <column name="" />
     </property>
   </class>
+  <class name="SysDBScriptLog" entity-set="SysDBScriptLog" table="SysDBScriptLog" p1:Guid="d3483b83-de67-443d-ae7e-dfece78c3010">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="abf0e0cd-505a-4895-9b5f-06b904ce7c03">
+      <column name="" />
+    </id>
+    <property name="ScriptName" type="String" p1:ValidateRequired="true" p1:Guid="2ac4c37f-bb05-4917-9a90-5d0f43679e98">
+      <column name="" />
+    </property>
+    <property name="RunOn" type="DateTime" p1:ValidateRequired="true" p1:Guid="25d60897-7516-410b-a4bc-efaf3c819e3d">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">

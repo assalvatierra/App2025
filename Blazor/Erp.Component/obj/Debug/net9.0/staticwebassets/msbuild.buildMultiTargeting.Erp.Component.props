@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Erp.Component.props" />
-</Project>

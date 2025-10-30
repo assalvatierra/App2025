@@ -54,6 +54,7 @@ import { AgentChatComponent } from './pages/agent-chat/agent-chat.component';
 import { AgentsComponent } from './pages/agents/agents.component';
 import { AgentFormComponent } from './pages/agents/agent-form/agent-form.component';
 import { JobMainComponent } from './pages/job-main/job-main.component';
+import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-form.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { JobMainComponent } from './pages/job-main/job-main.component';
     AgentChatComponent,
     AgentsComponent,
     AgentFormComponent,
-    JobMainComponent
+    JobMainComponent,
+    JobMainFormComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, CommonModule,

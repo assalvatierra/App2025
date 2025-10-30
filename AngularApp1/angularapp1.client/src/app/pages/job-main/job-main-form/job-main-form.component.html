@@ -1,0 +1,102 @@
+<mat-card>
+  <mat-card-header>
+    <div>
+      <mat-card-title>{{ TitleInfo }}</mat-card-title>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="jobMainForm" *ngIf="!dataloading" novalidate>
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>Job Main Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Job Date</mat-label>
+                <input matInput type="date" formControlName="jobDate">
+                <mat-error *ngIf="jobMainForm.get('jobDate')?.hasError('required') && jobMainForm.get('jobDate')?.touched">
+                  Job Date is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput rows="3" formControlName="description" placeholder="Enter job description..."></textarea>
+                <mat-error *ngIf="jobMainForm.get('description')?.hasError('required') && jobMainForm.get('description')?.touched">
+                  Description is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Item Status</mat-label>
+                <mat-select formControlName="itemStatusId">
+                  <mat-option [value]="1">Active</mat-option>
+                  <mat-option [value]="2">Inactive</mat-option>
+                  <mat-option [value]="3">Pending</mat-option>
+                  <mat-option [value]="4">Completed</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Business Unit</mat-label>
+                <mat-select formControlName="businessUnitId">
+                  <mat-option [value]="1">Default Unit</mat-option>
+                  <mat-option [value]="2">Operations</mat-option>
+                  <mat-option [value]="3">Administration</mat-option>
+                  <mat-option [value]="4">Sales</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Created By</mat-label>
+                <input matInput formControlName="createdBy" placeholder="Enter creator name...">
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Last Edit By</mat-label>
+                <input matInput formControlName="lastEditBy" placeholder="Enter editor name...">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div *ngIf="!ShowAddBtn">
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="dataloading">
+        <mat-icon>save</mat-icon>
+        Update
+      </button>
+    </div>
+
+    <div *ngIf="ShowAddBtn">
+      <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="dataloading">
+        <mat-icon>add</mat-icon>
+        Add Job
+      </button>
+    </div>
+
+    <button mat-raised-button (click)="onCancel()" [disabled]="dataloading">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>

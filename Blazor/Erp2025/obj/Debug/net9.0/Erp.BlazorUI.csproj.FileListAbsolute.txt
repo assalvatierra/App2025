@@ -1,8 +1,0 @@
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.csproj.AssemblyReference.cache
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.GeneratedMSBuildEditorConfig.editorconfig
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.AssemblyInfoInputs.cache
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.AssemblyInfo.cs
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.csproj.CoreCompileInputs.cache
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.MvcApplicationPartsAssemblyInfo.cs
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.MvcApplicationPartsAssemblyInfo.cache
-C:\DATA\GitHub\App2025\BlazorUI\obj\Debug\net9.0\Erp.BlazorUI.sourcelink.json

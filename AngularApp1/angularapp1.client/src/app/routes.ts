@@ -26,6 +26,8 @@ import { AgentsComponent } from "./pages/agents/agents.component";
 import { AgentFormComponent } from "./pages/agents/agent-form/agent-form.component";
 import { JobMainComponent } from "./pages/job-main/job-main.component";
 import { JobMainFormComponent } from "./pages/job-main/job-main-form/job-main-form.component";
+import { JobServiceComponent } from "./pages/job-service/job-service.component";
+import { JobServiceFormComponent } from './pages/job-service/job-service-form/job-service-form.component';
 
 const routeConfig: Routes = [
 
@@ -128,6 +130,15 @@ const routeConfig: Routes = [
     {
       path: 'agents/add/form/:id',
       component: AgentFormComponent
+    },
+    {
+      path: 'job-service',
+      component: JobServiceComponent
+    },
+    {
+      path: 'job-service/form/:id',
+      component: JobServiceFormComponent,
+      canActivate: [AuthGuard]
     },
 
 ];

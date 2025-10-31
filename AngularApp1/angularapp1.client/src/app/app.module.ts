@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,13 +21,11 @@ import { VideosComponent } from './pages/content/videos/videos.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { ItemPopupMenuComponent } from './shared/entity-list-table/item-popup-menu/item-popup-menu.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EntityListTableComponent } from './shared/entity-list-table/entity-list-table.component';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
 import { CountriesComponent } from './pages/countries/countries.component';
 import { CountryFormComponent } from './pages/countries/country-form/country-form.component';
@@ -55,6 +54,8 @@ import { AgentsComponent } from './pages/agents/agents.component';
 import { AgentFormComponent } from './pages/agents/agent-form/agent-form.component';
 import { JobMainComponent } from './pages/job-main/job-main.component';
 import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-form.component';
+import { SharedModule } from './shared/shared.module'; 
+import { JobServiceModule } from './pages/job-service/job-service.module'; 
 
 @NgModule({
   declarations: [
@@ -67,7 +68,6 @@ import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-fo
     MenuItemComponent,
     VideosComponent,
     CountriesComponent,
-    EntityListTableComponent,
     CountryFormComponent,
     EntityFormComponent,
     EntityFormPageComponent,
@@ -94,7 +94,10 @@ import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-fo
     JobMainFormComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule, // Added for Angular Material
+    HttpClientModule,
+    CommonModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
@@ -104,7 +107,6 @@ import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-fo
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    ItemPopupMenuComponent,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
@@ -112,7 +114,9 @@ import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-fo
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    SharedModule, 
+    JobServiceModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

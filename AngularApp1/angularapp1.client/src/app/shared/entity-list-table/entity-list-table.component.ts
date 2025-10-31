@@ -18,6 +18,7 @@ export class EntityListTableComponent implements AfterViewInit {
   @Output() addRecordClicked = new EventEmitter();
 
   @Input() menuLabel: string = 'Actions';
+  @Input() loading: boolean = false;
 
   @Input() showEdit: boolean = true;
   @Input() editTitle: string = 'Edit Record';

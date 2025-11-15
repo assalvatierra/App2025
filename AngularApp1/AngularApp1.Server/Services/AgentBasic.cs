@@ -17,8 +17,8 @@ namespace AngularApp1.Server.Services
     public class AgentBasic : IAgentBasic
     {
         string modelId = "gpt-4.1";
-        string endpoint = "";
-        string apiKey = "";
+        string endpoint = "https://abel-ai-llm.openai.azure.com/";
+        string apiKey = "1wN1vKJNYLt6ChbIFbo2dvlt9rafjnRMh1P3QzRPTa0pMoic6F78JQQJ99BIACYeBjFXJ3w3AAABACOGlMta";
 
         string MainInstruction =string.Empty;
         Kernel kernel;
@@ -35,7 +35,7 @@ namespace AngularApp1.Server.Services
         {
             _context = context;
             this.agent = agent;
-            this.initializeKernel2();
+            this.initializeKernel();
             this.initializePlugins();
         }
 
@@ -102,37 +102,37 @@ namespace AngularApp1.Server.Services
                 .AddAzureOpenAIChatCompletion(modelId, endpoint, apiKey)
                 .Build();
 
-            //default plugins
-            EnvInfoPlugin envInfo = new EnvInfoPlugin();
-            kernel.Plugins.AddFromObject(envInfo);
+            ////default plugins
+            //EnvInfoPlugin envInfo = new EnvInfoPlugin();
+            //kernel.Plugins.AddFromObject(envInfo);
 
 
-            if (this.agent.AgentFeatures != null && this.agent.AgentFeatures.Count > 0)
-            {
-                foreach (var feature in this.agent.AgentFeatures)
-                {
-                    if (feature.Code == "BIN")
-                    {
-                        AgentBinPlugin p = new AgentBinPlugin(_context, this.agent.Id);
-                        kernel.Plugins.AddFromObject(p);
-                    }
+            //if (this.agent.AgentFeatures != null && this.agent.AgentFeatures.Count > 0)
+            //{
+            //    foreach (var feature in this.agent.AgentFeatures)
+            //    {
+            //        if (feature.Code == "BIN")
+            //        {
+            //            AgentBinPlugin p = new AgentBinPlugin(_context, this.agent.Id);
+            //            kernel.Plugins.AddFromObject(p);
+            //        }
 
-                    if(feature.Code == "EJOBS")
-                    {
-                        eJobPlugin p = new eJobPlugin();
-                        kernel.Plugins.AddFromObject(p);
-                    }
+            //        if(feature.Code == "EJOBS")
+            //        {
+            //            eJobPlugin p = new eJobPlugin();
+            //            kernel.Plugins.AddFromObject(p);
+            //        }
 
-                    if (feature.Code == "MGR100")
-                    {
-                        AgentManagerPlugin p1 = new AgentManagerPlugin(_context, this.agent.Id);
-                        kernel.Plugins.AddFromObject(p1);
-                        AgentTaskPlugin p2 = new AgentTaskPlugin(_context, this.agent.Id);
-                        kernel.Plugins.AddFromObject(p2);
-                    }
+            //        if (feature.Code == "MGR100")
+            //        {
+            //            AgentManagerPlugin p1 = new AgentManagerPlugin(_context, this.agent.Id);
+            //            kernel.Plugins.AddFromObject(p1);
+            //            AgentTaskPlugin p2 = new AgentTaskPlugin(_context, this.agent.Id);
+            //            kernel.Plugins.AddFromObject(p2);
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
 
             var history = new ChatHistory();

@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
 import { CountriesComponent } from './pages/countries/countries.component';
@@ -55,7 +56,8 @@ import { AgentFormComponent } from './pages/agents/agent-form/agent-form.compone
 import { JobMainComponent } from './pages/job-main/job-main.component';
 import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-form.component';
 import { SharedModule } from './shared/shared.module'; 
-import { JobServiceModule } from './pages/job-service/job-service.module'; 
+import { JobServiceModule } from './pages/job-service/job-service.module';
+import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main-details/job-main-details.component'; 
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import { JobServiceModule } from './pages/job-service/job-service.module';
     AgentsComponent,
     AgentFormComponent,
     JobMainComponent,
-    JobMainFormComponent
+    JobMainFormComponent,
+    JobMainDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +114,7 @@ import { JobServiceModule } from './pages/job-service/job-service.module';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
+    MatTabsModule,
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,

@@ -18,9 +18,9 @@ namespace AngularApp1.Server.Controllers
     {
 
         private readonly SignInManager<ErpIdentityUser> _signInManager;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController( SignInManager<ErpIdentityUser> signInManager, ILogger<WeatherForecastController> logger)
+        public UserController( SignInManager<ErpIdentityUser> signInManager, ILogger<UserController> logger)
         {
             _signInManager = signInManager;
             _logger = logger;

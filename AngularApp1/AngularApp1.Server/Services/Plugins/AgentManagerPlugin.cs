@@ -61,7 +61,7 @@ namespace AngularApp1.Server.Services.Plugins
             string result = string.Empty;
             if (agentdata != null)
             {
-                AgentBasic Agent = new AgentBasic(agentdata, _context);
+                IAgentBasic Agent = new AgentBasic(agentdata, _context);
                 var response = await Agent.processInstructions(userInput, chatHistory);
                 result = response.Value ?? string.Empty;
             }

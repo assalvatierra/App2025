@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiJobServiceService, JobService } from '../../../core/services/api-job-service.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-job-service-form',
@@ -13,6 +14,15 @@ export class JobServiceFormComponent implements OnInit {
   jobServiceForm: FormGroup;
   isEditMode: boolean = false;
   serviceId: number = 0;
+  loadError: boolean = false; // Added to handle load errors
+
+  public itemStatuses: any[] = [
+    { id: 1, name: 'Pending' },
+    { id: 2, name: 'In Progress' },
+    { id: 3, name: 'Completed' },
+    { id: 4, name: 'Cancelled' }   
+  ]
+
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +30,27 @@ export class JobServiceFormComponent implements OnInit {
     private route: ActivatedRoute,
     public router: Router  // Changed from private to public
   ) {
-    this.jobServiceForm = this.createForm();
+    this.jobServiceForm = this.fb.group({
+      id: [0],
+      jobMainId: [null, Validators.required],
+      particulars: [''],
+      dateStart: [null],
+      dateEnd: [null],
+      quotedAmt: [0],
+      supplierAmt: [0],
+      createdBy: [''],
+      createdOn: [null],
+      lastEditBy: [''],
+      lastEditOn: [null],
+      isArchived: [false],
+      isPrivate: [false],
+      isActive: [true],
+      serviceItemId: [null],
+      supplierId: [null],
+      itemStatusId: [null],
+      sortOrder: [0],
+      // Add or remove controls to match the new JobService definition
+    });
   }
 
   ngOnInit() {
@@ -50,30 +80,41 @@ export class JobServiceFormComponent implements OnInit {
     }
   }
 
-  private createForm(): FormGroup {
-    return this.fb.group({
-      jobId: ['', Validators.required],
-      serviceDate: ['', Validators.required],
-      description: ['', Validators.required],
-      serviceTypeId: ['', Validators.required],
-      cost: ['', [Validators.required, Validators.min(0)]],
-      statusId: ['', Validators.required]
-    });
-  }
-
   private loadJobService() {
-    this.apiService.getJobService(this.serviceId).subscribe({
-      next: (service: JobService) => {
-        this.jobServiceForm.patchValue({
-          jobId: service.jobId,
-          serviceDate: service.serviceDate,
-          description: service.description,
-          serviceTypeId: service.serviceTypeId,
-          cost: service.cost,
-          statusId: service.statusId
-        });
-      },
-      error: (error) => console.error('Load error:', error)
-    });
+    this.apiService.getJobService(this.serviceId)
+      .pipe(
+        catchError(err => {
+          this.loadError = true;
+          return [];
+        })
+      )
+      .subscribe({
+        next: (service: JobService) => {
+          this.jobServiceForm.patchValue({
+            id: service.id,
+            jobMainId: service.jobMainId,
+            particulars: service.particulars,
+            dateStart: service.dateStart,
+            dateEnd: service.dateEnd,
+            quotedAmt: service.quotedAmt,
+            supplierAmt: service.supplierAmt,
+            createdBy: service.createdBy,
+            createdOn: service.createdOn,
+            lastEditBy: service.lastEditBy,
+            lastEditOn: service.lastEditOn,
+            isArchived: service.isArchived,
+            isPrivate: service.isPrivate,
+            isActive: service.isActive,
+            serviceItemId: service.serviceItemId,
+            supplierId: service.supplierId,
+            itemStatusId: service.itemStatusId,
+            sortOrder: service.sortOrder
+          });
+        },
+        error: (error) => {
+          this.loadError = true;
+          console.error('Load error:', error);
+        }
+      });
   }
 }

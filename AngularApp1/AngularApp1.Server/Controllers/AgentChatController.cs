@@ -68,7 +68,7 @@ namespace AngularApp1.Server.Controllers
                 return NotFound($"Agent with ID {info.AgentId} not found.");
             }
 
-            AgentBasic Agent = new AgentBasic(agentdata, _context);
+            IAgentBasic Agent = new AgentBasic(agentdata, _context);
             var result = await Agent.processInstructions(info.messageRequest, info.messageHistory);
             info.messageReply = result.Value ?? string.Empty;
 

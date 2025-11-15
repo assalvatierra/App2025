@@ -14,20 +14,27 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-label>Job ID</mat-label>
-                <input matInput type="number" formControlName="jobId" placeholder="Enter job ID...">
-                <mat-error *ngIf="jobServiceForm.get('jobId')?.hasError('required') && jobServiceForm.get('jobId')?.touched">
-                  Job ID is <strong>required</strong>
+                <mat-label>Job Main ID</mat-label>
+                <input matInput type="number" formControlName="jobMainId" placeholder="Enter Job Main ID...">
+                <mat-error *ngIf="jobServiceForm.get('jobMainId')?.hasError('required') && jobServiceForm.get('jobMainId')?.touched">
+                  Job Main ID is <strong>required</strong>
                 </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Date Start</mat-label>
+                <input matInput type="date" formControlName="dateStart">
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-label>Service Date</mat-label>
-                <input matInput type="date" formControlName="serviceDate">
-                <mat-error *ngIf="jobServiceForm.get('serviceDate')?.hasError('required') && jobServiceForm.get('serviceDate')?.touched">
-                  Service Date is <strong>required</strong>
-                </mat-error>
+                <mat-label>Date End</mat-label>
+                <input matInput type="date" formControlName="dateEnd" />
               </mat-form-field>
             </div>
           </div>
@@ -35,11 +42,10 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-label>Description</mat-label>
-                <textarea matInput rows="3" formControlName="description" placeholder="Enter service description..."></textarea>
-                <mat-error *ngIf="jobServiceForm.get('description')?.hasError('required') && jobServiceForm.get('description')?.touched">
-                  Description is <strong>required</strong>
-                </mat-error>
+                <mat-label>
+                  Particulars
+                </mat-label>
+                <textarea matInput rows="3" formControlName="particulars" placeholder="Service Description..."></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -47,48 +53,86 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-label>Service Type</mat-label>
-                <mat-select formControlName="serviceTypeId">
-                  <mat-option [value]="1">Maintenance</mat-option>
-                  <mat-option [value]="2">Repair</mat-option>
-                  <mat-option [value]="3">Installation</mat-option>
-                  <mat-option [value]="4">Inspection</mat-option>
+                <mat-label>Quote amount</mat-label>
+                <input matInput type="number" formControlName="quotedAmt" placeholder="0" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Item Status</mat-label>
+                <mat-select formControlName="itemStatusId">
+                  <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
+                    {{ status.name }}
+                  </mat-option>
                 </mat-select>
-                <mat-error *ngIf="jobServiceForm.get('serviceTypeId')?.hasError('required') && jobServiceForm.get('serviceTypeId')?.touched">
-                  Service Type is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Cost</mat-label>
-                <input matInput type="number" formControlName="cost" placeholder="0.00">
-                <mat-error *ngIf="jobServiceForm.get('cost')?.hasError('required') && jobServiceForm.get('cost')?.touched">
-                  Cost is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="jobServiceForm.get('cost')?.hasError('min') && jobServiceForm.get('cost')?.touched">
-                  Cost must be greater than or equal to 0
-                </mat-error>
               </mat-form-field>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="statusId">
-                  <mat-option [value]="1">Active</mat-option>
-                  <mat-option [value]="2">Inactive</mat-option>
-                  <mat-option [value]="3">Pending</mat-option>
-                  <mat-option [value]="4">Completed</mat-option>
-                </mat-select>
-                <mat-error *ngIf="jobServiceForm.get('statusId')?.hasError('required') && jobServiceForm.get('statusId')?.touched">
-                  Status is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+          <!--<div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Particulars</mat-label>
+        <textarea matInput rows="3" formControlName="particulars" placeholder="Enter service description..."></textarea>
+        <mat-error *ngIf="jobServiceForm.get('particulars')?.hasError('required') && jobServiceForm.get('particulars')?.touched">
+          particulars is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>-->
+          <!--<div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="3" formControlName="description" placeholder="Enter service description..."></textarea>
+        <mat-error *ngIf="jobServiceForm.get('description')?.hasError('required') && jobServiceForm.get('description')?.touched">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>-->
+          <!--<div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Service Type</mat-label>
+        <mat-select formControlName="serviceTypeId">
+          <mat-option [value]="1">Maintenance</mat-option>
+          <mat-option [value]="2">Repair</mat-option>
+          <mat-option [value]="3">Installation</mat-option>
+          <mat-option [value]="4">Inspection</mat-option>
+        </mat-select>
+        <mat-error *ngIf="jobServiceForm.get('serviceTypeId')?.hasError('required') && jobServiceForm.get('serviceTypeId')?.touched">
+          Service Type is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Last Edit On</mat-label>
+        <input matInput type="date" formControlName="lastEditOn">
+      </mat-form-field>
+    </div>
+  </div>-->
+          <!--<div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="statusId">
+          <mat-option [value]="1">Active</mat-option>
+          <mat-option [value]="2">Inactive</mat-option>
+          <mat-option [value]="3">Pending</mat-option>
+          <mat-option [value]="4">Completed</mat-option>
+        </mat-select>
+        <mat-error *ngIf="jobServiceForm.get('statusId')?.hasError('required') && jobServiceForm.get('statusId')?.touched">
+          Status is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>-->
+
         </mat-card-content>
       </mat-card>
     </form>

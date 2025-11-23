@@ -17,8 +17,8 @@ namespace AngularApp1.Server.Services
     public class AgentBasic : IAgentBasic
     {
         string modelId = "gpt-4.1";
-        string endpoint = "";
-        string apiKey = "";
+        string endpoint = "https://abel-ai-llm.openai.azure.com/";
+        string apiKey = "1wN1vKJNYLt6ChbIFbo2dvlt9rafjnRMh1P3QzRPTa0pMoic6F78JQQJ99BIACYeBjFXJ3w3AAABACOGlMta";
 
         string MainInstruction =string.Empty;
         Kernel kernel;

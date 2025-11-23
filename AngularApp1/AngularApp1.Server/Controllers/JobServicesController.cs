@@ -28,11 +28,25 @@ namespace AngularApp1.Server.Controllers
             return await _context.JobService.ToListAsync();
         }
 
+
+        [HttpGet("byJob/{JobId}")]
+        public async Task<ActionResult<IEnumerable<JobService>>> GetJobServiceByJobId(int JobId)
+        {
+            var jobService = await _context.JobService.Where(js => js.JobMainId == JobId).ToListAsync();
+            if (jobService == null || !jobService.Any())
+            {
+                return NotFound();
+            }
+            return jobService;
+        }
+
         // GET: api/JobServices/5
         [HttpGet("{id}")]
         public async Task<ActionResult<JobService>> GetJobService(int id)
         {
-            var jobService = await _context.JobService.FindAsync(id);
+            var jobService = await _context.JobService
+                //.Include(js => js.ServiceItem) 
+                .FirstOrDefaultAsync(js => js.Id == id);
 
             if (jobService == null)
             {

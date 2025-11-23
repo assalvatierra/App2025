@@ -83,6 +83,10 @@ export class ApiJobServiceService {
     //);
   }
 
+  getJobsServiceByJobId(jobId: number): Observable<JobService[]> {
+    return this.http.get<JobService[]>(`${this.apiUrl}/byJob/${jobId}`);
+  }
+
   createJobService(jobService: JobService): Observable<JobService> {
     return this.http.post<JobService>(this.apiUrl, jobService);
   }

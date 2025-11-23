@@ -57,7 +57,9 @@ import { JobMainComponent } from './pages/job-main/job-main.component';
 import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-form.component';
 import { SharedModule } from './shared/shared.module'; 
 import { JobServiceModule } from './pages/job-service/job-service.module';
-import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main-details/job-main-details.component'; 
+import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main-details/job-main-details.component';
+import { JobMainServicesComponent } from './pages/job-main/job-main-form/job-main-services/job-main-services.component';
+import { JobMainServiceDialogComponent } from './pages/job-main/job-main-form/job-main-services/job-main-service-dialog/job-main-service-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -94,7 +96,9 @@ import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main
     AgentFormComponent,
     JobMainComponent,
     JobMainFormComponent,
-    JobMainDetailsComponent
+    JobMainDetailsComponent,
+    JobMainServicesComponent,
+    JobMainServiceDialogComponent
   ],
   imports: [
     BrowserModule,

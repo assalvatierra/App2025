@@ -357,9 +357,9 @@ public partial class DbA0a0aeDev2025Context : DbContext
                 .HasForeignKey(d => d.JobMainId)
                 .HasConstraintName("FK_JobService_JobMain_0");
 
-            entity.HasOne(d => d.ServiceItem).WithMany(p => p.JobServices)
-                .HasForeignKey(d => d.ServiceItemId)
-                .HasConstraintName("FK_JobService_ServiceItem_1");
+            //entity.HasOne(d => d.ServiceItem).WithMany(p => p.JobServices)
+            //    .HasForeignKey(d => d.ServiceItemId)
+            //    .HasConstraintName("FK_JobService_ServiceItem_1");
 
             entity.HasOne(d => d.Supplier).WithMany(p => p.JobServices)
                 .HasForeignKey(d => d.SupplierId)

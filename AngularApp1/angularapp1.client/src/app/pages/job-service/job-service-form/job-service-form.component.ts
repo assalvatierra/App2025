@@ -46,9 +46,11 @@ export class JobServiceFormComponent implements OnInit {
       isPrivate: [false],
       isActive: [true],
       serviceItemId: [null],
+      serviceItem: [null], 
       supplierId: [null],
       itemStatusId: [null],
       sortOrder: [0],
+
       // Add or remove controls to match the new JobService definition
     });
   }
@@ -106,6 +108,7 @@ export class JobServiceFormComponent implements OnInit {
             isPrivate: service.isPrivate,
             isActive: service.isActive,
             serviceItemId: service.serviceItemId,
+            serviceItem: service.serviceItem,
             supplierId: service.supplierId,
             itemStatusId: service.itemStatusId,
             sortOrder: service.sortOrder

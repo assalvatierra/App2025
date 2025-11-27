@@ -39,5 +39,5 @@ public partial class ServiceItem
 
     public virtual ItemType? ItemType { get; set; }
 
-    public virtual ICollection<JobService> JobServices { get; set; } = new List<JobService>();
+    //public virtual ICollection<JobService> JobServices { get; set; } = new List<JobService>();
 }

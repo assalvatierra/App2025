@@ -45,7 +45,7 @@ namespace AngularApp1.Server.Controllers
         public async Task<ActionResult<JobService>> GetJobService(int id)
         {
             var jobService = await _context.JobService
-                //.Include(js => js.ServiceItem) 
+                //.Include(js => js.ServiceItem)
                 .FirstOrDefaultAsync(js => js.Id == id);
 
             if (jobService == null)

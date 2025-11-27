@@ -18,6 +18,7 @@ export interface JobService {
   isPrivate: boolean;
   isActive: boolean;
   serviceItemId: number;
+  serviceItem: any;
   supplierId: number;
   itemStatusId: number;
   sortOrder: number;

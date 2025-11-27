@@ -23,6 +23,18 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Service</mat-label>
+                <mat-select formControlName="serviceItemId">
+                  <mat-option *ngFor="let item of serviceItems" [value]="item.id">
+                    {{ item.description }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col">
@@ -65,7 +77,7 @@
                 <mat-label>Item Status</mat-label>
                 <mat-select formControlName="itemStatusId">
                   <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
-                    {{ status.name }}
+                    {{ status.description }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -78,11 +90,11 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!jobServiceForm.valid">
+    <button mat-raised-button color="primary" (click)="onSaveClick()" [disabled]="!jobServiceForm.valid">
       <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
       {{ isEditMode ? 'Update' : 'Create' }}
     </button>
-    <button mat-raised-button (click)="router.navigate(['/job-service'])">
+    <button mat-raised-button (click)="onCancelClick()">
       <mat-icon>cancel</mat-icon>
       Cancel
     </button>

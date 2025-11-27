@@ -47,7 +47,7 @@ GET {{AngularApp1.Server_HostAddress}}/api/ServiceItems
 GET {{AngularApp1.Server_HostAddress}}/api/JobMains
 
 ###
-GET {{AngularApp1.Server_HostAddress}}/api/JobServices
+GET {{AngularApp1.Server_HostAddress}}/api/JobServices/3
 
 
 

@@ -5,6 +5,7 @@ import { ApiJobServiceService, JobService } from '../../../../../core/services/a
 import { catchError } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'; // If you're passing data
+import { ApiService } from '../../../../../core/api.service';
 
 @Component({
   selector: 'app-job-main-service-dialog',
@@ -20,19 +21,15 @@ export class JobMainServiceDialogComponent implements OnInit {
   serviceId: number = 0;
   loadError: boolean = false; // Added to handle load errors
 
-  public itemStatuses: any[] = [
-    { id: 1, name: 'Pending' },
-    { id: 2, name: 'In Progress' },
-    { id: 3, name: 'Completed' },
-    { id: 4, name: 'Cancelled' }
-  ]
-
+  public itemStatuses: any[] = [];
+  public serviceItems: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<JobMainServiceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, // If you're receiving data
     private fb: FormBuilder,
     private apiService: ApiJobServiceService,
+    private apiServiceLookup: ApiService,
     private route: ActivatedRoute,
     public router: Router  // Changed from private to public
   ) {
@@ -60,6 +57,9 @@ export class JobMainServiceDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadServiceItems();
+    this.loadItemStatuses();
+
     this.route.params.subscribe(params => {
       this.serviceId = this.data.serviceId;
       this.isEditMode = this.serviceId !== 0;
@@ -69,11 +69,12 @@ export class JobMainServiceDialogComponent implements OnInit {
     });
   }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close(); // Close without a result
   }
 
   onSaveClick(): void {
+    this.onSubmit();
     this.dialogRef.close('Some result'); // Close with a result
   }
 
@@ -138,5 +139,35 @@ export class JobMainServiceDialogComponent implements OnInit {
         }
       });
   }
+
+  private loadServiceItems() {
+    this.apiServiceLookup.getServiceItems()
+      .subscribe({
+        next: (items: any[]) => {
+          this.serviceItems = items;
+        },
+        error: (error) => {
+          this.loadError = true;
+          console.error('Service Items Load error:', error);
+        }
+      });
+
+  }
+
+  private loadItemStatuses() {
+    this.apiServiceLookup.getItemStatuses()
+      .subscribe({
+        next: (items: any[]) => {
+          this.itemStatuses = items;
+        },
+        error: (error) => {
+          this.loadError = true;
+          console.error('Statuses Load error:', error);
+
+        }
+      })
+  }
+
+
 }
 

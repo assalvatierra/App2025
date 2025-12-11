@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Data;
 using Erp.Domain.Models;
+using AngularApp1.Server.Services.RabbitMQ;
 
 namespace AngularApp1.Server.Controllers
 {
@@ -38,6 +39,9 @@ namespace AngularApp1.Server.Controllers
             {
                 return NotFound();
             }
+
+            //RabbitMqBasic rabbitMq = new RabbitMqBasic();
+            //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
 
             return jobMain;
         }

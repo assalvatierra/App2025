@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore p1:name="Model" p1:Guid="9cd51a2c-9a0d-48e4-b6ca-072e096d6e0c" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="n8n_service" entity-set="n8n_services" p1:Guid="a568089e-0115-4fde-8c47-e129c385fe13">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f494b3fc-7c98-443d-9b1c-3dd1eeba3b10">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="c5f20f9f-b8c9-427c-b9ea-bff75b2d7eaf">
+      <column name="" />
+    </property>
+    <property name="Description" type="String" p1:ValidateRequired="true" p1:Guid="55ab421e-0e0d-4cef-9cf3-94b026f9ecd2">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="56b76269-f059-4c93-89bf-6a7f0733dd88">
+      <column name="" />
+    </property>
+  </class>
+  <class name="n8n_service_rate" entity-set="n8n_service_rates" p1:Guid="d7235ebb-982b-45e1-ab03-d9c6bd59b888">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ca6180b0-22fc-45a8-829f-1207c5dea50a">
+      <column name="" />
+    </id>
+    <property name="n8n_serviceId" type="Int32" p1:ValidateRequired="true" p1:Guid="8a27f200-4fd7-4a37-b890-d32364ebb832">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Quantity" type="String" p1:ValidateRequired="true" p1:Guid="998ed04f-f95a-4268-810f-451b1dee34cb">
+      <column name="" />
+    </property>
+    <property name="Rate" type="Decimal" p1:ValidateRequired="true" p1:Guid="74c19418-7b1d-4d6a-b892-fd6be036f211">
+      <column name="" />
+    </property>
+  </class>
+  <associations>
+    <association name="n8n_service_n8n_service_rate" cardinality="OneToMany" p1:Guid="755974e2-49eb-4ff5-ad86-a5178b077bef">
+      <end1 multiplicity="One" name="n8n_service" class="n8n_service_rate" relation-class="n8n_service" generate="False" constrained="True" lazy="False" p1:Guid="49580016-2fda-4ca0-a651-92958efa1bcc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="n8n_service_rates" class="n8n_service" relation-class="n8n_service_rate" lazy="False" p1:Guid="e1799399-d868-4cc1-a24c-1ae16f56c2f6">
+        <property name="n8n_serviceId" />
+      </end2>
+    </association>
+  </associations>
+</efcore>

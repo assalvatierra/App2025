@@ -7,6 +7,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
             <input matInput placeholder="Name" formControlName="name">
             @if (dataForm.controls['name'].hasError('required')) {
             <mat-error>Name is <strong>required</strong></mat-error>
@@ -17,6 +18,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
             <input matInput placeholder="Description" formControlName="description">
           </mat-form-field>
         </div>
@@ -24,6 +26,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Remarks</mat-label>
             <textarea matInput placeholder="Remarks" formControlName="remarks"></textarea>
           </mat-form-field>
         </div>
@@ -31,11 +34,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Code</mat-label>
             <input matInput placeholder="Code" formControlName="code" />
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Order</mat-label>
             <input matInput placeholder="Order" formControlName="sortOrder" />
           </mat-form-field>
         </div>

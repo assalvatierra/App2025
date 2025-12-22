@@ -18,10 +18,15 @@
       </mat-card>
     </form>
 
-    <app-contact-info-form #ContactForm
-                     *ngIf="!dataloading"
-                     [modelData]="currentData">
-    </app-contact-info-form>
+    <mat-tab-group>
+      <mat-tab label="Information">
+        <app-contact-info-form #ContactForm
+                               *ngIf="!dataloading"
+                               [modelData]="currentData">
+        </app-contact-info-form>
+
+      </mat-tab>
+    </mat-tab-group>
 
   </mat-card-content>
   <mat-card-actions>

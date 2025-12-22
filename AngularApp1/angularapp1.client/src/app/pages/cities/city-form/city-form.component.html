@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header>
     <div>
-      <mat-card-title> {{TitleInfo}} </mat-card-title> 
+      <mat-card-title> {{TitleInfo}} </mat-card-title>
     </div>
   </mat-card-header>
   <mat-card-content>
@@ -15,11 +15,11 @@
     <div *ngIf="!ShowAddBtn">
       <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
     </div>
-    
+
     <div *ngIf="ShowAddBtn">
         <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
     </div>
-    
+
     <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
   </mat-card-actions>
 </mat-card>

@@ -33,12 +33,12 @@ export class CityFormComponent implements AfterViewInit {
     }
 
     if(this.paramId != 0) {
-      this.TitleInfo = 'Edit Country Form';
+      this.TitleInfo = 'Edit City Form';
       this.retrieveApiData(this.paramId);
     }
 
     if(this.paramId == 0) {
-      this.TitleInfo = 'Add New Country Form';
+      this.TitleInfo = 'Add New City Form';
       this.SetDefaultData();
 
       this.dataloading = false;
@@ -103,7 +103,7 @@ export class CityFormComponent implements AfterViewInit {
       });
   }
 
-  
+
   private addApiData(data: any): void {
     this.dataloading = true;
     this.api.addCity(data)
@@ -148,6 +148,6 @@ export class CityFormComponent implements AfterViewInit {
 
   }
 
-  
+
 
 }

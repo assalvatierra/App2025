@@ -28,6 +28,35 @@
       <column name="" />
     </property>
   </class>
+  <class name="n8n_reservations" entity-set="n8n_reservations" p1:Guid="ee3bad80-fdec-4ac7-9516-4f817502aa6e">
+    <id name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="91ba24f6-71d2-441b-a95a-81fee6bdd170">
+      <column name="" />
+    </id>
+    <property name="record_date" type="Date" p1:ValidateRequired="true" p1:Guid="bb1ad900-d464-4dcf-8c69-cf584668a048">
+      <column name="" />
+    </property>
+    <property name="details" type="String" p1:ValidateRequired="true" p1:Guid="d8a28c2d-0a72-42e2-904c-24c4d02daf08">
+      <column name="" />
+    </property>
+    <property name="remarks" type="String" p1:ValidateRequired="true" p1:Guid="75f2901e-ca15-4d86-8b77-df0bc213d4ab">
+      <column name="" />
+    </property>
+    <property name="ref_url" type="String" p1:ValidateRequired="true" p1:Guid="324fa115-a8cc-4250-bff5-459221694b40">
+      <column name="" />
+    </property>
+    <property name="record_status" type="String" p1:ValidateRequired="true" p1:Guid="ccae0add-74b1-4a77-9f54-f331b9e7ff26">
+      <column name="" />
+    </property>
+    <property name="amount_calculated" type="Decimal" p1:ValidateRequired="true" p1:Guid="3bbf4ab9-6d59-4ffe-8d0e-3e08262eb85b">
+      <column name="" />
+    </property>
+    <property name="amount_invoice" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1bb82e5b-2a46-4266-8b50-11498409e567">
+      <column name="" />
+    </property>
+    <property name="payment_url" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d6c46fba-4720-4895-b2d4-637a09b78466">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="n8n_service_n8n_service_rate" cardinality="OneToMany" p1:Guid="755974e2-49eb-4ff5-ad86-a5178b077bef">
       <end1 multiplicity="One" name="n8n_service" class="n8n_service_rate" relation-class="n8n_service" generate="False" constrained="True" lazy="False" p1:Guid="49580016-2fda-4ca0-a651-92958efa1bcc">

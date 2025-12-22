@@ -14,22 +14,39 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput placeholder="Type" formControlName="entityTypeId" />
+                <mat-label>Entity Type</mat-label>
+                <mat-select formControlName="entityTypeId">
+                  <mat-option [value]="1">Supplier</mat-option>
+                  <mat-option [value]="2">Customer</mat-option>
+                  <mat-option [value]="3">Partner</mat-option>
+                  <mat-option [value]="4">Others</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
+
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput placeholder="Status" formControlName="entityStatusId" />
+                <mat-label>Business Unit</mat-label>
+                <mat-select formControlName="businessUnitId">
+                  <mat-option [value]="1">Expense</mat-option>
+                  <mat-option [value]="2">Income</mat-option>
+                  <mat-option [value]="3">Others</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
-          </div>
-          <div class="row">
+
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput placeholder="Business Unit" formControlName="businessUnitId" />
+                <mat-label>Entity Status</mat-label>
+                <mat-select formControlName="entityStatusId">
+                  <mat-option [value]="1">Active</mat-option>
+                  <mat-option [value]="2">Inactive</mat-option>
+                  <mat-option [value]="3">Pending</mat-option>
+                  <mat-option [value]="4">Completed</mat-option>
+                </mat-select>
               </mat-form-field>
-              <button mat-raised-button color="primary" (click)="onOpenTypeDialog()">Browse</button>
             </div>
+
           </div>
 
         </mat-card-content>

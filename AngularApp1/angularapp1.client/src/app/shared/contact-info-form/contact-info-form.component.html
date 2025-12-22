@@ -1,3 +1,4 @@
+<div *ngIf="dataForm">
 <form [formGroup]="dataForm" novalidate>
   <mat-card class="shipping-card">
     <mat-card-header>
@@ -8,11 +9,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Primary Phone#</mat-label>
             <input matInput placeholder="Primary Number" formControlName="contactNo1" />
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Alternate Phone#</mat-label>
             <input matInput placeholder="Alternate Number" formControlName="contactNo2" />
           </mat-form-field>
         </div>
@@ -21,11 +24,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Primary Email</mat-label>
             <input matInput placeholder="Primary Email" formControlName="email1" />
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Alternate Email</mat-label>
             <input matInput placeholder="Alternate Email" formControlName="email2" />
           </mat-form-field>
         </div>
@@ -34,11 +39,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Primary Address</mat-label>
             <input matInput placeholder="Primary Address" formControlName="address1" />
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Alternate Address</mat-label>
             <input matInput placeholder="Alternate Address" formControlName="address2" />
           </mat-form-field>
         </div>
@@ -48,3 +55,4 @@
 
   </mat-card>
 </form>
+</div>

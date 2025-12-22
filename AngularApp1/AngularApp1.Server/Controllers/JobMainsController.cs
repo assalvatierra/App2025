@@ -16,10 +16,12 @@ namespace AngularApp1.Server.Controllers
     public class JobMainsController : ControllerBase
     {
         private readonly ErpDbContext _context;
+        private readonly IRabbitMqBasic? _rabbitmq;
 
-        public JobMainsController(ErpDbContext context)
+        public JobMainsController(ErpDbContext context, IRabbitMqBasic? rabbitmq)
         {
             _context = context;
+            _rabbitmq = rabbitmq;
         }
 
         // GET: api/JobMains
@@ -40,8 +42,6 @@ namespace AngularApp1.Server.Controllers
                 return NotFound();
             }
 
-            //RabbitMqBasic rabbitMq = new RabbitMqBasic();
-            //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
 
             return jobMain;
         }
@@ -61,6 +61,15 @@ namespace AngularApp1.Server.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+
+                //Send Message to RabbitMQ
+                if (_rabbitmq != null)
+                {
+                    _rabbitmq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {jobMain.Id} updated." });
+                }
+                //RabbitMqBasic rabbitMq = new RabbitMqBasic();
+                //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,6 +93,15 @@ namespace AngularApp1.Server.Controllers
         {
             _context.JobMain.Add(jobMain);
             await _context.SaveChangesAsync();
+
+            //Send Message to RabbitMQ
+            if (_rabbitmq != null)
+            {
+                _rabbitmq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {jobMain.Id} created." });
+            }
+            //RabbitMqBasic rabbitMq = new RabbitMqBasic();
+            //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
+
 
             return CreatedAtAction("GetJobMain", new { id = jobMain.Id }, jobMain);
         }

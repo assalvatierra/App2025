@@ -11,7 +11,7 @@ using AngularApp1.Server.Areas.Identity.Data;
 using Microsoft.OpenApi.Models;
 using AngularApp1.Server.Services.Plugins;
 using Microsoft.SemanticKernel;
-
+using AngularApp1.Server.Services.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +94,11 @@ builder.Services.AddSwaggerGen(options =>
                     {securityScheme, new string[] { }}
                 });
 });
+
+
+
+// ADD Application Services
+builder.AddRabbitMqService();
 
 
 

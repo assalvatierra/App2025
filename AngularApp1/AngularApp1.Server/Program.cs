@@ -5,12 +5,12 @@ using AngularApp1.Server.Data;
 //using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.BearerToken;
+//using Microsoft.AspNetCore.Authentication.BearerToken;
 using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
 using Microsoft.OpenApi.Models;
-using AngularApp1.Server.Services.Plugins;
-using Microsoft.SemanticKernel;
+//using AngularApp1.Server.Services.Plugins;
+//using Microsoft.SemanticKernel;
 using AngularApp1.Server.Services.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);

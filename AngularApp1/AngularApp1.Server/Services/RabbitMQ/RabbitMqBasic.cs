@@ -35,6 +35,10 @@ namespace AngularApp1.Server.Services.RabbitMQ
             {
                 builder.Services.AddSingleton<IRabbitMqBasic, NoOpRabbitMq>();
             }
+            else if (options.Version.ToUpper() == "LOCAL")
+            {
+                builder.Services.AddSingleton<IRabbitMqBasic, Cloudamqp>();
+            }
             else if (options.Version.ToUpper() == "CLOUDAMQP")
             {
                 builder.Services.AddSingleton<IRabbitMqBasic, Cloudamqp>();

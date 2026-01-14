@@ -42,6 +42,8 @@ builder.Services.AddAuthentication(
 });
 
 builder.Services.AddHttpClient();
+
+
 //builder.Services.AddHttpClient("AgentHttpClient", client =>
 //{
 //    client.Timeout = TimeSpan.FromMinutes(5); // Set your desired timeout

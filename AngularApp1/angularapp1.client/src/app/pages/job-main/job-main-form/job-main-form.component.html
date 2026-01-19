@@ -5,19 +5,36 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Details">
-        <app-job-main-details>
 
-        </app-job-main-details>
-      </mat-tab>
-      <mat-tab label="Services">
-        <app-job-main-services>
+    <div *ngIf="jobDescription" class="job-description-section">
+      <mat-card class="description-card">
+        <mat-card-content>
+          <p>Job Description</p>
+          <strong>{{ jobDescription }}</strong>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-        </app-job-main-services>
-      </mat-tab>
-      <mat-tab label="Activities"> Activities </mat-tab>
-    </mat-tab-group>
+    <div class="job-details-section">
+      <mat-card>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Details">
+              <app-job-main-details (descriptionChanged)="onDescriptionChanged($event)">
+
+              </app-job-main-details>
+            </mat-tab>
+            <mat-tab label="Services">
+              <app-job-main-services>
+
+              </app-job-main-services>
+            </mat-tab>
+            <mat-tab label="Activities"> Activities </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
   </mat-card-content>
 </mat-card>
 

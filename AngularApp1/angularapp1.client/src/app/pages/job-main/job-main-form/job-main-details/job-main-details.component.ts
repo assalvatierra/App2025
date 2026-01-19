@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiJobMainService } from '../../../../core/services/api-job-main.service';
@@ -18,6 +18,8 @@ export class JobMainDetailsComponent implements AfterViewInit {
   private paramId: number = 0;
   public ShowAddBtn: boolean = false;
   public TitleInfo: string = 'Job Order Details';
+
+  @Output() descriptionChanged = new EventEmitter<string>();
 
   constructor(
     private fb: FormBuilder,
@@ -143,6 +145,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
   /* Methods */
   private initializeData(param: any): void {
     this.currentData = param;
+    this.descriptionChanged.emit(this.currentData.description || '');
   }
 
   private updateCurrentDataValues(): void {
@@ -179,6 +182,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
       itemStatusId: 1,
       businessUnitId: 1
     };
+    this.descriptionChanged.emit('');
   }
 
   private setFormData(data: any): void {

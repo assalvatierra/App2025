@@ -36,6 +36,14 @@ mat-form-field {
   padding: 16px;
 }
 
+.job-description-section {
+  margin-bottom: 15px;
+}
+
+.job-details-section {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .row {
     flex-direction: column;

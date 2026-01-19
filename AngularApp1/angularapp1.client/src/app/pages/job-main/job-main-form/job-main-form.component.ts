@@ -12,6 +12,7 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 
 export class JobMainFormComponent implements AfterViewInit {
   public TitleInfo: string = '';
+  public jobDescription: string = '';
   private formLabel: string = 'Job Order';
   private formModeLabel_edit: string = 'Edit';
   private formModeLabel_add: string = 'Create';
@@ -35,6 +36,10 @@ export class JobMainFormComponent implements AfterViewInit {
         + ( this.paramId == 0 ? this.formModeLabel_add : this.formModeLabel_edit )
         + ' ' + this.formLabel
 
+    }
+
+    onDescriptionChanged(description: string): void {
+      this.jobDescription = description;
     }
 
 }

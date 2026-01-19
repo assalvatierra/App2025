@@ -38,6 +38,22 @@ namespace AngularApp1.Server.Controllers
             return dtos;
         }
 
+        // GET: api/JobCustomers/ByJobMain/5
+        // This route must be defined BEFORE the {id} route to ensure correct matching
+        [HttpGet("ByJobMain/{jobMainId}")]
+        public async Task<ActionResult<IEnumerable<JobCustomerDto>>> GetJobCustomersByJobMain(int jobMainId)
+        {
+            var jobCustomers = await _context.JobCustomers
+                .Where(x => x.JobMainId == jobMainId)
+                .Include(x => x.Customer)
+                .Include(x => x.JobMain)
+                .ToListAsync();
+
+            // Return empty list instead of NotFound for consistency
+            var dtos = jobCustomers.Select(MapToDto).ToList();
+            return dtos;
+        }
+
         // GET: api/JobCustomers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<JobCustomerDto>> GetJobCustomer(int id)
@@ -53,25 +69,6 @@ namespace AngularApp1.Server.Controllers
             }
 
             return MapToDto(jobCustomer);
-        }
-
-        // GET: api/JobCustomers/ByJobMain/5
-        [HttpGet("ByJobMain/{jobMainId}")]
-        public async Task<ActionResult<IEnumerable<JobCustomerDto>>> GetJobCustomersByJobMain(int jobMainId)
-        {
-            var jobCustomers = await _context.JobCustomers
-                .Where(x => x.JobMainId == jobMainId)
-                .Include(x => x.Customer)
-                .Include(x => x.JobMain)
-                .ToListAsync();
-
-            if (!jobCustomers.Any())
-            {
-                return NotFound();
-            }
-
-            var dtos = jobCustomers.Select(MapToDto).ToList();
-            return dtos;
         }
 
         // PUT: api/JobCustomers/5

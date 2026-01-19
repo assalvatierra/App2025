@@ -30,5 +30,24 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobService> JobService { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Map JobCustomers DbSet to JobCustomer table (singular)
+            modelBuilder.Entity<JobCustomer>().ToTable("JobCustomer");
+
+            // Configure relationships
+            modelBuilder.Entity<JobCustomer>()
+                .HasOne(jc => jc.JobMain)
+                .WithMany(jm => jm.JobCustomers)
+                .HasForeignKey(jc => jc.JobMainId);
+
+            modelBuilder.Entity<JobCustomer>()
+                .HasOne(jc => jc.Customer)
+                .WithMany(e => e.JobCustomers)
+                .HasForeignKey(jc => jc.CustomerId);
+        }
     }
 }

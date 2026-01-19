@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { ApiJobCustomersService, JobCustomerDto } from '../../../../../core/services/api-job-customers.service';
+import { ApiEntityService } from '../../../../../core/services/api-entity.service';
 
 @Component({
   selector: 'app-job-customer-form',
@@ -18,6 +20,7 @@ import { ApiJobCustomersService, JobCustomerDto } from '../../../../../core/serv
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule,
@@ -31,10 +34,13 @@ export class JobCustomerFormComponent implements OnInit {
   public customerForm!: FormGroup;
   public isLoading: boolean = false;
   public isEditMode: boolean = false;
+  public customers: any[] = [];
+  public loadingCustomers: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private api: ApiJobCustomersService,
+    private entityService: ApiEntityService,
     public dialogRef: MatDialogRef<JobCustomerFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { jobMainId: number; customerId?: number }
   ) {
@@ -42,6 +48,8 @@ export class JobCustomerFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadCustomersList();
+    
     if (this.data && this.data.customerId && this.data.customerId > 0) {
       this.isEditMode = true;
       this.loadCustomerData(this.data.customerId);
@@ -56,6 +64,21 @@ export class JobCustomerFormComponent implements OnInit {
       isBillTo: [false],
       notes: ['']
     });
+  }
+
+  private loadCustomersList(): void {
+    this.loadingCustomers = true;
+    this.entityService.getEntities()
+      .subscribe({
+        next: (res: any[]) => {
+          this.customers = res;
+          this.loadingCustomers = false;
+        },
+        error: (err) => {
+          console.error('Error loading customers list:', err);
+          this.loadingCustomers = false;
+        }
+      });
   }
 
   private loadCustomerData(customerId: number): void {

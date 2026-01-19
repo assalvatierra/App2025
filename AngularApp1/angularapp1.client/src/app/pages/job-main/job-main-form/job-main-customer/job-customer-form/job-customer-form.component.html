@@ -1,0 +1,53 @@
+<div class="job-customer-form-dialog">
+  <!-- Header -->
+  <div class="dialog-header">
+    <h2 class="dialog-title">{{ isEditMode ? 'Edit' : 'Add' }} Job Customer</h2>
+  </div>
+
+  <!-- Content -->
+  <div class="dialog-content">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <mat-label>Customer ID</mat-label>
+          <input matInput type="number" formControlName="customerId" placeholder="Enter Customer ID">
+          <mat-error *ngIf="customerForm.get('customerId')?.hasError('required')">
+            Customer ID is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <mat-label>Job Main ID</mat-label>
+          <input matInput type="number" formControlName="jobMainId" placeholder="Job ID" [disabled]="true">
+        </mat-form-field>
+      </div>
+
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="isPrimary">Is Primary Customer</mat-checkbox>
+      </div>
+
+      <div class="checkbox-group">
+        <mat-checkbox formControlName="isBillTo">Is Bill To</mat-checkbox>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes" placeholder="Additional notes..." rows="3"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <!-- Actions -->
+  <div class="dialog-actions">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="customerForm.invalid || isLoading">
+      <mat-icon *ngIf="!isLoading">save</mat-icon>
+      <mat-spinner diameter="20" *ngIf="isLoading" style="margin-right: 8px;"></mat-spinner>
+      {{ isEditMode ? 'Update' : 'Add' }} Customer
+    </button>
+  </div>
+</div>

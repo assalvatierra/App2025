@@ -13,11 +13,10 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 export class JobMainFormComponent implements AfterViewInit {
   public TitleInfo: string = '';
   public jobDescription: string = '';
+  public paramId: number = 0;
   private formLabel: string = 'Job Order';
   private formModeLabel_edit: string = 'Edit';
   private formModeLabel_add: string = 'Create';
-
-  private paramId: number = 0;
 
   constructor(
     private router: Router,
@@ -88,7 +87,7 @@ export class JobMainFormComponent implements AfterViewInit {
 //  private initForm(): void {
 //    this.jobMainForm = this.fb.group({
 //      jobDate: ['', Validators.required],
-//      description: ['', Validators.required],
+///      description: ['', Validators.required],
 //      itemStatusId: [1],
 //      businessUnitId: [1],
 //      createdBy: [''],

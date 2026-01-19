@@ -48,4 +48,8 @@
     <ProjectReference Include="..\..\Erp.Domain\Erp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

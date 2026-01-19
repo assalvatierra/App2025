@@ -1,0 +1,204 @@
+<div class="customer-details-dialog">
+  <!-- Header Section -->
+  <div class="dialog-header">
+    <h2 class="dialog-title">Customer Details</h2>
+  </div>
+
+  <!-- Content Section -->
+  <div class="dialog-content">
+    <div class="details-container">
+
+      <!-- Job Customer Information -->
+      <mat-card class="info-section">
+        <mat-card-header>
+          <mat-card-title>Job Customer Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="detail-row">
+            <label>ID:</label>
+            <span>{{ customer.id }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Job Main ID:</label>
+            <span>{{ customer.jobMainId || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Customer ID:</label>
+            <span>{{ customer.customerId || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Is Primary:</label>
+            <span>
+              <mat-icon class="status-icon" [class.active]="customer.isPrimary">
+                {{ customer.isPrimary ? 'check_circle' : 'radio_button_unchecked' }}
+              </mat-icon>
+              {{ customer.isPrimary ? 'Yes' : 'No' }}
+            </span>
+          </div>
+          <div class="detail-row">
+            <label>Is Bill To:</label>
+            <span>
+              <mat-icon class="status-icon" [class.active]="customer.isBillTo">
+                {{ customer.isBillTo ? 'check_circle' : 'radio_button_unchecked' }}
+              </mat-icon>
+              {{ customer.isBillTo ? 'Yes' : 'No' }}
+            </span>
+          </div>
+          <div class="detail-row" *ngIf="customer.notes">
+            <label>Notes:</label>
+            <span class="notes-text">{{ customer.notes }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Customer Entity Information -->
+      <mat-card class="info-section">
+        <mat-card-header>
+          <mat-card-title>Customer Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="detail-row">
+            <label>Name:</label>
+            <span>{{ customer.customerName || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Code:</label>
+            <span>{{ customer.customerCode || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Description:</label>
+            <span>{{ customer.customerDescription || 'N/A' }}</span>
+          </div>
+          <div class="detail-row" *ngIf="customer.customerRemarks">
+            <label>Remarks:</label>
+            <span>{{ customer.customerRemarks }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Status:</label>
+            <span>
+              <mat-chip-set>
+                <mat-chip *ngIf="customer.customerIsActive" highlighted>Active</mat-chip>
+                <mat-chip *ngIf="customer.customerIsArchived" [disabled]="true">Archived</mat-chip>
+                <mat-chip *ngIf="customer.customerIsPrivate" [disabled]="true">Private</mat-chip>
+              </mat-chip-set>
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Contact Information -->
+      <mat-card class="info-section">
+        <mat-card-header>
+          <mat-card-title>Contact Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="detail-row">
+            <label>Contact No. 1:</label>
+            <span>
+              <a *ngIf="customer.customerContactNo1" [href]="'tel:' + customer.customerContactNo1">
+                {{ customer.customerContactNo1 }}
+              </a>
+              <span *ngIf="!customer.customerContactNo1">N/A</span>
+            </span>
+          </div>
+          <div class="detail-row">
+            <label>Contact No. 2:</label>
+            <span>
+              <a *ngIf="customer.customerContactNo2" [href]="'tel:' + customer.customerContactNo2">
+                {{ customer.customerContactNo2 }}
+              </a>
+              <span *ngIf="!customer.customerContactNo2">N/A</span>
+            </span>
+          </div>
+          <div class="detail-row">
+            <label>Email 1:</label>
+            <span>
+              <a *ngIf="customer.customerEmail1" [href]="'mailto:' + customer.customerEmail1">
+                {{ customer.customerEmail1 }}
+              </a>
+              <span *ngIf="!customer.customerEmail1">N/A</span>
+            </span>
+          </div>
+          <div class="detail-row">
+            <label>Email 2:</label>
+            <span>
+              <a *ngIf="customer.customerEmail2" [href]="'mailto:' + customer.customerEmail2">
+                {{ customer.customerEmail2 }}
+              </a>
+              <span *ngIf="!customer.customerEmail2">N/A</span>
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Address Information -->
+      <mat-card class="info-section">
+        <mat-card-header>
+          <mat-card-title>Address Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="detail-row">
+            <label>Address 1:</label>
+            <span>{{ customer.customerAddress1 || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Address 2:</label>
+            <span>{{ customer.customerAddress2 || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>City ID:</label>
+            <span>{{ customer.customerRefCityId || 'N/A' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- System Information -->
+      <mat-card class="info-section">
+        <mat-card-header>
+          <mat-card-title>System Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="detail-row">
+            <label>Created By:</label>
+            <span>{{ customer.customerCreatedBy || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Created On:</label>
+            <span>{{ customer.customerCreatedOn | date: 'short' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Last Edit By:</label>
+            <span>{{ customer.customerLastEditBy || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Last Edit On:</label>
+            <span>{{ customer.customerLastEditOn | date: 'short' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Business Unit ID:</label>
+            <span>{{ customer.customerBusinessUnitId || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Entity Type ID:</label>
+            <span>{{ customer.customerEntityTypeId || 'N/A' }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Entity Status ID:</label>
+            <span>{{ customer.customerEntityStatusId || 'N/A' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <!-- Actions Section -->
+  <div class="dialog-actions">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-raised-button color="primary" (click)="onEdit()">
+      <mat-icon>edit</mat-icon>
+      Edit
+    </button>
+  </div>
+
+</div>

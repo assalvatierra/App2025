@@ -1,0 +1,93 @@
+<div class="job-customers-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Job Customers</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="customers-actions">
+        <button mat-raised-button color="primary" (click)="onAddCustomer()">
+          <mat-icon>add</mat-icon>
+          Add Customer
+        </button>
+      </div>
+
+      <div *ngIf="dataloading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!dataloading && jobCustomers.length === 0" class="no-data-message">
+        <p>No customers associated with this job. Click "Add Customer" to add one.</p>
+      </div>
+
+      <div *ngIf="!dataloading && jobCustomers.length > 0" class="customers-table">
+        <table mat-table [dataSource]="jobCustomers" class="full-width">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+
+          <!-- Customer Name Column -->
+          <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.customerName || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Customer Code Column -->
+          <ng-container matColumnDef="customerCode">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td mat-cell *matCellDef="let element">{{ element.customerCode || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Contact No Column -->
+          <ng-container matColumnDef="customerContactNo1">
+            <th mat-header-cell *matHeaderCellDef>Contact No</th>
+            <td mat-cell *matCellDef="let element">{{ element.customerContactNo1 || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="customerEmail1">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.customerEmail1 || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Primary Column -->
+          <ng-container matColumnDef="isPrimary">
+            <th mat-header-cell *matHeaderCellDef>Primary</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox [checked]="element.isPrimary" disabled></mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Bill To Column -->
+          <ng-container matColumnDef="isBillTo">
+            <th mat-header-cell *matHeaderCellDef>Bill To</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox [checked]="element.isBillTo" disabled></mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="onViewDetails(element)" matTooltip="View Details">
+                <mat-icon>info</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="onEditCustomer(element.id)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDeleteCustomer(element.id)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

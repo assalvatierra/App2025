@@ -29,5 +29,6 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ServiceItem> ServiceItem { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobService> JobService { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
     }
 }

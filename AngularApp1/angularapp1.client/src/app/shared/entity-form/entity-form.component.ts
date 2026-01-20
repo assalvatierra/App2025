@@ -1,8 +1,5 @@
-import { Component, inject, Input, AfterViewInit, OnInit } from '@angular/core';
+import { Component, inject, Input, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../core/api.service';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-entity-form',
@@ -15,15 +12,10 @@ export class EntityFormComponent implements AfterViewInit {
   @Input() modelData: any;
 
   public dataForm: any;
-  public cities: any[] = [];
-  public filteredCities$: Observable<any[]> | undefined;
+  
 
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  constructor(private fb: FormBuilder) {
     this.initForm();
-  }
-
-  ngOnInit(): void {
-    this.loadCities();
   }
 
   ngAfterViewInit(): void {
@@ -37,8 +29,7 @@ export class EntityFormComponent implements AfterViewInit {
       remarks: '',
       code: '',
       sortOrder: 0,
-      refCity: '',
-      refCityId: 0
+      
     });
   }
 
@@ -48,29 +39,7 @@ export class EntityFormComponent implements AfterViewInit {
     console.log(param);
   }
 
-  private loadCities(): void {
-    this.api.getCities().subscribe((res: any) => {
-      this.cities = res || [];
-      const control = this.dataForm.get('refCity');
-      this.filteredCities$ = control.valueChanges.pipe(
-        startWith((control.value as any) || ''),
-        map((value: any) => typeof value === 'string' ? value : (value?.name || '')),
-        map((name: any) => name ? this._filterCities(String(name)) : this.cities.slice())
-      );
-    }, err => {
-      console.error('Error loading cities', err);
-    });
-  }
-
-  private _filterCities(name: string) {
-    const filterValue = name.toLowerCase();
-    return this.cities.filter(c => (c.name || '').toLowerCase().includes(filterValue));
-  }
-
-  onCitySelected(option: any) {
-    if (!option) return;
-    this.dataForm.patchValue({ refCity: option.name, refCityId: option.id });
-  }
+  
 
 
 }

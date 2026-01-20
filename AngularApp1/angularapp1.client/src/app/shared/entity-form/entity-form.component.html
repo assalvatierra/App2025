@@ -45,19 +45,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>City</mat-label>
-            <input type="text" matInput placeholder="Search city" formControlName="refCity" [matAutocomplete]="auto" />
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCitySelected($event.option.value)">
-              <mat-option *ngFor="let c of filteredCities$ | async" [value]="c">
-                {{ c.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
+      
     </mat-card-content>
   </mat-card>
 </form>

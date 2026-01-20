@@ -3,67 +3,94 @@
     <mat-card-title>Entity Info</mat-card-title>
   </mat-card-header>
 
-  <div style="margin:15px;">
-    <form [formGroup]="dataForm" novalidate>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Category</mat-card-title>
-        </mat-card-header>
+  <mat-card-content *ngIf="!dataloading">
+    <app-entity-form #entityForm
+                     *ngIf="!dataloading"
+                     [modelData]="currentData">
+    </app-entity-form>
 
-        <mat-card-content>
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Entity Type</mat-label>
-                <mat-select formControlName="entityTypeId">
-                  <mat-option *ngFor="let it of itemTypeLookupData" [value]="it.id">
-                    {{ it.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+    <div style="margin:15px;">
+      <form [formGroup]="dataForm" novalidate>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title></mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Entity Type</mat-label>
+                  <mat-select formControlName="entityTypeId">
+                    <mat-option *ngFor="let it of itemTypeLookupData" [value]="it.id">
+                      {{ it.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Business Unit</mat-label>
+                  <mat-select formControlName="businessUnitId">
+                    <mat-option *ngFor="let bu of businessUnitLookupData" [value]="bu.id">
+                      {{ bu.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Entity Status</mat-label>
+                  <mat-select formControlName="entityStatusId">
+                    <mat-option *ngFor="let st of itemStatusLookupData" [value]="st.id">
+                      {{ st.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
             </div>
 
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Business Unit</mat-label>
-                <mat-select formControlName="businessUnitId">
-                  <mat-option *ngFor="let bu of businessUnitLookupData" [value]="bu.id">
-                    {{ bu.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+
+
+
+          </mat-card-content>
+
+          <mat-card-content *ngIf="!dataloading" [formGroup]="dataForm">
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>City</mat-label>
+                  <mat-select formControlName="refCityId">
+                    <mat-option [value]="0">-- None --</mat-option>
+                    <mat-option *ngFor="let c of cities" [value]="c.id">{{ c.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
+          </mat-card-content>
 
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Entity Status</mat-label>
-                <mat-select formControlName="entityStatusId">
-                  <mat-option *ngFor="let st of itemStatusLookupData" [value]="st.id">
-                    {{ st.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
 
-          </div>
 
-        </mat-card-content>
-      </mat-card>
-    </form>
-  </div>
-    <mat-card-content>
-      <app-entity-form #entityForm
-                       *ngIf="!dataloading"
-                       [modelData]="currentData">
-      </app-entity-form>
-    </mat-card-content>
 
-    <mat-card-content>
-      <app-contact-info-form #ContactForm
-                             *ngIf="!dataloading"
-                             [modelData]="currentData">
-      </app-contact-info-form>
-    </mat-card-content>
+
+        </mat-card>
+      </form>
+    </div>
+
+
+
+  </mat-card-content>
+
+
+  <mat-card-content>
+    <app-contact-info-form #ContactForm
+                           *ngIf="!dataloading"
+                           [modelData]="currentData">
+    </app-contact-info-form>
+  </mat-card-content>
 
 
     <mat-card-actions>

@@ -25,6 +25,7 @@ export class EntityFormPageComponent implements AfterViewInit {
   private paramId: number = 0;
 
   public dataForm: any;
+  public cities: any[] = [];
 
 
   constructor(
@@ -54,6 +55,7 @@ export class EntityFormPageComponent implements AfterViewInit {
     this.getApiBusinessUnitLookupData();
     this.getApiItemTypeLookupData();
     this.getApiItemStatusLookupData();
+    this.loadCities();
   }
 
   /* Event Handlers */
@@ -252,12 +254,38 @@ export class EntityFormPageComponent implements AfterViewInit {
     this.dataForm = this.fb.group({
       entityTypeId: 0,
       entityStatusId: 0,
-      businessUnitId: 0
+      businessUnitId: 0,
+      refCityId: 0
     });
   }
 
+  private loadCities(): void {
+    this.dataloading = true;
+    this.apiService.getCities().subscribe((res: any) => {
+      this.cities = res || [];
+      // ensure refCityId control exists
+      if (!this.dataForm.get('refCityId')) {
+        this.dataForm.addControl('refCityId', this.fb.control(0));
+      }
+      // If current data already has a refCityId, patch it so the select shows correctly
+      if (this.currentData && this.currentData.refCityId) {
+        this.dataForm.patchValue({ refCityId: this.currentData.refCityId });
+      }
+      this.dataloading = false;
+    }, err => {
+      console.error('Error loading cities', err);
+      this.dataloading = false;
+    });
+  }
+
+  
+
   public setFormData(param: any) {
-    this.dataForm.patchValue(param);
+    // ensure refCityId control exists and patch values
+    if (!this.dataForm.get('refCityId')) {
+      this.dataForm.addControl('refCityId', this.fb.control(0));
+    }
+    this.dataForm.patchValue(param || {});
   }
 
 
@@ -283,10 +311,8 @@ export class EntityFormPageComponent implements AfterViewInit {
       this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
     }
 
-    // refCityId is now on the entity form
-    if (this.entityInfo && this.entityInfo.modelData) {
-      this.currentData.refCityId = this.entityInfo.dataForm.get('refCityId')?.value;
-    }
+    // refCityId is stored on the page form controls
+    this.currentData.refCityId = this.dataForm.get('refCityId')?.value;
 
   }
 

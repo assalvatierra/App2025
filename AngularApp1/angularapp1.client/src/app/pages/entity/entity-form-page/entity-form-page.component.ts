@@ -40,7 +40,14 @@ export class EntityFormPageComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
-    this.retrieveApiData(this.paramId);
+    
+    if (this.paramId === 0) {
+      // New record mode
+      this.initializeNewEntity();
+    } else {
+      // Edit mode
+      this.retrieveApiData(this.paramId);
+    }
 
     this.getApiBusinessUnitLookupData();
   }
@@ -48,12 +55,24 @@ export class EntityFormPageComponent implements AfterViewInit {
   /* Event Handlers */
   onSubmit(): void {
     this.updateCurrentDataValues();
-    this.updateApiData(this.paramId, this.currentData);
-    alert('Update Submitted!');
+    
+    if (this.paramId === 0) {
+      // Add new entity
+      this.addApiData(this.currentData);
+    } else {
+      // Update existing entity
+      this.updateApiData(this.paramId, this.currentData);
+    }
   }
 
   onOpenTypeDialog(): void {
     this.openBusinessUnitLookupDialog();
+  }
+
+  onCancel(): void {
+    if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+      this.router.navigate(['/entities']);
+    }
   }
 
   /* API calls */
@@ -68,6 +87,7 @@ export class EntityFormPageComponent implements AfterViewInit {
 
         error: (err) => {
           console.error('API Error:', err);
+          this.dataloading = false;
         },
 
         complete: () => {
@@ -79,6 +99,60 @@ export class EntityFormPageComponent implements AfterViewInit {
       });
   }
 
+  private initializeNewEntity(): void {
+    this.dataloading = false;
+    const now = new Date().toISOString();
+    
+    this.currentData = {
+      id: 0,
+      name: '',
+      description: '',
+      remarks: '',
+      code: '',
+      sortOrder: 0,
+      contactNo1: '',
+      contactNo2: '',
+      address1: '',
+      address2: '',
+      email1: '',
+      email2: '',
+      createdBy: 'System',
+      createdOn: now,
+      lastEditBy: 'System',
+      lastEditOn: now,
+      isArchived: false,
+      isPrivate: false,
+      isActive: true,
+      entityTypeId: 0,
+      entityStatusId: 0,
+      businessUnitId: 0,
+      refCityId: 0
+    };
+    
+    this.setFormData(this.currentData);
+  }
+
+  private addApiData(data: any): void {
+    this.dataloading = true;
+    this.api.addEntity(data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('Entity created successfully:', res);
+          alert('Entity created successfully!');
+          this.router.navigate(['/entities']);
+        },
+        error: (err: any) => {
+          console.error('API Error:', err);
+          this.dataloading = false;
+          const errorMessage = err?.error?.message || err?.error || 'Failed to create entity';
+          alert(`Error: ${errorMessage}`);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
   private updateApiData(Id: number, data: any): void {
     this.dataloading = true;
     this.api.updateEntity(this.paramId, data)
@@ -86,10 +160,13 @@ export class EntityFormPageComponent implements AfterViewInit {
         next:
           (res: any) => {
             console.log('API Response:', res);
+            alert('Entity updated successfully!');
+            this.router.navigate(['/entities']);
           },
 
         error: (err) => {
           console.error('API Error:', err);
+          this.dataloading = false;
         },
 
         complete: () => {

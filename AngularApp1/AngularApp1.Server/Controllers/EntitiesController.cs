@@ -49,14 +49,25 @@ namespace AngularApp1.Server.Controllers
         {
             if (id != entity.Id)
             {
-                return BadRequest();
+                return BadRequest("ID mismatch");
             }
-
-            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
+                // Validate required fields
+                if (string.IsNullOrWhiteSpace(entity.Name))
+                {
+                    return BadRequest("Entity name is required");
+                }
+
+                // Update audit fields
+                entity.LastEditBy = User?.Identity?.Name ?? "System";
+                entity.LastEditOn = DateTime.Now;
+
+                _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+                return NoContent();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -64,13 +75,16 @@ namespace AngularApp1.Server.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Concurrency error: The entity was modified by another user");
             }
-
-            return NoContent();
+            catch (DbUpdateException ex)
+            {
+                return BadRequest($"Error updating entity: {ex.InnerException?.Message ?? ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // POST: api/Entities
@@ -78,10 +92,47 @@ namespace AngularApp1.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Entity>> PostEntity(Entity entity)
         {
-            _context.Entity.Add(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                // Validate required fields
+                if (string.IsNullOrWhiteSpace(entity.Name))
+                {
+                    return BadRequest("Entity name is required");
+                }
 
-            return CreatedAtAction("GetEntity", new { id = entity.Id }, entity);
+                if (string.IsNullOrWhiteSpace(entity.CreatedBy))
+                {
+                    entity.CreatedBy = User?.Identity?.Name ?? "System";
+                }
+
+                if (string.IsNullOrWhiteSpace(entity.LastEditBy))
+                {
+                    entity.LastEditBy = User?.Identity?.Name ?? "System";
+                }
+
+                if (entity.CreatedOn == default)
+                {
+                    entity.CreatedOn = DateTime.Now;
+                }
+
+                if (entity.LastEditOn == default)
+                {
+                    entity.LastEditOn = DateTime.Now;
+                }
+
+                _context.Entity.Add(entity);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetEntity", new { id = entity.Id }, entity);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest($"Error saving entity: {ex.InnerException?.Message ?? ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // DELETE: api/Entities/5

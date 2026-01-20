@@ -32,7 +32,8 @@ export class EntityComponent {
 
   /* Event Handlers */
   onAddRecord() {
-    this.router.navigate(['entities/form', 2]);
+    // Navigate to entity form with ID 0 to indicate new record
+    this.router.navigate(['entities/form', 0]);
     console.log('Add record clicked');
   }
 
@@ -46,7 +47,21 @@ export class EntityComponent {
   }
 
   onArchive(param: any) {
-    console.log('Archive clicked', param);
+    if (confirm('Are you sure you want to delete this entity?')) {
+      this.dataloading = true;
+      this.api.deleteEntity(param)
+        .subscribe({
+          next: () => {
+            console.log('Entity deleted successfully');
+            this.retrieveApiData();
+          },
+          error: (err) => {
+            console.error('Delete error:', err);
+            this.dataloading = false;
+            alert('Failed to delete entity');
+          }
+        });
+    }
   }
 
 

@@ -1,6 +1,7 @@
 import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiEntityService } from '../../../core/services/api-entity.service';
+import { ApiService } from '../../../core/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
 import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
@@ -33,6 +34,7 @@ export class EntityFormPageComponent implements AfterViewInit {
     private dialog: MatDialog, // Inject MatDialog
     private apiBusinessUnitlookupService: ApiBusinessUnitService,
     private entityService: EntityService,
+      private apiService: ApiService,
     private fb: FormBuilder
   ) {
     this.initForm();
@@ -50,6 +52,8 @@ export class EntityFormPageComponent implements AfterViewInit {
     }
 
     this.getApiBusinessUnitLookupData();
+    this.getApiItemTypeLookupData();
+    this.getApiItemStatusLookupData();
   }
 
   /* Event Handlers */
@@ -203,6 +207,40 @@ export class EntityFormPageComponent implements AfterViewInit {
 
   }
 
+  public itemTypeLookupData: any[] = [];
+  private getApiItemTypeLookupData(): void {
+    this.dataloading = true;
+    this.apiService.getItemTypes()
+      .subscribe({
+        next: (res: any) => {
+          this.itemTypeLookupData = res;
+        },
+        error: (err) => {
+          console.error('API Error (ItemTypes):', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
+  public itemStatusLookupData: any[] = [];
+  private getApiItemStatusLookupData(): void {
+    this.dataloading = true;
+    this.apiService.getItemStatuses()
+      .subscribe({
+        next: (res: any) => {
+          this.itemStatusLookupData = res;
+        },
+        error: (err) => {
+          console.error('API Error (ItemStatuses):', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
   /* Methods */
   private initializeData(param: any): void {
     this.currentData = param;
@@ -232,6 +270,10 @@ export class EntityFormPageComponent implements AfterViewInit {
       this.currentData.sortOrder = this.entityInfo.dataForm.get('sortOrder')?.value;
     }
 
+    // copy category selects from reactive form into currentData
+    this.currentData.entityTypeId = this.dataForm.get('entityTypeId')?.value;
+    this.currentData.entityStatusId = this.dataForm.get('entityStatusId')?.value;
+    this.currentData.businessUnitId = this.dataForm.get('businessUnitId')?.value;
     if (this.contactInfo && this.contactInfo.modelData) {
       this.currentData.contactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
       this.currentData.contactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
@@ -241,12 +283,17 @@ export class EntityFormPageComponent implements AfterViewInit {
       this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
     }
 
+    // refCityId is now on the entity form
+    if (this.entityInfo && this.entityInfo.modelData) {
+      this.currentData.refCityId = this.entityInfo.dataForm.get('refCityId')?.value;
+    }
+
   }
 
   
 
   /* Dialogs */
-  private businessUnitLookupData: any[] = [];
+  public businessUnitLookupData: any[] = [];
   openBusinessUnitLookupDialog(): void {
     
     const dialogConfig = new MatDialogConfig();

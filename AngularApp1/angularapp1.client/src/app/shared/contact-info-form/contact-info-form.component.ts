@@ -2,7 +2,6 @@ import { Component, inject, Input } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-contact-info-form',
   templateUrl: './contact-info-form.component.html',
@@ -35,8 +34,10 @@ export class ContactInfoFormComponent {
   }
 
   public setFormData(param: any) {
-    this.dataForm.patchValue(param);
+    this.dataForm.patchValue(param || {});
   }
+
+  
 
 
 }

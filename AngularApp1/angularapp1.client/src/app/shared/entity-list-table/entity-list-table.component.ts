@@ -10,7 +10,7 @@ import { EntityListTableDataSource, EntityListTableItem } from './entity-list-ta
   styleUrl: './entity-list-table.component.css',
   standalone: false
 })
-export class EntityListTableComponent implements AfterViewInit {
+export class EntityListTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<EntityListTableItem>;
@@ -18,8 +18,7 @@ export class EntityListTableComponent implements AfterViewInit {
   @Output() addRecordClicked = new EventEmitter();
 
   @Input() menuLabel: string = 'Actions';
-  @Input() loading: boolean = false;
-
+  
   @Input() showEdit: boolean = true;
   @Input() editTitle: string = 'Edit Record';
   @Output() editRecordClicked = new EventEmitter<any>();
@@ -50,12 +49,19 @@ export class EntityListTableComponent implements AfterViewInit {
     //];
     this._tableFields = value;
   }
+
+  public isLoading: boolean=true;
   private _tableFields: any[] = [];
-  constructor() { }
+
+  constructor() {
+    }
   //constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    this.isLoading = true;
     this.initializeFields();
+    this.isLoading = false;
+
   }
 
 

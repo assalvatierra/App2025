@@ -1,6 +1,6 @@
 
 <div class="mat-elevation-z2" *ngIf="tableFields.length">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+  <table mat-table class="full-width-table" matSort aria-label="Elements" *ngIf="!isLoading">
     <!-- Row Actions -->
     <ng-container matColumnDef="actions" stickyEnd>
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">

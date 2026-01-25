@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export enum actionTypes {
   editRecord = 1,
@@ -13,7 +14,7 @@ export enum actionTypes {
 
 @Component({
   selector: 'app-item-popup-menu',
-  imports: [CommonModule,MatButtonModule, MatMenuModule],
+  imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
   templateUrl: './item-popup-menu.component.html',
   styleUrl: './item-popup-menu.component.css'
 })

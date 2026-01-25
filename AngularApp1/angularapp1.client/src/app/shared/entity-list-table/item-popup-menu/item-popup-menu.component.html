@@ -1,4 +1,7 @@
-<button mat-button [matMenuTriggerFor]="menu">{{menuLabel}}</button>
+<button mat-button [matMenuTriggerFor]="menu">
+  <mat-icon>list</mat-icon>
+  {{menuLabel}}
+</button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item *ngIf="showEdit" (click)="onActionClicked(MenuActionTypes.editRecord)">{{editTitle}}</button>
   <button mat-menu-item *ngIf="showEditDetails" (click)="onActionClicked(MenuActionTypes.editDetails)">Edit Details </button>

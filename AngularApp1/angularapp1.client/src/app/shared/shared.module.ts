@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EntityListTableComponent } from './entity-list-table/entity-list-table.component';
 import { ItemPopupMenuComponent } from './entity-list-table/item-popup-menu/item-popup-menu.component';
+import { UiPageTitleComponent } from './ui-page-title/ui-page-title.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,12 @@ import { ItemPopupMenuComponent } from './entity-list-table/item-popup-menu/item
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    ItemPopupMenuComponent // Import the standalone component
+    ItemPopupMenuComponent, // Import the standalone component
+    UiPageTitleComponent
   ],
   exports: [
-    EntityListTableComponent
+    EntityListTableComponent,
+    UiPageTitleComponent
   ]
 })
 export class SharedModule { }

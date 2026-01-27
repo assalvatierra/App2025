@@ -39,7 +39,11 @@ export class JobMainFormComponent implements AfterViewInit {
 
     onDescriptionChanged(description: string): void {
       this.jobDescription = description;
-    }
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/Jobs']);
+  }
 
 }
 

@@ -1,15 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiJobMainService } from '../../core/services/api-job-main.service';
+import { SharedModule } from '../../shared/shared.module';
+import { UiPageTitleComponent } from '../../shared/ui-page-title/ui-page-title.component';
+import { MatCardModule } from '@angular/material/card';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
 import { tableField } from '../../shared/models/entityListTableField';
 
 
 @Component({
   selector: 'app-job-main',
-  standalone: false,
+  standalone: true,
   templateUrl: './job-main.component.html',
-  styleUrls: ['./job-main.component.css']
+  styleUrls: ['./job-main.component.css'],
+  imports: [UiPageTitleComponent, MatCardModule, SharedModule]
 })
 export class JobMainComponent {
   @ViewChild('ListTable') TableList !: EntityListTableComponent;

@@ -102,7 +102,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AgentChatComponent,
     AgentsComponent,
     AgentFormComponent,
-    JobMainComponent,
     JobMainFormComponent,
     JobMainDetailsComponent,
     JobMainServicesComponent,
@@ -139,8 +138,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     SharedModule, 
     JobServiceModule,
-    JobCustomerDetailsComponent,
-    JobCustomerFormComponent
+    JobMainComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

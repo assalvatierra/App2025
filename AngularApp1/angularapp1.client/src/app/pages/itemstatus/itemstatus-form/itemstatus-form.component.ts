@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { ApiService } from '../../../core/api.service';
 import { ApiItemStatusClassService, ItemStatusClass } from '../../../core/services/api-item-status-class.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { EntityFormComponent } from '../../../shared/entity-form/entity-form.com
   styleUrls: ['./itemstatus-form.component.css'],
   standalone: false
 })
-export class ItemStatusFormComponent implements AfterViewInit {
+export class ItemStatusFormComponent implements OnInit, AfterViewInit {
   @ViewChild('entityForm') entityInfo!: EntityFormComponent;
   public currentData: any;
   public dataloading: boolean = true;
@@ -31,6 +31,10 @@ export class ItemStatusFormComponent implements AfterViewInit {
     this.initForm();
   }
 
+  ngOnInit(): void {
+    this.loadItemStatusClasses();
+  }
+
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
    
@@ -38,8 +42,6 @@ export class ItemStatusFormComponent implements AfterViewInit {
       console.error('Invalid parameter ID:', this.paramId);
       return;
     }
-
-    this.loadItemStatusClasses();
 
     if(this.paramId != 0) {
       this.TitleInfo = 'Edit Item Status Form';

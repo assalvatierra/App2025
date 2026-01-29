@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrl: './contact-info-form.component.css',
   standalone: false
 })
-export class ContactInfoFormComponent {
+export class ContactInfoFormComponent implements OnInit {
 
   @Input() modelData: any;
 
@@ -18,7 +18,7 @@ export class ContactInfoFormComponent {
     this.initForm();
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.setFormData(this.modelData);
   }
 

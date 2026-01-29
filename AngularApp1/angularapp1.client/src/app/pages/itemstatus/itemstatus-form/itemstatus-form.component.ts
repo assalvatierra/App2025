@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../../core/api.service';
+import { ApiItemStatusClassService, ItemStatusClass } from '../../../core/services/api-item-status-class.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
 
 @Component({
@@ -16,12 +18,18 @@ export class ItemStatusFormComponent implements AfterViewInit {
   private paramId: number = 0;
   public ShowAddBtn:  boolean = false;
   public TitleInfo: string = 'Edit Item Status Form';
+  public itemStatusClasses: ItemStatusClass[] = [];
+  public statusClassForm!: FormGroup;
 
   constructor(
     private api: ApiService,
+    private itemStatusClassService: ApiItemStatusClassService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+    private fb: FormBuilder
+  ) {
+    this.initForm();
+  }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
@@ -30,6 +38,8 @@ export class ItemStatusFormComponent implements AfterViewInit {
       console.error('Invalid parameter ID:', this.paramId);
       return;
     }
+
+    this.loadItemStatusClasses();
 
     if(this.paramId != 0) {
       this.TitleInfo = 'Edit Item Status Form';
@@ -102,7 +112,8 @@ export class ItemStatusFormComponent implements AfterViewInit {
     if (this.entityInfo && this.entityInfo.dataForm) {
       this.currentData = {
         ...this.currentData,
-        ...this.entityInfo.dataForm.value
+        ...this.entityInfo.dataForm.value,
+        ...this.statusClassForm.value
       };
     }
   }
@@ -113,6 +124,9 @@ export class ItemStatusFormComponent implements AfterViewInit {
 
   private initializeData(data: any): void {
     this.currentData = data;
+    this.statusClassForm.patchValue({
+      itemStatusClassId: data.itemStatusClassId
+    });
   }
 
   private SetDefaultData(){
@@ -122,9 +136,29 @@ export class ItemStatusFormComponent implements AfterViewInit {
       description: '',
       remarks: '',
       code: '',
-      sortOrder: 0
+      sortOrder: 0,
+      itemStatusClassId: null
     };
+    this.statusClassForm.patchValue({
+      itemStatusClassId: null
+    });
+  }
 
+  private loadItemStatusClasses(): void {
+    this.itemStatusClassService.getItemStatusClasses().subscribe({
+      next: (res: ItemStatusClass[]) => {
+        this.itemStatusClasses = res;
+      },
+      error: (err) => {
+        console.error('Error loading ItemStatusClasses:', err);
+      }
+    });
+  }
+
+  private initForm(): void {
+    this.statusClassForm = this.fb.group({
+      itemStatusClassId: null
+    });
   }
 
 }

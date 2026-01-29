@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ApiService } from '../../../core/api.service';
+import { ApiItemTypeClassService, ItemTypeClass } from '../../../core/services/api-item-type-class.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntityFormComponent } from '../../../shared/entity-form/entity-form.component';
 
 @Component({
@@ -16,12 +18,18 @@ export class ItemTypesFormComponent implements AfterViewInit {
   private paramId: number = 0;
   public ShowAddBtn:  boolean = false;
   public TitleInfo: string = 'Edit Item Type Form';
+  public itemTypeClasses: ItemTypeClass[] = [];
+  public typeClassForm!: FormGroup;
 
   constructor(
     private api: ApiService,
+    private itemTypeClassService: ApiItemTypeClassService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+    private fb: FormBuilder
+  ) {
+    this.initForm();
+  }
 
   ngAfterViewInit(): void {
     this.paramId = Number(this.route.snapshot.paramMap.get('id'));
@@ -30,6 +38,8 @@ export class ItemTypesFormComponent implements AfterViewInit {
       console.error('Invalid parameter ID:', this.paramId);
       return;
     }
+
+    this.loadItemTypeClasses();
 
     if(this.paramId != 0) {
       this.TitleInfo = 'Edit Item Type Form';
@@ -104,7 +114,8 @@ export class ItemTypesFormComponent implements AfterViewInit {
     if (this.entityInfo && this.entityInfo.dataForm) {
       this.currentData = {
         ...this.currentData,
-        ...this.entityInfo.dataForm.value
+        ...this.entityInfo.dataForm.value,
+        ...this.typeClassForm.value
       };
     }
   }
@@ -115,6 +126,9 @@ export class ItemTypesFormComponent implements AfterViewInit {
 
   private initializeData(data: any): void {
     this.currentData = data;
+    this.typeClassForm.patchValue({
+      itemTypeClassId: data.itemTypeClassId
+    });
   }
 
   private SetDefaultData(){
@@ -124,9 +138,29 @@ export class ItemTypesFormComponent implements AfterViewInit {
       description: '',
       remarks: '',
       code: '',
-      sortOrder: 0
+      sortOrder: 0,
+      itemTypeClassId: null
     };
+    this.typeClassForm.patchValue({
+      itemTypeClassId: null
+    });
+  }
 
+  private loadItemTypeClasses(): void {
+    this.itemTypeClassService.getItemTypeClasses().subscribe({
+      next: (res: ItemTypeClass[]) => {
+        this.itemTypeClasses = res;
+      },
+      error: (err) => {
+        console.error('Error loading ItemTypeClasses:', err);
+      }
+    });
+  }
+
+  private initForm(): void {
+    this.typeClassForm = this.fb.group({
+      itemTypeClassId: null
+    });
   }
 
   

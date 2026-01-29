@@ -18,7 +18,9 @@ export class EntityListTableComponent implements OnInit {
   @Output() addRecordClicked = new EventEmitter();
 
   @Input() menuLabel: string = 'Actions';
-  
+
+  @Input() showAdd: boolean = true;
+  @Input() addTitle: string = 'Add Record';
   @Input() showEdit: boolean = true;
   @Input() editTitle: string = 'Edit Record';
   @Output() editRecordClicked = new EventEmitter<any>();

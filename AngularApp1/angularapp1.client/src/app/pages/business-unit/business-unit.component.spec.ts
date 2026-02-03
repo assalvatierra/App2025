@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatCardModule } from '@angular/material/card';
+import { SharedModule } from '../../shared/shared.module';
 
 import { BusinessUnitComponent } from './business-unit.component';
 
@@ -8,7 +11,8 @@ describe('BusinessUnitComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BusinessUnitComponent]
+      declarations: [BusinessUnitComponent],
+  imports: [HttpClientTestingModule, MatCardModule, SharedModule]
     })
     .compileComponents();
 

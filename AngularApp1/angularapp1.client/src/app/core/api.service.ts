@@ -145,6 +145,21 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}/api/ItemTypes/${id}`);
   }
 
+  getItemTypesByClassName(className: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/ItemTypes/ByClassName/${className}`).pipe(
+      map((res: any) => {
+        return res.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+        }));
+      })
+    );
+  }
+
   addItemType(itemType: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/ItemTypes`, itemType);
   }
@@ -176,6 +191,21 @@ export class ApiService {
 
   getItemStatus(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/api/ItemStatus/${id}`);
+  }
+
+  getItemStatusesByClassName(className: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/ItemStatus/ByClassName/${className}`).pipe(
+      map((res: any) => {
+        return res.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+        }));
+      })
+    );
   }
 
   addItemStatus(itemStatus: any): Observable<any> {

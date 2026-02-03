@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Data;
 using Erp.Domain.Models;
@@ -40,6 +35,23 @@ namespace AngularApp1.Server.Controllers
             }
 
             return itemType;
+        }
+
+        // GET: api/ItemTypes/ByClassName/{className}
+        [HttpGet("ByClassName/{className}")]
+        public async Task<ActionResult<IEnumerable<ItemType>>> GetItemTypeByClassName(string className)
+        {
+            var itemTypes = await _context.ItemType
+                .Include(it => it.ItemTypeClass)
+                .Where(it => it.ItemTypeClass != null && it.ItemTypeClass.Name == className)
+                .ToListAsync();
+
+            if (itemTypes == null || !itemTypes.Any())
+            {
+                return NotFound();
+            }
+
+            return itemTypes;
         }
 
         // PUT: api/ItemTypes/5

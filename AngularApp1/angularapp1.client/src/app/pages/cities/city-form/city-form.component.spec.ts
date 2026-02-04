@@ -20,12 +20,12 @@ describe('CityFormComponent', () => {
 
   beforeEach(async () => {
     const apiServiceSpy = jasmine.createSpyObj('ApiService', ['getCity', 'addCity', 'updateCity']);
-    
+
     await TestBed.configureTestingModule({
       declarations: [CityFormComponent],
       imports: [
+        HttpClientTestingModule, // <- Add this
         ReactiveFormsModule,
-        HttpClientTestingModule,
         MatButtonModule,
         MatCardModule,
         MatInputModule,
@@ -51,7 +51,7 @@ describe('CityFormComponent', () => {
       .compileComponents();
 
     apiService = TestBed.inject(ApiService) as jasmine.SpyObj<ApiService>;
-    
+
     // Setup default mock return values
     apiServiceSpy.getCity.and.returnValue(of({}));
     apiServiceSpy.addCity.and.returnValue(of({}));
@@ -59,7 +59,7 @@ describe('CityFormComponent', () => {
 
     fixture = TestBed.createComponent(CityFormComponent);
     component = fixture.componentInstance;
-    
+
     // Don't call detectChanges() here to avoid triggering ngAfterViewInit
   });
 
@@ -75,7 +75,7 @@ describe('CityFormComponent', () => {
 
   it('should set title to "Add New City Form" when paramId is 0', () => {
     component.ngAfterViewInit();
-    
+
     expect(component.TitleInfo).toBe('Add New City Form');
     expect(component.ShowAddBtn).toBe(true);
     expect(component.dataloading).toBe(false);
@@ -85,16 +85,16 @@ describe('CityFormComponent', () => {
     // Mock ActivatedRoute to return a non-zero id
     const mockActivatedRoute = TestBed.inject(ActivatedRoute);
     spyOn(mockActivatedRoute.snapshot.paramMap, 'get').and.returnValue('5');
-    
+
     component.ngAfterViewInit();
-    
+
     expect(component.TitleInfo).toBe('Edit City Form');
     expect(apiService.getCity).toHaveBeenCalledWith(5);
   });
 
   it('should initialize currentData when paramId is 0', () => {
     component.ngAfterViewInit();
-    
+
     expect(component.currentData).toEqual({
       id: 0,
       name: '',

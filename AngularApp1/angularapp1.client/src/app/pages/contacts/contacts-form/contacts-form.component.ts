@@ -18,6 +18,8 @@ export class ContactsFormComponent implements AfterViewInit {
   public ShowAddBtn:  boolean = false;
   public TitleInfo: string | undefined;
   public dataFormName: any;
+  public itemStatusLookupData: any[] = [];
+  public itemTypeLookupData: any[] = [];
 
   constructor(
     private api: ApiService,
@@ -28,6 +30,8 @@ export class ContactsFormComponent implements AfterViewInit {
     
     this.dataFormName = this.fb.group({
       name: new FormControl(),
+      statusId: new FormControl(0),
+      itemTypeId: new FormControl(1)
     });
 
   }
@@ -41,11 +45,14 @@ export class ContactsFormComponent implements AfterViewInit {
   ngAfterContentInit(): void {
     console.log("After Initialize...");
    
-    this.dataFormName.patchValue({
-      name: "john doe"
-    });   
+//    this.dataFormName.patchValue({
+//      name: "john doe"
+//    });   
 
-    this.paramId = Number(this.route.snapshot.paramMap.get('id'));
+  this.getApiItemStatusLookupData();
+  this.getApiItemTypeLookupData();
+
+  this.paramId = Number(this.route.snapshot.paramMap.get('id'));
     
     if (isNaN(this.paramId)) {
       console.error('Invalid parameter ID:', this.paramId);
@@ -126,15 +133,17 @@ export class ContactsFormComponent implements AfterViewInit {
   private updateCurrentDataValues(): void {
    
       console.log("updating contact name...");
-      this.currentData.Name = this.dataFormName.get('name')?.value;
+      this.currentData.name = this.dataFormName.get('name')?.value;
+    this.currentData.statusId = this.dataFormName.get('statusId')?.value;
+    this.currentData.typeId = this.dataFormName.get('itemTypeId')?.value;
     
       console.log("updating contact...");
-      this.currentData.ContactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
-      this.currentData.ContactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
-      this.currentData.Email1 = this.contactInfo.dataForm.get('email1')?.value;
-      this.currentData.Email2 = this.contactInfo.dataForm.get('email2')?.value;
-      this.currentData.Address1 = this.contactInfo.dataForm.get('address1')?.value;
-      this.currentData.Address2 = this.contactInfo.dataForm.get('address2')?.value;
+      this.currentData.contactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
+      this.currentData.contactNo2 = this.contactInfo.dataForm.get('contactNo2')?.value;
+      this.currentData.email1 = this.contactInfo.dataForm.get('email1')?.value;
+      this.currentData.email2 = this.contactInfo.dataForm.get('email2')?.value;
+      this.currentData.address1 = this.contactInfo.dataForm.get('address1')?.value;
+      this.currentData.address2 = this.contactInfo.dataForm.get('address2')?.value;
   }
 
   private updateApiData(paramId: number, data: any): void {
@@ -172,7 +181,50 @@ export class ContactsFormComponent implements AfterViewInit {
   }
 
   private initializeData(data: any): void {
-    this.currentData = data;
+    this.currentData = {
+      ...data,
+      name: data?.name ?? data?.Name ?? '',
+      statusId: data?.statusId ?? data?.StatusId ?? 0,
+      itemTypeId: data?.itemTypeId ?? data?.ItemTypeId ?? 0
+    };
+    this.dataFormName.patchValue({
+      name: this.currentData.name,
+      statusId: this.currentData.statusId,
+      itemTypeId: this.currentData.itemTypeId
+    });   
+    this.contactInfo.setFormData(this.currentData);
+  }
+
+  private getApiItemStatusLookupData(): void {
+    this.dataloading = true;
+    this.api.getItemStatuses()
+      .subscribe({
+        next: (res: any) => {
+          this.itemStatusLookupData = res || [];
+        },
+        error: (err) => {
+          console.error('API Error (ItemStatuses):', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
+  }
+
+  private getApiItemTypeLookupData(): void {
+    this.dataloading = true;
+    this.api.getItemTypes()
+      .subscribe({
+        next: (res: any) => {
+          this.itemTypeLookupData = res || [];
+        },
+        error: (err) => {
+          console.error('API Error (ItemTypes):', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
   }
 
   
@@ -198,6 +250,12 @@ export class ContactsFormComponent implements AfterViewInit {
       IsActive: true,
       StatusId: 1
     };
+
+    this.dataFormName.patchValue({
+      name: this.currentData.Name,
+      statusId: this.currentData.StatusId,
+      itemTypeId: this.currentData.ItemTypeId ?? 0
+    });
 
   }
 

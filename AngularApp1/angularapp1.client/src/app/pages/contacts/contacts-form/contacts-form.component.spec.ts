@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -44,13 +45,23 @@ describe('ContactsFormComponent', () => {
 
   beforeEach(async () => {
     currentParam = '0';
-    apiService = jasmine.createSpyObj('ApiService', ['getContact', 'addContact', 'updateContact']);
+    apiService = jasmine.createSpyObj('ApiService', ['getContact', 'addContact', 'updateContact', 'getItemStatuses', 'getItemTypes']);
     apiService.getContact.and.returnValue(of({
       Id: 1,
-      Name: 'John Doe'
+      Name: 'John Doe',
+      StatusId: 2,
+      ItemTypeId: 3
     }));
     apiService.addContact.and.returnValue(of({}));
     apiService.updateContact.and.returnValue(of({}));
+    apiService.getItemStatuses.and.returnValue(of([
+      { id: 1, name: 'Active' },
+      { id: 2, name: 'Inactive' }
+    ]));
+    apiService.getItemTypes.and.returnValue(of([
+      { id: 3, name: 'Customer' },
+      { id: 4, name: 'Vendor' }
+    ]));
 
     await TestBed.configureTestingModule({
       declarations: [ContactsFormComponent],
@@ -61,6 +72,7 @@ describe('ContactsFormComponent', () => {
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         MatTabsModule,
         ContactInfoFormStubComponent
       ],
@@ -82,7 +94,9 @@ describe('ContactsFormComponent', () => {
       Email1: '',
       Email2: '',
       Address1: '',
-      Address2: ''
+      Address2: '',
+      StatusId: 1,
+      ItemTypeId: 3
     };
 
     component.TitleInfo = 'Add New Contact Form';
@@ -136,4 +150,20 @@ describe('ContactsFormComponent', () => {
     component.onCancel();
     expect(router.navigate).toHaveBeenCalledWith(['/contacts']);
   });
+
+  it('should load item statuses for dropdown options', fakeAsync(() => {
+    component['getApiItemStatusLookupData']();
+    tick();
+
+    expect(apiService.getItemStatuses).toHaveBeenCalled();
+    expect(component.itemStatusLookupData.length).toBe(2);
+  }));
+
+  it('should load item types for dropdown options', fakeAsync(() => {
+    component['getApiItemTypeLookupData']();
+    tick();
+
+    expect(apiService.getItemTypes).toHaveBeenCalled();
+    expect(component.itemTypeLookupData.length).toBe(2);
+  }));
 });

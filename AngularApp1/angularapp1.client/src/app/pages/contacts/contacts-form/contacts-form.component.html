@@ -16,7 +16,7 @@
           </mat-form-field>
           <mat-form-field class="full-width" style="width: 100%;">
             <mat-label>Item Type</mat-label>
-            <mat-select formControlName="itemTypeId">
+            <mat-select formControlName="typeId">
               <mat-option *ngFor="let it of itemTypeLookupData" [value]="it.id">
                 {{ it.name }}
               </mat-option>

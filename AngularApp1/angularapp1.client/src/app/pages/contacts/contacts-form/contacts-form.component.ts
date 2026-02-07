@@ -3,6 +3,7 @@ import { ApiService } from '../../../core/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContactInfoFormComponent } from '../../../shared/contact-info-form/contact-info-form.component';
+import { TREE_KEY_MANAGER_FACTORY_PROVIDER } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-contacts-form',
@@ -31,7 +32,7 @@ export class ContactsFormComponent implements AfterViewInit {
     this.dataFormName = this.fb.group({
       name: new FormControl(),
       statusId: new FormControl(0),
-      itemTypeId: new FormControl(1)
+      typeId: new FormControl(1)
     });
 
   }
@@ -135,7 +136,7 @@ export class ContactsFormComponent implements AfterViewInit {
       console.log("updating contact name...");
       this.currentData.name = this.dataFormName.get('name')?.value;
     this.currentData.statusId = this.dataFormName.get('statusId')?.value;
-    this.currentData.typeId = this.dataFormName.get('itemTypeId')?.value;
+    this.currentData.typeId = this.dataFormName.get('typeId')?.value;
     
       console.log("updating contact...");
       this.currentData.contactNo1 = this.contactInfo.dataForm.get('contactNo1')?.value;
@@ -185,12 +186,12 @@ export class ContactsFormComponent implements AfterViewInit {
       ...data,
       name: data?.name ?? data?.Name ?? '',
       statusId: data?.statusId ?? data?.StatusId ?? 0,
-      itemTypeId: data?.itemTypeId ?? data?.ItemTypeId ?? 0
+      typeId: data?.typeId ?? data?.typeId ?? 0
     };
     this.dataFormName.patchValue({
       name: this.currentData.name,
       statusId: this.currentData.statusId,
-      itemTypeId: this.currentData.itemTypeId
+      typeId: this.currentData.typeId
     });   
     this.contactInfo.setFormData(this.currentData);
   }
@@ -254,8 +255,8 @@ export class ContactsFormComponent implements AfterViewInit {
     this.dataFormName.patchValue({
       name: this.currentData.Name,
       statusId: this.currentData.StatusId,
-      itemTypeId: this.currentData.ItemTypeId ?? 0
-    });
+      typeId: this.currentData.typeId ?? 0
+    });``
 
   }
 

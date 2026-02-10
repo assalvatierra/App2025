@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angu
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiJobMainService } from '../../../../core/services/api-job-main.service';
+import { ApiService } from '../../../../core/api.service';
 
 @Component({
   selector: 'app-job-main-details',
@@ -18,12 +19,14 @@ export class JobMainDetailsComponent implements AfterViewInit {
   private paramId: number = 0;
   public ShowAddBtn: boolean = false;
   public TitleInfo: string = 'Job Order Details';
+  public itemStatusLookupData: any[] = [];
 
   @Output() descriptionChanged = new EventEmitter<string>();
 
   constructor(
     private fb: FormBuilder,
     private api: ApiJobMainService,
+    private apiService: ApiService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -37,6 +40,9 @@ export class JobMainDetailsComponent implements AfterViewInit {
       console.error('Invalid parameter ID:', this.paramId);
       return;
     }
+
+    // Load lookup data
+    this.getApiItemStatusLookupData();
 
     if (this.paramId != 0) {
       this.TitleInfo = 'Edit Job Main Form';
@@ -209,5 +215,21 @@ export class JobMainDetailsComponent implements AfterViewInit {
       const control = this.jobMainForm.get(key);
       control?.markAsTouched();
     });
+  }
+
+  private getApiItemStatusLookupData(): void {
+    this.dataloading = true;
+    this.apiService.getItemStatuses()
+      .subscribe({
+        next: (res: any) => {
+          this.itemStatusLookupData = res || [];
+        },
+        error: (err) => {
+          console.error('API Error (ItemStatuses):', err);
+        },
+        complete: () => {
+          this.dataloading = false;
+        }
+      });
   }
 }

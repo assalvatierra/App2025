@@ -7,6 +7,37 @@
                      *ngIf="!dataloading"
                      [modelData]="currentData">
     </app-entity-form>
+    
+    <form [formGroup]="itemStatusForm" *ngIf="!dataloading">
+      <mat-card class="shipping-card">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Item Status</mat-label>
+                <mat-select formControlName="itemStatusId">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option *ngFor="let itemStatus of itemStatuses" [value]="itemStatus.id">
+                    {{ itemStatus.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Item Type</mat-label>
+                <mat-select formControlName="itemTypeId">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.id">
+                    {{ itemType.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
   </mat-card-content>
   <mat-card-actions>
     <div *ngIf="!ShowAddBtn">

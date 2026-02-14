@@ -526,6 +526,26 @@
       <column name="" />
     </property>
   </class>
+  <class name="SysFeatures" entity-set="SysFeatures" p1:Guid="240fc600-d934-4a3c-bd9f-4d795211ab78">
+    <id name="Id" type="Int16" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ed1a95e0-cfd1-42c1-8af4-3313bacf247e">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="9c00d306-392c-4979-9394-cc0baba0fa80">
+      <column name="" />
+    </property>
+    <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d0b47f72-fbe1-44a6-9b84-7c116d76c28e">
+      <column name="" />
+    </property>
+    <property name="IsEnabled" type="Boolean" p1:ValidateRequired="true" p1:Guid="7126ce24-39eb-48bf-b4d5-12d911db6f3b">
+      <column name="" />
+    </property>
+    <property name="Expiry" type="DateTime" p1:ValidateRequired="true" p1:Guid="09a967c9-fd88-48dc-8f71-d40873926e37">
+      <column name="" />
+    </property>
+    <property name="SysCode" type="String" p1:ValidateRequired="true" p1:Guid="c1c4bbf5-1b20-4af6-8b66-41f2d6cafb27">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">

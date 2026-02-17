@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
@@ -11,10 +11,15 @@ import { tableField } from '../../shared/models/entityListTableField';
   styleUrls: ['./itemstatus.component.css'],
   standalone: false
 })
-export class ItemStatusComponent implements AfterViewInit {
+export class ItemStatusComponent implements OnInit, AfterViewInit {
   @ViewChild('ListTable') TableList!: EntityListTableComponent;
   public showEdit: boolean = true;
   public dataloading: boolean = true;
+
+  public itemStatusClasses: any[] = [];
+  public selectedItemStatusClassName: string = '';
+  private allItemStatuses: any[] = []; // Store all items for client-side filtering
+  private isInitialized: boolean = false;
 
   public get tableFields() {
     return this.getTableFields();
@@ -26,8 +31,29 @@ export class ItemStatusComponent implements AfterViewInit {
     private entityService: EntityService
   ) {}
 
+  ngOnInit(): void {
+    this.loadItemStatusClasses();
+  }
+
   ngAfterViewInit(): void {
-    this.retrieveApiData();
+    this.loadAllItemStatuses();
+  }
+
+  private loadAllItemStatuses(): void {
+    this.dataloading = true;
+    this.api.getItemStatuses().subscribe({
+      next: (res: any) => {
+        console.log('Loaded all item statuses:', res);
+        this.allItemStatuses = res; // Cache for client-side filtering
+        this.isInitialized = true;
+        this.applyClientSideFilter();
+        this.dataloading = false;
+      },
+      error: (err) => {
+        console.error('API Error:', err);
+        this.dataloading = false;
+      }
+    });
   }
 
   onAddRecord() {
@@ -41,19 +67,72 @@ export class ItemStatusComponent implements AfterViewInit {
   onEditDetails(param: any) {}
   onArchive(param: any) {}
 
-  retrieveApiData() {
-    this.dataloading = true;
-    this.api.getItemStatuses().subscribe({
-      next: (res: any) => {
-        if (this.TableList) {
-          this.TableList.initialize(res);
+  onItemStatusClassChange(): void {
+    console.log('=== Dropdown changed ===');
+    console.log('New selection:', this.selectedItemStatusClassName);
+    console.log('Is initialized:', this.isInitialized);
+    console.log('TableList exists:', !!this.TableList);
+    this.applyClientSideFilter();
+  }
+
+  private applyClientSideFilter(): void {
+    console.log('=== applyClientSideFilter START ===');
+    console.log('selectedItemStatusClassName:', this.selectedItemStatusClassName);
+    console.log('allItemStatuses count:', this.allItemStatuses.length);
+    console.log('itemStatusClasses count:', this.itemStatusClasses.length);
+    console.log('TableList available:', !!this.TableList);
+    console.log('isInitialized:', this.isInitialized);
+    
+    // Wait for table to be ready
+    if (!this.TableList || !this.isInitialized) {
+      console.log('Table not ready yet, skipping filter');
+      return;
+    }
+    
+    // If no filter selected or no data loaded yet, show all items
+    if (!this.selectedItemStatusClassName || !this.allItemStatuses.length) {
+      console.log('Showing all items (no filter or no data)');
+      console.log('Initializing with', this.allItemStatuses.length, 'items');
+      this.TableList.initialize([...this.allItemStatuses]); // Create new array reference
+      console.log('=== applyClientSideFilter END (showing all) ===');
+      return;
+    }
+
+    // Filter by matching itemStatusClassId
+    const selectedClass = this.itemStatusClasses.find(
+      c => c.name === this.selectedItemStatusClassName
+    );
+    
+    console.log('selectedClass found:', selectedClass);
+    
+    if (selectedClass) {
+      const filtered = this.allItemStatuses.filter(
+        item => {
+          console.log(`Item ${item.id}: itemStatusClassId=${item.itemStatusClassId}, selectedClass.id=${selectedClass.id}, match=${item.itemStatusClassId === selectedClass.id}`);
+          return item.itemStatusClassId === selectedClass.id;
         }
+      );
+      console.log('Filtered items count:', filtered.length);
+      console.log('Filtered items:', filtered);
+      console.log('Initializing with filtered data');
+      this.TableList.initialize([...filtered]); // Create new array reference
+      console.log('=== applyClientSideFilter END (filtered) ===');
+    } else {
+      // If class not found, show all items
+      console.log('Class not found, showing all items');
+      this.TableList.initialize([...this.allItemStatuses]); // Create new array reference
+      console.log('=== applyClientSideFilter END (class not found) ===');
+    }
+  }
+
+  loadItemStatusClasses(): void {
+    this.api.getItemStatusClasses().subscribe({
+      next: (res: any[]) => {
+        this.itemStatusClasses = res || [];
       },
       error: (err) => {
-        console.error('API Error:', err);
-      },
-      complete: () => {
-        this.dataloading = false;
+        console.error('Failed to load ItemStatusClass list:', err);
+        this.itemStatusClasses = [];
       }
     });
   }

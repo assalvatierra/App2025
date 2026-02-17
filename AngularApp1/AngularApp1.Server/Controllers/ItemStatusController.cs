@@ -42,14 +42,8 @@ namespace AngularApp1.Server.Controllers
         public async Task<ActionResult<IEnumerable<ItemStatus>>> GetItemStatusByClassName(string className)
         {
             var itemStatuses = await _context.ItemStatus
-                .Include(it => it.ItemStatusClass)
                 .Where(it => it.ItemStatusClass != null && it.ItemStatusClass.Name == className)
                 .ToListAsync();
-
-            if (itemStatuses == null || !itemStatuses.Any())
-            {
-                return NotFound();
-            }
 
             return itemStatuses;
         }

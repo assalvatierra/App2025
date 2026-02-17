@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { Observable, of as observableOf, merge, Subject } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface EntityListTableItem {
@@ -48,9 +48,17 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
   public data: EntityListTableItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
+  private dataChange = new Subject<void>();
 
   constructor() {
     super();
+  }
+
+  /**
+   * Trigger a data refresh
+   */
+  refresh(): void {
+    this.dataChange.next();
   }
 
   /**
@@ -62,7 +70,7 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
-      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
+      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange, this.dataChange)
         .pipe(map(() => {
           return this.getPagedData(this.getSortedData([...this.data ]));
         }));

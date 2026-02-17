@@ -183,7 +183,8 @@ export class ApiService {
           description: item.description,
           remarks: item.remarks,
           code: item.code,
-          sortOrder: item.sortOrder
+          sortOrder: item.sortOrder,
+          itemStatusClassId: item.itemStatusClassId
         }));
       })
     );
@@ -202,7 +203,8 @@ export class ApiService {
           description: item.description,
           remarks: item.remarks,
           code: item.code,
-          sortOrder: item.sortOrder
+          sortOrder: item.sortOrder,
+          itemStatusClassId: item.itemStatusClassId
         }));
       })
     );
@@ -218,6 +220,23 @@ export class ApiService {
 
   deleteItemStatus(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/api/ItemStatus/${id}`);
+  }
+
+  // ITEM STATUS CLASS API
+
+  getItemStatusClasses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/ItemStatusClass`).pipe(
+      map((res: any) => {
+        return res.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          remarks: item.remarks,
+          code: item.code,
+          sortOrder: item.sortOrder
+        }));
+      })
+    );
   }
 
   // SERVICE ITEMS API

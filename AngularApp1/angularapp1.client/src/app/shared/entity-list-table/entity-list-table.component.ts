@@ -86,11 +86,31 @@ export class EntityListTableComponent implements OnInit {
   /* Methods */
 
   initialize(param: EntityListTableItem[]): void {
+    console.log('=== EntityListTableComponent.initialize called ===');
+    console.log('Received data count:', param.length);
+    console.log('Received data:', param);
+    console.log('Paginator available:', !!this.paginator);
+    console.log('Sort available:', !!this.sort);
+    console.log('Table available:', !!this.table);
+    
     this.dataSource.data = param;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
-
+    
+    console.log('DataSource.data set to:', this.dataSource.data.length, 'items');
+    
+    // Reset paginator to first page
+    if (this.paginator && this.paginator.pageIndex !== 0) {
+      console.log('Resetting paginator to first page');
+      this.paginator.firstPage();
+    } else {
+      console.log('Already on first page or no paginator, triggering manual refresh');
+      // If already on first page, paginator won't emit event, so trigger manually
+      this.dataSource.refresh();
+    }
+    
+    console.log('=== EntityListTableComponent.initialize END ===');
   }
 
   initializeFields(): void {

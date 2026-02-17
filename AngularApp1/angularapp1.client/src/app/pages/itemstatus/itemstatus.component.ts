@@ -57,6 +57,19 @@ export class ItemStatusComponent implements OnInit, AfterViewInit {
   }
 
   onAddRecord() {
+    // If a specific ItemStatusClass is selected, pass it to the form
+    if (this.selectedItemStatusClassName && this.selectedItemStatusClassName !== '') {
+      const selectedClass = this.itemStatusClasses.find(
+        c => c.name === this.selectedItemStatusClassName
+      );
+      if (selectedClass) {
+        this.router.navigate(['/references/itemstatus/form', 0], {
+          queryParams: { itemStatusClassId: selectedClass.id }
+        });
+        return;
+      }
+    }
+    // Otherwise, navigate without pre-selecting a class
     this.router.navigate(['/references/itemstatus/form', 0]);
   }
 

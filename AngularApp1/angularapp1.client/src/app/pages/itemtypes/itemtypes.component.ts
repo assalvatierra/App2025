@@ -56,6 +56,19 @@ export class ItemTypesComponent implements OnInit, AfterViewInit {
   }
 
   onAddRecord() {
+    // If a specific ItemTypeClass is selected, pass it to the form
+    if (this.selectedItemTypeClassName && this.selectedItemTypeClassName !== '') {
+      const selectedClass = this.itemTypeClasses.find(
+        c => c.name === this.selectedItemTypeClassName
+      );
+      if (selectedClass) {
+        this.router.navigate(['/references/itemtypes/form', 0], {
+          queryParams: { itemTypeClassId: selectedClass.id }
+        });
+        return;
+      }
+    }
+    // Otherwise, navigate without pre-selecting a class
     this.router.navigate(['/references/itemtypes/form', 0]);
   }
 

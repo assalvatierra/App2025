@@ -50,7 +50,10 @@ export class ItemTypesFormComponent implements OnInit, AfterViewInit {
 
     if(this.paramId == 0) {
       this.TitleInfo = 'Add New Item Type Form';
-      this.SetDefaultData();
+      
+      // Check if itemTypeClassId is passed via query params
+      const itemTypeClassId = this.route.snapshot.queryParamMap.get('itemTypeClassId');
+      this.SetDefaultData(itemTypeClassId ? Number(itemTypeClassId) : null);
 
       this.dataloading = false;
       this.ShowAddBtn = true;
@@ -133,7 +136,7 @@ export class ItemTypesFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private SetDefaultData(){
+  private SetDefaultData(preselectedClassId: number | null = null){
     this.currentData = {
       id: 0,
       name: '',
@@ -141,10 +144,10 @@ export class ItemTypesFormComponent implements OnInit, AfterViewInit {
       remarks: '',
       code: '',
       sortOrder: 0,
-      itemTypeClassId: null
+      itemTypeClassId: preselectedClassId
     };
     this.typeClassForm.patchValue({
-      itemTypeClassId: null
+      itemTypeClassId: preselectedClassId
     });
   }
 

@@ -50,7 +50,10 @@ export class ItemStatusFormComponent implements OnInit, AfterViewInit {
 
     if(this.paramId == 0) {
       this.TitleInfo = 'Add New Item Status Form';
-      this.SetDefaultData();
+      
+      // Check if itemStatusClassId is passed via query params
+      const itemStatusClassId = this.route.snapshot.queryParamMap.get('itemStatusClassId');
+      this.SetDefaultData(itemStatusClassId ? Number(itemStatusClassId) : null);
 
       this.dataloading = false;
       this.ShowAddBtn = true;
@@ -131,7 +134,7 @@ export class ItemStatusFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private SetDefaultData(){
+  private SetDefaultData(preselectedClassId: number | null = null){
     this.currentData = {
       id: 0,
       name: '',
@@ -139,10 +142,10 @@ export class ItemStatusFormComponent implements OnInit, AfterViewInit {
       remarks: '',
       code: '',
       sortOrder: 0,
-      itemStatusClassId: null
+      itemStatusClassId: preselectedClassId
     };
     this.statusClassForm.patchValue({
-      itemStatusClassId: null
+      itemStatusClassId: preselectedClassId
     });
   }
 

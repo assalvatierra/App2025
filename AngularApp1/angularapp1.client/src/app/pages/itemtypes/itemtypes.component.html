@@ -5,6 +5,18 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+      <mat-form-field appearance="outline" style="min-width: 280px;">
+        <mat-label>Item Type Class</mat-label>
+        <mat-select [(value)]="selectedItemTypeClassName" (selectionChange)="onItemTypeClassChange()">
+          <mat-option [value]="''">All</mat-option>
+          <mat-option *ngFor="let typeClass of itemTypeClasses" [value]="typeClass.name">
+            {{ typeClass.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <app-entity-list-table #ListTable
             (addRecordClicked)="onAddRecord()"
             [showEdit]="showEdit"

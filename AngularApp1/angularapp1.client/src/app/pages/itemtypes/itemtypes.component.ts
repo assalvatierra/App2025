@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { EntityListTableComponent } from '../../shared/entity-list-table/entity-list-table.component';
@@ -11,10 +11,15 @@ import { tableField } from '../../shared/models/entityListTableField';
   styleUrls: ['./itemtypes.component.css'],
   standalone: false
 })
-export class ItemTypesComponent implements AfterViewInit {
+export class ItemTypesComponent implements OnInit, AfterViewInit {
   @ViewChild('ListTable') TableList!: EntityListTableComponent;
   public showEdit: boolean = true;
   public dataloading: boolean = true;
+
+  public itemTypeClasses: any[] = [];
+  public selectedItemTypeClassName: string = '';
+  private allItemTypes: any[] = []; // Store all items for client-side filtering
+  private isInitialized: boolean = false;
 
   public get tableFields() {
     return this.getTableFields();
@@ -26,8 +31,28 @@ export class ItemTypesComponent implements AfterViewInit {
     private entityService: EntityService
   ) {}
 
+  ngOnInit(): void {
+    this.loadItemTypeClasses();
+  }
+
   ngAfterViewInit(): void {
-    this.retrieveApiData();
+    this.loadAllItemTypes();
+  }
+
+  private loadAllItemTypes(): void {
+    this.dataloading = true;
+    this.api.getItemTypes().subscribe({
+      next: (res: any) => {
+        this.allItemTypes = res; // Cache for client-side filtering
+        this.isInitialized = true;
+        this.applyClientSideFilter();
+        this.dataloading = false;
+      },
+      error: (err) => {
+        console.error('API Error:', err);
+        this.dataloading = false;
+      }
+    });
   }
 
   onAddRecord() {
@@ -40,6 +65,50 @@ export class ItemTypesComponent implements AfterViewInit {
 
   onEditDetails(param: any) {}
   onArchive(param: any) {}
+
+  onItemTypeClassChange(): void {
+    this.applyClientSideFilter();
+  }
+
+  private applyClientSideFilter(): void {
+    // Wait for table to be ready
+    if (!this.TableList || !this.isInitialized) {
+      return;
+    }
+    
+    // If no filter selected or no data loaded yet, show all items
+    if (!this.selectedItemTypeClassName || !this.allItemTypes.length) {
+      this.TableList.initialize([...this.allItemTypes]); // Create new array reference
+      return;
+    }
+
+    // Filter by matching itemTypeClassId
+    const selectedClass = this.itemTypeClasses.find(
+      c => c.name === this.selectedItemTypeClassName
+    );
+    
+    if (selectedClass) {
+      const filtered = this.allItemTypes.filter(
+        item => item.itemTypeClassId === selectedClass.id
+      );
+      this.TableList.initialize([...filtered]); // Create new array reference
+    } else {
+      // If class not found, show all items
+      this.TableList.initialize([...this.allItemTypes]); // Create new array reference
+    }
+  }
+
+  loadItemTypeClasses(): void {
+    this.api.getItemTypeClasses().subscribe({
+      next: (res: any[]) => {
+        this.itemTypeClasses = res || [];
+      },
+      error: (err) => {
+        console.error('Failed to load ItemTypeClass list:', err);
+        this.itemTypeClasses = [];
+      }
+    });
+  }
 
   retrieveApiData() {
     this.dataloading = true;

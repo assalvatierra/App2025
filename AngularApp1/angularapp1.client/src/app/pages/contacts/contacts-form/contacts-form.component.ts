@@ -198,7 +198,7 @@ export class ContactsFormComponent implements AfterViewInit {
 
   private getApiItemStatusLookupData(): void {
     this.dataloading = true;
-    this.api.getItemStatuses()
+    this.api.getItemStatusesByClassName('CONTACT')
       .subscribe({
         next: (res: any) => {
           this.itemStatusLookupData = res || [];
@@ -214,7 +214,7 @@ export class ContactsFormComponent implements AfterViewInit {
 
   private getApiItemTypeLookupData(): void {
     this.dataloading = true;
-    this.api.getItemTypes()
+    this.api.getItemTypesByClassName('CONTACT')
       .subscribe({
         next: (res: any) => {
           this.itemTypeLookupData = res || [];

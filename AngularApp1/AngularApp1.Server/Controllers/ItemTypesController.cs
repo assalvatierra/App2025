@@ -43,7 +43,7 @@ namespace AngularApp1.Server.Controllers
         {
             var itemTypes = await _context.ItemType
                 .Include(it => it.ItemTypeClass)
-                .Where(it => it.ItemTypeClass != null && it.ItemTypeClass.Name == className)
+                .Where(it => it.ItemTypeClass != null && it.ItemTypeClass.Code == className)
                 .ToListAsync();
 
             if (itemTypes == null || !itemTypes.Any())

@@ -160,7 +160,7 @@ export class ServiceItemsFormComponent implements OnInit, AfterViewInit {
   }
 
   private loadItemStatuses(): void {
-    this.api.getItemStatuses().subscribe({
+    this.api.getItemStatusesByClassName('SERVICEITEM').subscribe({
       next: (res: any[]) => {
         this.itemStatuses = res;
       },
@@ -171,7 +171,7 @@ export class ServiceItemsFormComponent implements OnInit, AfterViewInit {
   }
 
   private loadItemTypes(): void {
-    this.api.getItemTypes().subscribe({
+    this.api.getItemTypesByClassName('SERVICEITEM').subscribe({
       next: (res: any[]) => {
         this.itemTypes = res;
       },

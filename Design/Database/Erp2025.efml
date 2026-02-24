@@ -546,6 +546,43 @@
       <column name="" />
     </property>
   </class>
+  <class name="JobTimesheet" entity-set="JobTimesheet" p1:Guid="2f652c56-62e1-43c2-b381-1594214b8fed">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="941e69e7-fe4a-430f-a5a0-d2c199933591">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Expenses" entity-set="Expenses" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Receivables" entity-set="Receivables" p1:Guid="a22fba07-887a-4447-b0cd-44d08eb9bdeb">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="9f6b6326-9ec0-4ab7-8e20-32cf7b0b5e53">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Resources" entity-set="Resources" p1:Guid="97b70db5-76eb-48a0-aab4-40cb7ece0152">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c41a4552-b02e-4194-b6cd-967180785219">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Customers" entity-set="Customers" p1:Guid="a0a39fb2-2dfc-4f7f-ae63-f17b21312e1a" />
+  <class name="Suppliers" entity-set="Suppliers" p1:Guid="6ca7829a-5355-473b-99df-cba9dfb4a08a" />
+  <class name="JobExpense" entity-set="JobExpense" p1:Guid="a15eda79-5663-4376-930a-b4a32b9f3740">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="7f70f878-bbea-4072-b235-c6afe8977f8d">
+      <column name="" />
+    </id>
+  </class>
+  <class name="JobReceivable" entity-set="JobReceivable" p1:Guid="6fc83f5f-e8f6-4b26-9137-11ff6c495b7d">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a18c3295-557f-4e8e-80b3-0d99b31d0ef7">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Payments" entity-set="Payments" p1:Guid="be535a04-59d1-43d7-8405-4cdcb480d0b7">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0b027ba0-621f-4fbf-871d-5da3e95fe1d1">
+      <column name="" />
+    </id>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">

@@ -546,10 +546,13 @@
       <column name="" />
     </property>
   </class>
-  <class name="JobTimesheet" entity-set="JobTimesheet" p1:Guid="2f652c56-62e1-43c2-b381-1594214b8fed">
+  <class name="Timesheet" entity-set="Timesheet" p1:Guid="2f652c56-62e1-43c2-b381-1594214b8fed">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="941e69e7-fe4a-430f-a5a0-d2c199933591">
       <column name="" />
     </id>
+    <property name="ResourcesId" type="Int32" p1:ValidateRequired="true" p1:Guid="e9eb4b1e-380c-4732-9158-e6946067c7a4">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="Expenses" entity-set="Expenses" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
@@ -561,27 +564,99 @@
       <column name="" />
     </id>
   </class>
-  <class name="Resources" entity-set="Resources" p1:Guid="97b70db5-76eb-48a0-aab4-40cb7ece0152">
+  <class name="Resource" entity-set="Resource" p1:Guid="97b70db5-76eb-48a0-aab4-40cb7ece0152">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c41a4552-b02e-4194-b6cd-967180785219">
       <column name="" />
     </id>
   </class>
-  <class name="Customers" entity-set="Customers" p1:Guid="a0a39fb2-2dfc-4f7f-ae63-f17b21312e1a" />
-  <class name="Suppliers" entity-set="Suppliers" p1:Guid="6ca7829a-5355-473b-99df-cba9dfb4a08a" />
+  <class name="Customers" entity-set="Customers" p1:Guid="a0a39fb2-2dfc-4f7f-ae63-f17b21312e1a">
+    <id name="Property1" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="aacca400-6537-421c-92c5-f2a88c8598e5">
+      <column name="" />
+    </id>
+  </class>
+  <class name="Suppliers" entity-set="Suppliers" p1:Guid="6ca7829a-5355-473b-99df-cba9dfb4a08a">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="2f7ea7a2-a205-434f-bd39-8d5a5ab99531">
+      <column name="" />
+    </id>
+  </class>
   <class name="JobExpense" entity-set="JobExpense" p1:Guid="a15eda79-5663-4376-930a-b4a32b9f3740">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="7f70f878-bbea-4072-b235-c6afe8977f8d">
       <column name="" />
     </id>
+    <property name="ExpensesId" type="Int32" p1:ValidateRequired="true" p1:Guid="d98bc9e7-cc63-498b-b869-d22a21366679">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="e9e0e9f5-ac98-451b-a8cd-dca0ba9d9d08">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="JobReceivable" entity-set="JobReceivable" p1:Guid="6fc83f5f-e8f6-4b26-9137-11ff6c495b7d">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a18c3295-557f-4e8e-80b3-0d99b31d0ef7">
       <column name="" />
     </id>
+    <property name="ReceivablesId" type="Int32" p1:ValidateRequired="true" p1:Guid="601523b3-fd84-4731-b17a-38a84d90db9e">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="610aea85-ec37-4442-ad11-9d37ff10657b">
+      <column name="" not-null="False" />
+    </property>
   </class>
-  <class name="Payments" entity-set="Payments" p1:Guid="be535a04-59d1-43d7-8405-4cdcb480d0b7">
+  <class name="Payment" entity-set="Payment" p1:Guid="be535a04-59d1-43d7-8405-4cdcb480d0b7">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0b027ba0-621f-4fbf-871d-5da3e95fe1d1">
       <column name="" />
     </id>
+  </class>
+  <class name="JobTimesheet" entity-set="JobTimesheet" p1:Guid="1008ed89-ef5a-4435-91be-e1286480d9cd">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="efa37190-fbda-40c6-8eed-c8386a96784d">
+      <column name="" not-null="False" />
+    </id>
+    <property name="TimesheetId" type="Int32" p1:ValidateRequired="true" p1:Guid="52552f7d-393e-4a50-8d11-a3d287f08fbc">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="cc55d0ec-714a-4cd5-921e-221aa62427e8">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ReceivablePayment" entity-set="ReceivablePayment" p1:Guid="10e1a8b8-b4db-4a4e-a9c9-9f4cb5222475">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="d97b3029-2316-4638-95f8-f9c34af35f68">
+      <column name="" />
+    </id>
+    <property name="ReceivablesId" type="Int32" p1:ValidateRequired="true" p1:Guid="ab801a56-6f3f-4c11-aca1-c372e5e3092d">
+      <column name="" not-null="False" />
+    </property>
+    <property name="PaymentsId" type="Int32" p1:ValidateRequired="true" p1:Guid="a28cb406-6119-474b-a84d-6aae5630f82d">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ExpensePayment" entity-set="ExpensePayment" p1:Guid="21329e08-e2a3-4382-8333-0174f64f872f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="3e3c4019-203f-4c88-a4a1-ac490d2b5a67">
+      <column name="" />
+    </id>
+    <property name="ExpensesId" type="Int32" p1:ValidateRequired="true" p1:Guid="4b9e690e-dfe8-48f3-b21b-addfc4da89da">
+      <column name="" not-null="False" />
+    </property>
+    <property name="PaymentsId" type="Int32" p1:ValidateRequired="true" p1:Guid="12a91e2c-4902-4c3c-b26f-46a8fef2718f">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="JobServiceTimesheet" entity-set="JobServiceTimesheet" p1:Guid="2cafe87f-5b6e-4356-9e4b-271d5d4945ac">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="af4862db-78d9-4887-a484-903e3bfda13b">
+      <column name="" />
+    </id>
+    <property name="TimesheetId" type="Int32" p1:ValidateRequired="true" p1:Guid="c039216c-fe24-4dcc-a87b-f83860fb6d30">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="8e36e7ae-d666-48e6-ba05-b3988231882b">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="PaymentDetail" entity-set="PaymentDetail" p1:Guid="a3b7efa4-4f9a-48cd-9fa0-a3038f3a0068">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="01418c6a-d4b7-49a0-a656-72804c7bf1d5">
+      <column name="" />
+    </id>
+    <property name="PaymentId" type="Int32" p1:ValidateRequired="true" p1:Guid="c20d97a9-6eb0-45f2-90b9-ed8d0453e64b">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
@@ -822,6 +897,118 @@
       </end1>
       <end2 multiplicity="Many" name="AgentTasks" class="AgentTaskStatus" relation-class="AgentTask" generate="False" lazy="False" p1:Guid="f3658e32-1b4e-433a-854d-77f369a86be9">
         <property name="AgentTaskStatusId" />
+      </end2>
+    </association>
+    <association name="Receivables_JobReceivable" cardinality="OneToMany" p1:Guid="5352f509-1883-4dbb-9a76-8b9b7ad57acd">
+      <end1 multiplicity="One" name="Receivables" class="JobReceivable" relation-class="Receivables" generate="False" constrained="True" lazy="False" p1:Guid="64bce27a-8878-4df3-97a4-b82689e000b4">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobReceivables" class="Receivables" relation-class="JobReceivable" lazy="False" p1:Guid="f9253f40-a794-4699-975b-e7322a0e2d02">
+        <property name="ReceivablesId" />
+      </end2>
+    </association>
+    <association name="Expenses_JobExpense" cardinality="OneToMany" p1:Guid="5de79e98-ba30-4ee6-845b-55b0d629d907">
+      <end1 multiplicity="One" name="Expenses" class="JobExpense" relation-class="Expenses" generate="False" constrained="True" lazy="False" p1:Guid="1388a437-4d6f-4fd0-b906-f92d66ea43d2">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobExpenses" class="Expenses" relation-class="JobExpense" lazy="False" p1:Guid="5e957559-4814-464c-b487-4b32a2eec79c">
+        <property name="ExpensesId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobReceivable" cardinality="OneToMany" p1:Guid="fe8532e7-2e57-4534-8d22-3c88fc6eeb9f">
+      <end1 multiplicity="One" name="JobMain" class="JobReceivable" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="4997d170-fe65-4583-a24a-923ffde785f9">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobReceivables" class="JobMain" relation-class="JobReceivable" lazy="False" p1:Guid="c7c11404-9b2d-408d-8b4b-5484a5d1ebce">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobExpense" cardinality="OneToMany" p1:Guid="6868fc61-0899-460e-a4d6-738975925fd4">
+      <end1 multiplicity="One" name="JobMain" class="JobExpense" relation-class="JobMain" constrained="True" lazy="False" p1:Guid="1819749a-9032-4880-abdc-548fbd3d15b7">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobExpenses" class="JobMain" relation-class="JobExpense" lazy="False" p1:Guid="d8472621-3715-42c5-abd3-3cdef39a83a7">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="Resources_JobTimesheet" cardinality="OneToMany" p1:Guid="739b8492-f145-4d91-addd-c72cf6094e14">
+      <end1 multiplicity="One" name="Resources" class="Timesheet" relation-class="Resource" generate="False" constrained="True" lazy="False" p1:Guid="ee8d6027-e484-4d14-93e4-21fa0fdf4641">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobTimesheets" class="Resource" relation-class="Timesheet" lazy="False" p1:Guid="3a447ac9-fe86-4250-b0ac-c19ec78f02d6">
+        <property name="ResourcesId" />
+      </end2>
+    </association>
+    <association name="Timesheet_JobTimesheet" cardinality="OneToMany" p1:Guid="914c5e65-52bb-481b-addc-d1047bc8dfb4">
+      <end1 multiplicity="One" name="Timesheet" class="JobTimesheet" relation-class="Timesheet" constrained="True" lazy="False" p1:Guid="dd8bf976-3d11-4b28-9747-33dc799cff63">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobTimesheets" class="Timesheet" relation-class="JobTimesheet" lazy="False" p1:Guid="0bba2339-5172-44a2-af3e-42ce4de60440">
+        <property name="TimesheetId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobTimesheet" cardinality="OneToMany" p1:Guid="619f3637-e254-4439-ac6b-503f4bfeed1d">
+      <end1 multiplicity="One" name="JobMain" class="JobTimesheet" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="69083c28-d653-4190-8275-1d808769051d">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobTimesheets" class="JobMain" relation-class="JobTimesheet" lazy="False" p1:Guid="0616fedc-25fc-49ef-9475-c1aff729ba5d">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="Receivables_ReceivablePayment" cardinality="OneToMany" p1:Guid="0df0a6a9-ad5a-47c6-9a57-9b3baaac2bc6">
+      <end1 multiplicity="One" name="Receivables" class="ReceivablePayment" relation-class="Receivables" generate="False" constrained="True" lazy="False" p1:Guid="8713beba-50ef-4130-a684-967d58eb0329">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivablePayments" class="Receivables" relation-class="ReceivablePayment" lazy="False" p1:Guid="3b6ecf6a-3bce-47f2-a475-afe7376ceb1a">
+        <property name="ReceivablesId" />
+      </end2>
+    </association>
+    <association name="Expenses_ExpensePayment" cardinality="OneToMany" p1:Guid="c223b75d-d6e1-4f35-929d-72cf4f444854">
+      <end1 multiplicity="One" name="Expenses" class="ExpensePayment" relation-class="Expenses" generate="False" constrained="True" lazy="False" p1:Guid="dc3af140-c1bb-4ad2-a60f-de834a1a93ca">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ExpensePayments" class="Expenses" relation-class="ExpensePayment" lazy="False" p1:Guid="f1ef3e9e-68af-4811-a5b3-cc8c0590a16b">
+        <property name="ExpensesId" />
+      </end2>
+    </association>
+    <association name="Payments_ExpensePayment" cardinality="OneToMany" p1:Guid="1e05ead1-821a-4781-a840-3dfb67460de6">
+      <end1 multiplicity="One" name="Payments" class="ExpensePayment" relation-class="Payment" generate="False" constrained="True" lazy="False" p1:Guid="6efd8f53-15f3-4cf5-9a44-d7a91b1efb87">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ExpensePayments" class="Payment" relation-class="ExpensePayment" lazy="False" p1:Guid="9f9e1790-e730-440a-b55b-76c750573060">
+        <property name="PaymentsId" />
+      </end2>
+    </association>
+    <association name="Payments_ReceivablePayment" cardinality="OneToMany" p1:Guid="3b65e7e4-3b7f-4257-905e-d59f51a94e7d">
+      <end1 multiplicity="One" name="Payments" class="ReceivablePayment" relation-class="Payment" generate="False" constrained="True" lazy="False" p1:Guid="cf075e08-62fc-4bba-9c6d-fc8974d8b9f5">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivablePayments" class="Payment" relation-class="ReceivablePayment" lazy="False" p1:Guid="552f680e-8850-44c4-83c6-c05b58e45450">
+        <property name="PaymentsId" />
+      </end2>
+    </association>
+    <association name="Timesheet_JobServiceTimesheet" cardinality="OneToMany" p1:Guid="f7610d55-a261-40fa-a40f-2cc2f888a342">
+      <end1 multiplicity="One" name="Timesheet" class="JobServiceTimesheet" relation-class="Timesheet" generate="False" constrained="True" lazy="False" p1:Guid="66dd6fcd-4a47-47c8-bbc1-e363919fc7d3">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceTimesheets" class="Timesheet" relation-class="JobServiceTimesheet" lazy="False" p1:Guid="324fed8b-69ad-4353-ba41-07c94502d33f">
+        <property name="TimesheetId" />
+      </end2>
+    </association>
+    <association name="JobService_JobServiceTimesheet" cardinality="OneToMany" p1:Guid="0c174b5e-3f5b-41c6-b221-7ac7db640152">
+      <end1 multiplicity="One" name="JobService" class="JobServiceTimesheet" relation-class="JobService" constrained="True" lazy="False" p1:Guid="b027002c-9ac8-4a47-b476-d1d5006ce865">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceTimesheets" class="JobService" relation-class="JobServiceTimesheet" lazy="False" p1:Guid="82ef06e6-8eaf-4aa8-beb1-393df49a679e">
+        <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="Payment_PaymentDetail" cardinality="OneToMany" p1:Guid="65777fd6-1b88-4998-b7d4-9b3c554fc6a3">
+      <end1 multiplicity="One" name="Payment" class="PaymentDetail" relation-class="Payment" generate="False" constrained="True" lazy="False" p1:Guid="84cdaf29-479e-4db4-84a5-11ec7ea39a4b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PaymentDetails" class="Payment" relation-class="PaymentDetail" lazy="False" p1:Guid="40256d25-718b-40a1-bc63-1ce694059a58">
+        <property name="PaymentId" />
       </end2>
     </association>
   </associations>

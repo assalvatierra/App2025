@@ -569,16 +569,6 @@
       <column name="" />
     </id>
   </class>
-  <class name="Customers" entity-set="Customers" p1:Guid="a0a39fb2-2dfc-4f7f-ae63-f17b21312e1a">
-    <id name="Property1" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="aacca400-6537-421c-92c5-f2a88c8598e5">
-      <column name="" />
-    </id>
-  </class>
-  <class name="Suppliers" entity-set="Suppliers" p1:Guid="6ca7829a-5355-473b-99df-cba9dfb4a08a">
-    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="2f7ea7a2-a205-434f-bd39-8d5a5ab99531">
-      <column name="" />
-    </id>
-  </class>
   <class name="JobExpense" entity-set="JobExpense" p1:Guid="a15eda79-5663-4376-930a-b4a32b9f3740">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="7f70f878-bbea-4072-b235-c6afe8977f8d">
       <column name="" />
@@ -647,14 +637,6 @@
       <column name="" not-null="False" />
     </property>
     <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="8e36e7ae-d666-48e6-ba05-b3988231882b">
-      <column name="" not-null="False" />
-    </property>
-  </class>
-  <class name="PaymentDetail" entity-set="PaymentDetail" p1:Guid="a3b7efa4-4f9a-48cd-9fa0-a3038f3a0068">
-    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="01418c6a-d4b7-49a0-a656-72804c7bf1d5">
-      <column name="" />
-    </id>
-    <property name="PaymentId" type="Int32" p1:ValidateRequired="true" p1:Guid="c20d97a9-6eb0-45f2-90b9-ed8d0453e64b">
       <column name="" not-null="False" />
     </property>
   </class>
@@ -1001,14 +983,6 @@
       </end1>
       <end2 multiplicity="Many" name="JobServiceTimesheets" class="JobService" relation-class="JobServiceTimesheet" lazy="False" p1:Guid="82ef06e6-8eaf-4aa8-beb1-393df49a679e">
         <property name="JobServiceId" />
-      </end2>
-    </association>
-    <association name="Payment_PaymentDetail" cardinality="OneToMany" p1:Guid="65777fd6-1b88-4998-b7d4-9b3c554fc6a3">
-      <end1 multiplicity="One" name="Payment" class="PaymentDetail" relation-class="Payment" generate="False" constrained="True" lazy="False" p1:Guid="84cdaf29-479e-4db4-84a5-11ec7ea39a4b">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="PaymentDetails" class="Payment" relation-class="PaymentDetail" lazy="False" p1:Guid="40256d25-718b-40a1-bc63-1ce694059a58">
-        <property name="PaymentId" />
       </end2>
     </association>
   </associations>

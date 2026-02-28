@@ -554,15 +554,54 @@
       <column name="" not-null="False" />
     </property>
   </class>
-  <class name="Expenses" entity-set="Expenses" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
+  <class name="Expense" entity-set="Expense" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
       <column name="" />
     </id>
+    <property name="TrxDate" type="Date" p1:ValidateRequired="true" p1:Guid="32535eb7-d6bd-4915-af3b-c6c35ed8f845">
+      <column name="" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="13bb5407-4f43-4d29-ab58-dc665cf1a8c7">
+      <column name="" />
+    </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="d65a075a-7ba2-43e3-ab46-8125e0a0d17c">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="071b1ca4-73f4-4298-a277-348fa436467c">
+      <column name="" />
+    </property>
   </class>
-  <class name="Receivables" entity-set="Receivables" p1:Guid="a22fba07-887a-4447-b0cd-44d08eb9bdeb">
+  <class name="Receivable" entity-set="Receivable" p1:Guid="a22fba07-887a-4447-b0cd-44d08eb9bdeb">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="9f6b6326-9ec0-4ab7-8e20-32cf7b0b5e53">
       <column name="" />
     </id>
+    <property name="TrxRef" type="String" p1:ValidateRequired="true" p1:Guid="424f7c4d-8135-43d4-9705-9bbc5f1ab234">
+      <column name="" />
+    </property>
+    <property name="TrxDate" type="Date" p1:ValidateRequired="true" p1:Guid="cd5a9c99-6e2a-495d-b427-edb21a87a33a">
+      <column name="" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="9b999ba2-40af-4087-82bf-e42d66dee251">
+      <column name="" />
+    </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="9392ea6d-3a8d-4e66-a46b-a9c8916949c2">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="76c366ae-8a55-4ba8-adf6-6b052a300ffd">
+      <column name="" />
+    </property>
   </class>
   <class name="Resource" entity-set="Resource" p1:Guid="97b70db5-76eb-48a0-aab4-40cb7ece0152">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c41a4552-b02e-4194-b6cd-967180785219">
@@ -595,6 +634,36 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0b027ba0-621f-4fbf-871d-5da3e95fe1d1">
       <column name="" />
     </id>
+    <property name="TrxDate" type="Date" p1:ValidateRequired="true" p1:Guid="ff27fba6-647c-4434-b7a1-924c1a3eb8ab">
+      <column name="" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="1c47e3f5-a725-465e-a23a-ec30afac1458">
+      <column name="" />
+    </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="7012ddf0-00e3-4e0a-b839-8f6f2095dd21">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="420b79b9-00a1-447f-9c1c-b3f02e9567ca">
+      <column name="" />
+    </property>
+    <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="19f659e3-89b4-43ac-a216-a57d04058e1b">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="678c38c8-602e-4178-a4b0-938462c9416e">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="666a0616-9068-4c20-ad70-26fa1b7901b3">
+      <column name="" not-null="False" />
+    </property>
+    <property name="AdditionalInfo" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="000d9e28-202c-4557-a962-b88220ee7d43">
+      <column name="" />
+    </property>
   </class>
   <class name="JobTimesheet" entity-set="JobTimesheet" p1:Guid="1008ed89-ef5a-4435-91be-e1286480d9cd">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="efa37190-fbda-40c6-8eed-c8386a96784d">
@@ -638,6 +707,37 @@
     </property>
     <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="8e36e7ae-d666-48e6-ba05-b3988231882b">
       <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ReceivableCustomer" entity-set="ReceivableCustomer" p1:Guid="ef0373e5-5fe7-43a5-a29c-95640e9c00c9">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="8efa7ec3-5ad3-4ec4-982d-b048c0410f06">
+      <column name="" />
+    </id>
+    <property name="ReceivablesId" type="Int32" p1:ValidateRequired="true" p1:Guid="00b9fa5a-0dad-4464-9621-281811e1300f">
+      <column name="" not-null="False" />
+    </property>
+    <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="9435e9e0-5180-4038-aa59-beeab0c34547">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="6c3e163d-d3a3-4315-a9d0-f3690c4dffb7">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ReceivableStatus" entity-set="ReceivableStatus" p1:Guid="ac8bb9ad-ea17-48c1-b4e9-83082649065a">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a501d35d-22cf-4073-99f0-86f8483a9a70">
+      <column name="" />
+    </id>
+    <property name="ReceivableId" type="Int32" p1:ValidateRequired="true" p1:Guid="d9b15738-d4f3-4534-a6a0-514b158f4ec3">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="1a4ff003-5816-4ed5-a9ff-b73b2d37f1d5">
+      <column name="" not-null="False" />
+    </property>
+    <property name="StatusDate" type="DateTime" p1:ValidateRequired="true" p1:Guid="f84dc063-5b97-48c3-a6cb-2766080ccd7b">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="68051b81-945d-40d3-aa51-fb65dc4d2747">
+      <column name="" />
     </property>
   </class>
   <associations>
@@ -882,18 +982,18 @@
       </end2>
     </association>
     <association name="Receivables_JobReceivable" cardinality="OneToMany" p1:Guid="5352f509-1883-4dbb-9a76-8b9b7ad57acd">
-      <end1 multiplicity="One" name="Receivables" class="JobReceivable" relation-class="Receivables" generate="False" constrained="True" lazy="False" p1:Guid="64bce27a-8878-4df3-97a4-b82689e000b4">
+      <end1 multiplicity="One" name="Receivables" class="JobReceivable" relation-class="Receivable" generate="False" constrained="True" lazy="False" p1:Guid="64bce27a-8878-4df3-97a4-b82689e000b4">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="JobReceivables" class="Receivables" relation-class="JobReceivable" lazy="False" p1:Guid="f9253f40-a794-4699-975b-e7322a0e2d02">
+      <end2 multiplicity="Many" name="JobReceivables" class="Receivable" relation-class="JobReceivable" lazy="False" p1:Guid="f9253f40-a794-4699-975b-e7322a0e2d02">
         <property name="ReceivablesId" />
       </end2>
     </association>
     <association name="Expenses_JobExpense" cardinality="OneToMany" p1:Guid="5de79e98-ba30-4ee6-845b-55b0d629d907">
-      <end1 multiplicity="One" name="Expenses" class="JobExpense" relation-class="Expenses" generate="False" constrained="True" lazy="False" p1:Guid="1388a437-4d6f-4fd0-b906-f92d66ea43d2">
+      <end1 multiplicity="One" name="Expenses" class="JobExpense" relation-class="Expense" generate="False" constrained="True" lazy="False" p1:Guid="1388a437-4d6f-4fd0-b906-f92d66ea43d2">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="JobExpenses" class="Expenses" relation-class="JobExpense" lazy="False" p1:Guid="5e957559-4814-464c-b487-4b32a2eec79c">
+      <end2 multiplicity="Many" name="JobExpenses" class="Expense" relation-class="JobExpense" lazy="False" p1:Guid="5e957559-4814-464c-b487-4b32a2eec79c">
         <property name="ExpensesId" />
       </end2>
     </association>
@@ -938,18 +1038,18 @@
       </end2>
     </association>
     <association name="Receivables_ReceivablePayment" cardinality="OneToMany" p1:Guid="0df0a6a9-ad5a-47c6-9a57-9b3baaac2bc6">
-      <end1 multiplicity="One" name="Receivables" class="ReceivablePayment" relation-class="Receivables" generate="False" constrained="True" lazy="False" p1:Guid="8713beba-50ef-4130-a684-967d58eb0329">
+      <end1 multiplicity="One" name="Receivables" class="ReceivablePayment" relation-class="Receivable" generate="False" constrained="True" lazy="False" p1:Guid="8713beba-50ef-4130-a684-967d58eb0329">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="ReceivablePayments" class="Receivables" relation-class="ReceivablePayment" lazy="False" p1:Guid="3b6ecf6a-3bce-47f2-a475-afe7376ceb1a">
+      <end2 multiplicity="Many" name="ReceivablePayments" class="Receivable" relation-class="ReceivablePayment" lazy="False" p1:Guid="3b6ecf6a-3bce-47f2-a475-afe7376ceb1a">
         <property name="ReceivablesId" />
       </end2>
     </association>
     <association name="Expenses_ExpensePayment" cardinality="OneToMany" p1:Guid="c223b75d-d6e1-4f35-929d-72cf4f444854">
-      <end1 multiplicity="One" name="Expenses" class="ExpensePayment" relation-class="Expenses" generate="False" constrained="True" lazy="False" p1:Guid="dc3af140-c1bb-4ad2-a60f-de834a1a93ca">
+      <end1 multiplicity="One" name="Expenses" class="ExpensePayment" relation-class="Expense" generate="False" constrained="True" lazy="False" p1:Guid="dc3af140-c1bb-4ad2-a60f-de834a1a93ca">
         <property name="Id" />
       </end1>
-      <end2 multiplicity="Many" name="ExpensePayments" class="Expenses" relation-class="ExpensePayment" lazy="False" p1:Guid="f1ef3e9e-68af-4811-a5b3-cc8c0590a16b">
+      <end2 multiplicity="Many" name="ExpensePayments" class="Expense" relation-class="ExpensePayment" lazy="False" p1:Guid="f1ef3e9e-68af-4811-a5b3-cc8c0590a16b">
         <property name="ExpensesId" />
       </end2>
     </association>
@@ -983,6 +1083,70 @@
       </end1>
       <end2 multiplicity="Many" name="JobServiceTimesheets" class="JobService" relation-class="JobServiceTimesheet" lazy="False" p1:Guid="82ef06e6-8eaf-4aa8-beb1-393df49a679e">
         <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="Receivables_ReceivableCustomer" cardinality="OneToMany" p1:Guid="59ab26ea-e807-4e90-a4fa-fab3b70cb62c">
+      <end1 multiplicity="One" name="Receivables" class="ReceivableCustomer" relation-class="Receivable" constrained="True" lazy="False" p1:Guid="82f6a219-3458-49e9-8908-1e007fadc7b5">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivableCustomers" class="Receivable" relation-class="ReceivableCustomer" lazy="False" p1:Guid="c73d156b-71e2-44a2-9dee-3c8bde88ae1d">
+        <property name="ReceivablesId" />
+      </end2>
+    </association>
+    <association name="Entity_ReceivableCustomer" cardinality="OneToMany" p1:Guid="fa7b69dd-8aa0-43b8-b741-f0014925388a">
+      <end1 multiplicity="One" name="Entity" class="ReceivableCustomer" relation-class="Entity" constrained="True" lazy="False" p1:Guid="12016657-c430-4250-9b3f-7c61d17b65bf">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivableCustomers" class="Entity" relation-class="ReceivableCustomer" lazy="False" p1:Guid="ae32cc25-246f-41ce-b999-c45573e8d366">
+        <property name="EntityId" />
+      </end2>
+    </association>
+    <association name="ItemType_ReceivableCustomer" cardinality="OneToMany" p1:Guid="27a3a265-23c3-44d2-a449-bc8d318f0f5b">
+      <end1 multiplicity="One" name="ItemType" class="ReceivableCustomer" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="ac6ad540-6376-4cba-bbb0-ef66be2a204f">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivableCustomers" class="ItemType" relation-class="ReceivableCustomer" lazy="False" p1:Guid="a40e7517-7358-4343-8a5c-765fa6d75ee3">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="Receivable_ReceivableStatus" cardinality="OneToMany" p1:Guid="40db026d-f6f7-445d-a924-203eef1f78e8">
+      <end1 multiplicity="One" name="Receivable" class="ReceivableStatus" relation-class="Receivable" constrained="True" lazy="False" p1:Guid="41795f0a-29b4-4173-8d5d-b89bd7e3c884">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivableStatuses" class="Receivable" relation-class="ReceivableStatus" lazy="False" p1:Guid="a7eda30d-199d-4d25-ab20-0c8749f1f694">
+        <property name="ReceivableId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_ReceivableStatus" cardinality="OneToMany" p1:Guid="55c79e33-2d2d-4747-967a-fd7a8518daee">
+      <end1 multiplicity="One" name="ItemStatus" class="ReceivableStatus" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="0957e355-0085-4176-82b2-ec689d764219">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ReceivableStatuses" class="ItemStatus" relation-class="ReceivableStatus" lazy="False" p1:Guid="e8607320-6f61-4eb3-b29d-7b477f7044f3">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="Entity_Payment" cardinality="OneToMany" p1:Guid="1ecd28bc-88d2-442a-aca4-1f6f008fbf04">
+      <end1 multiplicity="One" name="Entity" class="Payment" relation-class="Entity" constrained="True" lazy="False" p1:Guid="c1a45f81-d902-4a63-8148-658acdd33187">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Payments" class="Entity" relation-class="Payment" lazy="False" p1:Guid="22ba74d1-511d-4863-92bf-5d4b913e9241">
+        <property name="EntityId" />
+      </end2>
+    </association>
+    <association name="ItemType_Payment" cardinality="OneToMany" p1:Guid="ea869297-d8d1-4d11-bb6d-88fd80a4d36b">
+      <end1 multiplicity="One" name="ItemType" class="Payment" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="8bbd77e7-8c22-4e8e-9299-dd0615895dbc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Payments" class="ItemType" relation-class="Payment" lazy="False" p1:Guid="e6887e91-8474-4624-864e-95d8c0b92eeb">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_Payment" cardinality="OneToMany" p1:Guid="b97464a6-2db2-4a04-ab67-ecb4a09a1320">
+      <end1 multiplicity="One" name="ItemStatus" class="Payment" relation-class="ItemStatus" generate="False" constrained="True" lazy="False" p1:Guid="e302bfd1-c89a-4fa0-b724-434ae02d8c96">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Payments" class="ItemStatus" relation-class="Payment" lazy="False" p1:Guid="a0a4c9a8-98c0-43b8-8ccb-a8b3181ba5a1">
+        <property name="ItemStatusId" />
       </end2>
     </association>
   </associations>

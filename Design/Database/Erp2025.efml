@@ -576,6 +576,9 @@
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="071b1ca4-73f4-4298-a277-348fa436467c">
       <column name="" />
     </property>
+    <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="f9694701-8cf9-49d1-984d-5b4c2d3ae54f">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="Receivable" entity-set="Receivable" p1:Guid="a22fba07-887a-4447-b0cd-44d08eb9bdeb">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="9f6b6326-9ec0-4ab7-8e20-32cf7b0b5e53">
@@ -601,6 +604,9 @@
     </component>
     <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="76c366ae-8a55-4ba8-adf6-6b052a300ffd">
       <column name="" />
+    </property>
+    <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="2d51a95c-0abd-4e1f-8c52-6c026a5a53d0">
+      <column name="" not-null="False" />
     </property>
   </class>
   <class name="Resource" entity-set="Resource" p1:Guid="97b70db5-76eb-48a0-aab4-40cb7ece0152">
@@ -737,6 +743,23 @@
       <column name="" />
     </property>
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="68051b81-945d-40d3-aa51-fb65dc4d2747">
+      <column name="" />
+    </property>
+  </class>
+  <class name="ExpenseStatus" entity-set="ExpenseStatus" p1:Guid="69358389-6d80-44f2-ab99-584d7256a7a3">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="1759c0ad-2006-497e-9b10-2fb800170f45">
+      <column name="" />
+    </id>
+    <property name="ExpenseId" type="Int32" p1:ValidateRequired="true" p1:Guid="7c1d8c4e-fe63-4e15-9768-3ab0a9b38ccb">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="ca09c555-bb38-4ccf-b0ef-823ff984b736">
+      <column name="" not-null="False" />
+    </property>
+    <property name="StatusDate" type="Date" p1:ValidateRequired="true" p1:Guid="3e20d54f-fb55-4727-be4b-a982b095594f">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e232ae53-2de9-4a7a-8750-f9a9213ae4dd">
       <column name="" />
     </property>
   </class>
@@ -1146,6 +1169,38 @@
         <property name="Id" />
       </end1>
       <end2 multiplicity="Many" name="Payments" class="ItemStatus" relation-class="Payment" lazy="False" p1:Guid="a0a4c9a8-98c0-43b8-8ccb-a8b3181ba5a1">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="Entity_Receivable" cardinality="OneToMany" p1:Guid="c900a344-6947-45bb-b7c4-f8507ae7b546">
+      <end1 multiplicity="One" name="Entity" class="Receivable" relation-class="Entity" generate="False" constrained="True" lazy="False" p1:Guid="e7b9cca6-0dc6-43b7-9f66-a800c878fbcc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Receivables" class="Entity" relation-class="Receivable" lazy="False" p1:Guid="cba03dc7-aca5-4622-8660-72bbbcd294a9">
+        <property name="EntityId" />
+      </end2>
+    </association>
+    <association name="Entity_Expense" cardinality="OneToMany" p1:Guid="2b7796a7-2b8a-4d82-9726-92f34d6d1125">
+      <end1 multiplicity="One" name="Entity" class="Expense" relation-class="Entity" generate="False" constrained="True" lazy="False" p1:Guid="76975b75-4f6f-46e3-8b97-4999ed705d72">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Expenses" class="Entity" relation-class="Expense" lazy="False" p1:Guid="8cec23eb-e178-40db-a706-7d3eb102e1a1">
+        <property name="EntityId" />
+      </end2>
+    </association>
+    <association name="Expense_ExpenseStatus" cardinality="OneToMany" p1:Guid="523fb910-eac2-49d6-90d9-573a2dc34e4c">
+      <end1 multiplicity="One" name="Expense" class="ExpenseStatus" relation-class="Expense" constrained="True" lazy="False" p1:Guid="b5adf73c-d7bd-48c0-9f68-bb8aee2e30dd">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ExpenseStatuses" class="Expense" relation-class="ExpenseStatus" lazy="False" p1:Guid="ba5f40e6-e793-4a57-8afd-752a91dca64f">
+        <property name="ExpenseId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_ExpenseStatus" cardinality="OneToMany" p1:Guid="307999ec-51c6-4a1c-9d86-752c2e019a01">
+      <end1 multiplicity="One" name="ItemStatus" class="ExpenseStatus" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="54507dbf-5477-4e9b-a72b-7768c423c94e">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ExpenseStatuses" class="ItemStatus" relation-class="ExpenseStatus" lazy="False" p1:Guid="27eb60ac-597c-42ea-a9e2-cc927d2ab754">
         <property name="ItemStatusId" />
       </end2>
     </association>

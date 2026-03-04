@@ -36,18 +36,27 @@ export class NavigationComponent {
   menuItems = signal<MenuItem[]>([
     { icon: 'dashboard', label: 'Jobs Orders', route: 'Jobs' },
     //{ icon: 'dashboard', label: 'JobServices', route: 'job-service' },
-    { icon: 'dashboard', label: 'Entities', route: 'Entities' },
-    { icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
-    { icon: 'dashboard', label: 'Contacts', route: 'contacts' },
+    //{ icon: 'dashboard', label: 'Entities', route: 'Entities' },
+    //{ icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
+    //{ icon: 'dashboard', label: 'Contacts', route: 'contacts' },
+ 
+    {
+      icon: 'analytics', label: 'Masterfiles', route: '',
+      subItems: [
+        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},  
+        { icon: 'dashboard', label: 'Entities', route: 'Entities' },
+        { icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
+        { icon: 'dashboard', label: 'Contacts', route: 'contacts' },
+        { icon: 'comment', label: 'Agent List', route: 'agents'}
+      ],
+    },
     {
       icon: 'analytics', label: 'References', route: '',
       subItems: [
         { icon: 'comment', label: 'Countries', route: 'references/countries'},
         { icon: 'comment', label: 'Cities', route: 'references/cities'},
         { icon: 'comment', label: 'Item Types', route: 'references/itemtypes'},
-        { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'},
-        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},  
-        { icon: 'comment', label: 'Agent List', route: 'agents'}
+        { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'}
       ]
     },
     {

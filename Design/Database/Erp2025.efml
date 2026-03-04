@@ -553,6 +553,12 @@
     <property name="ResourcesId" type="Int32" p1:ValidateRequired="true" p1:Guid="e9eb4b1e-380c-4732-9158-e6946067c7a4">
       <column name="" not-null="False" />
     </property>
+    <property name="tsDate" type="Date" p1:ValidateRequired="true" p1:Guid="38728e11-0117-4cf5-a9bf-80804bb9359d">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="47418cf7-067f-4dcd-bba6-b865863952e3">
+      <column name="" />
+    </property>
   </class>
   <class name="Expense" entity-set="Expense" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">

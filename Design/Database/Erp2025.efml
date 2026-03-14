@@ -550,14 +550,17 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="941e69e7-fe4a-430f-a5a0-d2c199933591">
       <column name="" />
     </id>
-    <property name="ResourcesId" type="Int32" p1:ValidateRequired="true" p1:Guid="e9eb4b1e-380c-4732-9158-e6946067c7a4">
-      <column name="" not-null="False" />
-    </property>
     <property name="tsDate" type="Date" p1:ValidateRequired="true" p1:Guid="38728e11-0117-4cf5-a9bf-80804bb9359d">
       <column name="" />
     </property>
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="47418cf7-067f-4dcd-bba6-b865863952e3">
       <column name="" />
+    </property>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="ef53a617-735f-4502-82cc-a211c7fa8abb">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ResourceId1" type="Int32" p1:ValidateRequired="true" p1:Guid="b9a9115d-237a-4dd1-a7bf-d72d33e5e1f5">
+      <column name="" not-null="False" />
     </property>
   </class>
   <class name="Expense" entity-set="Expense" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
@@ -619,6 +622,22 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="c41a4552-b02e-4194-b6cd-967180785219">
       <column name="" />
     </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="6ca41e2d-9f61-47b2-9c05-e71c7266f4f6">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="e8902958-b4db-4222-8391-55c195c97dc2">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="051784cb-015d-47bc-8bc8-1cd7a998838b">
+      <column name="" not-null="False" />
+    </property>
+    <property name="jsonProperties" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="fdf36eba-bc51-4f6b-aa30-020644c6f561">
+      <column name="" />
+    </property>
   </class>
   <class name="JobExpense" entity-set="JobExpense" p1:Guid="a15eda79-5663-4376-930a-b4a32b9f3740">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="7f70f878-bbea-4072-b235-c6afe8977f8d">
@@ -1042,14 +1061,6 @@
         <property name="JobMainId" />
       </end2>
     </association>
-    <association name="Resources_JobTimesheet" cardinality="OneToMany" p1:Guid="739b8492-f145-4d91-addd-c72cf6094e14">
-      <end1 multiplicity="One" name="Resources" class="Timesheet" relation-class="Resource" generate="False" constrained="True" lazy="False" p1:Guid="ee8d6027-e484-4d14-93e4-21fa0fdf4641">
-        <property name="Id" />
-      </end1>
-      <end2 multiplicity="Many" name="JobTimesheets" class="Resource" relation-class="Timesheet" lazy="False" p1:Guid="3a447ac9-fe86-4250-b0ac-c19ec78f02d6">
-        <property name="ResourcesId" />
-      </end2>
-    </association>
     <association name="Timesheet_JobTimesheet" cardinality="OneToMany" p1:Guid="914c5e65-52bb-481b-addc-d1047bc8dfb4">
       <end1 multiplicity="One" name="Timesheet" class="JobTimesheet" relation-class="Timesheet" constrained="True" lazy="False" p1:Guid="dd8bf976-3d11-4b28-9747-33dc799cff63">
         <property name="Id" />
@@ -1208,6 +1219,38 @@
       </end1>
       <end2 multiplicity="Many" name="ExpenseStatuses" class="ItemStatus" relation-class="ExpenseStatus" lazy="False" p1:Guid="27eb60ac-597c-42ea-a9e2-cc927d2ab754">
         <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="ItemType_Resource" cardinality="OneToMany" p1:Guid="486142ae-4499-45ed-9c1b-ab191ea353e3">
+      <end1 multiplicity="One" name="ItemType" class="Resource" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="482b7adb-2c89-4dd8-a299-936bef2e270e">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Resources" class="ItemType" relation-class="Resource" generate="False" lazy="False" p1:Guid="4260d1fc-3d6a-4a69-8216-3a8a696624e4">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_Resource" cardinality="OneToMany" p1:Guid="ef1cc8fa-b1df-4fdf-88ee-971e82ccfb87">
+      <end1 multiplicity="One" name="ItemStatus" class="Resource" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="5fa4684a-1044-48ba-acf9-100e99c6a98b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Resources" class="ItemStatus" relation-class="Resource" generate="False" lazy="False" p1:Guid="287640d4-f161-4b32-bf22-d47f92520a60">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="Resource_Timesheet" cardinality="OneToMany" p1:Guid="2f2f9a02-2f0a-4747-bf5a-c3bc1ad1796b">
+      <end1 multiplicity="One" name="Resource" class="Timesheet" relation-class="Resource" constrained="True" lazy="False" p1:Guid="b93fba5e-a750-47af-a8fe-17deb3627fd8">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Timesheets" class="Resource" relation-class="Timesheet" generate="False" lazy="False" p1:Guid="4419fc16-d873-48f1-90b7-991d9671ec21">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="Resource_Timesheet1" cardinality="OneToMany" p1:Guid="0eeca8e5-9206-4872-89c3-69a9e457966a">
+      <end1 multiplicity="One" name="Resource1" class="Timesheet" relation-class="Resource" constrained="True" lazy="False" p1:Guid="b33a1e8c-91f7-4c99-8a9d-10020d93144f">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Timesheets1" class="Resource" relation-class="Timesheet" generate="False" lazy="False" p1:Guid="c25d64ac-50a1-48c0-907a-80c64ed97d7d">
+        <property name="ResourceId1" />
       </end2>
     </association>
   </associations>

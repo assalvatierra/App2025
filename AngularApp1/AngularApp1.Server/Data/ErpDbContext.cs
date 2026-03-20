@@ -14,6 +14,7 @@ namespace AngularApp1.Server.Data
         {
         }
 
+        public DbSet<Erp.Domain.Models.SysFeature> SysFeature { get; set; } = default!;
         public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentBin> AgentBin { get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentInstruction> AgentInstruction { get; set; } = default!;

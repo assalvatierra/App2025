@@ -526,7 +526,7 @@
       <column name="" />
     </property>
   </class>
-  <class name="SysFeatures" entity-set="SysFeatures" p1:Guid="240fc600-d934-4a3c-bd9f-4d795211ab78">
+  <class name="SysFeature" entity-set="SysFeature" p1:Guid="240fc600-d934-4a3c-bd9f-4d795211ab78">
     <id name="Id" type="Int16" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ed1a95e0-cfd1-42c1-8af4-3313bacf247e">
       <column name="" />
     </id>
@@ -543,6 +543,9 @@
       <column name="" />
     </property>
     <property name="SysCode" type="String" p1:ValidateRequired="true" p1:Guid="c1c4bbf5-1b20-4af6-8b66-41f2d6cafb27">
+      <column name="" />
+    </property>
+    <property name="Settings" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1df46f8f-e5f6-4c4e-a508-9e37204d374f">
       <column name="" />
     </property>
   </class>

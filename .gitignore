@@ -124,3 +124,10 @@ Thumbs.db
 /.vs/Erp2025/DesignTimeBuild
 .vs/Erp2025/DesignTimeBuild/.dtbcache.v2
 .vs/Erp2025/v17/.futdcache.v2
+
+# Build artifacts
+/Erp.Domain/obj/
+/Erp.Domain/bin/
+/Scaffolding/Erp.Domain/obj/
+/Scaffolding/Erp.Domain/bin/
+/AngularApp1/angularapp1.client/obj/

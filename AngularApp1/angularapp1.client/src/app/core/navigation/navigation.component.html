@@ -1,20 +1,26 @@
-<!-- ...existing code... -->
+<!-- Show menu disabled message when feature is disabled -->
+@if (isFeatureDisabled) {
+  <div class="menu-disabled">
+    <mat-icon class="disabled-icon">block</mat-icon>
+    <h3>Menu Disabled</h3>
+    <p>The menu configuration feature is currently disabled.</p>
+    <p class="help-text">Please contact your administrator to enable menu access.</p>
+  </div>
+}
 
 <!-- Show loading indicator while filtering -->
-@if (!isFilteringComplete()) {
+@if (!isFilteringComplete() && !isFeatureDisabled) {
   <div class="menu-loading">
     <mat-spinner diameter="40"></mat-spinner>
     <p>Loading menu...</p>
   </div>
 }
 
-<!-- Show menu items only after filtering is complete -->
-@if (isFilteringComplete()) {
+<!-- Show menu items only after filtering is complete and feature is not disabled -->
+@if (isFilteringComplete() && !isFeatureDisabled) {
   <mat-nav-list>
     @for (item of menuItems(); track item.label){
       <app-menu-item [item]="item" [collapsed]="sideNaveCollapsed()" ></app-menu-item>
     }
   </mat-nav-list>
 }
-
-<!-- ...existing code... -->

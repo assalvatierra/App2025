@@ -41,6 +41,9 @@ export class AppComponent implements OnInit {
   
   // Updated to use MenuFilterConfig instead of just boolean
   menuFilter = signal<Map<string, MenuFilterConfig>>(new Map());
+  
+  // Signal to indicate if menu configuration feature is disabled
+  isMenuFeatureDisabled = signal(false);
 
   title = 'angularapp1.client001';
 
@@ -65,13 +68,32 @@ export class AppComponent implements OnInit {
     this.apiSysFeaturesService.getSysFeatureBySysCode('MENU_CONFIG')
       .subscribe({
         next: (feature) => {
-          if (feature && feature.isEnabled && feature.settings) {
-            this.applyMenuFilter(feature.settings);
+          if (!feature) {
+            console.warn('⚠️ Menu configuration not found - showing all items');
+            this.isMenuFeatureDisabled.set(false);
+            return;
           }
+          
+          if (!feature.isEnabled) {
+            console.warn('⚠️ Menu configuration is disabled');
+            this.isMenuFeatureDisabled.set(true);
+            return;
+          }
+          
+          if (!feature.settings) {
+            console.warn('⚠️ Menu configuration has no settings - showing all items');
+            this.isMenuFeatureDisabled.set(false);
+            return;
+          }
+          
+          console.log('✅ Menu configuration is enabled - applying filter');
+          this.isMenuFeatureDisabled.set(false);
+          this.applyMenuFilter(feature.settings);
         },
         error: (err) => {
-          console.error('Error loading menu feature settings:', err);
+          console.error('❌ Error loading menu feature settings:', err);
           // Continue with default menu if settings fail to load
+          this.isMenuFeatureDisabled.set(false);
         }
       });
   }

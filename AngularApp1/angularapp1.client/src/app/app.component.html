@@ -30,7 +30,10 @@
 </mat-toolbar>
     <mat-sidenav-container>
         <mat-sidenav opened mode="side"  [style.width]="sidenavWidth()"> 
-            <app-navigation [collapsed]="collapsed()" [menuFilter]="menuFilter()"> 
+            <app-navigation 
+              [collapsed]="collapsed()" 
+              [menuFilter]="menuFilter()"
+              [isFeatureDisabled]="isMenuFeatureDisabled()"> 
 
             </app-navigation>
         </mat-sidenav>

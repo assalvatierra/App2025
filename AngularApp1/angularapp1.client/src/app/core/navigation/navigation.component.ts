@@ -30,6 +30,9 @@ export class NavigationComponent implements OnInit {
   
   // Track filtering state to prevent showing menu before filter is applied
   isFilteringComplete = signal(false);
+  
+  // Track if menu feature is disabled - renamed to avoid conflict with Input
+  private _isFeatureDisabled = signal(false);
 
   @Input() set collapsed(val: boolean){
     this.sideNaveCollapsed.set(val);
@@ -37,6 +40,16 @@ export class NavigationComponent implements OnInit {
 
   @Input() set menuFilter(val: Map<string, MenuFilterConfig> | undefined) {
     this._menuFilter.set(val);
+  }
+  
+  @Input() set isFeatureDisabled(val: boolean) {
+    this._isFeatureDisabled.set(val);
+    console.log(`🔧 Menu feature disabled state: ${val}`);
+  }
+  
+  // Getter to access the disabled state in template
+  get isFeatureDisabled(): boolean {
+    return this._isFeatureDisabled();
   }
 
   // Internal signal to track menuFilter changes - now uses MenuFilterConfig
@@ -164,6 +177,7 @@ export class NavigationComponent implements OnInit {
       // If no filter, show all items
       console.log('✅ No filter applied - showing all menu items');
       this.menuItems.set([...this.allMenuItems]);
+      //this.isFilteringComplete.set(true);
       return;
     }
 

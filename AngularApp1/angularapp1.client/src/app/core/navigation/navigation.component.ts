@@ -71,11 +71,37 @@ export class NavigationComponent implements OnInit {
       route: 'Jobs' 
     },
     {
+      name: 'Timesheets',
+      label: 'Timesheets',
+      icon: 'schedule',
+      route: '',
+      subItems: [
+        { 
+          name: 'All Timesheets',
+          label: 'All Timesheets',
+          icon: 'list', 
+          route: 'timesheets'
+        },
+        { 
+          name: 'Timesheet Approval',
+          label: 'Timesheet Approval',
+          icon: 'approval', 
+          route: 'timesheets/approval'
+        }
+      ]
+    },
+    {
       name: 'Masterfiles',
       label: 'Masterfiles',
       icon: 'analytics', 
       route: '',
       subItems: [
+        { 
+          name: 'Resources',
+          label: 'Resources',
+          icon: 'people', 
+          route: 'resources'
+        },
         { 
           name: 'Service Items',
           label: 'Service Items',

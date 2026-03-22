@@ -565,6 +565,9 @@
     <property name="ResourceId1" type="Int32" p1:ValidateRequired="true" p1:Guid="b9a9115d-237a-4dd1-a7bf-d72d33e5e1f5">
       <column name="" not-null="False" />
     </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="a78938c4-fee3-48a5-842f-d387ce2cc17a">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="Expense" entity-set="Expense" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
@@ -1254,6 +1257,14 @@
       </end1>
       <end2 multiplicity="Many" name="Timesheets1" class="Resource" relation-class="Timesheet" generate="False" lazy="False" p1:Guid="c25d64ac-50a1-48c0-907a-80c64ed97d7d">
         <property name="ResourceId1" />
+      </end2>
+    </association>
+    <association name="ItemStatus_Timesheet" cardinality="OneToMany" p1:Guid="07328774-2820-406d-a547-bea53f4af9b0">
+      <end1 multiplicity="One" name="ItemStatus" class="Timesheet" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="a079d585-bcd9-4f97-9033-e2fb44adf320">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Timesheets" class="ItemStatus" relation-class="Timesheet" lazy="False" p1:Guid="143654f7-f79b-4b86-be18-3d15920e0784">
+        <property name="ItemStatusId" />
       </end2>
     </association>
   </associations>

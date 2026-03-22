@@ -15,7 +15,8 @@ namespace AngularApp1.Server.Data
         }
 
         public DbSet<Erp.Domain.Models.SysFeature> SysFeature { get; set; } = default!;
-        public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!;
+        public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!
+;
         public DbSet<Erp.Domain.Models.AgentBin> AgentBin { get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentInstruction> AgentInstruction { get; set; } = default!;
         public DbSet<AgentTask> AgentTask { get; set; }
@@ -33,6 +34,13 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatusClass> ItemStatusClass { get; set; } = default!;
+        
+        // Timesheet related DbSets
+        public DbSet<Erp.Domain.Models.Timesheet> Timesheet { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobTimesheet> JobTimesheet { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobServiceTimesheet> JobServiceTimesheet { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,6 +58,45 @@ namespace AngularApp1.Server.Data
                 .HasOne(jc => jc.Customer)
                 .WithMany(e => e.JobCustomers)
                 .HasForeignKey(jc => jc.CustomerId);
+
+            // Configure Timesheet relationships
+            modelBuilder.Entity<Timesheet>()
+                .HasOne(t => t.Resource)
+                .WithMany(r => r.TimesheetResources)
+                .HasForeignKey(t => t.ResourceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Timesheet>()
+                .HasOne(t => t.ResourceId1Navigation)
+                .WithMany(r => r.TimesheetResourceId1Navigations)
+                .HasForeignKey(t => t.ResourceId1)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure JobTimesheet relationships
+            modelBuilder.Entity<JobTimesheet>()
+                .HasOne<Timesheet>()
+                .WithMany()
+                .HasForeignKey(jt => jt.TimesheetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobTimesheet>()
+                .HasOne<JobMain>()
+                .WithMany()
+                .HasForeignKey(jt => jt.JobMainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure JobServiceTimesheet relationships
+            modelBuilder.Entity<JobServiceTimesheet>()
+                .HasOne<Timesheet>()
+                .WithMany()
+                .HasForeignKey(jst => jst.TimesheetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobServiceTimesheet>()
+                .HasOne<JobService>()
+                .WithMany()
+                .HasForeignKey(jst => jst.JobServiceId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

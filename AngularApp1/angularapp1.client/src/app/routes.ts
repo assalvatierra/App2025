@@ -28,6 +28,11 @@ import { JobMainComponent } from "./pages/job-main/job-main.component";
 import { JobMainFormComponent } from "./pages/job-main/job-main-form/job-main-form.component";
 import { JobServiceComponent } from "./pages/job-service/job-service.component";
 import { JobServiceFormComponent } from './pages/job-service/job-service-form/job-service-form.component';
+import { TimesheetsListComponent } from './pages/timesheets/timesheets-list/timesheets-list.component';
+import { TimesheetFormComponent } from './pages/timesheets/timesheet-form/timesheet-form.component';
+import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approval/timesheet-approval.component';
+import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
+import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
 
 const routeConfig: Routes = [
 
@@ -140,6 +145,33 @@ const routeConfig: Routes = [
       component: JobServiceFormComponent,
       canActivate: [AuthGuard]
     },
+    // Timesheet routes
+    {
+      path: 'timesheets',
+      component: TimesheetsListComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'timesheets/form/:id',
+      component: TimesheetFormComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'timesheets/approval',
+      component: TimesheetApprovalComponent,
+      canActivate: [AuthGuard]
+    },
+    // Resource routes
+    {
+      path: 'resources',
+      component: ResourcesListComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'resources/form/:id',
+      component: ResourceFormComponent,
+      canActivate: [AuthGuard]
+    }
 
 ];
 

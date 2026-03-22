@@ -1,0 +1,29 @@
+<ui-page-title [title]="'Timesheet Approval'"></ui-page-title>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Pending Timesheets for Approval</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-entity-list-table
+      #ListTable
+      [tableFields]="tableFields"
+      [showEdit]="false"
+      [showAdd]="false"
+      [showEditDetails]="true"
+      (editDetailClicked)="onViewDetails($event)"
+    ></app-entity-list-table>
+
+    <div class="action-buttons" *ngIf="pendingTimesheets.length > 0">
+      <p>Use the actions menu to approve or reject individual timesheets.</p>
+    </div>
+    
+    <div class="no-data" *ngIf="pendingTimesheets.length === 0 && !dataloading">
+      <p>No pending timesheets for approval.</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <div class="spinner">Loading...</div>
+</div>

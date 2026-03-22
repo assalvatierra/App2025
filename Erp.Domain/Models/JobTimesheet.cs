@@ -10,6 +10,4 @@ public partial class JobTimesheet
     public int? TimesheetId { get; set; }
 
     public int? JobMainId { get; set; }
-
-    public virtual Timesheet? Timesheet { get; set; }
 }

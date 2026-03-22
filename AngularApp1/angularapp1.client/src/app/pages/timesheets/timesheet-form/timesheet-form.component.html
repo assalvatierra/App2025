@@ -1,0 +1,77 @@
+<ui-page-title [title]="titleInfo"></ui-page-title>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ titleInfo }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="timesheetForm" (ngSubmit)="onSubmit()">
+      <div class="form-container">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="tsDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="timesheetForm.get('tsDate')?.hasError('required')">
+            Date is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Resource/Employee</mat-label>
+          <mat-select formControlName="resourceId" required>
+            <mat-option *ngFor="let resource of resources" [value]="resource.id">
+              {{ resource.name }} ({{ resource.code }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="timesheetForm.get('resourceId')?.hasError('required')">
+            Resource is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Approver (Optional)</mat-label>
+          <mat-select formControlName="resourceId1">
+            <mat-option [value]="null">None</mat-option>
+            <mat-option *ngFor="let resource of resources" [value]="resource.id">
+              {{ resource.name }} ({{ resource.code }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="itemStatusId">
+            <mat-option *ngFor="let status of statuses" [value]="status.id">
+              {{ status.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput formControlName="remarks" rows="4"></textarea>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" *ngIf="!showAddBtn" [disabled]="dataloading">
+            Update Timesheet
+          </button>
+          <button mat-raised-button color="primary" type="button" (click)="onAdd()" *ngIf="showAddBtn" [disabled]="dataloading">
+            Add Timesheet
+          </button>
+          <button mat-raised-button color="accent" type="button" (click)="onSubmitForApproval()" *ngIf="!showAddBtn" [disabled]="dataloading">
+            Submit for Approval
+          </button>
+          <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <div class="spinner">Loading...</div>
+</div>

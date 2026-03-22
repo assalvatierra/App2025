@@ -15,9 +15,7 @@ public partial class Timesheet
 
     public int? ResourceId1 { get; set; }
 
-    public virtual ICollection<JobServiceTimesheet> JobServiceTimesheets { get; set; } = new List<JobServiceTimesheet>();
-
-    public virtual ICollection<JobTimesheet> JobTimesheets { get; set; } = new List<JobTimesheet>();
+    public int? ItemStatusId { get; set; }
 
     public virtual Resource? Resource { get; set; }
 

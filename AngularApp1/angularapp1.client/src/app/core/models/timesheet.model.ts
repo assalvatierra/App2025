@@ -1,0 +1,40 @@
+// Timesheet Models
+export interface Timesheet {
+  id: number;
+  tsDate: Date;
+  remarks?: string;
+  resourceId?: number;
+  resourceId1?: number;
+  itemStatusId?: number;
+  resource?: Resource;
+  resourceId1Navigation?: Resource;
+}
+
+export interface JobTimesheet {
+  id: number;
+  timesheetId?: number;
+  jobMainId?: number;
+}
+
+export interface JobServiceTimesheet {
+  id: number;
+  timesheetId?: number;
+  jobServiceId?: number;
+}
+
+export interface Resource {
+  id: number;
+  name: string;
+  description?: string;
+  remarks?: string;
+  code?: string;
+  sortOrder?: number;
+  itemTypeId?: number;
+  itemStatusId?: number;
+  jsonProperties?: string;
+}
+
+export interface ApprovalRequest {
+  statusId?: number;
+  remarks?: string;
+}

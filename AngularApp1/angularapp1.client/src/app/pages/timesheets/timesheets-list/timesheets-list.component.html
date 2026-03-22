@@ -1,0 +1,73 @@
+<ui-page-title [title]="'Timesheets'"></ui-page-title>
+
+<mat-card class="filter-card">
+  <mat-card-header>
+    <mat-card-title>Filter Timesheets</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Resource/Employee</mat-label>
+        <mat-select [(ngModel)]="filterResourceId">
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option *ngFor="let resource of resources" [value]="resource.id">
+            {{ resource.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="filterStartDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="filterEndDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="filterStatusId">
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filter-buttons">
+        <button mat-raised-button color="primary" (click)="onFilter()">
+          Apply Filter
+        </button>
+        <button mat-raised-button (click)="onClearFilter()">
+          Clear Filter
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <app-entity-list-table
+      #ListTable
+      [tableFields]="tableFields"
+      [showEdit]="showEdit"
+      [showAdd]="true"
+      [addTitle]="'Add Timesheet'"
+      [editTitle]="'Edit Timesheet'"
+      (addRecordClicked)="onAddRecord()"
+      (editRecordClicked)="onEdit($event)"
+      (archiveClicked)="onArchive($event)"
+    ></app-entity-list-table>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <div class="spinner">Loading...</div>
+</div>

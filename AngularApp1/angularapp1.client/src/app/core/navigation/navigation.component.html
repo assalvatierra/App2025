@@ -1,7 +1,20 @@
 <!-- ...existing code... -->
-<mat-nav-list>
-  @for (item of menuItems(); track item.label){
-    <app-menu-item [item]="item" [collapsed]="sideNaveCollapsed()" ></app-menu-item>
-  }
-</mat-nav-list>
+
+<!-- Show loading indicator while filtering -->
+@if (!isFilteringComplete()) {
+  <div class="menu-loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading menu...</p>
+  </div>
+}
+
+<!-- Show menu items only after filtering is complete -->
+@if (isFilteringComplete()) {
+  <mat-nav-list>
+    @for (item of menuItems(); track item.label){
+      <app-menu-item [item]="item" [collapsed]="sideNaveCollapsed()" ></app-menu-item>
+    }
+  </mat-nav-list>
+}
+
 <!-- ...existing code... -->

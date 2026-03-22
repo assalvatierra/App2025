@@ -1,14 +1,21 @@
-import { Component, inject, signal,Input, computed } from '@angular/core';
+import { Component, inject, signal, Input, computed, OnInit, effect } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatListModule } from '@angular/material/list';
 
 export interface MenuItem {
-  label: string;
+  name: string;      // Unique identifier for filtering
+  label: string;     // Display text
   icon?: string;
   route?: string;
   subItems?: MenuItem[];
+}
+
+// Import MenuFilterConfig interface
+export interface MenuFilterConfig {
+  enabled: boolean;
+  label?: string;
 }
 
 @Component({
@@ -17,13 +24,23 @@ export interface MenuItem {
   styleUrl: './navigation.component.css',
   standalone: false
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
 
   sideNaveCollapsed = signal(false);
+  
+  // Track filtering state to prevent showing menu before filter is applied
+  isFilteringComplete = signal(false);
 
   @Input() set collapsed(val: boolean){
     this.sideNaveCollapsed.set(val);
   }
+
+  @Input() set menuFilter(val: Map<string, MenuFilterConfig> | undefined) {
+    this._menuFilter.set(val);
+  }
+
+  // Internal signal to track menuFilter changes - now uses MenuFilterConfig
+  private _menuFilter = signal<Map<string, MenuFilterConfig> | undefined>(undefined);
 
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -33,38 +50,193 @@ export class NavigationComponent {
       shareReplay()
     );
 
-  menuItems = signal<MenuItem[]>([
-    { icon: 'dashboard', label: 'Jobs Orders', route: 'Jobs' },
-    //{ icon: 'dashboard', label: 'JobServices', route: 'job-service' },
-    //{ icon: 'dashboard', label: 'Entities', route: 'Entities' },
-    //{ icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
-    //{ icon: 'dashboard', label: 'Contacts', route: 'contacts' },
- 
+  private allMenuItems: MenuItem[] = [
+    { 
+      name: 'Jobs Orders',
+      label: 'Jobs Orders', 
+      icon: 'dashboard', 
+      route: 'Jobs' 
+    },
     {
-      icon: 'analytics', label: 'Masterfiles', route: '',
+      name: 'Masterfiles',
+      label: 'Masterfiles',
+      icon: 'analytics', 
+      route: '',
       subItems: [
-        { icon: 'comment', label: 'Service Items', route: 'references/serviceitems'},  
-        { icon: 'dashboard', label: 'Entities', route: 'Entities' },
-        { icon: 'dashboard', label: 'Business Units', route: 'businessunits' },
-        { icon: 'dashboard', label: 'Contacts', route: 'contacts' },
-        { icon: 'comment', label: 'Agent List', route: 'agents'}
+        { 
+          name: 'Service Items',
+          label: 'Service Items',
+          icon: 'comment', 
+          route: 'references/serviceitems'
+        },  
+        { 
+          name: 'Entities',
+          label: 'Entities',
+          icon: 'dashboard', 
+          route: 'Entities' 
+        },
+        { 
+          name: 'Business Units',
+          label: 'Business Units',
+          icon: 'dashboard', 
+          route: 'businessunits' 
+        },
+        { 
+          name: 'Contacts',
+          label: 'Contacts',
+          icon: 'dashboard', 
+          route: 'contacts' 
+        },
+        { 
+          name: 'Agent List',
+          label: 'Agent List',
+          icon: 'comment', 
+          route: 'agents'
+        }
       ],
     },
     {
-      icon: 'analytics', label: 'References', route: '',
+      name: 'References',
+      label: 'References',
+      icon: 'analytics', 
+      route: '',
       subItems: [
-        { icon: 'comment', label: 'Countries', route: 'references/countries'},
-        { icon: 'comment', label: 'Cities', route: 'references/cities'},
-        { icon: 'comment', label: 'Item Types', route: 'references/itemtypes'},
-        { icon: 'comment', label: 'Item Status', route: 'references/itemstatus'}
+        { 
+          name: 'Countries',
+          label: 'Countries',
+          icon: 'comment', 
+          route: 'references/countries'
+        },
+        { 
+          name: 'Cities',
+          label: 'Cities',
+          icon: 'comment', 
+          route: 'references/cities'
+        },
+        { 
+          name: 'Item Types',
+          label: 'Item Types',
+          icon: 'comment', 
+          route: 'references/itemtypes'
+        },
+        { 
+          name: 'Item Status',
+          label: 'Item Status',
+          icon: 'comment', 
+          route: 'references/itemstatus'
+        }
       ]
     },
     {
+      name: 'Agent Form',
       label: 'Agent Form',
       icon: 'person_add',
       route: '/agents/form/0'
     }
-  ]);
+  ];
 
-  profilePicSize = computed(() => this.sideNaveCollapsed() ? '32' : '100')
+  menuItems = signal<MenuItem[]>([]);
+
+  profilePicSize = computed(() => this.sideNaveCollapsed() ? '32' : '100');
+
+  constructor() {
+    // Don't set initial menu items - wait for filter
+    
+    // React to menuFilter changes automatically
+    effect(() => {
+      const filter = this._menuFilter();
+      console.log('🔍 Menu filter changed, applying filter...', filter?.size || 0, 'items');
+      this.applyMenuFilter();
+    }, { allowSignalWrites: true });
+  }
+
+  ngOnInit() {
+    // Initial filter application
+    this.applyMenuFilter();
+  }
+
+  private applyMenuFilter() {
+    const filter = this._menuFilter();
+    
+    console.log('🎯 Applying menu filter. Filter size:', filter?.size || 0);
+     
+    if (!filter || filter.size === 0) {
+      // If no filter, show all items
+      console.log('✅ No filter applied - showing all menu items');
+      this.menuItems.set([...this.allMenuItems]);
+      return;
+    }
+
+    const filteredItems = this.allMenuItems
+      .map(item => {
+        // Get filter configuration for this item
+        const filterConfig = filter?.get(item.name);
+        const parentEnabled = filterConfig?.enabled ?? true;
+        
+        // Get label override from filter (if provided)
+        const displayLabel = filterConfig?.label || item.label;
+        
+        console.log(`📋 Menu "${item.name}" (Display: "${displayLabel}"${filterConfig?.label ? ' [OVERRIDDEN]' : ''}): ${parentEnabled ? '✅ Enabled' : '❌ Disabled'}`);
+        
+        if (!parentEnabled) {
+          console.log(`   ↳ Hiding entire menu "${item.name}"`);
+          return null; // Parent disabled, skip entire menu
+        }
+
+        // Filter sub-items if they exist
+        if (item.subItems && item.subItems.length > 0) {
+          const filteredSubItems = item.subItems
+            .filter(subItem => {
+              // Get filter configuration for sub-item
+              const subFilterConfig = filter?.get(subItem.name);
+              const subEnabled = subFilterConfig?.enabled ?? true;
+              const subDisplayLabel = subFilterConfig?.label || subItem.label;
+              
+              console.log(`   ↳ Sub-item "${subItem.name}" (Display: "${subDisplayLabel}"${subFilterConfig?.label ? ' [OVERRIDDEN]' : ''}): ${subEnabled ? '✅' : '❌'}`);
+              return subEnabled;
+            })
+            .map(subItem => {
+              // Apply label override for sub-items
+              const subFilterConfig = filter?.get(subItem.name);
+              if (subFilterConfig?.label) {
+                return {
+                  ...subItem,
+                  label: subFilterConfig.label
+                };
+              }
+              return subItem;
+            });
+          
+          // If no sub-items remain, hide the parent menu too
+          if (filteredSubItems.length === 0) {
+            console.log(`   ↳ ⚠️ Hiding parent "${item.name}" - all sub-items filtered out`);
+            return null;
+          }
+
+          console.log(`   ↳ Showing ${filteredSubItems.length}/${item.subItems.length} sub-items`);
+          
+          // Return parent with filtered sub-items and label override
+          return {
+            ...item,
+            label: displayLabel, // Apply label override to parent
+            subItems: filteredSubItems
+          };
+        }
+        
+        // Return item with label override
+        return {
+          ...item,
+          label: displayLabel
+        };
+      })
+      .filter((item): item is MenuItem => item !== null);
+    
+    console.log(`✅ Filter applied. Showing ${filteredItems.length}/${this.allMenuItems.length} menu items`);
+    console.log('📋 Visible menus:', filteredItems.map(i => `${i.name} (${i.label})`).join(', '));
+    
+    this.menuItems.set(filteredItems);
+    
+    // Mark filtering as complete
+    this.isFilteringComplete.set(true);
+  }
 }

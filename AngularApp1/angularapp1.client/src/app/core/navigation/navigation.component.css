@@ -48,3 +48,19 @@
   border-left-color:blue;
   color:blue;
 }
+
+/* Loading indicator styles */
+.menu-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+
+  > p {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

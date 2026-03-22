@@ -1,0 +1,130 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "AngularApp1.Server (https)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build: AngularApp1.Server",
+            "program": "${workspaceFolder}/AngularApp1/AngularApp1.Server/bin/Debug/net9.0/AngularApp1.Server.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/AngularApp1/AngularApp1.Server",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7252;http://localhost:5157",
+                "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/AngularApp1/AngularApp1.Server"
+            }
+        },
+        {
+            "name": "eJobsAPI (https)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build: eJobsAPI",
+            "program": "${workspaceFolder}/eJobsAPI/bin/Debug/net9.0/eJobsAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/eJobsAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7129;http://localhost:5089"
+            }
+        },
+        {
+            "name": "WebAgent (https)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build: WebAgent",
+            "program": "${workspaceFolder}/WebAgent/bin/Debug/net9.0/WebAgent.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/WebAgent",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7297;http://localhost:5063"
+            }
+        },
+        {
+            "name": "WebReporting (https)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build: WebReporting",
+            "program": "${workspaceFolder}/WebReporting/bin/Debug/net9.0/WebReporting.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/WebReporting",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7227;http://localhost:5227"
+            }
+        },
+        {
+            "name": "WebSecurity (https)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build: WebSecurity",
+            "program": "${workspaceFolder}/WebSecurity/bin/Debug/net9.0/WebSecurity.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/WebSecurity",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7188;http://localhost:5258"
+            }
+        },
+        {
+            "name": "Angular Client (Chrome)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:51099",
+            "webRoot": "${workspaceFolder}/AngularApp1/angularapp1.client/src"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack (AngularApp1 + eJobsAPI)",
+            "configurations": [
+                "AngularApp1.Server (https)",
+                "eJobsAPI (https)"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "All Services",
+            "configurations": [
+                "AngularApp1.Server (https)",
+                "eJobsAPI (https)",
+                "WebAgent (https)",
+                "WebReporting (https)",
+                "WebSecurity (https)"
+            ],
+            "stopAll": true
+        }
+    ]
+}

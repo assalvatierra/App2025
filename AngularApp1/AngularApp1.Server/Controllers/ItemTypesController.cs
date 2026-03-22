@@ -43,7 +43,9 @@ namespace AngularApp1.Server.Controllers
         {
             var itemTypes = await _context.ItemType
                 .Include(it => it.ItemTypeClass)
-                .Where(it => it.ItemTypeClass != null && it.ItemTypeClass.Code == className)
+                .Where(it => it.ItemTypeClass != null &&
+                             (it.ItemTypeClass.Name.ToUpper() == className.ToUpper() ||
+                              it.ItemTypeClass.Code != null && it.ItemTypeClass.Code.ToUpper() == className.ToUpper()))
                 .ToListAsync();
 
             if (itemTypes == null || !itemTypes.Any())
@@ -52,6 +54,21 @@ namespace AngularApp1.Server.Controllers
             }
 
             return itemTypes;
+        }
+
+        // GET: api/ItemTypes/ByCode/{code}
+        [HttpGet("ByCode/{code}")]
+        public async Task<ActionResult<ItemType>> GetItemTypeByCode(string code)
+        {
+            var itemType = await _context.ItemType
+                .FirstOrDefaultAsync(it => it.Code == code);
+
+            if (itemType == null)
+            {
+                return NotFound();
+            }
+
+            return itemType;
         }
 
         // PUT: api/ItemTypes/5

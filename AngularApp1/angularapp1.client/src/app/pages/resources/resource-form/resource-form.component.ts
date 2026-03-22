@@ -112,35 +112,23 @@ export class ResourceFormComponent implements AfterViewInit {
 
   /* API calls */
   private loadLookupData(): void {
-    // Load item types
-    this.apiService.getItemTypesByClassName('Resource').subscribe({
+    // Load item types filtered by 'RESOURCE' class
+    this.apiService.getItemTypesByClassName('RESOURCE').subscribe({
       next: (res: any) => {
         this.itemTypes = res || [];
       },
       error: (err) => {
         console.error('Error loading item types:', err);
-        // Fallback to all item types
-        this.apiService.getItemTypes().subscribe({
-          next: (res: any) => {
-            this.itemTypes = res || [];
-          }
-        });
       }
     });
 
-    // Load item statuses
-    this.apiService.getItemStatusesByClassName('Resource').subscribe({
+    // Load item statuses filtered by 'RESOURCE' class
+    this.apiService.getItemStatusesByClassName('RESOURCE').subscribe({
       next: (res: any) => {
         this.itemStatuses = res || [];
       },
       error: (err) => {
         console.error('Error loading item statuses:', err);
-        // Fallback to all statuses
-        this.apiService.getItemStatuses().subscribe({
-          next: (res: any) => {
-            this.itemStatuses = res || [];
-          }
-        });
       }
     });
   }

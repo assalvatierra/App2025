@@ -48,7 +48,24 @@ namespace AngularApp1.Server.Controllers
                 query = query.Where(r => r.ItemTypeId == itemTypeId.Value);
             }
 
-            return await query.OrderBy(r => r.SortOrder).ThenBy(r => r.Name).ToListAsync();
+            var resources = await query
+                .OrderBy(r => r.SortOrder)
+                .ThenBy(r => r.Name)
+                .Select(r => new 
+                {
+                    r.Id,
+                    r.Name,
+                    r.Code,
+                    r.Description,
+                    r.Remarks,
+                    r.SortOrder,
+                    r.ItemTypeId,
+                    r.ItemStatusId,
+                    r.JsonProperties
+                })
+                .ToListAsync();
+
+            return Ok(resources);
         }
 
         // GET: api/Resources/5
@@ -84,22 +101,61 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("Active")]
         public async Task<ActionResult<IEnumerable<Resource>>> GetActiveResources()
         {
-            return await _context.Resource
-                .Where(r => r.ItemStatusId == 1) // Assuming 1 is "Active" status
-                .OrderBy(r => r.SortOrder)
-                .ThenBy(r => r.Name)
+            var activeStatusId = await _context.ItemStatus
+                .Include(s => s.ItemStatusClass)
+                .Where(s => s.Code != null && s.Code.ToUpper() == "ACTIVE" &&
+                            s.ItemStatusClass != null && s.ItemStatusClass.Code != null &&
+                            s.ItemStatusClass.Code.ToUpper() == "RESOURCE")
+                .Select(s => s.Id)
+                .FirstOrDefaultAsync();
+
+            var resources = await (
+                from r in _context.Resource
+                join t in _context.ItemType on r.ItemTypeId equals t.Id into typeJoin
+                from t in typeJoin.DefaultIfEmpty()
+                where r.ItemStatusId == activeStatusId
+                orderby r.SortOrder, r.Name
+                select new
+                {
+                    r.Id,
+                    r.Name,
+                    r.Code,
+                    r.Description,
+                    r.Remarks,
+                    r.SortOrder,
+                    r.ItemTypeId,
+                    ItemTypeCode = t != null ? t.Code : null,
+                    r.ItemStatusId,
+                    r.JsonProperties
+                })
                 .ToListAsync();
+
+            return Ok(resources);
         }
 
         // GET: api/Resources/ByType/{itemTypeId}
         [HttpGet("ByType/{itemTypeId}")]
         public async Task<ActionResult<IEnumerable<Resource>>> GetResourcesByType(int itemTypeId)
         {
-            return await _context.Resource
+            var resources = await _context.Resource
                 .Where(r => r.ItemTypeId == itemTypeId)
                 .OrderBy(r => r.SortOrder)
                 .ThenBy(r => r.Name)
+                .Select(r => new 
+                {
+                    r.Id,
+                    r.Name,
+                    r.Code,
+                    r.Description,
+                    r.Remarks,
+                    r.SortOrder,
+                    r.ItemTypeId,
+                    r.ItemStatusId,
+                    r.JsonProperties
+                })
                 .ToListAsync();
+
+            return Ok(resources);
         }
 
         // PUT: api/Resources/5

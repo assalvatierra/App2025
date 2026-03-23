@@ -133,6 +133,7 @@ export class ApiResourcesService {
       code: data.code,
       sortOrder: data.sortOrder,
       itemTypeId: data.itemTypeId,
+      itemTypeCode: data.itemTypeCode,
       itemStatusId: data.itemStatusId,
       jsonProperties: data.jsonProperties
     };

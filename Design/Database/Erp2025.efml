@@ -794,6 +794,23 @@
       <column name="" />
     </property>
   </class>
+  <class name="SysUserActionAllowed" entity-set="SysUserActionAllowed" p1:Guid="dcede961-6d05-4985-b38e-e61498f0e8dd">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="63438869-ec2f-44a7-80a7-2cd71c95241c">
+      <column name="" />
+    </id>
+    <property name="User" type="String" p1:ValidateRequired="true" p1:Guid="d08b2a9c-04d4-465f-8be4-93e5c8325f52">
+      <column name="" />
+    </property>
+    <property name="SysActionCode" type="String" p1:ValidateRequired="true" p1:Guid="dcadc878-4551-4422-a928-bf3572f478b1">
+      <column name="" />
+    </property>
+    <property name="ActionStatus" type="String" p1:ValidateRequired="true" p1:Guid="ac950104-4f83-4ff1-a7bd-5ee8057a6c59">
+      <column name="" />
+    </property>
+    <property name="AutoDisableOn" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8b7d1068-4adb-484b-a3ff-4f984d7ed007">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">

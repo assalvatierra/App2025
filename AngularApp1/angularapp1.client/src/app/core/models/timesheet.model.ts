@@ -30,6 +30,7 @@ export interface Resource {
   code?: string;
   sortOrder?: number;
   itemTypeId?: number;
+  itemTypeCode?: string;
   itemStatusId?: number;
   jsonProperties?: string;
 }

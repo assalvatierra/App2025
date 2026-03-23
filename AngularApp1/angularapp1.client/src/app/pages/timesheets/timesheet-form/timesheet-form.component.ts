@@ -9,11 +9,23 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { forkJoin } from 'rxjs';
 import { ApiTimesheetsService } from '../../../core/services/api-timesheets.service';
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
+import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
 import { ApiService } from '../../../core/api.service';
-import { Timesheet } from '../../../core/models/timesheet.model';
+import { Timesheet, Resource } from '../../../core/models/timesheet.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
+
+interface TimesheetColumnConfig {
+  columnName: string;
+  displayColumnName: string;
+  includedTypes: string[];
+}
+
+interface TimesheetFeatureSettings {
+  columns: TimesheetColumnConfig[];
+}
 
 @Component({
   selector: 'app-timesheet-form',
@@ -42,13 +54,20 @@ export class TimesheetFormComponent implements AfterViewInit {
   public titleInfo: string = 'Timesheet Details';
 
   // Lookup data
-  public resources: any[] = [];
+  public resources: Resource[] = [];
   public statuses: any[] = [];
+
+  // Feature-driven resource dropdowns
+  public resourceIdLabel: string = 'Resource/Employee';
+  public resourceId1Label: string = 'Approver (Optional)';
+  public resourcesForResourceId: Resource[] = [];
+  public resourcesForResourceId1: Resource[] = [];
 
   constructor(
     private fb: FormBuilder,
     private apiTimesheets: ApiTimesheetsService,
     private apiResources: ApiResourcesService,
+    private apiSysFeatures: ApiSysFeaturesService,
     private apiService: ApiService,
     private router: Router,
     private route: ActivatedRoute
@@ -131,28 +150,72 @@ export class TimesheetFormComponent implements AfterViewInit {
 
   /* API calls */
   private loadLookupData(): void {
-    // Load resources
-    this.apiResources.getActiveResources().subscribe({
-      next: (res: any) => {
-        this.resources = res || [];
-      },
-      error: (err) => {
-        console.error('Error loading resources:', err);
-      }
-    });
+    // Load all active resources, the TIMESHEET SysFeature, and statuses in parallel
+    forkJoin({
+      resources: this.apiResources.getActiveResources(),
+      statuses: this.apiService.getItemStatusesByClassName('Timesheet'),
+      feature: this.apiSysFeatures.getSysFeatureBySysCode('TIMESHEET')
+    }).subscribe({
+      next: ({ resources, statuses, feature }) => {
+        this.resources = resources || [];
+        this.statuses = statuses || [];
 
-    // Load statuses
-    this.apiService.getItemStatusesByClassName('Timesheet').subscribe({
-      next: (res: any) => {
-        this.statuses = res || [];
+        console.log('Loaded resources:', this.resources); // Debug log
+        console.log('Feature settings:', feature?.settings); // Debug log
+
+        // Apply SysFeature column config to map labels and filter resources by includedTypes
+        if (feature?.settings) {
+          try {
+            const settings: TimesheetFeatureSettings = JSON.parse(feature.settings);
+            settings.columns.forEach(col => {
+              const upperTypes = col.includedTypes.map(c => c.toUpperCase());
+
+              // Filter resources by itemTypeCode - handle null/undefined codes
+              const filtered = upperTypes.length > 0
+                ? this.resources.filter(r => {
+                    const itemTypeCode = (r.itemTypeCode || '').toUpperCase();
+                    console.log(`Checking resource ${r.name} (itemTypeCode: ${r.itemTypeCode}) against types:`, upperTypes);
+                    return upperTypes.includes(itemTypeCode);
+                  })
+                : this.resources;
+
+              console.log(`Column ${col.columnName}: filtered ${filtered.length} resources from ${this.resources.length}`);
+
+              if (col.columnName === 'resourceId') {
+                this.resourceIdLabel = col.displayColumnName;
+                this.resourcesForResourceId = filtered;
+              } else if (col.columnName === 'resourceId1') {
+                this.resourceId1Label = col.displayColumnName;
+                this.resourcesForResourceId1 = filtered;
+              }
+            });
+          } catch (e) {
+            console.error('Error parsing TIMESHEET feature settings:', e);
+            this.resourcesForResourceId = this.resources;
+            this.resourcesForResourceId1 = this.resources;
+          }
+        } else {
+          console.log('No feature config found, using all resources');
+          // No feature config: fall back to showing all resources in both dropdowns
+          this.resourcesForResourceId = this.resources;
+          this.resourcesForResourceId1 = this.resources;
+        }
+
+        console.log('ResourceId dropdown:', this.resourcesForResourceId);
+        console.log('ResourceId1 dropdown:', this.resourcesForResourceId1);
       },
       error: (err) => {
-        console.error('Error loading statuses:', err);
-        // Fallback to all statuses
-        this.apiService.getItemStatuses().subscribe({
-          next: (res: any) => {
-            this.statuses = res || [];
+        console.error('Error loading lookup data:', err);
+        // On error still try to load resources and statuses independently
+        this.apiResources.getActiveResources().subscribe({
+          next: (res) => {
+            this.resources = res || [];
+            this.resourcesForResourceId = this.resources;
+            this.resourcesForResourceId1 = this.resources;
           }
+        });
+        this.apiService.getItemStatuses().subscribe({
+          next: (res) => { this.statuses = res || []; }
         });
       }
     });

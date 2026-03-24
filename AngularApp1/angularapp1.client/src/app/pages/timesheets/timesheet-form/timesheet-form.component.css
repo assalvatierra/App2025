@@ -38,13 +38,57 @@
   margin-top: 8px;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
 .section-title {
   font-size: 14px;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.6);
-  margin: 0 0 8px 0;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.job-link-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #f9f9f9;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.job-link-select {
+  flex: 1 1 300px;
+  min-width: 200px;
+}
+
+.job-link-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.job-link-loading {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+  align-self: center;
+}
+
+.no-jobs-text {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  font-style: italic;
+  margin: 0;
 }
 
 .job-timesheets-table {

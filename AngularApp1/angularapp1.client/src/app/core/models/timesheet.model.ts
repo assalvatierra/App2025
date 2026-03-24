@@ -8,6 +8,8 @@ export interface Timesheet {
   itemStatusId?: number;
   resource?: Resource;
   resourceId1Navigation?: Resource;
+  linkedJobId?: number;
+  linkedJobDescription?: string;
 }
 
 export interface JobTimesheet {

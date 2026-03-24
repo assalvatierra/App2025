@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,7 @@ import { ApiTimesheetsService } from '../../../core/services/api-timesheets.serv
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
 import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
 import { ApiService } from '../../../core/api.service';
+import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 import { Timesheet, JobTimesheet, Resource } from '../../../core/models/timesheet.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 
@@ -25,6 +26,7 @@ interface TimesheetColumnConfig {
 
 interface TimesheetFeatureSettings {
   specialcolumns: TimesheetColumnConfig[];
+  allowMultiJobLink: boolean;
 }
 
 @Component({
@@ -35,6 +37,7 @@ interface TimesheetFeatureSettings {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -66,12 +69,21 @@ export class TimesheetFormComponent implements AfterViewInit {
   // Linked job timesheets
   public jobTimesheets: JobTimesheet[] = [];
 
+  // Job link form state
+  public showJobLinkForm: boolean = false;
+  public jobMains: any[] = [];
+  public selectedJobMainId: number | null = null;
+  public jobLinkLoading: boolean = false;
+  public allowMultiJobLink: boolean = true;
+  public featureLoaded: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private apiTimesheets: ApiTimesheetsService,
     private apiResources: ApiResourcesService,
     private apiSysFeatures: ApiSysFeaturesService,
     private apiService: ApiService,
+    private apiJobMain: ApiJobMainService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -151,6 +163,58 @@ export class TimesheetFormComponent implements AfterViewInit {
     }
   }
 
+  onShowJobLinkForm(): void {
+    this.showJobLinkForm = true;
+    this.selectedJobMainId = null;
+    if (this.jobMains.length === 0) {
+      this.jobLinkLoading = true;
+      this.apiJobMain.getJobMains().subscribe({
+        next: (res) => {
+          this.jobMains = res || [];
+          this.jobLinkLoading = false;
+        },
+        error: (err) => {
+          console.error('Error loading job mains:', err);
+          this.jobLinkLoading = false;
+        }
+      });
+    }
+  }
+
+  onCancelJobLink(): void {
+    this.showJobLinkForm = false;
+    this.selectedJobMainId = null;
+  }
+
+  onLinkJob(): void {
+    if (!this.selectedJobMainId) return;
+    this.jobLinkLoading = true;
+    this.apiTimesheets.addTimesheetJob(this.paramId, this.selectedJobMainId).subscribe({
+      next: (newLink) => {
+        this.jobTimesheets = [...this.jobTimesheets, newLink];
+        this.showJobLinkForm = false;
+        this.selectedJobMainId = null;
+        this.jobLinkLoading = false;
+      },
+      error: (err) => {
+        console.error('Error linking job:', err);
+        this.jobLinkLoading = false;
+      }
+    });
+  }
+
+  onRemoveJobLink(jobTimesheet: JobTimesheet): void {
+    if (!confirm('Remove this job link?')) return;
+    this.apiTimesheets.deleteTimesheetJob(this.paramId, jobTimesheet.id).subscribe({
+      next: () => {
+        this.jobTimesheets = this.jobTimesheets.filter(jt => jt.id !== jobTimesheet.id);
+      },
+      error: (err) => {
+        console.error('Error removing job link:', err);
+      }
+    });
+  }
+
   /* API calls */
   private loadLookupData(): void {
     // Load all active resources, the TIMESHEET SysFeature, and statuses in parallel
@@ -170,6 +234,8 @@ export class TimesheetFormComponent implements AfterViewInit {
         if (feature?.settings) {
           try {
             const settings: TimesheetFeatureSettings = JSON.parse(feature.settings);
+            // Explicitly cast to handle both boolean false and string "false" from JSON
+            this.allowMultiJobLink = String(settings.allowMultiJobLink) !== 'false';
             settings.specialcolumns.forEach(col => {
               const upperTypes = col.includedTypes.map(c => c.toUpperCase());
 
@@ -206,6 +272,7 @@ export class TimesheetFormComponent implements AfterViewInit {
 
         console.log('ResourceId dropdown:', this.resourcesForResourceId);
         console.log('ResourceId1 dropdown:', this.resourcesForResourceId1);
+        this.featureLoaded = true;
       },
       error: (err) => {
         console.error('Error loading lookup data:', err);
@@ -220,6 +287,7 @@ export class TimesheetFormComponent implements AfterViewInit {
         this.apiService.getItemStatuses().subscribe({
           next: (res) => { this.statuses = res || []; }
         });
+        this.featureLoaded = true; // unblock the UI even on error
       }
     });
   }

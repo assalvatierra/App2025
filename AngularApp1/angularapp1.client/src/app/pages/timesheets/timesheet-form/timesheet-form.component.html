@@ -54,14 +54,45 @@
         </mat-form-field>
 
         <!-- Linked Job Timesheets -->
-        <div *ngIf="jobTimesheets.length > 0" class="job-timesheets-section">
-          <h4 class="section-title">Linked Jobs</h4>
-          <table class="job-timesheets-table">
+        <div *ngIf="!showAddBtn && featureLoaded && !dataloading" class="job-timesheets-section">
+          <div class="section-header">
+            <h4 class="section-title">Linked Jobs</h4>
+            <button mat-stroked-button color="primary" type="button"
+                    *ngIf="!showJobLinkForm && (allowMultiJobLink || jobTimesheets.length === 0)"
+                    (click)="onShowJobLinkForm()">
+              + Add Job Link
+            </button>
+          </div>
+
+          <!-- Job link form -->
+          <div *ngIf="showJobLinkForm" class="job-link-form">
+            <mat-form-field appearance="outline" class="job-link-select">
+              <mat-label>Select Job</mat-label>
+              <mat-select [(ngModel)]="selectedJobMainId" [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let jm of jobMains" [value]="jm.id">
+                  {{ jm.jobDate | date:'mediumDate' }} — {{ jm.description }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="job-link-actions">
+              <button mat-raised-button color="primary" type="button"
+                      [disabled]="!selectedJobMainId || jobLinkLoading"
+                      (click)="onLinkJob()">
+                Link
+              </button>
+              <button mat-button type="button" (click)="onCancelJobLink()">Cancel</button>
+            </div>
+            <div *ngIf="jobLinkLoading" class="job-link-loading">Loading...</div>
+          </div>
+
+          <!-- Linked jobs table -->
+          <table *ngIf="jobTimesheets.length > 0" class="job-timesheets-table">
             <thead>
               <tr>
                 <th>Job Date</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -69,9 +100,18 @@
                 <td>{{ jt.jobDate | date:'mediumDate' }}</td>
                 <td>{{ jt.description }}</td>
                 <td>{{ jt.statusName }}</td>
+                <td>
+                  <button mat-button color="warn" type="button"
+                          (click)="onRemoveJobLink(jt)">
+                    Unlink Job
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
+          <p *ngIf="jobTimesheets.length === 0 && !showJobLinkForm" class="no-jobs-text">
+            No jobs linked. Click "Add Job Link" to associate a job.
+          </p>
         </div>
 
         <div class="button-container">

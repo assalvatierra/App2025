@@ -138,6 +138,36 @@ export class ApiTimesheetsService {
   }
 
   /**
+   * Link a JobMain to a Timesheet
+   * @param timesheetId Timesheet ID
+   * @param jobMainId JobMain ID to link
+   * @returns Observable of the created JobTimesheet
+   */
+  addTimesheetJob(timesheetId: number, jobMainId: number): Observable<JobTimesheet> {
+    return this.http.post<JobTimesheet>(
+      `${this.baseUrl}/api/Timesheets/${timesheetId}/Jobs`,
+      jobMainId
+    ).pipe(
+      map((jt: any) => ({
+        ...jt,
+        jobDate: jt.jobDate ? new Date(jt.jobDate) : undefined
+      }))
+    );
+  }
+
+  /**
+   * Remove a job link from a Timesheet
+   * @param timesheetId Timesheet ID
+   * @param jobTimesheetId JobTimesheet record ID to remove
+   * @returns Observable of any
+   */
+  deleteTimesheetJob(timesheetId: number, jobTimesheetId: number): Observable<any> {
+    return this.http.delete<any>(
+      `${this.baseUrl}/api/Timesheets/${timesheetId}/Jobs/${jobTimesheetId}`
+    );
+  }
+
+  /**
    * Get job service timesheets for a specific timesheet
    * @param id Timesheet ID
    * @returns Observable of JobServiceTimesheet array
@@ -220,7 +250,9 @@ export class ApiTimesheetsService {
       resourceId1: data.resourceId1,
       itemStatusId: data.itemStatusId,
       resource: data.resource,
-      resourceId1Navigation: data.resourceId1Navigation
+      resourceId1Navigation: data.resourceId1Navigation,
+      linkedJobId: data.linkedJobId,
+      linkedJobDescription: data.linkedJobDescription
     };
   }
 }

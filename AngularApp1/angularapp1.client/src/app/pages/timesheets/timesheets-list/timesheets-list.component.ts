@@ -169,7 +169,11 @@ export class TimesheetsListComponent implements AfterViewInit {
       resourceName: item.resource?.name || 'N/A',
       approverName: item.resourceId1Navigation?.name || 'N/A',
       tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
-      itemStatusId: item.itemStatusId
+      itemStatusId: item.itemStatusId,
+      linkedJobId: item.linkedJobId || null,
+      linkedJobInfo: item.linkedJobId
+        ? `#${item.linkedJobId} – ${item.linkedJobDescription || ''}`
+        : ''
     }));
     this.TableList.initialize(mappedData);
   }
@@ -179,8 +183,9 @@ export class TimesheetsListComponent implements AfterViewInit {
       { key: 'id', label: 'ID' },
       { key: 'tsDateFormatted', label: 'Date' },
       { key: 'resourceName', label: 'Resource/Employee' },
-      { key: 'approverName', label: 'Approver' },
+      { key: 'approverName', label: 'Unit' },
       { key: 'remarks', label: 'Remarks' },
+      { key: 'linkedJobInfo', label: 'Linked Job' },
       { key: 'itemStatusId', label: 'Status' }
     ];
   }

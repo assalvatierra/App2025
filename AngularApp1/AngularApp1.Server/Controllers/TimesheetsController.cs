@@ -26,7 +26,7 @@ namespace AngularApp1.Server.Controllers
         // GET: api/Timesheets?startDate=2024-01-01&endDate=2024-01-31
         // GET: api/Timesheets?statusId=1
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Timesheet>>> GetTimesheets(
+        public async Task<ActionResult<IEnumerable<TimesheetListDto>>> GetTimesheets(
             [FromQuery] int? resourceId = null,
             [FromQuery] DateTime? startDate = null,
             [FromQuery] DateTime? endDate = null,
@@ -57,7 +57,43 @@ namespace AngularApp1.Server.Controllers
                 query = query.Where(t => t.ItemStatusId == statusId.Value);
             }
 
-            return await query.OrderByDescending(t => t.TsDate).ToListAsync();
+            var timesheets = await query.OrderByDescending(t => t.TsDate).ToListAsync();
+
+            // Fetch first linked job per timesheet in one query
+            var timesheetIds = timesheets.Select(t => t.Id).ToList();
+            var linkedJobs = await (
+                from jt in _context.JobTimesheet
+                join jm in _context.JobMain on jt.JobMainId equals jm.Id into jmJoin
+                from jm in jmJoin.DefaultIfEmpty()
+                where jt.TimesheetId != null && timesheetIds.Contains(jt.TimesheetId.Value)
+                group new { jt, jm } by jt.TimesheetId into g
+                select new
+                {
+                    TimesheetId = g.Key,
+                    JobMainId = g.OrderBy(x => x.jt.Id).Select(x => (int?)x.jm.Id).FirstOrDefault(),
+                    JobDescription = g.OrderBy(x => x.jt.Id).Select(x => x.jm.Description).FirstOrDefault()
+                }
+            ).ToDictionaryAsync(x => x.TimesheetId!.Value);
+
+            var result = timesheets.Select(t =>
+            {
+                linkedJobs.TryGetValue(t.Id, out var job);
+                return new TimesheetListDto
+                {
+                    Id = t.Id,
+                    TsDate = t.TsDate,
+                    Remarks = t.Remarks,
+                    ResourceId = t.ResourceId,
+                    ResourceId1 = t.ResourceId1,
+                    ItemStatusId = t.ItemStatusId,
+                    Resource = t.Resource,
+                    ResourceId1Navigation = t.ResourceId1Navigation,
+                    LinkedJobId = job?.JobMainId,
+                    LinkedJobDescription = job?.JobDescription
+                };
+            }).ToList();
+
+            return Ok(result);
         }
 
         // GET: api/Timesheets/5
@@ -186,6 +222,74 @@ namespace AngularApp1.Server.Controllers
             ).ToListAsync();
 
             return Ok(result);
+        }
+
+        // POST: api/Timesheets/5/Jobs
+        [HttpPost("{id}/Jobs")]
+        public async Task<ActionResult<JobTimesheetDto>> PostTimesheetJob(int id, [FromBody] int jobMainId)
+        {
+            var timesheetExists = await _context.Timesheet.AnyAsync(t => t.Id == id);
+            if (!timesheetExists)
+            {
+                return NotFound("Timesheet not found.");
+            }
+
+            var jobMainExists = await _context.JobMain.AnyAsync(j => j.Id == jobMainId);
+            if (!jobMainExists)
+            {
+                return NotFound("JobMain not found.");
+            }
+
+            // Prevent duplicate links
+            var alreadyLinked = await _context.JobTimesheet
+                .AnyAsync(jt => jt.TimesheetId == id && jt.JobMainId == jobMainId);
+            if (alreadyLinked)
+            {
+                return Conflict("This job is already linked to the timesheet.");
+            }
+
+            var jobTimesheet = new JobTimesheet
+            {
+                TimesheetId = id,
+                JobMainId = jobMainId
+            };
+
+            _context.JobTimesheet.Add(jobTimesheet);
+            await _context.SaveChangesAsync();
+
+            // Return the full DTO with JobMain info
+            var jm = await _context.JobMain.Include(j => j.ItemStatus)
+                .FirstOrDefaultAsync(j => j.Id == jobMainId);
+
+            var dto = new JobTimesheetDto
+            {
+                Id = jobTimesheet.Id,
+                TimesheetId = jobTimesheet.TimesheetId,
+                JobMainId = jobTimesheet.JobMainId,
+                JobDate = jm?.JobDate,
+                Description = jm?.Description,
+                StatusName = jm?.ItemStatus?.Name
+            };
+
+            return CreatedAtAction(nameof(GetTimesheetJobs), new { id }, dto);
+        }
+
+        // DELETE: api/Timesheets/5/Jobs/3
+        [HttpDelete("{id}/Jobs/{jobTimesheetId}")]
+        public async Task<IActionResult> DeleteTimesheetJob(int id, int jobTimesheetId)
+        {
+            var jobTimesheet = await _context.JobTimesheet
+                .FirstOrDefaultAsync(jt => jt.Id == jobTimesheetId && jt.TimesheetId == id);
+
+            if (jobTimesheet == null)
+            {
+                return NotFound();
+            }
+
+            _context.JobTimesheet.Remove(jobTimesheet);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // GET: api/Timesheets/5/JobServices
@@ -391,5 +495,20 @@ namespace AngularApp1.Server.Controllers
         public DateTime? JobDate { get; set; }
         public string? Description { get; set; }
         public string? StatusName { get; set; }
+    }
+
+    // DTO for Timesheet list with first linked job info
+    public class TimesheetListDto
+    {
+        public int Id { get; set; }
+        public DateTime TsDate { get; set; }
+        public string? Remarks { get; set; }
+        public int? ResourceId { get; set; }
+        public int? ResourceId1 { get; set; }
+        public int? ItemStatusId { get; set; }
+        public Erp.Domain.Models.Resource? Resource { get; set; }
+        public Erp.Domain.Models.Resource? ResourceId1Navigation { get; set; }
+        public int? LinkedJobId { get; set; }
+        public string? LinkedJobDescription { get; set; }
     }
 }

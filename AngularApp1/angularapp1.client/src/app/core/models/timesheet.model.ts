@@ -14,6 +14,9 @@ export interface JobTimesheet {
   id: number;
   timesheetId?: number;
   jobMainId?: number;
+  jobDate?: Date;
+  description?: string;
+  statusName?: string;
 }
 
 export interface JobServiceTimesheet {

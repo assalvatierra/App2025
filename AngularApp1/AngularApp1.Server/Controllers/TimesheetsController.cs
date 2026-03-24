@@ -115,20 +115,77 @@ namespace AngularApp1.Server.Controllers
                 .ToListAsync();
         }
 
+        // GET: api/Timesheets/ByStatusCodes?codes=APPROVAL,SUBMITTED
+        [HttpGet("ByStatusCodes")]
+        public async Task<ActionResult<IEnumerable<Timesheet>>> GetTimesheetsByStatusCodes([FromQuery] string codes)
+        {
+            if (string.IsNullOrWhiteSpace(codes))
+            {
+                return BadRequest("Status codes parameter is required");
+            }
+
+            // Split codes and trim whitespace
+            var statusCodes = codes.Split(',')
+                .Select(c => c.Trim().ToUpper())
+                .Where(c => !string.IsNullOrEmpty(c))
+                .ToList();
+
+            if (!statusCodes.Any())
+            {
+                return BadRequest("At least one valid status code is required");
+            }
+
+            // Get status IDs from codes
+            var statusIds = await _context.ItemStatus
+                .Where(s => s.Code != null && statusCodes.Contains(s.Code.ToUpper()))
+                .Select(s => s.Id)
+                .ToListAsync();
+
+            if (!statusIds.Any())
+            {
+                return NotFound($"No statuses found for codes: {string.Join(", ", statusCodes)}");
+            }
+
+            // Get timesheets with matching status IDs
+            var timesheets = await _context.Timesheet
+                .Include(t => t.Resource)
+                .Include(t => t.ResourceId1Navigation)
+                .Where(t => statusIds.Contains(t.ItemStatusId ?? 0))
+                .OrderByDescending(t => t.TsDate)
+                .ToListAsync();
+
+            return timesheets;
+        }
+
         // GET: api/Timesheets/5/Jobs
         [HttpGet("{id}/Jobs")]
-        public async Task<ActionResult<IEnumerable<JobTimesheet>>> GetTimesheetJobs(int id)
+        public async Task<ActionResult<IEnumerable<JobTimesheetDto>>> GetTimesheetJobs(int id)
         {
             var timesheetExists = await _context.Timesheet.AnyAsync(t => t.Id == id);
-            
+
             if (!timesheetExists)
             {
                 return NotFound();
             }
 
-            return await _context.JobTimesheet
-                .Where(jt => jt.TimesheetId == id)
-                .ToListAsync();
+            var result = await (
+                from jt in _context.JobTimesheet
+                join jm in _context.JobMain.Include(j => j.ItemStatus)
+                    on jt.JobMainId equals jm.Id into jmJoin
+                from jm in jmJoin.DefaultIfEmpty()
+                where jt.TimesheetId == id
+                select new JobTimesheetDto
+                {
+                    Id = jt.Id,
+                    TimesheetId = jt.TimesheetId,
+                    JobMainId = jt.JobMainId,
+                    JobDate = jm != null ? jm.JobDate : (DateTime?)null,
+                    Description = jm != null ? jm.Description : null,
+                    StatusName = jm != null && jm.ItemStatus != null ? jm.ItemStatus.Name : null
+                }
+            ).ToListAsync();
+
+            return Ok(result);
         }
 
         // GET: api/Timesheets/5/JobServices
@@ -323,5 +380,16 @@ namespace AngularApp1.Server.Controllers
     {
         public int? StatusId { get; set; }
         public string? Remarks { get; set; }
+    }
+
+    // DTO for JobTimesheet with JobMain display fields
+    public class JobTimesheetDto
+    {
+        public int Id { get; set; }
+        public int? TimesheetId { get; set; }
+        public int? JobMainId { get; set; }
+        public DateTime? JobDate { get; set; }
+        public string? Description { get; set; }
+        public string? StatusName { get; set; }
     }
 }

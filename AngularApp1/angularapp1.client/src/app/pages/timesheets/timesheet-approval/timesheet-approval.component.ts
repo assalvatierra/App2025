@@ -104,8 +104,9 @@ export class TimesheetApprovalComponent implements AfterViewInit {
 
   private retrievePendingTimesheets(): void {
     this.dataloading = true;
-    // Status 2 = Submitted for approval
-    this.apiTimesheets.getTimesheetsByStatus(2).subscribe({
+    // Use status code 'APPROVAL' to get timesheets pending approval
+    // This will automatically resolve the status code to the correct ID
+    this.apiTimesheets.getTimesheetsByStatusCodes(['APPROVAL']).subscribe({
       next: (res: Timesheet[]) => {
         this.pendingTimesheets = res;
         this.initializeTimesheetList(res);
@@ -134,6 +135,7 @@ export class TimesheetApprovalComponent implements AfterViewInit {
       tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
       actions: item.id
     }));
+
     this.TableList.initialize(mappedData);
   }
 

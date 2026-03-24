@@ -108,12 +108,33 @@ export class ApiTimesheetsService {
   }
 
   /**
+   * Get timesheets by status codes
+   * @param statusCodes Array of status codes (e.g., ['APPROVAL', 'SUBMITTED'])
+   * @returns Observable of Timesheet array
+   */
+  getTimesheetsByStatusCodes(statusCodes: string[]): Observable<Timesheet[]> {
+    const codesParam = statusCodes.join(',');
+    const params = new HttpParams().set('codes', codesParam);
+    
+    return this.http.get<Timesheet[]>(`${this.baseUrl}/api/Timesheets/ByStatusCodes`, { params }).pipe(
+      map((res: any) => {
+        return res.map((timesheet: any) => this.mapTimesheet(timesheet));
+      })
+    );
+  }
+
+  /**
    * Get job timesheets for a specific timesheet
    * @param id Timesheet ID
    * @returns Observable of JobTimesheet array
    */
   getTimesheetJobs(id: number): Observable<JobTimesheet[]> {
-    return this.http.get<JobTimesheet[]>(`${this.baseUrl}/api/Timesheets/${id}/Jobs`);
+    return this.http.get<JobTimesheet[]>(`${this.baseUrl}/api/Timesheets/${id}/Jobs`).pipe(
+      map((res: any[]) => res.map(jt => ({
+        ...jt,
+        jobDate: jt.jobDate ? new Date(jt.jobDate) : undefined
+      })))
+    );
   }
 
   /**

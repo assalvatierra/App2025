@@ -33,3 +33,39 @@
   color: white;
   font-size: 24px;
 }
+
+.job-timesheets-section {
+  margin-top: 8px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.job-timesheets-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.job-timesheets-table th,
+.job-timesheets-table td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.job-timesheets-table th {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.54);
+  background-color: #f5f5f5;
+}
+
+.job-timesheets-table tbody tr:hover {
+  background-color: #fafafa;
+}

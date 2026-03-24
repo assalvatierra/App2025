@@ -10,7 +10,7 @@ import { EntityListTableDataSource, EntityListTableItem } from './entity-list-ta
   styleUrl: './entity-list-table.component.css',
   standalone: false
 })
-export class EntityListTableComponent implements OnInit {
+export class EntityListTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<EntityListTableItem>;
@@ -52,18 +52,27 @@ export class EntityListTableComponent implements OnInit {
     this._tableFields = value;
   }
 
-  public isLoading: boolean=true;
+  public isLoading: boolean = true;
   private _tableFields: any[] = [];
+  private _viewInitialized: boolean = false;
+  private _pendingData: EntityListTableItem[] | null = null;
 
   constructor() {
-    }
-  //constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.initializeFields();
     this.isLoading = false;
+  }
 
+  ngAfterViewInit(): void {
+    this._viewInitialized = true;
+    // Apply any data that arrived before the view was ready
+    if (this._pendingData !== null) {
+      this._applyData(this._pendingData);
+      this._pendingData = null;
+    }
   }
 
 
@@ -88,29 +97,41 @@ export class EntityListTableComponent implements OnInit {
   initialize(param: EntityListTableItem[]): void {
     console.log('=== EntityListTableComponent.initialize called ===');
     console.log('Received data count:', param.length);
-    console.log('Received data:', param);
+    console.log('View initialized:', this._viewInitialized);
+
+    if (this._viewInitialized) {
+      this._applyData(param);
+    } else {
+      // View not ready yet — store data and apply in ngAfterViewInit
+      console.log('View not ready, queuing data for later...');
+      this._pendingData = param;
+    }
+  }
+
+  private _applyData(param: EntityListTableItem[]): void {
+    console.log('=== EntityListTableComponent._applyData called ===');
+    console.log('Data count:', param.length);
     console.log('Paginator available:', !!this.paginator);
     console.log('Sort available:', !!this.sort);
     console.log('Table available:', !!this.table);
-    
+
     this.dataSource.data = param;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
-    
+
     console.log('DataSource.data set to:', this.dataSource.data.length, 'items');
-    
+
     // Reset paginator to first page
     if (this.paginator && this.paginator.pageIndex !== 0) {
       console.log('Resetting paginator to first page');
       this.paginator.firstPage();
     } else {
       console.log('Already on first page or no paginator, triggering manual refresh');
-      // If already on first page, paginator won't emit event, so trigger manually
       this.dataSource.refresh();
     }
-    
-    console.log('=== EntityListTableComponent.initialize END ===');
+
+    console.log('=== EntityListTableComponent._applyData END ===');
   }
 
   initializeFields(): void {

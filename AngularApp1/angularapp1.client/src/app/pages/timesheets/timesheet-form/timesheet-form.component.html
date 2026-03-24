@@ -53,6 +53,27 @@
           <textarea matInput formControlName="remarks" rows="4"></textarea>
         </mat-form-field>
 
+        <!-- Linked Job Timesheets -->
+        <div *ngIf="jobTimesheets.length > 0" class="job-timesheets-section">
+          <h4 class="section-title">Linked Jobs</h4>
+          <table class="job-timesheets-table">
+            <thead>
+              <tr>
+                <th>Job Date</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let jt of jobTimesheets">
+                <td>{{ jt.jobDate | date:'mediumDate' }}</td>
+                <td>{{ jt.description }}</td>
+                <td>{{ jt.statusName }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="button-container">
           <button mat-raised-button color="primary" type="submit" *ngIf="!showAddBtn" [disabled]="dataloading">
             Update Timesheet

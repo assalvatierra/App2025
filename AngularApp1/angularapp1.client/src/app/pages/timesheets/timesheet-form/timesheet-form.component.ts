@@ -14,7 +14,7 @@ import { ApiTimesheetsService } from '../../../core/services/api-timesheets.serv
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
 import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
 import { ApiService } from '../../../core/api.service';
-import { Timesheet, Resource } from '../../../core/models/timesheet.model';
+import { Timesheet, JobTimesheet, Resource } from '../../../core/models/timesheet.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 
 interface TimesheetColumnConfig {
@@ -24,7 +24,7 @@ interface TimesheetColumnConfig {
 }
 
 interface TimesheetFeatureSettings {
-  columns: TimesheetColumnConfig[];
+  specialcolumns: TimesheetColumnConfig[];
 }
 
 @Component({
@@ -62,6 +62,9 @@ export class TimesheetFormComponent implements AfterViewInit {
   public resourceId1Label: string = 'Approver (Optional)';
   public resourcesForResourceId: Resource[] = [];
   public resourcesForResourceId1: Resource[] = [];
+
+  // Linked job timesheets
+  public jobTimesheets: JobTimesheet[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -167,7 +170,7 @@ export class TimesheetFormComponent implements AfterViewInit {
         if (feature?.settings) {
           try {
             const settings: TimesheetFeatureSettings = JSON.parse(feature.settings);
-            settings.columns.forEach(col => {
+            settings.specialcolumns.forEach(col => {
               const upperTypes = col.includedTypes.map(c => c.toUpperCase());
 
               // Filter resources by itemTypeCode - handle null/undefined codes
@@ -223,10 +226,14 @@ export class TimesheetFormComponent implements AfterViewInit {
 
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;
-    this.apiTimesheets.getTimesheet(paramId).subscribe({
-      next: (res: Timesheet) => {
-        this.currentData = res;
+    forkJoin({
+      timesheet: this.apiTimesheets.getTimesheet(paramId),
+      jobs: this.apiTimesheets.getTimesheetJobs(paramId)
+    }).subscribe({
+      next: ({ timesheet, jobs }) => {
+        this.currentData = timesheet;
         this.setFormData(this.currentData);
+        this.jobTimesheets = jobs || [];
       },
       error: (err) => {
         console.error('API Error:', err);

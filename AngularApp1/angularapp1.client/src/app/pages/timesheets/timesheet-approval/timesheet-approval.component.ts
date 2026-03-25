@@ -130,10 +130,9 @@ export class TimesheetApprovalComponent implements AfterViewInit {
       remarks: item.remarks || '',
       code: item.resource?.code || '',
       sortOrder: item.id.toString(),
-      resourceName: item.resource?.name || 'N/A',
-      approverName: item.resourceId1Navigation?.name || 'N/A',
-      tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
-      actions: item.id
+      resourceName: (item.resource?.name || 'N/A')
+      + '[' + (item.resourceId1Navigation?.name || 'N/A') + ']',
+      tsDateFormatted: new Date(item.tsDate).toLocaleDateString()
     }));
 
     this.TableList.initialize(mappedData);
@@ -143,9 +142,8 @@ export class TimesheetApprovalComponent implements AfterViewInit {
     return [
       { key: 'id', label: 'ID' },
       { key: 'tsDateFormatted', label: 'Date' },
-      { key: 'resourceName', label: 'Employee' },
-      { key: 'remarks', label: 'Remarks' },
-      { key: 'actions', label: 'Actions' }
+      { key: 'resourceName', label: 'Resources' },
+      { key: 'remarks', label: 'Remarks' }
     ];
   }
 }

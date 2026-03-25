@@ -153,7 +153,7 @@ namespace AngularApp1.Server.Controllers
 
         // GET: api/Timesheets/ByStatusCodes?codes=APPROVAL,SUBMITTED
         [HttpGet("ByStatusCodes")]
-        public async Task<ActionResult<IEnumerable<Timesheet>>> GetTimesheetsByStatusCodes([FromQuery] string codes)
+        public async Task<ActionResult<IEnumerable<TimesheetListDto>>> GetTimesheetsByStatusCodes([FromQuery] string codes)
         {
             if (string.IsNullOrWhiteSpace(codes))
             {
@@ -179,7 +179,8 @@ namespace AngularApp1.Server.Controllers
 
             if (!statusIds.Any())
             {
-                return NotFound($"No statuses found for codes: {string.Join(", ", statusCodes)}");
+                // No matching status codes found — return empty list rather than 404
+                return Ok(new List<TimesheetListDto>());
             }
 
             // Get timesheets with matching status IDs
@@ -190,7 +191,41 @@ namespace AngularApp1.Server.Controllers
                 .OrderByDescending(t => t.TsDate)
                 .ToListAsync();
 
-            return timesheets;
+            // Fetch first linked job per timesheet
+            var timesheetIds = timesheets.Select(t => t.Id).ToList();
+            var linkedJobs = await (
+                from jt in _context.JobTimesheet
+                join jm in _context.JobMain on jt.JobMainId equals jm.Id into jmJoin
+                from jm in jmJoin.DefaultIfEmpty()
+                where jt.TimesheetId != null && timesheetIds.Contains(jt.TimesheetId.Value)
+                group new { jt, jm } by jt.TimesheetId into g
+                select new
+                {
+                    TimesheetId = g.Key,
+                    JobMainId = g.OrderBy(x => x.jt.Id).Select(x => (int?)x.jm.Id).FirstOrDefault(),
+                    JobDescription = g.OrderBy(x => x.jt.Id).Select(x => x.jm.Description).FirstOrDefault()
+                }
+            ).ToDictionaryAsync(x => x.TimesheetId!.Value);
+
+            var result = timesheets.Select(t =>
+            {
+                linkedJobs.TryGetValue(t.Id, out var job);
+                return new TimesheetListDto
+                {
+                    Id = t.Id,
+                    TsDate = t.TsDate,
+                    Remarks = t.Remarks,
+                    ResourceId = t.ResourceId,
+                    ResourceId1 = t.ResourceId1,
+                    ItemStatusId = t.ItemStatusId,
+                    Resource = t.Resource,
+                    ResourceId1Navigation = t.ResourceId1Navigation,
+                    LinkedJobId = job?.JobMainId,
+                    LinkedJobDescription = job?.JobDescription
+                };
+            }).ToList();
+
+            return Ok(result);
         }
 
         // GET: api/Timesheets/5/Jobs

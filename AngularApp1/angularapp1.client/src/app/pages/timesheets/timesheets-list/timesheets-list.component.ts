@@ -51,6 +51,7 @@ export class TimesheetsListComponent implements AfterViewInit {
   // Lookup data
   public resources: any[] = [];
   public statuses: any[] = [];
+  private lastTimesheetData: any[] = [];
 
   public get tableFields() {
     return this.getTableFields();
@@ -119,6 +120,9 @@ export class TimesheetsListComponent implements AfterViewInit {
     this.apiService.getItemStatusesByClassName('Timesheet').subscribe({
       next: (res: any) => {
         this.statuses = res || [];
+        if (this.lastTimesheetData.length > 0) {
+          this.initializeTimesheetList(this.lastTimesheetData);
+        }
       },
       error: (err) => {
         console.error('Error loading statuses:', err);
@@ -126,6 +130,9 @@ export class TimesheetsListComponent implements AfterViewInit {
         this.apiService.getItemStatuses().subscribe({
           next: (res: any) => {
             this.statuses = res || [];
+            if (this.lastTimesheetData.length > 0) {
+              this.initializeTimesheetList(this.lastTimesheetData);
+            }
           },
           error: (err) => {
             console.error('Error loading all statuses:', err);
@@ -144,7 +151,8 @@ export class TimesheetsListComponent implements AfterViewInit {
       this.filterStatusId
     ).subscribe({
       next: (res: any) => {
-        this.initializeTimesheetList(res);
+        this.lastTimesheetData = res || [];
+        this.initializeTimesheetList(this.lastTimesheetData);
       },
       error: (err) => {
         console.error('API Error:', err);
@@ -170,6 +178,7 @@ export class TimesheetsListComponent implements AfterViewInit {
       approverName: item.resourceId1Navigation?.name || 'N/A',
       tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
       itemStatusId: item.itemStatusId,
+      statusName: this.statuses.find(s => s.id === item.itemStatusId)?.name || '',
       linkedJobId: item.linkedJobId || null,
       linkedJobInfo: item.linkedJobId
         ? `#${item.linkedJobId} – ${item.linkedJobDescription || ''}`
@@ -186,7 +195,7 @@ export class TimesheetsListComponent implements AfterViewInit {
       { key: 'approverName', label: 'Unit' },
       { key: 'remarks', label: 'Remarks' },
       { key: 'linkedJobInfo', label: 'Linked Job' },
-      { key: 'itemStatusId', label: 'Status' }
+      { key: 'statusName', label: 'Status' }
     ];
   }
 }

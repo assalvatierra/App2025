@@ -6,129 +6,68 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="timesheetForm" (ngSubmit)="onSubmit()">
-      <div class="form-container">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Date</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="tsDate" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="timesheetForm.get('tsDate')?.hasError('required')">
-            Date is required
-          </mat-error>
-        </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ resourceIdLabel }}</mat-label>
-          <mat-select formControlName="resourceId" required>
-            <mat-option *ngFor="let resource of resourcesForResourceId" [value]="resource.id">
-              {{ resource.name }} ({{ resource.code }})
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="timesheetForm.get('resourceId')?.hasError('required')">
-            {{ resourceIdLabel }} is required
-          </mat-error>
-        </mat-form-field>
+      <mat-tab-group animationDuration="200ms">
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ resourceId1Label }}</mat-label>
-          <mat-select formControlName="resourceId1">
-            <mat-option [value]="null">None</mat-option>
-            <mat-option *ngFor="let resource of resourcesForResourceId1" [value]="resource.id">
-              {{ resource.name }} ({{ resource.code }})
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="itemStatusId">
-            <mat-option *ngFor="let status of statuses" [value]="status.id">
-              {{ status.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Remarks</mat-label>
-          <textarea matInput formControlName="remarks" rows="4"></textarea>
-        </mat-form-field>
-
-        <!-- Linked Job Timesheets -->
-        <div *ngIf="!showAddBtn && featureLoaded && !dataloading" class="job-timesheets-section">
-          <div class="section-header">
-            <h4 class="section-title">Linked Jobs</h4>
-            <button mat-stroked-button color="primary" type="button"
-                    *ngIf="!showJobLinkForm && (allowMultiJobLink || jobTimesheets.length === 0)"
-                    (click)="onShowJobLinkForm()">
-              + Add Job Link
-            </button>
+        <!-- Tab 1: Timesheet Main -->
+        <mat-tab label="Timesheet Main">
+          <div class="tab-content">
+            <app-timesheet-main
+              [timesheetForm]="timesheetForm"
+              [resourceIdLabel]="resourceIdLabel"
+              [resourceId1Label]="resourceId1Label"
+              [resourcesForResourceId]="resourcesForResourceId"
+              [resourcesForResourceId1]="resourcesForResourceId1"
+              [statuses]="statuses"
+              [showAddBtn]="showAddBtn"
+              [featureLoaded]="featureLoaded"
+              [dataloading]="dataloading"
+              [jobTimesheets]="jobTimesheets"
+              [showJobLinkForm]="showJobLinkForm"
+              [jobMains]="jobMains"
+              [selectedJobMainId]="selectedJobMainId"
+              [jobLinkLoading]="jobLinkLoading"
+              [allowMultiJobLink]="allowMultiJobLink"
+              (showJobLinkFormRequested)="onShowJobLinkForm()"
+              (cancelJobLink)="onCancelJobLink()"
+              (linkJob)="onLinkJob()"
+              (removeJobLink)="onRemoveJobLink($event)"
+              (selectedJobMainIdChange)="selectedJobMainId = $event">
+            </app-timesheet-main>
           </div>
+        </mat-tab>
 
-          <!-- Job link form -->
-          <div *ngIf="showJobLinkForm" class="job-link-form">
-            <mat-form-field appearance="outline" class="job-link-select">
-              <mat-label>Select Job</mat-label>
-              <mat-select [(ngModel)]="selectedJobMainId" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let jm of jobMains" [value]="jm.id">
-                  {{ jm.jobDate | date:'mediumDate' }} — {{ jm.description }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div class="job-link-actions">
-              <button mat-raised-button color="primary" type="button"
-                      [disabled]="!selectedJobMainId || jobLinkLoading"
-                      (click)="onLinkJob()">
-                Link
-              </button>
-              <button mat-button type="button" (click)="onCancelJobLink()">Cancel</button>
-            </div>
-            <div *ngIf="jobLinkLoading" class="job-link-loading">Loading...</div>
+        <!-- Tab 2: Expense Details (hidden when allowExtendedDetails is false/null) -->
+        <mat-tab *ngIf="allowExtendedDetails" label="Expense Details" [disabled]="showAddBtn">
+          <div class="tab-content">
+            <app-timesheet-expense-details
+              *ngIf="!showAddBtn && !dataloading"
+              [timesheetId]="paramId">
+            </app-timesheet-expense-details>
+            <p *ngIf="showAddBtn" class="tab-disabled-message">
+              Save the timesheet first to manage expense details.
+            </p>
           </div>
+        </mat-tab>
 
-          <!-- Linked jobs table -->
-          <table *ngIf="jobTimesheets.length > 0" class="job-timesheets-table">
-            <thead>
-              <tr>
-                <th>Job Date</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let jt of jobTimesheets">
-                <td>{{ jt.jobDate | date:'mediumDate' }}</td>
-                <td>{{ jt.description }}</td>
-                <td>{{ jt.statusName }}</td>
-                <td>
-                  <button mat-button color="warn" type="button"
-                          (click)="onRemoveJobLink(jt)">
-                    Unlink Job
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p *ngIf="jobTimesheets.length === 0 && !showJobLinkForm" class="no-jobs-text">
-            No jobs linked. Click "Add Job Link" to associate a job.
-          </p>
-        </div>
+      </mat-tab-group>
 
-        <div class="button-container">
-          <button mat-raised-button color="primary" type="submit" *ngIf="!showAddBtn" [disabled]="dataloading">
-            Update Timesheet
-          </button>
-          <button mat-raised-button color="primary" type="button" (click)="onAdd()" *ngIf="showAddBtn" [disabled]="dataloading">
-            Add Timesheet
-          </button>
-          <button mat-raised-button color="accent" type="button" (click)="onSubmitForApproval()" *ngIf="!showAddBtn" [disabled]="dataloading">
-            Submit for Approval
-          </button>
-          <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
-            Cancel
-          </button>
-        </div>
+      <!-- Form action buttons -->
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" *ngIf="!showAddBtn" [disabled]="dataloading">
+          Update Timesheet
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="onAdd()" *ngIf="showAddBtn" [disabled]="dataloading">
+          Add Timesheet
+        </button>
+        <button mat-raised-button color="accent" type="button" (click)="onSubmitForApproval()" *ngIf="!showAddBtn" [disabled]="dataloading">
+          Submit for Approval
+        </button>
+        <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
+          Cancel
+        </button>
       </div>
+
     </form>
   </mat-card-content>
 </mat-card>

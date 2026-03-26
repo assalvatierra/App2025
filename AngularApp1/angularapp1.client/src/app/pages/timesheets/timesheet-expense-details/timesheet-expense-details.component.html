@@ -1,0 +1,72 @@
+<div class="expense-details-section">
+  <div class="section-header">
+    <h4 class="section-title">Expense Details</h4>
+  </div>
+
+  <div *ngIf="loading" class="expense-loading">Loading expense details...</div>
+
+  <form *ngIf="!loading" [formGroup]="expenseForm">
+    <div class="expense-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Bill Amount</mat-label>
+        <input matInput type="number" formControlName="billAmount" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Additional Bill Amount</mat-label>
+        <input matInput type="number" formControlName="additionalBillAmount" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Resource Rate</mat-label>
+        <input matInput type="number" formControlName="resourceRate" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Additional Rate</mat-label>
+        <input matInput type="number" formControlName="additionalRate" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Resource Rate 1</mat-label>
+        <input matInput type="number" formControlName="resourceRate1" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Additional Rate 1</mat-label>
+        <input matInput type="number" formControlName="additionalRate1" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Regular Expense</mat-label>
+        <input matInput type="number" formControlName="regularExpense" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Other Expense</mat-label>
+        <input matInput type="number" formControlName="otherExpense" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Discount</mat-label>
+        <input matInput type="number" formControlName="discount" placeholder="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="span-two">
+        <mat-label>Amount Remarks</mat-label>
+        <textarea matInput formControlName="amountRemarks" rows="2"></textarea>
+      </mat-form-field>
+
+    </div>
+
+    <div class="expense-actions">
+      <button mat-raised-button color="primary" type="button"
+              [disabled]="saving"
+              (click)="onSave()">
+        {{ saving ? 'Saving...' : (hasData ? 'Update Expense Details' : 'Save Expense Details') }}
+      </button>
+      <span *ngIf="saveSuccess" class="save-success">✓ Saved</span>
+    </div>
+  </form>
+</div>

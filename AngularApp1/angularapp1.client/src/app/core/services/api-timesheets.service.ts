@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Timesheet, JobTimesheet, JobServiceTimesheet, ApprovalRequest } from '../models/timesheet.model';
+import { Timesheet, JobTimesheet, JobServiceTimesheet, ApprovalRequest, TimesheetExpenseDetail } from '../models/timesheet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -234,6 +234,25 @@ export class ApiTimesheetsService {
    */
   rejectTimesheet(id: number, request: ApprovalRequest): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/api/Timesheets/${id}/Reject`, request);
+  }
+
+  /**
+   * Get expense detail for a timesheet (1-to-1)
+   * @param id Timesheet ID
+   * @returns Observable of TimesheetExpenseDetail or null
+   */
+  getExpenseDetail(id: number): Observable<TimesheetExpenseDetail | null> {
+    return this.http.get<TimesheetExpenseDetail | null>(`${this.baseUrl}/api/Timesheets/${id}/ExpenseDetail`);
+  }
+
+  /**
+   * Create or update expense detail for a timesheet (upsert)
+   * @param id Timesheet ID
+   * @param detail Expense detail object
+   * @returns Observable of any
+   */
+  upsertExpenseDetail(id: number, detail: TimesheetExpenseDetail): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/Timesheets/${id}/ExpenseDetail`, detail);
   }
 
   /**

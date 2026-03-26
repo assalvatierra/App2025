@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { forkJoin } from 'rxjs';
 import { ApiTimesheetsService } from '../../../core/services/api-timesheets.service';
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
@@ -17,6 +18,8 @@ import { ApiService } from '../../../core/api.service';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 import { Timesheet, JobTimesheet, Resource } from '../../../core/models/timesheet.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
+import { TimesheetExpenseDetailsComponent } from '../timesheet-expense-details/timesheet-expense-details.component';
+import { TimesheetMainComponent } from '../timesheet-main/timesheet-main.component';
 
 interface TimesheetColumnConfig {
   columnName: string;
@@ -27,6 +30,7 @@ interface TimesheetColumnConfig {
 interface TimesheetFeatureSettings {
   specialcolumns: TimesheetColumnConfig[];
   allowMultiJobLink: boolean;
+  allowExtendedDetails: boolean;
 }
 
 @Component({
@@ -45,14 +49,17 @@ interface TimesheetFeatureSettings {
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    UiPageTitleComponent
+    MatTabsModule,
+    UiPageTitleComponent,
+    TimesheetExpenseDetailsComponent,
+    TimesheetMainComponent
   ]
 })
 export class TimesheetFormComponent implements AfterViewInit {
   public timesheetForm!: FormGroup;
   public currentData: Timesheet | null = null;
   public dataloading: boolean = true;
-  private paramId: number = 0;
+  public paramId: number = 0;
   public showAddBtn: boolean = false;
   public titleInfo: string = 'Timesheet Details';
 
@@ -75,6 +82,7 @@ export class TimesheetFormComponent implements AfterViewInit {
   public selectedJobMainId: number | null = null;
   public jobLinkLoading: boolean = false;
   public allowMultiJobLink: boolean = true;
+  public allowExtendedDetails: boolean = true;
   public featureLoaded: boolean = false;
 
   constructor(
@@ -236,6 +244,7 @@ export class TimesheetFormComponent implements AfterViewInit {
             const settings: TimesheetFeatureSettings = JSON.parse(feature.settings);
             // Explicitly cast to handle both boolean false and string "false" from JSON
             this.allowMultiJobLink = String(settings.allowMultiJobLink) !== 'false';
+            this.allowExtendedDetails = String(settings.allowExtendedDetails) !== 'false';
             settings.specialcolumns.forEach(col => {
               const upperTypes = col.includedTypes.map(c => c.toUpperCase());
 

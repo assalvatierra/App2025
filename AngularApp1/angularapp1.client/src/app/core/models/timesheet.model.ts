@@ -44,3 +44,17 @@ export interface ApprovalRequest {
   statusId?: number;
   remarks?: string;
 }
+
+export interface TimesheetExpenseDetail {
+  id: number; // same as timesheetId (1-to-1 PK/FK)
+  billAmount?: number;
+  additionalBillAmount?: number;
+  resourceRate?: number;
+  additionalRate?: number;
+  resourceRate1?: number;
+  additionalRate1?: number;
+  regularExpense?: number;
+  otherExpense?: number;
+  discount?: number;
+  amountRemarks?: string;
+}

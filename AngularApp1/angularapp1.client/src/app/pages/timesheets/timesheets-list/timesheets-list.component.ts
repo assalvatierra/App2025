@@ -191,7 +191,7 @@ export class TimesheetsListComponent implements AfterViewInit {
     return [
       { key: 'id', label: 'ID' },
       { key: 'tsDateFormatted', label: 'Date' },
-      { key: 'resourceName', label: 'Resource/Employee' },
+      { key: 'resourceName', label: 'Resources' },
       { key: 'approverName', label: 'Unit' },
       { key: 'remarks', label: 'Remarks' },
       { key: 'linkedJobInfo', label: 'Linked Job' },

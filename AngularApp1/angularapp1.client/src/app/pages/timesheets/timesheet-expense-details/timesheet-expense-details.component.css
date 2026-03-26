@@ -1,0 +1,53 @@
+.expense-details-section {
+  margin-top: 8px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.expense-loading {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.expense-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
+}
+
+.expense-grid mat-form-field {
+  width: 100%;
+}
+
+.span-two {
+  grid-column: span 2;
+}
+
+.expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.save-success {
+  font-size: 13px;
+  color: #4caf50;
+  font-weight: 500;
+}

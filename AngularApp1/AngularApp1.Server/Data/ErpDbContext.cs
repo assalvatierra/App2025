@@ -40,6 +40,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobTimesheet> JobTimesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobServiceTimesheet> JobServiceTimesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.TimesheetExpenseDetail> TimesheetExpenseDetail { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -97,6 +98,12 @@ namespace AngularApp1.Server.Data
                 .WithMany()
                 .HasForeignKey(jst => jst.JobServiceId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure TimesheetExpenseDetail (1-to-1 with Timesheet, PK = TimesheetId)
+            modelBuilder.Entity<TimesheetExpenseDetail>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
         }
     }
 }

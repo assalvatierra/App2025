@@ -811,6 +811,41 @@
       <column name="" />
     </property>
   </class>
+  <class name="TimesheetExpenseDetail" entity-set="TimesheetExpenseDetail" p1:Guid="07e76514-1cf0-4bb0-8481-9fa0f919c2cd">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="7688921c-ddca-4090-8f83-33c7250baba6">
+      <column name="" />
+    </id>
+    <property name="BillAmount" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="50990f75-c1a8-4120-84c1-ca4b90721ed8">
+      <column name="" />
+    </property>
+    <property name="AdditionalBillAmount" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="442a465c-c4f9-424f-b654-686885d87c4d">
+      <column name="" />
+    </property>
+    <property name="ResourceRate" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="78fbefa3-b8f9-4127-9cee-421679d0aaf7">
+      <column name="" />
+    </property>
+    <property name="AdditionalRate" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1f16b31b-b75b-44c9-b0f5-8769fa910d34">
+      <column name="" />
+    </property>
+    <property name="ResourceRate1" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6398efbb-e4b9-4a83-9816-79806b9a7399">
+      <column name="" />
+    </property>
+    <property name="AdditionalRate1" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3f46cf09-5731-4f09-b22b-5a3f827bfd10">
+      <column name="" />
+    </property>
+    <property name="RegularExpense" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4299935d-5e11-4a40-af61-25f4b8fe35b0">
+      <column name="" />
+    </property>
+    <property name="OtherExpense" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="02257135-e53f-4c7c-984a-01e50359e4c4">
+      <column name="" />
+    </property>
+    <property name="Discount" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="097179c6-9bd0-4f42-8ce3-4353725f15c1">
+      <column name="" />
+    </property>
+    <property name="AmountRemarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ffbad769-cc25-4ea5-be0c-d69a93b6f547">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1282,6 +1317,14 @@
       </end1>
       <end2 multiplicity="Many" name="Timesheets" class="ItemStatus" relation-class="Timesheet" lazy="False" p1:Guid="143654f7-f79b-4b86-be18-3d15920e0784">
         <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="Timesheet_TimesheetExpenseDetails" cardinality="OneToMany" p1:Guid="c6001e75-fd47-4f25-b81b-aa82848f760f">
+      <end1 multiplicity="One" name="Timesheet" class="TimesheetExpenseDetail" relation-class="Timesheet" constrained="True" lazy="False" p1:Guid="8b9b3387-ffa0-4503-b7d0-953cc201f5e8">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="TimesheetExpenseDetails" class="Timesheet" relation-class="TimesheetExpenseDetail" lazy="False" p1:Guid="be9ad19e-e579-4705-9ff6-8ef53b08984d">
+        <property name="Id" />
       </end2>
     </association>
   </associations>

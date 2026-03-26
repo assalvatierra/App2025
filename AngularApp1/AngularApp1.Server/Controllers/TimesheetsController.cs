@@ -343,6 +343,61 @@ namespace AngularApp1.Server.Controllers
                 .ToListAsync();
         }
 
+        // GET: api/Timesheets/5/ExpenseDetail
+        [HttpGet("{id}/ExpenseDetail")]
+        public async Task<ActionResult<TimesheetExpenseDetail>> GetTimesheetExpenseDetail(int id)
+        {
+            var detail = await _context.TimesheetExpenseDetail.FindAsync(id);
+
+            if (detail == null)
+            {
+                return NotFound();
+            }
+
+            return detail;
+        }
+
+        // PUT: api/Timesheets/5/ExpenseDetail (upsert)
+        [HttpPut("{id}/ExpenseDetail")]
+        public async Task<IActionResult> UpsertTimesheetExpenseDetail(int id, [FromBody] TimesheetExpenseDetail detail)
+        {
+            detail.Id = id;
+
+            var existing = await _context.TimesheetExpenseDetail.FindAsync(id);
+            if (existing == null)
+            {
+                _context.TimesheetExpenseDetail.Add(detail);
+            }
+            else
+            {
+                existing.BillAmount = detail.BillAmount;
+                existing.AdditionalBillAmount = detail.AdditionalBillAmount;
+                existing.ResourceRate = detail.ResourceRate;
+                existing.AdditionalRate = detail.AdditionalRate;
+                existing.ResourceRate1 = detail.ResourceRate1;
+                existing.AdditionalRate1 = detail.AdditionalRate1;
+                existing.RegularExpense = detail.RegularExpense;
+                existing.OtherExpense = detail.OtherExpense;
+                existing.Discount = detail.Discount;
+                existing.AmountRemarks = detail.AmountRemarks;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Timesheet.Any(t => t.Id == id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+
+            return NoContent();
+        }
+
         // PUT: api/Timesheets/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTimesheet(int id, Timesheet timesheet)

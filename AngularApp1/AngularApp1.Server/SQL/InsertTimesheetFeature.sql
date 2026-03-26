@@ -1,9 +1,9 @@
 -- Insert or update the TIMESHEET SysFeature configuration
--- This defines column labels and resource type filters for the Timesheet form dropdowns.
+-- This defines column labels, resource type filters, and job link rules for the Timesheet form.
 --
 -- Settings JSON structure:
 -- {
---   "columns": [
+--   "specialcolumns": [
 --     {
 --       "columnName": "resourceId",         -- form control name
 --       "displayColumnName": "In-charge",   -- label shown in the form
@@ -14,7 +14,8 @@
 --       "displayColumnName": "Unit",
 --       "includedTypes": ["VEHICLE"]
 --     }
---   ]
+--   ],
+--   "allowMultiJobLink": true   -- false = only one job can be linked per timesheet
 -- }
 
 IF NOT EXISTS (SELECT 1 FROM SysFeature WHERE SysCode = 'TIMESHEET')
@@ -26,7 +27,7 @@ BEGIN
         1,
         '2099-12-31',
         N'{
-  "columns": [
+  "specialcolumns": [
     {
       "columnName": "resourceId",
       "displayColumnName": "In-charge",
@@ -37,7 +38,8 @@ BEGIN
       "displayColumnName": "Unit",
       "includedTypes": ["VEHICLE"]
     }
-  ]
+  ],
+  "allowMultiJobLink": true
 }'
     );
 END
@@ -46,7 +48,7 @@ BEGIN
     UPDATE SysFeature
     SET
         Settings = N'{
-  "columns": [
+  "specialcolumns": [
     {
       "columnName": "resourceId",
       "displayColumnName": "In-charge",
@@ -57,7 +59,8 @@ BEGIN
       "displayColumnName": "Unit",
       "includedTypes": ["VEHICLE"]
     }
-  ]
+  ],
+  "allowMultiJobLink": true
 }',
         IsEnabled = 1
     WHERE SysCode = 'TIMESHEET';

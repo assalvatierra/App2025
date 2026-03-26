@@ -327,13 +327,10 @@ export class TimesheetFormComponent implements AfterViewInit {
     this.apiTimesheets.updateTimesheet(id, data).subscribe({
       next: () => {
         console.log('Timesheet updated successfully');
-        this.router.navigate(['/timesheets']);
+        this.dataloading = false;
       },
       error: (err) => {
         console.error('API Error:', err);
-        this.dataloading = false;
-      },
-      complete: () => {
         this.dataloading = false;
       }
     });
@@ -342,9 +339,14 @@ export class TimesheetFormComponent implements AfterViewInit {
   private addApiData(data: Timesheet): void {
     this.dataloading = true;
     this.apiTimesheets.addTimesheet(data).subscribe({
-      next: () => {
+      next: (created) => {
         console.log('Timesheet created successfully');
-        this.router.navigate(['/timesheets']);
+        this.paramId = created.id;
+        this.currentData = created;
+        this.showAddBtn = false;
+        this.titleInfo = 'Edit Timesheet';
+        this.router.navigate(['/timesheets', this.paramId], { replaceUrl: true });
+        this.retrieveApiData(this.paramId);
       },
       error: (err) => {
         console.error('API Error:', err);

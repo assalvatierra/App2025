@@ -599,7 +599,7 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="9f6b6326-9ec0-4ab7-8e20-32cf7b0b5e53">
       <column name="" />
     </id>
-    <property name="TrxRef" type="String" p1:ValidateRequired="true" p1:Guid="424f7c4d-8135-43d4-9705-9bbc5f1ab234">
+    <property name="TrxRef" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="424f7c4d-8135-43d4-9705-9bbc5f1ab234">
       <column name="" />
     </property>
     <property name="TrxDate" type="Date" p1:ValidateRequired="true" p1:Guid="cd5a9c99-6e2a-495d-b427-edb21a87a33a">
@@ -617,7 +617,7 @@
       <property name="isPrivate" />
       <property name="isActive" />
     </component>
-    <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="76c366ae-8a55-4ba8-adf6-6b052a300ffd">
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="76c366ae-8a55-4ba8-adf6-6b052a300ffd">
       <column name="" />
     </property>
     <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="2d51a95c-0abd-4e1f-8c52-6c026a5a53d0">
@@ -686,7 +686,7 @@
       <property name="isPrivate" />
       <property name="isActive" />
     </component>
-    <property name="Remarks" type="String" p1:ValidateRequired="true" p1:Guid="420b79b9-00a1-447f-9c1c-b3f02e9567ca">
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="420b79b9-00a1-447f-9c1c-b3f02e9567ca">
       <column name="" />
     </property>
     <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="19f659e3-89b4-43ac-a216-a57d04058e1b">

@@ -70,6 +70,12 @@ export class NavigationComponent implements OnInit {
       icon: 'dashboard', 
       route: 'Jobs' 
     },
+    { 
+      name: 'Receivables',
+      label: 'Receivables',
+      icon: 'receipt', 
+      route: 'receivables'
+    },
     {
       name: 'Timesheets',
       label: 'Timesheets',

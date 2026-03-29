@@ -33,6 +33,7 @@ import { TimesheetFormComponent } from './pages/timesheets/timesheet-form/timesh
 import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approval/timesheet-approval.component';
 import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
+import { ReceivablesComponent } from './pages/receivables/receivables.component';
 
 const routeConfig: Routes = [
 
@@ -170,6 +171,12 @@ const routeConfig: Routes = [
     {
       path: 'resources/form/:id',
       component: ResourceFormComponent,
+      canActivate: [AuthGuard]
+    },
+    // Receivables routes
+    {
+      path: 'receivables',
+      component: ReceivablesComponent,
       canActivate: [AuthGuard]
     }
 

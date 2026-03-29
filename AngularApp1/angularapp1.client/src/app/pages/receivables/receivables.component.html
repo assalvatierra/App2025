@@ -1,0 +1,26 @@
+<div [ngSwitch]="currentView">
+  <!-- List View -->
+  <div *ngSwitchCase="'list'">
+    <app-receivable-list
+      [receivables]="receivables"
+      [entities]="entities"
+      [dataloading]="dataloading"
+      (addRecordClicked)="onAddRecord()"
+      (editRecordClicked)="onEditRecord($event)"
+      (deleteRecordClicked)="onDeleteRecord($event)"
+      (archiveRecordClicked)="onArchiveRecord($event)"
+      (activateRecordClicked)="onActivateRecord($event)">
+    </app-receivable-list>
+  </div>
+
+  <!-- Form View -->
+  <div *ngSwitchCase="'form'">
+    <app-receivable-form
+      [receivable]="selectedReceivable"
+      [entities]="entities"
+      [dataloading]="dataloading"
+      (saveRecordClicked)="onSaveRecord($event)"
+      (cancelClicked)="onCancelForm()">
+    </app-receivable-form>
+  </div>
+</div>

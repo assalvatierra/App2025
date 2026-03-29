@@ -42,6 +42,9 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
         public DbSet<Erp.Domain.Models.TimesheetExpenseDetail> TimesheetExpenseDetail { get; set; } = default!;
 
+        // Receivable related DbSets
+        public DbSet<Erp.Domain.Models.Receivable> Receivables { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -104,6 +107,9 @@ namespace AngularApp1.Server.Data
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
+
+            // Map Receivables DbSet to Receivable table (singular)
+            modelBuilder.Entity<Receivable>().ToTable("Receivable");
         }
     }
 }

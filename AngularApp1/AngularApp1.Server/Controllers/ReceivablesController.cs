@@ -67,6 +67,25 @@ namespace AngularApp1.Server.Controllers
             return receivable;
         }
 
+        // GET: api/Receivables/byId/5
+        [HttpGet("byId/{id}")]
+        public async Task<ActionResult<Receivable>> GetReceivableById(int id)
+        {
+            var receivable = await _context.Receivables
+                .Include(r => r.JobReceivables)
+                .Include(r => r.ReceivableCustomers)
+                .Include(r => r.ReceivablePayments)
+                .Include(r => r.ReceivableStatuses)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (receivable == null)
+            {
+                return NotFound(new { message = $"Receivable with ID {id} not found." });
+            }
+
+            return Ok(receivable);
+        }
+
         // PUT: api/Receivables/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

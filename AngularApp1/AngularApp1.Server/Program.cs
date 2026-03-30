@@ -63,7 +63,6 @@ builder.Services.AddCors(options =>
         builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
-
     });
 });
 

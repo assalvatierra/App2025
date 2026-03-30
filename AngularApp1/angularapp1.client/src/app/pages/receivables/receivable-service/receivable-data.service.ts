@@ -66,8 +66,14 @@ export class ReceivableDataService {
     this.loadingSubject.next(true);
     return this.apiReceivables.getReceivable(id).pipe(
       tap({
-        next: () => this.loadingSubject.next(false),
-        error: () => this.loadingSubject.next(false)
+        next: (receivable) => {
+          console.log('Receivable loaded:', receivable);
+          this.loadingSubject.next(false);
+        },
+        error: (error) => {
+          console.error('Error loading receivable:', error);
+          this.loadingSubject.next(false);
+        }
       })
     );
   }

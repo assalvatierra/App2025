@@ -56,12 +56,17 @@ export class ReceivablesComponent implements OnInit {
    * @param receivableId Receivable ID to edit
    */
   onEditRecord(receivableId: number): void {
-    this.receivableDataService.loadReceivable(receivableId).subscribe(
-      (receivable) => {
+    this.receivableDataService.loadReceivable(receivableId).subscribe({
+      next: (receivable) => {
         this.selectedReceivable = receivable;
         this.currentView = 'form';
+      },
+      error: (error) => {
+        console.error('Error loading receivable for edit:', error);
+        alert(`Failed to load receivable: ${error.message}`);
+        this.dataloading = false;
       }
-    );
+    });
   }
 
   /**

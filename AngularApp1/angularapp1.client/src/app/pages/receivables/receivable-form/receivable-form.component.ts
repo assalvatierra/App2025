@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,7 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
     ReceivableJobListComponent
   ]
 })
-export class ReceivableFormComponent implements OnInit, AfterViewInit {
+export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() receivable: Receivable | null = null;
   @Input() entities: any[] = [];
   @Input() dataloading: boolean = false;
@@ -57,7 +57,20 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadJobs();
-    
+    this.updateFormData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['receivable'] && !changes['receivable'].firstChange) {
+      this.updateFormData();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    // Component initialization if needed
+  }
+
+  private updateFormData(): void {
     if (this.receivable) {
       this.currentData = this.receivable;
       this.isNewRecord = false;
@@ -66,11 +79,21 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit {
     } else {
       this.isNewRecord = true;
       this.titleInfo = 'Add Receivable';
+      this.receivableForm.reset({
+        id: null,
+        trxRef: '',
+        trxDate: '',
+        amount: 0,
+        entityId: null,
+        remarks: '',
+        isActive: true,
+        isArchived: false,
+        isPrivate: false,
+        createdBy: 'System',
+        lastEditBy: 'System'
+      });
+      this.currentData = null;
     }
-  }
-
-  ngAfterViewInit(): void {
-    // Component initialization if needed
   }
 
   private loadJobs(): void {

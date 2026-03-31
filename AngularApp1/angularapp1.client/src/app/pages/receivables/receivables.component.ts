@@ -109,14 +109,56 @@ export class ReceivablesComponent implements OnInit {
    */
   onSaveRecord(receivable: Receivable): void {
     if (receivable.id) {
-      this.receivableDataService.updateReceivable(receivable.id, receivable).subscribe(() => {
-        this.currentView = 'list';
-        this.receivableDataService.loadReceivables();
+      // Updating existing receivable
+      this.receivableDataService.updateReceivable(receivable.id, receivable).subscribe({
+        next: () => {
+          this.receivableDataService.loadReceivables();
+          // Reload the receivable to get updated data
+          this.receivableDataService.loadReceivable(receivable.id!).subscribe({
+            next: (updatedReceivable) => {
+              this.selectedReceivable = updatedReceivable;
+              // Stay on form in edit mode
+            },
+            error: (error) => {
+              console.error('Error reloading receivable:', error);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error updating receivable:', error);
+          alert(`Failed to update receivable: ${error.message}`);
+        }
       });
     } else {
-      this.receivableDataService.addReceivable(receivable).subscribe(() => {
-        this.currentView = 'list';
-        this.receivableDataService.loadReceivables();
+      // Adding new receivable
+      this.receivableDataService.addReceivable(receivable).subscribe({
+        next: (newReceivable) => {
+          this.receivableDataService.loadReceivables();
+          // Reload the newly created receivable from server to ensure complete data
+          if (newReceivable.id) {
+            this.receivableDataService.loadReceivable(newReceivable.id).subscribe({
+              next: (completeReceivable) => {
+                // Switch to edit mode with the complete receivable data
+                this.selectedReceivable = completeReceivable;
+                this.currentView = 'form';
+              },
+              error: (error) => {
+                console.error('Error reloading new receivable:', error);
+                // Fallback: use the receivable returned from creation
+                this.selectedReceivable = newReceivable;
+                this.currentView = 'form';
+              }
+            });
+          } else {
+            // Fallback if no ID returned
+            this.selectedReceivable = newReceivable;
+            this.currentView = 'form';
+          }
+        },
+        error: (error) => {
+          console.error('Error adding receivable:', error);
+          alert(`Failed to add receivable: ${error.message}`);
+        }
       });
     }
   }

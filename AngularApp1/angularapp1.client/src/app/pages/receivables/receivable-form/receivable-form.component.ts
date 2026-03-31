@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -7,8 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { Receivable } from '../../../core/models/receivable.model';
+import { ReceivableCustomerListComponent } from '../receivable-customer-list/receivable-customer-list.component';
+import { ReceivableJobListComponent } from '../receivable-job-list/receivable-job-list.component';
+import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 
 @Component({
   selector: 'app-receivable-form',
@@ -24,7 +28,10 @@ import { Receivable } from '../../../core/models/receivable.model';
     MatSelectModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    UiPageTitleComponent
+    MatTabsModule,
+    UiPageTitleComponent,
+    ReceivableCustomerListComponent,
+    ReceivableJobListComponent
   ]
 })
 export class ReceivableFormComponent implements OnInit, AfterViewInit {
@@ -39,12 +46,18 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit {
   public currentData: Receivable | null = null;
   public isNewRecord: boolean = true;
   public titleInfo: string = 'Add Receivable';
+  public jobs: any[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private apiJobMain: ApiJobMainService
+  ) {
     this.initForm();
   }
 
   ngOnInit(): void {
+    this.loadJobs();
+    
     if (this.receivable) {
       this.currentData = this.receivable;
       this.isNewRecord = false;
@@ -58,6 +71,17 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // Component initialization if needed
+  }
+
+  private loadJobs(): void {
+    this.apiJobMain.getJobMains().subscribe({
+      next: (jobs: any[]) => {
+        this.jobs = jobs;
+      },
+      error: (err: any) => {
+        console.error('Error loading jobs:', err);
+      }
+    });
   }
 
   private initForm(): void {

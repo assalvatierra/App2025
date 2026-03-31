@@ -20,18 +20,17 @@ export interface Receivable {
 }
 
 export interface JobReceivable {
-  id: number;
-  receivableId?: number;
+  id?: number;
+  receivablesId?: number;
   jobMainId?: number;
   description?: string;
 }
 
 export interface ReceivableCustomer {
-  id: number;
-  receivableId?: number;
-  customerId?: number;
-  customerName?: string;
-  contact?: string;
+  id?: number;
+  receivablesId?: number;
+  entityId?: number;
+  itemTypeId?: number;
 }
 
 export interface ReceivablePayment {

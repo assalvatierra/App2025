@@ -1,0 +1,61 @@
+.job-section {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.form-card {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.table-container {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.jobs-table {
+  width: 100%;
+  background-color: white;
+}
+
+.jobs-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.no-data p {
+  margin: 0;
+}

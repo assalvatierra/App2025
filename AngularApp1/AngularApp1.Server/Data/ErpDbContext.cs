@@ -44,6 +44,8 @@ namespace AngularApp1.Server.Data
 
         // Receivable related DbSets
         public DbSet<Erp.Domain.Models.Receivable> Receivables { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ReceivableCustomer> ReceivableCustomers { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobReceivable> JobReceivables { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -110,6 +112,12 @@ namespace AngularApp1.Server.Data
 
             // Map Receivables DbSet to Receivable table (singular)
             modelBuilder.Entity<Receivable>().ToTable("Receivable");
+
+            // Map ReceivableCustomers DbSet to ReceivableCustomer table (singular)
+            modelBuilder.Entity<ReceivableCustomer>().ToTable("ReceivableCustomer");
+
+            // Map JobReceivables DbSet to JobReceivable table (singular)
+            modelBuilder.Entity<JobReceivable>().ToTable("JobReceivable");
         }
     }
 }

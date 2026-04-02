@@ -97,6 +97,14 @@
           [jobs]="jobs">
         </app-receivable-job-list>
       </mat-tab>
+
+      <!-- Status Tab -->
+      <mat-tab label="Status">
+        <app-receivable-status-list
+          [receivableId]="currentData?.id || null"
+          [itemStatuses]="itemStatuses">
+        </app-receivable-status-list>
+      </mat-tab>
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

@@ -39,16 +39,26 @@ namespace AngularApp1.Server.Controllers
 
         // GET: api/ItemStatus/ByClassName/{className}
         [HttpGet("ByClassName/{className}")]
-        public async Task<ActionResult<IEnumerable<ItemStatus>>> GetItemStatusByClassName(string className)
+        public async Task<ActionResult<IEnumerable<object>>> GetItemStatusByClassName(string className)
         {
             var itemStatuses = await _context.ItemStatus
-                .Include(it => it.ItemStatusClass)
                 .Where(it => it.ItemStatusClass != null &&
                              (it.ItemStatusClass.Name.ToUpper() == className.ToUpper() ||
                               it.ItemStatusClass.Code != null && it.ItemStatusClass.Code.ToUpper() == className.ToUpper()))
+                .Select(it => new
+                {
+                    id = it.Id,
+                    name = it.Name,
+                    description = it.Description,
+                    code = it.Code,
+                    remarks = it.Remarks,
+                    sortOrder = it.SortOrder,
+                    itemStatusClassId = it.ItemStatusClassId
+                })
+                .AsNoTracking()
                 .ToListAsync();
 
-            return itemStatuses;
+            return Ok(itemStatuses);
         }
 
         // GET: api/ItemStatus/ByCode/{code}

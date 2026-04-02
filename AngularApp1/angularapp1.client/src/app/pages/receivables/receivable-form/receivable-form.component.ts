@@ -12,7 +12,9 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
 import { Receivable } from '../../../core/models/receivable.model';
 import { ReceivableCustomerListComponent } from '../receivable-customer-list/receivable-customer-list.component';
 import { ReceivableJobListComponent } from '../receivable-job-list/receivable-job-list.component';
+import { ReceivableStatusListComponent } from '../receivable-status-list/receivable-status-list.component';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
+import { ApiService } from '../../../core/api.service';
 
 @Component({
   selector: 'app-receivable-form',
@@ -31,7 +33,8 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
     MatTabsModule,
     UiPageTitleComponent,
     ReceivableCustomerListComponent,
-    ReceivableJobListComponent
+    ReceivableJobListComponent,
+    ReceivableStatusListComponent
   ]
 })
 export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges {
@@ -47,16 +50,19 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
   public isNewRecord: boolean = true;
   public titleInfo: string = 'Add Receivable';
   public jobs: any[] = [];
+  public itemStatuses: any[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private apiJobMain: ApiJobMainService
+    private apiJobMain: ApiJobMainService,
+    private apiService: ApiService
   ) {
     this.initForm();
   }
 
   ngOnInit(): void {
     this.loadJobs();
+    this.loadItemStatuses();
     this.updateFormData();
   }
 
@@ -103,6 +109,17 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
       },
       error: (err: any) => {
         console.error('Error loading jobs:', err);
+      }
+    });
+  }
+
+  private loadItemStatuses(): void {
+    this.apiService.getItemStatusesByClassName('Receivables').subscribe({
+      next: (statuses: any[]) => {
+        this.itemStatuses = statuses;
+      },
+      error: (err: any) => {
+        console.error('Error loading item statuses:', err);
       }
     });
   }

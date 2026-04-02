@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiReceivablesService } from '../../../core/services/api-receivables.service';
 import { ApiEntityService } from '../../../core/services/api-entity.service';
-import { Receivable, ReceivableCustomer, JobReceivable } from '../../../core/models/receivable.model';
+import { Receivable, ReceivableCustomer, JobReceivable, ReceivableStatus } from '../../../core/models/receivable.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -228,5 +228,44 @@ constructor(
    */
   deleteJobReceivable(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/api/JobReceivables/${id}`);
+  }
+
+  // ===== ReceivableStatus Methods =====
+
+  /**
+   * Get receivable statuses by receivable ID
+   * @param receivableId Receivable ID
+   * @returns Observable of ReceivableStatus array
+   */
+  getReceivableStatuses(receivableId: number): Observable<ReceivableStatus[]> {
+    return this.http.get<ReceivableStatus[]>(`${this.baseUrl}/api/ReceivableStatuses/byReceivable/${receivableId}`);
+  }
+
+  /**
+   * Add a new receivable status
+   * @param status ReceivableStatus data to create
+   * @returns Observable of created ReceivableStatus
+   */
+  addReceivableStatus(status: ReceivableStatus): Observable<ReceivableStatus> {
+    return this.http.post<ReceivableStatus>(`${this.baseUrl}/api/ReceivableStatuses`, status);
+  }
+
+  /**
+   * Update an existing receivable status
+   * @param id ReceivableStatus ID
+   * @param status Updated ReceivableStatus data
+   * @returns Observable of any
+   */
+  updateReceivableStatus(id: number, status: ReceivableStatus): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/ReceivableStatuses/${id}`, status);
+  }
+
+  /**
+   * Delete a receivable status
+   * @param id ReceivableStatus ID
+   * @returns Observable of any
+   */
+  deleteReceivableStatus(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/ReceivableStatuses/${id}`);
   }
 }

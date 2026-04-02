@@ -43,10 +43,9 @@ export interface ReceivablePayment {
 }
 
 export interface ReceivableStatus {
-  id: number;
+  id?: number;
   receivableId?: number;
-  statusId?: number;
-  statusName?: string;
+  itemStatusId?: number;
   statusDate?: Date;
   remarks?: string;
 }

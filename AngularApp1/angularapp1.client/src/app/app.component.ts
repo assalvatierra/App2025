@@ -92,8 +92,22 @@ export class AppComponent implements OnInit {
         },
         error: (err) => {
           console.error('❌ Error loading menu feature settings:', err);
-          // Continue with default menu if settings fail to load
+          
+          // More detailed error logging
+          if (err.status === 0) {
+            console.error('🚨 Network error - Backend server may not be running or CORS issue');
+            console.error('   Check if backend is running on http://localhost:5157');
+          } else if (err.status === 404) {
+            console.error('🚨 Menu configuration not found in database');
+            console.error('   Run SQL script: SQL/InsertMenuConfigFeature.sql');
+          } else {
+            console.error(`🚨 HTTP ${err.status}: ${err.statusText}`);
+            console.error('   Error details:', err.error);
+          }
+          
+          // Continue with default menu (show all items) if settings fail to load
           this.isMenuFeatureDisabled.set(false);
+          console.log('📋 Falling back to showing all menu items');
         }
       });
   }

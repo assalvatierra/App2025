@@ -34,6 +34,7 @@ import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approva
 import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
 import { ReceivablesComponent } from './pages/receivables/receivables.component';
+import { PaymentsComponent } from './pages/payments/payments.component';
 
 const routeConfig: Routes = [
 
@@ -177,6 +178,12 @@ const routeConfig: Routes = [
     {
       path: 'receivables',
       component: ReceivablesComponent,
+      canActivate: [AuthGuard]
+    },
+    // Payments routes
+    {
+      path: 'payments',
+      component: PaymentsComponent,
       canActivate: [AuthGuard]
     }
 

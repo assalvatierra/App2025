@@ -1,0 +1,37 @@
+.filter-card {
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}

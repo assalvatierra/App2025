@@ -1,0 +1,24 @@
+<div [ngSwitch]="currentView">
+
+  <!-- List View -->
+  <div *ngSwitchCase="'list'">
+    <app-payment-list
+      [payments]="payments"
+      [dataloading]="dataloading"
+      (addRecordClicked)="onAddRecord()"
+      (editRecordClicked)="onEditRecord($event)"
+      (deleteRecordClicked)="onDeleteRecord($event)">
+    </app-payment-list>
+  </div>
+
+  <!-- Form View -->
+  <div *ngSwitchCase="'form'">
+    <app-payment-form
+      [payment]="selectedPayment"
+      [dataloading]="dataloading"
+      (saveRecordClicked)="onSaveRecord($event)"
+      (cancelClicked)="onCancelForm()">
+    </app-payment-form>
+  </div>
+
+</div>

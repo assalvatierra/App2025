@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReceivableCustomer } from '../../../core/models/receivable.model';
 import { ReceivableDataService } from '../receivable-service/receivable-data.service';
+import { ApiService } from '../../../core/api.service';
 
 @Component({
   selector: 'app-receivable-customer-list',
@@ -39,18 +40,22 @@ export class ReceivableCustomerListComponent implements OnInit, OnChanges {
   isEditing: boolean = false;
   editingId: number | null = null;
   showForm: boolean = false;
+  itemTypes: any[] = [];
+  itemClassFilter: string = 'CustomerType';
 
   displayedColumns: string[] = ['entity', 'itemType', 'actions'];
 
   constructor(
     private fb: FormBuilder,
     private dataService: ReceivableDataService,
+    private apiService: ApiService,
     private snackBar: MatSnackBar
   ) {
     this.initForm();
   }
 
   ngOnInit(): void {
+    this.loadItemTypes();
     this.loadCustomers();
   }
 
@@ -81,6 +86,18 @@ export class ReceivableCustomerListComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  loadItemTypes(): void {
+    this.apiService.getItemTypesByClassName(this.itemClassFilter).subscribe({
+      next: (itemTypes: any[]) => {
+        this.itemTypes = itemTypes;
+      },
+      error: (error: any) => {
+        console.error('Error loading item types:', error);
+        this.showMessage('Error loading item types');
+      }
+    });
   }
 
   onAdd(): void {
@@ -163,6 +180,12 @@ export class ReceivableCustomerListComponent implements OnInit, OnChanges {
     if (!entityId) return 'N/A';
     const entity = this.entities.find(e => e.id === entityId);
     return entity ? entity.name : 'Unknown';
+  }
+
+  getItemTypeName(itemTypeId: number | undefined): string {
+    if (!itemTypeId) return 'N/A';
+    const itemType = this.itemTypes.find(it => it.id === itemTypeId);
+    return itemType ? itemType.name : 'Unknown';
   }
 
   private showMessage(message: string): void {

@@ -29,8 +29,13 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Item Type ID</mat-label>
-            <input matInput type="number" formControlName="itemTypeId" placeholder="Enter item type ID">
+            <mat-label>Item Type</mat-label>
+            <mat-select formControlName="itemTypeId">
+              <mat-option [value]="null">Select Item Type</mat-option>
+              <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.id">
+                {{ itemType.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
 
@@ -59,7 +64,7 @@
       <!-- Item Type Column -->
       <ng-container matColumnDef="itemType">
         <th mat-header-cell *matHeaderCellDef>Item Type</th>
-        <td mat-cell *matCellDef="let customer">{{ customer.itemTypeId || 'N/A' }}</td>
+        <td mat-cell *matCellDef="let customer">{{ getItemTypeName(customer.itemTypeId) }}</td>
       </ng-container>
 
       <!-- Actions Column -->

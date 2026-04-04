@@ -83,6 +83,12 @@ export class NavigationComponent implements OnInit {
       route: 'payments'
     },
     {
+      name: 'Expenses',
+      label: 'Expenses',
+      icon: 'money_off',
+      route: 'expenses'
+    },
+    {
       name: 'Timesheets',
       label: 'Timesheets',
       icon: 'schedule',

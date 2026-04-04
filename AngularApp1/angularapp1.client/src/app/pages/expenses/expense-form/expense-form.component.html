@@ -1,0 +1,89 @@
+<ui-page-title [title]="titleInfo"></ui-page-title>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ titleInfo }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group>
+      <!-- Expense Details Tab -->
+      <mat-tab label="Expense Details">
+        <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+          <div class="form-container">
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Transaction Date *</mat-label>
+              <input matInput type="date" formControlName="trxDate" required>
+              <mat-error *ngIf="expenseForm.get('trxDate')?.hasError('required')">
+                Transaction Date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Amount *</mat-label>
+              <input matInput type="number" formControlName="amount" required placeholder="Enter amount">
+              <mat-error *ngIf="expenseForm.get('amount')?.hasError('required')">
+                Amount is required
+              </mat-error>
+              <mat-error *ngIf="expenseForm.get('amount')?.hasError('min')">
+                Amount must be greater than or equal to 0
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Entity</mat-label>
+              <mat-select formControlName="entityId">
+                <mat-option [value]="null">Select Entity</mat-option>
+                <mat-option *ngFor="let entity of entities" [value]="entity.id">
+                  {{ entity.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="remarks" rows="3" placeholder="Enter remarks"></textarea>
+            </mat-form-field>
+
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" formControlName="isActive">
+                Active
+              </label>
+              <label>
+                <input type="checkbox" formControlName="isArchived">
+                Archived
+              </label>
+              <label>
+                <input type="checkbox" formControlName="isPrivate">
+                Private
+              </label>
+            </div>
+
+            <div class="button-container">
+              <button mat-raised-button color="primary" type="submit" [disabled]="dataloading || expenseForm.invalid">
+                {{ isNewRecord ? 'Create Expense' : 'Update Expense' }}
+              </button>
+              <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
+                Cancel
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </mat-tab>
+
+      <!-- Status Tab -->
+      <mat-tab label="Status">
+        <app-expense-status-list
+          [expenseId]="currentData?.id || null"
+          [itemStatuses]="itemStatuses">
+        </app-expense-status-list>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>

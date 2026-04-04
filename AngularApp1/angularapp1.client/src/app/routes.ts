@@ -35,6 +35,7 @@ import { ResourcesListComponent } from './pages/resources/resources-list/resourc
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
 import { ReceivablesComponent } from './pages/receivables/receivables.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
+import { ExpensesComponent } from './pages/expenses/expenses.component';
 
 const routeConfig: Routes = [
 
@@ -184,6 +185,12 @@ const routeConfig: Routes = [
     {
       path: 'payments',
       component: PaymentsComponent,
+      canActivate: [AuthGuard]
+    },
+    // Expenses routes
+    {
+      path: 'expenses',
+      component: ExpensesComponent,
       canActivate: [AuthGuard]
     }
 

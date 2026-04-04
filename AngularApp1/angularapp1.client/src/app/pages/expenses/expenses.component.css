@@ -1,0 +1,4 @@
+/* Expenses page host styles */
+:host {
+  display: block;
+}

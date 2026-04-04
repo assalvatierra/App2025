@@ -52,6 +52,11 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.Payment> Payments { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ReceivablePayment> ReceivablePayments { get; set; } = default!;
 
+        // Expense related DbSets
+        public DbSet<Erp.Domain.Models.Expense> Expenses { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ExpenseStatus> ExpenseStatuses { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ExpensePayment> ExpensePayments { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -132,6 +137,24 @@ namespace AngularApp1.Server.Data
 
             // Map Payments DbSet to Payment table (singular)
             modelBuilder.Entity<Payment>().ToTable("Payment");
+
+            // Map Expense DbSets to singular table names
+            modelBuilder.Entity<Expense>().ToTable("Expense");
+            modelBuilder.Entity<ExpenseStatus>().ToTable("ExpenseStatus");
+            modelBuilder.Entity<ExpensePayment>().ToTable("ExpensePayment");
+
+            // Configure Expense relationships
+            modelBuilder.Entity<ExpenseStatus>()
+                .HasOne(es => es.Expense)
+                .WithMany(e => e.ExpenseStatuses)
+                .HasForeignKey(es => es.ExpenseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExpensePayment>()
+                .HasOne(ep => ep.Expenses)
+                .WithMany(e => e.ExpensePayments)
+                .HasForeignKey(ep => ep.ExpensesId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

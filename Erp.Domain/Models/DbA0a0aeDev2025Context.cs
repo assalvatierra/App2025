@@ -17,6 +17,8 @@ public partial class DbA0a0aeDev2025Context : DbContext
 
     public virtual DbSet<ExpenseStatus> ExpenseStatuses { get; set; }
 
+    public virtual DbSet<JobExpense> JobExpenses { get; set; }
+
     public virtual DbSet<JobReceivable> JobReceivables { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
@@ -66,6 +68,15 @@ public partial class DbA0a0aeDev2025Context : DbContext
             entity.HasOne(d => d.Expense).WithMany(p => p.ExpenseStatuses)
                 .HasForeignKey(d => d.ExpenseId)
                 .HasConstraintName("FK_ExpenseStatus_Expense_0");
+        });
+
+        modelBuilder.Entity<JobExpense>(entity =>
+        {
+            entity.ToTable("JobExpense");
+
+            entity.HasOne(d => d.Expense).WithMany(p => p.JobExpenses)
+                .HasForeignKey(d => d.ExpensesId)
+                .HasConstraintName("FK_JobExpense_Expense_0");
         });
 
         modelBuilder.Entity<JobReceivable>(entity =>

@@ -11,7 +11,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { Expense } from '../../../core/models/expense.model';
 import { ExpenseStatusListComponent } from '../expense-status-list/expense-status-list.component';
+import { ExpenseJobListComponent } from '../expense-job-list/expense-job-list.component';
 import { ApiService } from '../../../core/api.service';
+import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 
 @Component({
   selector: 'app-expense-form',
@@ -29,7 +31,8 @@ import { ApiService } from '../../../core/api.service';
     MatProgressSpinnerModule,
     MatTabsModule,
     UiPageTitleComponent,
-    ExpenseStatusListComponent
+    ExpenseStatusListComponent,
+    ExpenseJobListComponent
   ]
 })
 export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
@@ -45,16 +48,19 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
   public isNewRecord: boolean = true;
   public titleInfo: string = 'Add Expense';
   public itemStatuses: any[] = [];
+  public jobs: any[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private apiJobMain: ApiJobMainService
   ) {
     this.initForm();
   }
 
   ngOnInit(): void {
     this.loadItemStatuses();
+    this.loadJobs();
     this.updateFormData();
   }
 
@@ -92,12 +98,24 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private loadItemStatuses(): void {
-    this.apiService.getItemStatusesByClassName('Expenses').subscribe({
+    this.apiService.getItemStatusesByClassName('Expense').subscribe({
       next: (statuses: any[]) => {
+        console.log('Item statuses loaded:', statuses);
         this.itemStatuses = statuses;
       },
       error: (err: any) => {
         console.error('Error loading item statuses:', err);
+      }
+    });
+  }
+
+  private loadJobs(): void {
+    this.apiJobMain.getJobMains().subscribe({
+      next: (jobs: any[]) => {
+        this.jobs = jobs;
+      },
+      error: (err: any) => {
+        console.error('Error loading jobs:', err);
       }
     });
   }

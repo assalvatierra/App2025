@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { PaymentListComponent } from './payment-list/payment-list.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { PaymentDataService } from './payment-service/payment-data.service';
@@ -18,11 +19,25 @@ export class PaymentsComponent implements OnInit {
   public currentView: 'list' | 'form' = 'list';
   public payments: Payment[] = [];
   public selectedPayment: Payment | null = null;
+  public selectedMode: string | null = null;
+  public defaultFilterMode: string | null = null;
   public dataloading: boolean = true;
 
-  constructor(private paymentDataService: PaymentDataService) { }
+  constructor(
+    private paymentDataService: PaymentDataService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    // Subscribe to query parameter changes (will fire on initial load AND subsequent changes)
+    this.route.queryParams.subscribe(params => {
+      const newMode = params['mode'] || null;
+      if (newMode !== this.defaultFilterMode) {
+        this.defaultFilterMode = newMode;
+        console.log('Mode changed from navigation:', this.defaultFilterMode);
+      }
+    });
+
     this.paymentDataService.loadPayments();
 
     this.paymentDataService.payments$.subscribe(data => {
@@ -34,8 +49,9 @@ export class PaymentsComponent implements OnInit {
     });
   }
 
-  onAddRecord(): void {
+  onAddRecord(mode: string | null = null): void {
     this.selectedPayment = null;
+    this.selectedMode = mode;
     this.currentView = 'form';
   }
 
@@ -110,6 +126,7 @@ export class PaymentsComponent implements OnInit {
 
   onCancelForm(): void {
     this.selectedPayment = null;
+    this.selectedMode = null;
     this.currentView = 'list';
   }
 }

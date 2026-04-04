@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Expense, ExpenseStatus, ExpensePayment } from '../models/expense.model';
+import { Expense, ExpenseStatus, ExpensePayment, JobExpense } from '../models/expense.model';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +111,58 @@ export class ApiExpensesService {
       catchError((error) => {
         console.error('Error adding expense status:', error);
         return throwError(() => new Error(`Failed to add status for expense ${id}: ${error.message || error.statusText}`));
+      })
+    );
+  }
+
+  /**
+   * Get job expenses for an expense
+   */
+  getJobExpenses(id: number): Observable<JobExpense[]> {
+    return this.http.get<JobExpense[]>(`${this.baseUrl}/api/Expenses/${id}/Jobs`).pipe(
+      catchError((error) => {
+        console.error('Error fetching job expenses:', error);
+        return throwError(() => new Error(`Failed to fetch jobs for expense ${id}: ${error.message || error.statusText}`));
+      })
+    );
+  }
+
+  /**
+   * Add a job expense
+   */
+  addJobExpense(jobExpense: JobExpense): Observable<JobExpense> {
+    const expensesId = jobExpense.expensesId;
+    if (!expensesId) {
+      return throwError(() => new Error('Expense ID is required to add a job expense'));
+    }
+    return this.http.post<JobExpense>(`${this.baseUrl}/api/Expenses/${expensesId}/Jobs`, jobExpense).pipe(
+      catchError((error) => {
+        console.error('Error adding job expense:', error);
+        return throwError(() => new Error(`Failed to add job for expense ${expensesId}: ${error.message || error.statusText}`));
+      })
+    );
+  }
+
+  /**
+   * Update a job expense
+   */
+  updateJobExpense(id: number, jobExpense: JobExpense): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/Expenses/Jobs/${id}`, jobExpense).pipe(
+      catchError((error) => {
+        console.error('Error updating job expense:', error);
+        return throwError(() => new Error(`Failed to update job expense ${id}: ${error.message || error.statusText}`));
+      })
+    );
+  }
+
+  /**
+   * Delete a job expense
+   */
+  deleteJobExpense(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/Expenses/Jobs/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting job expense:', error);
+        return throwError(() => new Error(`Failed to delete job expense ${id}: ${error.message || error.statusText}`));
       })
     );
   }

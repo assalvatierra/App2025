@@ -9,6 +9,7 @@ export interface MenuItem {
   label: string;     // Display text
   icon?: string;
   route?: string;
+  queryParams?: { [key: string]: string };  // NEW: Query parameters
   subItems?: MenuItem[];
 }
 
@@ -77,16 +78,32 @@ export class NavigationComponent implements OnInit {
       route: 'receivables'
     },
     {
-      name: 'Payments',
-      label: 'Payments',
-      icon: 'payments',
-      route: 'payments'
-    },
-    {
       name: 'Expenses',
       label: 'Expenses',
       icon: 'money_off',
       route: 'expenses'
+    },
+    {
+      name: 'Cash',
+      label: 'Cash',
+      icon: 'account_balance_wallet',
+      route: '',
+      subItems: [
+        {
+          name: 'Collection',
+          label: 'Collection',
+          icon: 'account_balance',
+          route: 'payments',
+          queryParams: { mode: 'RECEIPT' }
+        },
+        {
+          name: 'Payments',
+          label: 'Payments',
+          icon: 'payments',
+          route: 'payments',
+          queryParams: { mode: 'RELEASE' }
+        }
+      ]
     },
     {
       name: 'Timesheets',

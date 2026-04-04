@@ -56,6 +56,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.Expense> Expenses { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ExpenseStatus> ExpenseStatuses { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ExpensePayment> ExpensePayments { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobExpense> JobExpenses { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -142,6 +143,7 @@ namespace AngularApp1.Server.Data
             modelBuilder.Entity<Expense>().ToTable("Expense");
             modelBuilder.Entity<ExpenseStatus>().ToTable("ExpenseStatus");
             modelBuilder.Entity<ExpensePayment>().ToTable("ExpensePayment");
+            modelBuilder.Entity<JobExpense>().ToTable("JobExpense");
 
             // Configure Expense relationships
             modelBuilder.Entity<ExpenseStatus>()
@@ -154,6 +156,13 @@ namespace AngularApp1.Server.Data
                 .HasOne(ep => ep.Expenses)
                 .WithMany(e => e.ExpensePayments)
                 .HasForeignKey(ep => ep.ExpensesId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure JobExpense relationships
+            modelBuilder.Entity<JobExpense>()
+                .HasOne(je => je.Expense)
+                .WithMany(e => e.JobExpenses)
+                .HasForeignKey(je => je.ExpensesId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

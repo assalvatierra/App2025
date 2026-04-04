@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiExpensesService } from '../../../core/services/api-expenses.service';
 import { ApiEntityService } from '../../../core/services/api-entity.service';
-import { Expense, ExpenseStatus } from '../../../core/models/expense.model';
+import { Expense, ExpenseStatus, JobExpense } from '../../../core/models/expense.model';
 
 @Injectable({
   providedIn: 'root'
@@ -119,5 +119,35 @@ export class ExpenseDataService {
    */
   addExpenseStatus(expenseId: number, status: ExpenseStatus): Observable<ExpenseStatus> {
     return this.apiExpenses.addExpenseStatus(expenseId, status);
+  }
+
+  // ===== JobExpense Methods =====
+
+  /**
+   * Get job expenses for a given expense ID
+   */
+  getJobExpenses(expenseId: number): Observable<JobExpense[]> {
+    return this.apiExpenses.getJobExpenses(expenseId);
+  }
+
+  /**
+   * Add a job expense
+   */
+  addJobExpense(jobExpense: JobExpense): Observable<JobExpense> {
+    return this.apiExpenses.addJobExpense(jobExpense);
+  }
+
+  /**
+   * Update a job expense
+   */
+  updateJobExpense(id: number, jobExpense: JobExpense): Observable<any> {
+    return this.apiExpenses.updateJobExpense(id, jobExpense);
+  }
+
+  /**
+   * Delete a job expense
+   */
+  deleteJobExpense(id: number): Observable<any> {
+    return this.apiExpenses.deleteJobExpense(id);
   }
 }

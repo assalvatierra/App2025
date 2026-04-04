@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { PaymentListComponent } from './payment-list/payment-list.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { PaymentDataService } from './payment-service/payment-data.service';
@@ -14,7 +15,7 @@ import { Payment } from '../../core/models/payment.model';
   imports: [CommonModule, PaymentListComponent, PaymentFormComponent],
   providers: [PaymentDataService]
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent implements OnInit, OnDestroy {
 
   public currentView: 'list' | 'form' = 'list';
   public payments: Payment[] = [];
@@ -23,20 +24,48 @@ export class PaymentsComponent implements OnInit {
   public defaultFilterMode: string | null = null;
   public dataloading: boolean = true;
 
+  private destroy$ = new Subject<void>();
+  private isNavigatingAway = false;
+
   constructor(
     private paymentDataService: PaymentDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     // Subscribe to query parameter changes (will fire on initial load AND subsequent changes)
-    this.route.queryParams.subscribe(params => {
-      const newMode = params['mode'] || null;
-      if (newMode !== this.defaultFilterMode) {
-        this.defaultFilterMode = newMode;
-        console.log('Mode changed from navigation:', this.defaultFilterMode);
-      }
-    });
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const newMode = params['mode'] || null;
+        
+        // Check if mode is changing AND form is open
+        if (newMode !== this.defaultFilterMode && 
+            this.currentView === 'form' && 
+            !this.isNavigatingAway) {
+          
+          const previousMode = this.defaultFilterMode;
+          
+          // Show confirmation dialog
+          const confirmMessage = this.buildConfirmationMessage(previousMode, newMode);
+          
+          if (!confirm(confirmMessage)) {
+            // User cancelled - prevent navigation
+            this.preventNavigation(previousMode);
+            return;
+          } else {
+            // User confirmed - close form and proceed
+            this.closeFormAndProceed(newMode);
+          }
+        } else {
+          // Normal mode change (form not open)
+          if (newMode !== this.defaultFilterMode) {
+            this.defaultFilterMode = newMode;
+            console.log('Mode changed from navigation:', this.defaultFilterMode);
+          }
+        }
+      });
 
     this.paymentDataService.loadPayments();
 
@@ -47,6 +76,62 @@ export class PaymentsComponent implements OnInit {
     this.paymentDataService.loading$.subscribe(loading => {
       this.dataloading = loading;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private buildConfirmationMessage(fromMode: string | null, toMode: string | null): string {
+    const fromDisplay = this.getModeDisplayName(fromMode);
+    const toDisplay = this.getModeDisplayName(toMode);
+    
+    return `You are switching from ${fromDisplay} to ${toDisplay}.\n\n` +
+           `The current form will be closed.\n` +
+           `Any unsaved changes will be lost.\n\n` +
+           `Do you want to continue?`;
+  }
+
+  private getModeDisplayName(mode: string | null): string {
+    if (!mode) return 'All Payments';
+    
+    switch (mode) {
+      case 'RECEIPT':
+        return 'Collection';
+      case 'RELEASE':
+        return 'Payments';
+      default:
+        return mode;
+    }
+  }
+
+  private preventNavigation(previousMode: string | null): void {
+    this.isNavigatingAway = true;
+    
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { mode: previousMode },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    }).then(() => {
+      this.isNavigatingAway = false;
+      console.log('Navigation cancelled, staying on:', previousMode);
+    });
+  }
+
+  private closeFormAndProceed(newMode: string | null): void {
+    // Close the form
+    this.currentView = 'list';
+    this.selectedPayment = null;
+    this.selectedMode = null;
+    
+    // Update the mode - this will trigger change detection in child component
+    // Force a new reference to ensure ngOnChanges fires
+    const previousMode = this.defaultFilterMode;
+    this.defaultFilterMode = newMode;
+    
+    console.log('Form closed, mode changed from', previousMode, 'to:', newMode);
   }
 
   onAddRecord(mode: string | null = null): void {

@@ -94,15 +94,27 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('PaymentList ngOnChanges:', changes);
+    
     if (changes['defaultFilterMode']) {
-      // Apply default filter mode whenever it changes (including first time)
-      if (this.defaultFilterMode && this.paymentModes.length > 0) {
-        console.log('Default filter mode changed:', this.defaultFilterMode);
-        this.filterMode = this.defaultFilterMode;
-        if (this.isInitialized) {
+      const newMode = changes['defaultFilterMode'].currentValue;
+      const prevMode = changes['defaultFilterMode'].previousValue;
+      
+      console.log('Mode change detected:', prevMode, '→', newMode);
+      
+      // Apply default filter mode whenever it changes
+      if (newMode) {
+        this.filterMode = newMode;
+        console.log('Filter mode set to:', this.filterMode);
+        
+        if (this.isInitialized && this.payments && this.payments.length > 0) {
+          console.log('Initializing list with', this.payments.length, 'payments');
           this.initializeList();
+        } else {
+          console.log('Cannot initialize list yet. isInitialized:', this.isInitialized, 
+                      'payments count:', this.payments?.length || 0);
         }
-      } else if (!this.defaultFilterMode && changes['defaultFilterMode'].previousValue) {
+      } else if (newMode === null && prevMode) {
         // Mode was cleared
         console.log('Default filter mode cleared');
         this.filterMode = null;
@@ -113,8 +125,11 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
     }
     
     // Initialize list when payments change (including first load)
-    if (changes['payments'] && this.isInitialized && this.payments) {
-      this.initializeList();
+    if (changes['payments'] && this.isInitialized) {
+      console.log('Payments changed, count:', this.payments?.length || 0);
+      if (this.payments && this.payments.length > 0) {
+        this.initializeList();
+      }
     }
     
     if ((changes['filterRemarks'] || changes['filterItemStatusId']) && this.TableList && this.isInitialized) {
@@ -142,7 +157,13 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
             console.log('Payment modes loaded for filtering:', this.paymentModes);
             
             // Apply default filter mode after modes are loaded
-            this.applyDefaultFilterMode();
+            if (this.defaultFilterMode) {
+              console.log('Applying defaultFilterMode after config load:', this.defaultFilterMode);
+              this.filterMode = this.defaultFilterMode;
+              if (this.isInitialized && this.payments && this.payments.length > 0) {
+                this.initializeList();
+              }
+            }
           } catch (error) {
             console.error('Error parsing payment configuration:', error);
             this.paymentModes = [];

@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +15,7 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
 import { SharedModule } from '../../../shared/shared.module';
 import { tableField } from '../../../shared/models/entityListTableField';
 import { Payment } from '../../../core/models/payment.model';
+import { ApiService } from '../../../core/api.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -38,7 +39,7 @@ import { Payment } from '../../../core/models/payment.model';
     SharedModule
   ]
 })
-export class PaymentListComponent implements AfterViewInit, OnChanges {
+export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('ListTable') TableList: any;
 
   @Input() payments: Payment[] = [];
@@ -52,7 +53,24 @@ export class PaymentListComponent implements AfterViewInit, OnChanges {
 
   // Filter properties
   public filterRemarks?: string;
-  public filterIsActive?: boolean | null = null;
+  public filterItemStatusId?: number | null = null;
+
+  // Status dropdown data
+  public itemStatuses: any[] = [];
+  private readonly itemClassName: string = 'Payment';
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.loadItemStatuses();
+  }
+
+  private loadItemStatuses(): void {
+    this.apiService.getItemStatusesByClassName(this.itemClassName).subscribe({
+      next: (res) => { this.itemStatuses = res; },
+      error: (err) => { console.error('Error loading item statuses:', err); }
+    });
+  }
 
   public get tableFields(): tableField[] {
     return this.getTableFields();
@@ -63,7 +81,7 @@ export class PaymentListComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['payments'] || changes['filterRemarks'] || changes['filterIsActive']) && this.TableList) {
+    if ((changes['payments'] || changes['filterRemarks'] || changes['filterItemStatusId']) && this.TableList) {
       this.initializeList();
     }
   }
@@ -105,7 +123,7 @@ export class PaymentListComponent implements AfterViewInit, OnChanges {
 
   onClearFilter(): void {
     this.filterRemarks = undefined;
-    this.filterIsActive = null;
+    this.filterItemStatusId = null;
     this.initializeList();
   }
 
@@ -114,7 +132,8 @@ export class PaymentListComponent implements AfterViewInit, OnChanges {
         !item.remarks?.toLowerCase().includes(this.filterRemarks.toLowerCase())) {
       return false;
     }
-    if (this.filterIsActive !== null && item.isActive !== this.filterIsActive) {
+    if (this.filterItemStatusId !== null && this.filterItemStatusId !== undefined &&
+        item.itemStatusId !== this.filterItemStatusId) {
       return false;
     }
     return true;

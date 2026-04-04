@@ -13,10 +13,11 @@
 
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="filterIsActive">
+        <mat-select [(ngModel)]="filterItemStatusId">
           <mat-option [value]="null">All</mat-option>
-          <mat-option [value]="true">Active</mat-option>
-          <mat-option [value]="false">Inactive</mat-option>
+          <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 

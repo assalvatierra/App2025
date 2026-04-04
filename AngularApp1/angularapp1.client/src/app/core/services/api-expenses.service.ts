@@ -9,7 +9,8 @@ import { Expense, ExpenseStatus, ExpensePayment } from '../models/expense.model'
 })
 export class ApiExpensesService {
 
-  private baseUrl = 'http://localhost:5157';
+  // Use relative URL to leverage Angular proxy configuration
+  private baseUrl = '';
 
   constructor(private http: HttpClient) { }
 

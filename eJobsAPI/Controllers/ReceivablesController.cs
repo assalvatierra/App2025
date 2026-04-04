@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace eJobsAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Jobs/[controller]")]
     [ApiController]
     public class ReceivablesController : ControllerBase
     {

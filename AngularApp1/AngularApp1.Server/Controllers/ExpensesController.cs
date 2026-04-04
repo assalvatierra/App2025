@@ -152,6 +152,75 @@ namespace AngularApp1.Server.Controllers
             return CreatedAtAction(nameof(GetExpenseStatuses), new { id }, status);
         }
 
+        // GET: api/Expenses/5/Jobs
+        [HttpGet("{id}/Jobs")]
+        public async Task<ActionResult<IEnumerable<JobExpense>>> GetJobExpenses(int id)
+        {
+            var jobExpenses = await _context.JobExpenses
+                .Where(je => je.ExpensesId == id)
+                .ToListAsync();
+
+            return jobExpenses;
+        }
+
+        // POST: api/Expenses/5/Jobs
+        [HttpPost("{id}/Jobs")]
+        public async Task<ActionResult<JobExpense>> PostJobExpense(int id, JobExpense jobExpense)
+        {
+            jobExpense.ExpensesId = id;
+
+            _context.JobExpenses.Add(jobExpense);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetJobExpenses), new { id }, jobExpense);
+        }
+
+        // PUT: api/Expenses/Jobs/5
+        [HttpPut("Jobs/{jobExpenseId}")]
+        public async Task<IActionResult> PutJobExpense(int jobExpenseId, JobExpense jobExpense)
+        {
+            if (jobExpenseId != jobExpense.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(jobExpense).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.JobExpenses.Any(e => e.Id == jobExpenseId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Expenses/Jobs/5
+        [HttpDelete("Jobs/{jobExpenseId}")]
+        public async Task<IActionResult> DeleteJobExpense(int jobExpenseId)
+        {
+            var jobExpense = await _context.JobExpenses.FindAsync(jobExpenseId);
+            if (jobExpense == null)
+            {
+                return NotFound();
+            }
+
+            _context.JobExpenses.Remove(jobExpense);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool ExpenseExists(int id)
         {
             return _context.Expenses.Any(e => e.Id == id);

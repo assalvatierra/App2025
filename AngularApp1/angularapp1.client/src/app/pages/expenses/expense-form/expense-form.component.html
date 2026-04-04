@@ -73,6 +73,14 @@
         </form>
       </mat-tab>
 
+      <!-- Jobs Tab -->
+      <mat-tab label="Jobs">
+        <app-expense-job-list
+          [expenseId]="currentData?.id || null"
+          [jobs]="jobs">
+        </app-expense-job-list>
+      </mat-tab>
+
       <!-- Status Tab -->
       <mat-tab label="Status">
         <app-expense-status-list

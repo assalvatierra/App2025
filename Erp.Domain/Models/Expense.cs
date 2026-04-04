@@ -32,4 +32,6 @@ public partial class Expense
     public virtual ICollection<ExpensePayment> ExpensePayments { get; set; } = new List<ExpensePayment>();
 
     public virtual ICollection<ExpenseStatus> ExpenseStatuses { get; set; } = new List<ExpenseStatus>();
+
+    public virtual ICollection<JobExpense> JobExpenses { get; set; } = new List<JobExpense>();
 }

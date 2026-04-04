@@ -15,6 +15,7 @@ export interface Expense {
   entityId?: number;
   expensePayments?: ExpensePayment[];
   expenseStatuses?: ExpenseStatus[];
+  jobExpenses?: JobExpense[];
 }
 
 export interface ExpenseStatus {
@@ -29,4 +30,11 @@ export interface ExpensePayment {
   id?: number;
   expensesId?: number;
   paymentsId?: number;
+}
+
+export interface JobExpense {
+  id?: number;
+  expensesId?: number;
+  jobMainId?: number;
+  description?: string;
 }

@@ -133,13 +133,9 @@ namespace AngularApp1.Server.Controllers
 
         // PUT: api/Payments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPayment(int id, Payment payment)
+        public async Task<IActionResult> PutPayment(int id, [FromBody] UpdatePaymentDto paymentDto)
         {
-            ModelState.Remove(nameof(Payment.CreatedBy));
-            ModelState.Remove(nameof(Payment.LastEditBy));
-            ModelState.Remove(nameof(Payment.Remarks));
-
-            if (id != payment.Id)
+            if (id != paymentDto.Id)
             {
                 return BadRequest(new { message = "Payment ID mismatch." });
             }
@@ -156,11 +152,25 @@ namespace AngularApp1.Server.Controllers
                 return NotFound(new { message = $"Payment with ID {id} not found." });
             }
 
-            payment.CreatedBy = existingPayment.CreatedBy;
-            payment.CreatedOn = existingPayment.CreatedOn;
-            payment.LastEditBy = User?.Identity?.Name ?? "System";
-            payment.LastEditOn = DateTime.Now;
-            payment.Remarks = payment.Remarks ?? string.Empty;
+            // Map DTO to entity, preserving server-managed fields
+            var payment = new Payment
+            {
+                Id = paymentDto.Id,
+                TrxDate = paymentDto.TrxDate,
+                Amount = paymentDto.Amount,
+                Remarks = paymentDto.Remarks ?? string.Empty,
+                IsArchived = paymentDto.IsArchived,
+                IsPrivate = paymentDto.IsPrivate,
+                IsActive = paymentDto.IsActive,
+                EntityId = paymentDto.EntityId,
+                ItemTypeId = paymentDto.ItemTypeId,
+                ItemStatusId = paymentDto.ItemStatusId,
+                AdditionalInfo = paymentDto.AdditionalInfo,
+                CreatedBy = existingPayment.CreatedBy,
+                CreatedOn = existingPayment.CreatedOn,
+                LastEditBy = User?.Identity?.Name ?? "System",
+                LastEditOn = DateTime.Now
+            };
 
             _context.Entry(payment).State = EntityState.Modified;
 

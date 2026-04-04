@@ -16,6 +16,17 @@ import { SharedModule } from '../../../shared/shared.module';
 import { tableField } from '../../../shared/models/entityListTableField';
 import { Payment } from '../../../core/models/payment.model';
 import { ApiService } from '../../../core/api.service';
+import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
+
+interface PaymentMode {
+  Mode: string;
+  DisplayMode: string;
+  includedTypes: string[];
+}
+
+interface PaymentConfig {
+  Modes: PaymentMode[];
+}
 
 @Component({
   selector: 'app-payment-list',
@@ -44,8 +55,9 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() payments: Payment[] = [];
   @Input() dataloading: boolean = true;
+  @Input() defaultFilterMode: string | null = null;
 
-  @Output() addRecordClicked = new EventEmitter<void>();
+  @Output() addRecordClicked = new EventEmitter<string | null>();
   @Output() editRecordClicked = new EventEmitter<number>();
   @Output() deleteRecordClicked = new EventEmitter<number>();
 
@@ -54,15 +66,97 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
   // Filter properties
   public filterRemarks?: string;
   public filterItemStatusId?: number | null = null;
+  public filterMode?: string | null = null;
 
   // Status dropdown data
   public itemStatuses: any[] = [];
+  public itemTypes: any[] = [];
+  public paymentModes: PaymentMode[] = [];
+  
   private readonly itemClassName: string = 'Payment';
+  private readonly paymentConfigCode: string = 'PAYMENT_CONFIG';
+  private isInitialized: boolean = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private apiSysFeaturesService: ApiSysFeaturesService
+  ) {}
 
   ngOnInit(): void {
+    this.loadPaymentConfiguration();
     this.loadItemStatuses();
+    this.loadItemTypes();
+  }
+
+  ngAfterViewInit(): void {
+    this.isInitialized = true;
+    // Don't call initializeList here yet - wait for data
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['defaultFilterMode']) {
+      // Apply default filter mode whenever it changes (including first time)
+      if (this.defaultFilterMode && this.paymentModes.length > 0) {
+        console.log('Default filter mode changed:', this.defaultFilterMode);
+        this.filterMode = this.defaultFilterMode;
+        if (this.isInitialized) {
+          this.initializeList();
+        }
+      } else if (!this.defaultFilterMode && changes['defaultFilterMode'].previousValue) {
+        // Mode was cleared
+        console.log('Default filter mode cleared');
+        this.filterMode = null;
+        if (this.isInitialized) {
+          this.initializeList();
+        }
+      }
+    }
+    
+    // Initialize list when payments change (including first load)
+    if (changes['payments'] && this.isInitialized && this.payments) {
+      this.initializeList();
+    }
+    
+    if ((changes['filterRemarks'] || changes['filterItemStatusId']) && this.TableList && this.isInitialized) {
+      this.initializeList();
+    }
+  }
+
+  private applyDefaultFilterMode(): void {
+    if (this.defaultFilterMode && !this.filterMode) {
+      console.log('Applying default filter mode:', this.defaultFilterMode);
+      this.filterMode = this.defaultFilterMode;
+      if (this.isInitialized) {
+        this.initializeList();
+      }
+    }
+  }
+
+  private loadPaymentConfiguration(): void {
+    this.apiSysFeaturesService.getSysFeatureBySysCode(this.paymentConfigCode).subscribe({
+      next: (feature) => {
+        if (feature && feature.isEnabled && feature.settings) {
+          try {
+            const config: PaymentConfig = JSON.parse(feature.settings);
+            this.paymentModes = config.Modes || [];
+            console.log('Payment modes loaded for filtering:', this.paymentModes);
+            
+            // Apply default filter mode after modes are loaded
+            this.applyDefaultFilterMode();
+          } catch (error) {
+            console.error('Error parsing payment configuration:', error);
+            this.paymentModes = [];
+          }
+        } else {
+          console.warn('Payment configuration not found or disabled');
+          this.paymentModes = [];
+        }
+      },
+      error: (err) => {
+        console.error('Error loading payment configuration:', err);
+        this.paymentModes = [];
+      }
+    });
   }
 
   private loadItemStatuses(): void {
@@ -72,18 +166,15 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
+  private loadItemTypes(): void {
+    this.apiService.getItemTypesByClassName(this.itemClassName).subscribe({
+      next: (res) => { this.itemTypes = res; },
+      error: (err) => { console.error('Error loading item types:', err); }
+    });
+  }
+
   public get tableFields(): tableField[] {
     return this.getTableFields();
-  }
-
-  ngAfterViewInit(): void {
-    this.initializeList();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['payments'] || changes['filterRemarks'] || changes['filterItemStatusId']) && this.TableList) {
-      this.initializeList();
-    }
   }
 
   private initializeList(): void {
@@ -95,6 +186,7 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
         amount:     item.amount?.toFixed(2) ?? '0.00',
         remarks:    item.remarks ?? '',
         entityId:   item.entityId ?? '',
+        itemType:   this.getItemTypeName(item.itemTypeId),
         isActive:   item.isActive ? 'Yes' : 'No',
         isArchived: item.isArchived ? 'Yes' : 'No',
         createdOn:  item.createdOn ? new Date(item.createdOn).toLocaleDateString() : ''
@@ -107,6 +199,7 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
 
   onAddRecord(): void {
     this.addRecordClicked.emit();
+    this.addRecordClicked.emit(this.filterMode || null);
   }
 
   onEdit(id: any): void {
@@ -124,19 +217,48 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
   onClearFilter(): void {
     this.filterRemarks = undefined;
     this.filterItemStatusId = null;
+    this.filterMode = null;
     this.initializeList();
   }
 
   private applyFilters(item: Payment): boolean {
+    // Filter by remarks
     if (this.filterRemarks &&
         !item.remarks?.toLowerCase().includes(this.filterRemarks.toLowerCase())) {
       return false;
     }
+    
+    // Filter by item status
     if (this.filterItemStatusId !== null && this.filterItemStatusId !== undefined &&
         item.itemStatusId !== this.filterItemStatusId) {
       return false;
     }
+    
+    // Filter by mode
+    if (this.filterMode) {
+      const selectedMode = this.paymentModes.find(m => m.Mode === this.filterMode);
+      if (selectedMode) {
+        // Get the item type code for this payment
+        const itemType = this.itemTypes.find(t => t.id === item.itemTypeId);
+        if (!itemType || !selectedMode.includedTypes.includes(itemType.code)) {
+          return false;
+        }
+      }
+    }
+    
     return true;
+  }
+
+  private getItemTypeName(itemTypeId?: number): string {
+    if (!itemTypeId) return '';
+    const itemType = this.itemTypes.find(t => t.id === itemTypeId);
+    return itemType ? itemType.name : '';
+  }
+
+  public getSelectedModeHint(): string {
+    if (!this.filterMode) return '';
+    const mode = this.paymentModes.find(m => m.Mode === this.filterMode);
+    return mode ? mode.includedTypes.join(', ') : '';
   }
 
   private getTableFields(): tableField[] {
@@ -145,6 +267,7 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
       { key: 'trxDate',    label: 'Transaction Date' },
       { key: 'amount',     label: 'Amount' },
       { key: 'remarks',    label: 'Remarks' },
+      { key: 'itemType',   label: 'Type' },
       { key: 'entityId',   label: 'Entity ID' },
       { key: 'isActive',   label: 'Active' },
       { key: 'isArchived', label: 'Archived' },

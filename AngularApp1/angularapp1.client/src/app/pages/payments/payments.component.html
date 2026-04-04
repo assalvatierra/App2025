@@ -5,7 +5,8 @@
     <app-payment-list
       [payments]="payments"
       [dataloading]="dataloading"
-      (addRecordClicked)="onAddRecord()"
+      [defaultFilterMode]="defaultFilterMode"
+      (addRecordClicked)="onAddRecord($event)"
       (editRecordClicked)="onEditRecord($event)"
       (deleteRecordClicked)="onDeleteRecord($event)">
     </app-payment-list>
@@ -15,6 +16,7 @@
   <div *ngSwitchCase="'form'">
     <app-payment-form
       [payment]="selectedPayment"
+      [defaultMode]="selectedMode"
       [dataloading]="dataloading"
       (saveRecordClicked)="onSaveRecord($event)"
       (cancelClicked)="onCancelForm()">

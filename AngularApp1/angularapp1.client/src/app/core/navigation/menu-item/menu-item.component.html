@@ -1,5 +1,4 @@
-
-    <a mat-list-item class="menu-item" [routerLink]="item().route" (click)="toggleNested()"
+<a mat-list-item class="menu-item" [routerLink]="item().route" [queryParams]="item().queryParams" (click)="toggleNested()"
       routerLinkActive="selected-menu-item" #rla="routerLinkActive" [class.activate]="rla.isActive">
 
       <mat-icon matListItemIcon>{{item().icon}}</mat-icon>
@@ -24,7 +23,10 @@
    @if(item().subItems && nestedMenuOpen()){
    
       @for(subItem of item().subItems; track subItem.label){
-        <a mat-list-item class="nested-menu-item indented" [routerLink]="item().route + '/' + subItem.route" [class.indented]="!collapsed()"
+        <a mat-list-item class="nested-menu-item indented" 
+          [routerLink]="getSubItemRoute(subItem)" 
+          [queryParams]="subItem.queryParams"
+          [class.indented]="!collapsed()"
           routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
           <mat-icon matListItemIcon>{{subItem.icon}}</mat-icon>
           

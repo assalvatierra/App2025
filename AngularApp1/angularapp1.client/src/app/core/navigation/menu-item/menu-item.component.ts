@@ -21,4 +21,17 @@ export class MenuItemComponent {
 
     this.nestedMenuOpen.set(!this.nestedMenuOpen());
   }
+
+  getSubItemRoute(subItem: MenuItem): string {
+    const parentRoute = this.item().route;
+    const subRoute = subItem.route || '';
+    
+    // If parent route is empty or subRoute is absolute, return subRoute
+    if (!parentRoute || subRoute.startsWith('/')) {
+      return subRoute;
+    }
+    
+    // Otherwise concatenate parent and sub routes
+    return `${parentRoute}/${subRoute}`;
+  }
 }

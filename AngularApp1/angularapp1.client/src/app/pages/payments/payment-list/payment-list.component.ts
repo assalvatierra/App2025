@@ -206,7 +206,7 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
         trxDate:    item.trxDate ? new Date(item.trxDate).toLocaleDateString() : '',
         amount:     item.amount?.toFixed(2) ?? '0.00',
         remarks:    item.remarks ?? '',
-        entityId:   item.entityId ?? '',
+        entityName: this.getEntityName(item),
         itemType:   this.getItemTypeName(item.itemTypeId),
         isActive:   item.isActive ? 'Yes' : 'No',
         isArchived: item.isArchived ? 'Yes' : 'No',
@@ -276,6 +276,15 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
     return itemType ? itemType.name : '';
   }
 
+  private getEntityName(payment: Payment): string {
+    if (payment.entity) {
+      return payment.entity.code 
+        ? `${payment.entity.name} (${payment.entity.code})`
+        : payment.entity.name;
+    }
+    return payment.entityId ? `ID: ${payment.entityId}` : '-';
+  }
+
   public getSelectedModeHint(): string {
     if (!this.filterMode) return '';
     const mode = this.paymentModes.find(m => m.Mode === this.filterMode);
@@ -287,9 +296,9 @@ export class PaymentListComponent implements OnInit, AfterViewInit, OnChanges {
       { key: 'id',         label: 'ID' },
       { key: 'trxDate',    label: 'Transaction Date' },
       { key: 'amount',     label: 'Amount' },
+      { key: 'entityName', label: 'Party' },
       { key: 'remarks',    label: 'Remarks' },
       { key: 'itemType',   label: 'Type' },
-      { key: 'entityId',   label: 'Entity ID' },
       { key: 'isActive',   label: 'Active' },
       { key: 'isArchived', label: 'Archived' },
       { key: 'createdOn',  label: 'Created On' }

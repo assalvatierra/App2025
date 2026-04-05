@@ -27,6 +27,7 @@ namespace AngularApp1.Server.Controllers
         public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         {
             return await _context.Payments
+                .Include(p => p.Entity)
                 .Include(p => p.ReceivablePayments)
                 .Include(p => p.ExpensePayments)
                 .OrderByDescending(p => p.TrxDate)
@@ -38,6 +39,7 @@ namespace AngularApp1.Server.Controllers
         public async Task<ActionResult<Payment>> GetPayment(int id)
         {
             var payment = await _context.Payments
+                .Include(p => p.Entity)
                 .Include(p => p.ReceivablePayments)
                 .Include(p => p.ExpensePayments)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -56,6 +58,7 @@ namespace AngularApp1.Server.Controllers
         {
             var payments = await _context.Payments
                 .Where(p => p.EntityId == entityId)
+                .Include(p => p.Entity)
                 .Include(p => p.ReceivablePayments)
                 .Include(p => p.ExpensePayments)
                 .OrderByDescending(p => p.TrxDate)

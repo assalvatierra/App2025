@@ -163,6 +163,11 @@ export class ApiPaymentsService {
       isPrivate:          data.isPrivate,
       isActive:           data.isActive,
       entityId:           data.entityId,
+      entity:             data.entity ? {
+        id:   data.entity.id,
+        name: data.entity.name,
+        code: data.entity.code
+      } : undefined,
       itemTypeId:         data.itemTypeId,
       itemStatusId:       data.itemStatusId,
       additionalInfo:     data.additionalInfo,

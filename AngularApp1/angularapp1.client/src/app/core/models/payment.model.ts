@@ -11,11 +11,18 @@ export interface Payment {
   isPrivate?: boolean;            // Optional - defaults to false
   isActive?: boolean;             // Optional - defaults to true for new payments
   entityId?: number;
+  entity?: EntityInfo;            // Navigation property
   itemTypeId?: number;
   itemStatusId?: number;
   additionalInfo?: string;
   receivablePayments?: ReceivablePaymentLink[];
   expensePayments?: ExpensePaymentLink[];
+}
+
+export interface EntityInfo {
+  id: number;
+  name: string;
+  code?: string;
 }
 
 export interface ReceivablePaymentLink {

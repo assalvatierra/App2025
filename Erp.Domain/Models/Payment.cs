@@ -35,6 +35,8 @@ public partial class Payment
 
     public string? AdditionalInfo { get; set; }
 
+    public virtual Entity? Entity { get; set; }
+
     public virtual ICollection<ExpensePayment> ExpensePayments { get; set; } = new List<ExpensePayment>();
 
     public virtual ICollection<ReceivablePayment> ReceivablePayments { get; set; } = new List<ReceivablePayment>();

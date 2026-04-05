@@ -9,102 +9,118 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
-      <div class="form-container">
+    <mat-tab-group>
+      <!-- Payment Details Tab -->
+      <mat-tab label="Payment Details">
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+          <div class="form-container">
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>
-            <strong [ngStyle]="{'color': isReceiptMode ? 'green' : 'red', 'font-size': '1.2em'}">
-              {{ modeDisplayLabel }} Type
-            </strong>
-          </mat-label>
-          <mat-select formControlName="itemTypeId">
-            <mat-option [value]="null">— None —</mat-option>
-            <mat-option *ngFor="let type of itemTypes" [value]="type.id">
-              {{ type.name }} <span *ngIf="type.code" class="type-code">({{ type.code }})</span>
-            </mat-option>
-          </mat-select>
-          <!--<mat-hint *ngIf="currentMode">
-      Available types for {{ modeDisplayLabel }}: {{ currentMode.includedTypes.join(', ') }}
-    </mat-hint>-->
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>
+                <strong [ngStyle]="{'color': isReceiptMode ? 'green' : 'red', 'font-size': '1.2em'}">
+                  {{ modeDisplayLabel }} Type
+                </strong>
+              </mat-label>
+              <mat-select formControlName="itemTypeId">
+                <mat-option [value]="null">— None —</mat-option>
+                <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+                  {{ type.name }} <span *ngIf="type.code" class="type-code">({{ type.code }})</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Party</mat-label>
-          <mat-select formControlName="entityId">
-            <mat-option [value]="null">— None —</mat-option>
-            <mat-option *ngFor="let entity of entities" [value]="entity.id">
-              {{ entity.name }}<span *ngIf="entity.code"> ({{ entity.code }})</span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Party</mat-label>
+              <mat-select formControlName="entityId">
+                <mat-option [value]="null">— None —</mat-option>
+                <mat-option *ngFor="let entity of entities" [value]="entity.id">
+                  {{ entity.name }}<span *ngIf="entity.code"> ({{ entity.code }})</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Transaction Date *</mat-label>
-          <input matInput type="date" formControlName="trxDate" required>
-          <mat-error *ngIf="paymentForm.get('trxDate')?.hasError('required')">
-            Transaction Date is required
-          </mat-error>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Transaction Date *</mat-label>
+              <input matInput type="date" formControlName="trxDate" required>
+              <mat-error *ngIf="paymentForm.get('trxDate')?.hasError('required')">
+                Transaction Date is required
+              </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Amount *</mat-label>
-          <input matInput type="number" formControlName="amount" required placeholder="0.00">
-          <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">
-            Amount is required
-          </mat-error>
-          <mat-error *ngIf="paymentForm.get('amount')?.hasError('min')">
-            Amount must be 0 or greater
-          </mat-error>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Amount *</mat-label>
+              <input matInput type="number" formControlName="amount" required placeholder="0.00">
+              <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">
+                Amount is required
+              </mat-error>
+              <mat-error *ngIf="paymentForm.get('amount')?.hasError('min')">
+                Amount must be 0 or greater
+              </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Remarks *</mat-label>
-          <textarea matInput formControlName="remarks" rows="3" required placeholder="Enter remarks"></textarea>
-          <mat-error *ngIf="paymentForm.get('remarks')?.hasError('required')">
-            Remarks is required
-          </mat-error>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Remarks *</mat-label>
+              <textarea matInput formControlName="remarks" rows="3" required placeholder="Enter remarks"></textarea>
+              <mat-error *ngIf="paymentForm.get('remarks')?.hasError('required')">
+                Remarks is required
+              </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Additional Info</mat-label>
-          <textarea matInput formControlName="additionalInfo" rows="2" placeholder="Optional additional information"></textarea>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Additional Info</mat-label>
+              <textarea matInput formControlName="additionalInfo" rows="2" placeholder="Optional additional information"></textarea>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Item Status</mat-label>
-          <mat-select formControlName="itemStatusId">
-            <mat-option [value]="null">— None —</mat-option>
-            <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
-              {{ status.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Item Status</mat-label>
+              <mat-select formControlName="itemStatusId">
+                <mat-option [value]="null">— None —</mat-option>
+                <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
+                  {{ status.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <div class="checkbox-container">
-          <label>
-            <input type="checkbox" formControlName="isActive"> Active
-          </label>
-          <label>
-            <input type="checkbox" formControlName="isArchived"> Archived
-          </label>
-          <label>
-            <input type="checkbox" formControlName="isPrivate"> Private
-          </label>
-        </div>
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" formControlName="isActive"> Active
+              </label>
+              <label>
+                <input type="checkbox" formControlName="isArchived"> Archived
+              </label>
+              <label>
+                <input type="checkbox" formControlName="isPrivate"> Private
+              </label>
+            </div>
 
-        <div class="button-container">
-          <button mat-raised-button color="primary" type="submit"
-                  [disabled]="dataloading || paymentForm.invalid">
-            {{ isNewRecord ? 'Create Payment' : 'Update Payment' }}
-          </button>
-          <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
-            Cancel
-          </button>
-        </div>
+            <div class="button-container">
+              <button mat-raised-button color="primary" type="submit"
+                      [disabled]="dataloading || paymentForm.invalid">
+                {{ isNewRecord ? 'Create Payment' : 'Update Payment' }}
+              </button>
+              <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
+                Cancel
+              </button>
+            </div>
 
-      </div>
-    </form>
+          </div>
+        </form>
+      </mat-tab>
+
+      <!-- Receivables Tab -->
+      <mat-tab label="Receivables" *ngIf="shouldShowReceivablesTab()">
+        <app-payment-receivable-list
+          [paymentId]="payment?.id || null">
+        </app-payment-receivable-list>
+      </mat-tab>
+
+      <!-- Expenses Tab -->
+      <mat-tab label="Expenses" *ngIf="shouldShowExpensesTab()">
+        <app-payment-expense-list
+          [paymentId]="payment?.id || null">
+        </app-payment-expense-list>
+      </mat-tab>
+    </mat-tab-group>
   </mat-card-content>
 </mat-card>
 

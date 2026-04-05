@@ -1,0 +1,69 @@
+.receivable-section {
+  padding: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.form-card {
+  margin-bottom: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+.receivables-table {
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.receivables-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.receivables-table td,
+.receivables-table th {
+  padding: 12px 8px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 32px;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+.no-data p {
+  margin: 0;
+}

@@ -9,17 +9,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { Payment } from '../../../core/models/payment.model';
 import { ApiService } from '../../../core/api.service';
 import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
 import { ApiEntityService } from '../../../core/services/api-entity.service';
+import { PaymentReceivableListComponent } from '../payment-receivable-list/payment-receivable-list.component';
+import { PaymentExpenseListComponent } from '../payment-expense-list/payment-expense-list.component';
 
 interface PaymentMode {
   Mode: string;
   DisplayMode: string;
   includedTypes: string[];
   DefaultType?: string;
+  LinkTabs?: string[];
 }
 
 interface PaymentConfig {
@@ -43,7 +47,10 @@ interface PaymentConfig {
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
-    UiPageTitleComponent
+    MatTabsModule,
+    UiPageTitleComponent,
+    PaymentReceivableListComponent,
+    PaymentExpenseListComponent
   ]
 })
 export class PaymentFormComponent implements OnInit, OnChanges {
@@ -245,6 +252,16 @@ export class PaymentFormComponent implements OnInit, OnChanges {
         this.entities = [];
       }
     });
+  }
+
+  // Check if Receivables tab should be shown
+  shouldShowReceivablesTab(): boolean {
+    return this.currentMode?.LinkTabs?.includes('Receivables') ?? false;
+  }
+
+  // Check if Expenses tab should be shown
+  shouldShowExpensesTab(): boolean {
+    return this.currentMode?.LinkTabs?.includes('Expenses') ?? false;
   }
 
   onModeToggle(): void {

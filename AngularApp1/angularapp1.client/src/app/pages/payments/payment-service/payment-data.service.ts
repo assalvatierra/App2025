@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiPaymentsService } from '../../../core/services/api-payments.service';
-import { Payment } from '../../../core/models/payment.model';
+import { Payment, ReceivablePaymentLink, ExpensePaymentLink } from '../../../core/models/payment.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,68 @@ export class PaymentDataService {
   public payments$ = this.paymentsSubject.asObservable();
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private apiPayments: ApiPaymentsService) { }
+  private baseUrl = 'http://localhost:5157';
+
+  constructor(
+    private apiPayments: ApiPaymentsService,
+    private http: HttpClient
+  ) { }
+
+  /**
+   * Get receivable payments for a payment
+   */
+  getReceivablePayments(paymentId: number): Observable<ReceivablePaymentLink[]> {
+    return this.http.get<ReceivablePaymentLink[]>(`${this.baseUrl}/api/ReceivablePayments/byPayment/${paymentId}`);
+  }
+
+  /**
+   * Add a receivable payment link
+   */
+  addReceivablePayment(receivablePayment: ReceivablePaymentLink): Observable<ReceivablePaymentLink> {
+    return this.http.post<ReceivablePaymentLink>(`${this.baseUrl}/api/ReceivablePayments`, receivablePayment);
+  }
+
+  /**
+   * Update a receivable payment link
+   */
+  updateReceivablePayment(id: number, receivablePayment: ReceivablePaymentLink): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/ReceivablePayments/${id}`, receivablePayment);
+  }
+
+  /**
+   * Delete a receivable payment link
+   */
+  deleteReceivablePayment(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/ReceivablePayments/${id}`);
+  }
+
+  /**
+   * Get expense payments for a payment
+   */
+  getExpensePayments(paymentId: number): Observable<ExpensePaymentLink[]> {
+    return this.http.get<ExpensePaymentLink[]>(`${this.baseUrl}/api/ExpensePayments/byPayment/${paymentId}`);
+  }
+
+  /**
+   * Add an expense payment link
+   */
+  addExpensePayment(expensePayment: ExpensePaymentLink): Observable<ExpensePaymentLink> {
+    return this.http.post<ExpensePaymentLink>(`${this.baseUrl}/api/ExpensePayments`, expensePayment);
+  }
+
+  /**
+   * Update an expense payment link
+   */
+  updateExpensePayment(id: number, expensePayment: ExpensePaymentLink): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/ExpensePayments/${id}`, expensePayment);
+  }
+
+  /**
+   * Delete an expense payment link
+   */
+  deleteExpensePayment(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/ExpensePayments/${id}`);
+  }
 
   /**
    * Load all payments

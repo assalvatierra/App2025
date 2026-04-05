@@ -78,3 +78,12 @@
 mat-spinner {
   margin: 0 auto;
 }
+
+/* Tab styling */
+::ng-deep .mat-mdc-tab-body-content {
+  padding: 16px 0;
+}
+
+::ng-deep .mat-mdc-tab-labels {
+  justify-content: flex-start;
+}

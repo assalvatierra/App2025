@@ -1,0 +1,87 @@
+<div class="receivable-section">
+  <div class="section-header">
+    <h3>Receivables</h3>
+    <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!showForm && paymentId">
+      <mat-icon>add</mat-icon>
+      Link Receivable
+    </button>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <mat-card *ngIf="showForm" class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ isEditing ? 'Edit Receivable Link' : 'Link Receivable' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="receivablePaymentForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Receivable *</mat-label>
+            <mat-select formControlName="receivablesId" required>
+              <mat-option [value]="null">Select Receivable</mat-option>
+              <mat-option *ngFor="let receivable of receivables" [value]="receivable.id">
+                {{ receivable.trxRef }} - {{ receivable.amount | currency }} ({{ receivable.trxDate | date:'shortDate' }})
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="receivablePaymentForm.get('receivablesId')?.hasError('required')">
+              Receivable is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="receivablePaymentForm.invalid">
+            {{ isEditing ? 'Update' : 'Add' }}
+          </button>
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Receivable Payments Table -->
+  <div class="table-container" *ngIf="receivablePayments.length > 0">
+    <table mat-table [dataSource]="receivablePayments" class="receivables-table">
+      
+      <!-- Receivable Column -->
+      <ng-container matColumnDef="receivable">
+        <th mat-header-cell *matHeaderCellDef>Receivable Reference</th>
+        <td mat-cell *matCellDef="let rp">{{ getReceivableInfo(rp.receivablesId).ref }}</td>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let rp">{{ getReceivableInfo(rp.receivablesId).amount | currency }}</td>
+      </ng-container>
+
+      <!-- Transaction Date Column -->
+      <ng-container matColumnDef="trxDate">
+        <th mat-header-cell *matHeaderCellDef>Transaction Date</th>
+        <td mat-cell *matCellDef="let rp">{{ getReceivableInfo(rp.receivablesId).trxDate }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let rp">
+          <button mat-icon-button color="primary" (click)="onEdit(rp)" [disabled]="showForm">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete(rp)" [disabled]="showForm">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="receivablePayments.length === 0 && !showForm" class="no-data">
+    <p>No receivables linked yet. {{ paymentId ? 'Click "Link Receivable" to get started.' : 'Save the payment first to link receivables.' }}</p>
+  </div>
+</div>

@@ -150,50 +150,44 @@ test.describe('Payment Collection Page', () => {
     await page.waitForTimeout(600); // allow the form to render
 
     // ── Step 3: Verify the form heading ───────────────────────────────────
-    const formHeading = page.locator('mat-card-title, h2, h3').filter({ hasText: 'Add Payment' }).first();
+    // The form renders as "Add Cash Transaction" (outer) with "Cash Receipt"
+    // as the inner mat-card-title, confirming the RECEIPT mode.
+    const formHeading = page.locator(
+      'mat-card-title, h2, h3, [class*="title"], [class*="heading"]'
+    ).filter({ hasText: /Add Cash Transaction|Cash Receipt|Add Payment/i }).first();
     await expect(formHeading).toBeVisible({ timeout: 8000 });
 
-    // ── Step 4: Find the mode slide-toggle ────────────────────────────────
-    // The toggle is a <button role="switch"> inside a mat-slide-toggle.
-    // aria-checked="true"  → Receipt mode (RECEIPT)
-    // aria-checked="false" → Release mode (RELEASE)
-    const modeToggle = page.locator('button[role="switch"]');
-    await expect(modeToggle).toBeVisible({ timeout: 8000 });
+    // ── Step 4: Verify the inner card title confirms RECEIPT mode ─────────
+    // "Cash Receipt" is shown inside mat-card-title when in RECEIPT mode.
+    const receiptTitle = page.locator('mat-card-title').filter({ hasText: /Cash Receipt/i });
+    await expect(receiptTitle).toBeVisible({ timeout: 8000 });
 
-    const ariaChecked = await modeToggle.getAttribute('aria-checked');
-    const formModeIsReceipt = ariaChecked === 'true';
+    // ── Step 5: Verify the Receipt Type dropdown is present ───────────────
+    // In Receipt (COLLECT) mode the form shows a "Receipt Type" combobox
+    // pre-filled with "Billing Collection (COLLECT)".
+    const receiptTypeDropdown = page.locator(
+      'strong:has-text("Receipt Type"), [aria-label*="Receipt Type"], combobox[aria-label*="Receipt Type"]'
+    ).first();
+    await expect(receiptTypeDropdown).toBeVisible({ timeout: 8000 });
 
-    // ── Step 5: Verify the toggle label reflects the correct mode ─────────
-    // When aria-checked="true" the label next to the toggle reads "Receipt".
-    const toggleLabel = page.locator('label.mdc-label').filter({ hasText: 'Receipt' });
-    await expect(toggleLabel).toBeVisible({ timeout: 5000 });
+    // ── Step 6: Verify the dropdown value contains "COLLECT" ──────────────
+    // The combobox label reads "Receipt Type Billing Collection (COLLECT)".
+    const collectOption = page.locator('text=COLLECT').first();
+    await expect(collectOption).toBeVisible({ timeout: 5000 });
 
-    // ── Step 6: Verify the mode-hint text ─────────────────────────────────
-    // When in Receipt mode the hint reads "Switch to Release mode →"
-    const modeHint = page.locator('span.mode-hint');
-    await expect(modeHint).toBeVisible({ timeout: 5000 });
-    await expect(modeHint).toContainText('Release mode');
-
-    // ── Step 7: Cross-check – form mode must match list mode ──────────────
-    // List mode=RECEIPT  →  toggle aria-checked must be "true"
-    const expectedToggleState = listMode === 'RECEIPT' ? 'true' : 'false';
+    // ── Step 7: Cross-check – form is in RECEIPT mode, not RELEASE ─────────
+    // "Release Type" or "Cash Release" must NOT be visible in this form.
+    const releaseTitle = page.locator('mat-card-title').filter({ hasText: /Cash Release/i });
+    const releaseVisible = await releaseTitle.isVisible().catch(() => false);
     expect(
-      ariaChecked,
-      `Form toggle aria-checked="${ariaChecked}" does not match list mode="${listMode}". ` +
-      `Expected aria-checked="${expectedToggleState}"`
-    ).toBe(expectedToggleState);
-
-    // ── Step 8: Verify the Item Type hint shows correct available types ────
-    // In Receipt mode the hint reads: "Available types for Receipt: COLLECT"
-    const itemTypeHint = page.locator('mat-hint').filter({ hasText: /available types/i });
-    await expect(itemTypeHint).toBeVisible({ timeout: 5000 });
-    await expect(itemTypeHint).toContainText('Receipt');
-    await expect(itemTypeHint).toContainText('COLLECT');
+      releaseVisible,
+      'Form should be in RECEIPT mode but "Cash Release" title was found'
+    ).toBe(false);
 
     // ── Screenshot 1: form with all assertions passed ─────────────────────
     await saveScreenshot(page, `payment-collection-add-form_${filenameTimestamp()}`);
 
-    // ── Step 9: Cancel / close the form ───────────────────────────────────
+    // ── Step 8: Cancel / close the form ───────────────────────────────────
     const cancelBtn = page.locator('button').filter({ hasText: 'Cancel' });
     if (await cancelBtn.count() > 0) {
       await cancelBtn.first().click();

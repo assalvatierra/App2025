@@ -149,54 +149,44 @@ test.describe('Payment Release Page', () => {
     await page.waitForTimeout(600); // allow the form to render
 
     // ── Step 3: Verify the form heading ───────────────────────────────────
-    const formHeading = page.locator('mat-card-title, h2, h3')
-      .filter({ hasText: 'Add Payment' })
-      .first();
+    // The form renders as "Add Cash Transaction" (outer) with "Cash Release"
+    // as the inner mat-card-title, confirming the RELEASE mode.
+    const formHeading = page.locator(
+      'mat-card-title, h2, h3, [class*="title"], [class*="heading"]'
+    ).filter({ hasText: /Add Cash Transaction|Cash Release|Add Payment/i }).first();
     await expect(formHeading).toBeVisible({ timeout: 8000 });
 
-    // ── Step 4: Find the mode slide-toggle ────────────────────────────────
-    // The toggle is a <button role="switch"> inside a mat-slide-toggle.
-    // aria-checked="true"  → Receipt mode (RECEIPT)
-    // aria-checked="false" → Release mode (RELEASE)
-    const modeToggle = page.locator('button[role="switch"]');
-    await expect(modeToggle).toBeVisible({ timeout: 8000 });
+    // ── Step 4: Verify the inner card title confirms RELEASE mode ─────────
+    // "Cash Release" is shown inside mat-card-title when in RELEASE mode.
+    const releaseTitle = page.locator('mat-card-title').filter({ hasText: /Cash Release/i });
+    await expect(releaseTitle).toBeVisible({ timeout: 8000 });
 
-    const ariaChecked = await modeToggle.getAttribute('aria-checked');
+    // ── Step 5: Verify the Release Type dropdown is present ───────────────
+    // In Release mode the form shows a "Release Type" combobox with OPEX as
+    // the default (Operation Expenses).
+    const releaseTypeDropdown = page.locator(
+      'strong:has-text("Release Type"), [aria-label*="Release Type"], combobox[aria-label*="Release Type"]'
+    ).first();
+    await expect(releaseTypeDropdown).toBeVisible({ timeout: 8000 });
 
-    // ── Step 5: Verify the toggle label reads "Release" ───────────────────
-    // When aria-checked="false" the label next to the toggle reads "Release".
-    const toggleLabel = page.locator('label.mdc-label').filter({ hasText: 'Release' });
-    await expect(toggleLabel).toBeVisible({ timeout: 5000 });
+    // ── Step 6: Verify the dropdown value contains "OPEX" ─────────────────
+    // The combobox label reads "Release Type Operation Expenses (OPEX)".
+    const opexOption = page.locator('text=OPEX').first();
+    await expect(opexOption).toBeVisible({ timeout: 5000 });
 
-    // ── Step 6: Verify the mode-hint text ─────────────────────────────────
-    // When in Release mode the hint reads "← Switch to Receipt mode"
-    const modeHint = page.locator('span.mode-hint');
-    await expect(modeHint).toBeVisible({ timeout: 5000 });
-    await expect(modeHint).toContainText('Receipt mode');
-
-    // ── Step 7: Cross-check – form mode must match list mode ──────────────
-    // List mode=RELEASE  →  toggle aria-checked must be "false"
-    const expectedToggleState = listMode === 'RECEIPT' ? 'true' : 'false';
+    // ── Step 7: Cross-check – form is in RELEASE mode, not RECEIPT ─────────
+    // "Receipt Type" or "Cash Receipt" must NOT be visible in this form.
+    const receiptTitle = page.locator('mat-card-title').filter({ hasText: /Cash Receipt/i });
+    const receiptVisible = await receiptTitle.isVisible().catch(() => false);
     expect(
-      ariaChecked,
-      `Form toggle aria-checked="${ariaChecked}" does not match list mode="${listMode}". ` +
-      `Expected aria-checked="${expectedToggleState}"`
-    ).toBe(expectedToggleState);
-
-    // ── Step 8: Verify the Item Type hint shows correct available types ────
-    // In Release mode the hint reads:
-    // "Available types for Release: OPEX, JOBEX, GENEX"
-    const itemTypeHint = page.locator('mat-hint').filter({ hasText: /available types/i });
-    await expect(itemTypeHint).toBeVisible({ timeout: 5000 });
-    await expect(itemTypeHint).toContainText('Release');
-    await expect(itemTypeHint).toContainText('OPEX');
-    await expect(itemTypeHint).toContainText('JOBEX');
-    await expect(itemTypeHint).toContainText('GENEX');
+      receiptVisible,
+      'Form should be in RELEASE mode but "Cash Receipt" title was found'
+    ).toBe(false);
 
     // ── Screenshot 1: form with all assertions passed ─────────────────────
     await saveScreenshot(page, `payment-release-add-form_${filenameTimestamp()}`);
 
-    // ── Step 9: Cancel / close the form ───────────────────────────────────
+    // ── Step 8: Cancel / close the form ───────────────────────────────────
     const cancelBtn = page.locator('button').filter({ hasText: 'Cancel' });
     if (await cancelBtn.count() > 0) {
       await cancelBtn.first().click();

@@ -45,36 +45,19 @@ function filenameTimestamp() {
 const BASE_URL = 'https://localhost:51099';
 
 /**
- * Navigates to the Payments page.
- * The Payments link is nested inside the "Cash" collapsible section of the
- * sidebar.  We expand that section first, then click the Payments link.
- * Falls back to a direct absolute URL if the sidebar approach fails.
+ * Navigates to the Payments (Collection / RECEIPT) page.
+ * The sidebar exposes two Cash sub-links:
+ *   "Collection" → /payments?mode=RECEIPT
+ *   "Payments"   → /payments?mode=RELEASE
+ * There is no plain /payments route with data, so we target the Collection
+ * link (RECEIPT mode) which consistently has records to interact with.
+ * Uses direct page.goto for reliable data loading in both headed and headless
+ * modes (sidebar click can result in stale filter state).
  */
 async function navigateToPayments(page) {
-  // Step 1 – expand the "Cash" collapsible nav group if it is not already open
-  const cashToggle = page.locator('a[href="/"]').filter({ hasText: 'Cash' });
-  if (await cashToggle.count() > 0) {
-    const isExpanded = await page
-      .locator('a[href="/payments"]')
-      .isVisible()
-      .catch(() => false);
-
-    if (!isExpanded) {
-      await cashToggle.first().click();
-      await page.waitForTimeout(400); // let the expand animation finish
-    }
-  }
-
-  // Step 2 – click the Payments link
-  const paymentsLink = page.locator('a[href="/payments"]');
-  if (await paymentsLink.count() > 0) {
-    await paymentsLink.first().click();
-    await page.waitForLoadState('networkidle');
-    return;
-  }
-
-  // Fallback: absolute URL navigation
-  await page.goto(`${BASE_URL}/payments`, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE_URL}/payments?mode=RECEIPT`, { waitUntil: 'networkidle' });
+  // Extra wait to allow Angular to render the data rows
+  await page.waitForTimeout(500);
 }
 
 /**

@@ -124,3 +124,5 @@ Thumbs.db
 /.vs/Erp2025/DesignTimeBuild
 .vs/Erp2025/DesignTimeBuild/.dtbcache.v2
 .vs/Erp2025/v17/.futdcache.v2
+/Playwright/test-results
+Playwright/test-results/.last-run.json

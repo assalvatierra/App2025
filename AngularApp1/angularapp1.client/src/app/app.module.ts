@@ -27,6 +27,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EntityFormComponent } from './shared/entity-form/entity-form.component';
 import { CountriesComponent } from './pages/countries/countries.component';
@@ -45,6 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CityFormComponent } from './pages/cities/city-form/city-form.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ContactsFormComponent } from './pages/contacts/contacts-form/contacts-form.component';
+import { ContactEntityListComponent } from './pages/contacts/contact-entity-list/contact-entity-list.component';
 import { ItemTypesComponent } from './pages/itemtypes/itemtypes.component';
 import { ItemTypesFormComponent } from './pages/itemtypes/itemtypes-form/itemtypes-form.component';
 import { ItemStatusComponent } from './pages/itemstatus/itemstatus.component';
@@ -93,6 +97,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CityFormComponent,
     ContactsComponent,
     ContactsFormComponent,
+    ContactEntityListComponent,
     ItemTypesComponent,
     ItemTypesFormComponent,
     ItemStatusComponent,
@@ -128,6 +133,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatRadioModule,
     MatCardModule,
     MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule,
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,

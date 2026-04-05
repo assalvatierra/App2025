@@ -319,6 +319,9 @@
     <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="54f29aef-6955-4131-982e-13c3bc11b693">
       <column name="" />
     </property>
+    <property name="isActive" type="Boolean" p1:ValidateRequired="true" p1:Guid="c7cc64d3-83c6-46ae-9136-f7443b25784c">
+      <column name="" />
+    </property>
   </class>
   <class name="ItemStatus" entity-set="ItemStatus" p1:Guid="26a7bbaa-e83e-4f62-b8a6-9bb40e9a21d3">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="73b756f7-b0d1-4fa4-9473-9ba961f1835d">

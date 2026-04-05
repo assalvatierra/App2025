@@ -126,6 +126,26 @@ export class NavigationComponent implements OnInit {
       ]
     },
     {
+      name: 'Organization',
+      label: 'Organization',
+      icon: 'business', 
+      route: '',
+      subItems: [
+        { 
+          name: 'Entities',
+          label: 'Entities',
+          icon: 'domain', 
+          route: 'Entities' 
+        },
+        { 
+          name: 'Contacts',
+          label: 'Contacts',
+          icon: 'contacts', 
+          route: 'contacts' 
+        }
+      ]
+    },
+    {
       name: 'Masterfiles',
       label: 'Masterfiles',
       icon: 'analytics', 
@@ -144,22 +164,10 @@ export class NavigationComponent implements OnInit {
           route: 'references/serviceitems'
         },  
         { 
-          name: 'Entities',
-          label: 'Entities',
-          icon: 'dashboard', 
-          route: 'Entities' 
-        },
-        { 
           name: 'Business Units',
           label: 'Business Units',
           icon: 'dashboard', 
           route: 'businessunits' 
-        },
-        { 
-          name: 'Contacts',
-          label: 'Contacts',
-          icon: 'dashboard', 
-          route: 'contacts' 
         },
         { 
           name: 'Agent List',

@@ -13,6 +13,12 @@ public partial class EntityContact
 
     public string? Notes { get; set; }
 
+    public bool IsActive { get; set; }
+
+    public DateTime? ActiveFrom { get; set; }
+
+    public DateTime? ActiveTo { get; set; }
+
     public virtual Contact? Contact { get; set; }
 
     public virtual Entity? Entity { get; set; }

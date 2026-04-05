@@ -1,52 +1,107 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>{{TitleInfo}}</mat-card-title>
+    <mat-card-subtitle *ngIf="currentData?.name">
+      <strong>Contact: {{ currentData!.name }}</strong>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-  
+    <mat-tab-group style="margin-top: 24px;">
+      <!-- Contact Details Tab -->
+      <mat-tab label="Contact Details">
+        <form [formGroup]="dataFormName">
+          <mat-card class="shipping-card" style="margin-top: 16px;">
+            <mat-card-header>
+              <mat-card-title>Contact Name</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field class="full-width" style="width: 100%;">
+                <input matInput type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Name" required>
+              </mat-form-field>
+              
+              <mat-form-field class="full-width" style="width: 100%;">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput 
+                          formControlName="remarks" 
+                          placeholder="Enter remarks or notes about this contact"
+                          rows="3"></textarea>
+              </mat-form-field>
+              
+              <div style="display: flex; gap: 16px;">
+                <mat-form-field class="full-width" style="flex: 1;">
+                  <mat-label>Item Type</mat-label>
+                  <mat-select formControlName="typeId">
+                    <mat-option *ngFor="let it of itemTypeLookupData" [value]="it.id">
+                      {{ it.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width" style="flex: 1;">
+                  <mat-label>Status</mat-label>
+                  <mat-select formControlName="statusId">
+                    <mat-option *ngFor="let st of itemStatusLookupData" [value]="st.id">
+                      {{ st.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+              <mat-form-field class="full-width" style="width: 100%;">
+                <mat-label>City</mat-label>
+                <mat-select formControlName="refCityId">
+                  <mat-option [value]="undefined">-- Select City --</mat-option>
+                  <mat-option *ngFor="let city of citiesLookupData" [value]="city.id">
+                    {{ city.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <!-- Boolean Fields Section -->
+              <div style="margin-top: 16px; margin-bottom: 16px;">
+                <h4 style="margin-bottom: 12px; color: #666;">Contact Status</h4>
+                <div style="display: flex; gap: 24px; align-items: center;">
+                  <mat-checkbox formControlName="isActive" color="primary">
+                    Active
+                  </mat-checkbox>
+                  
+                  <mat-checkbox formControlName="isPrivate" color="primary">
+                    Private
+                  </mat-checkbox>
+                  
+                  <mat-checkbox formControlName="isArchived" color="warn">
+                    Archived
+                  </mat-checkbox>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </mat-tab>
 
-    <form [formGroup]="dataFormName">
-      <mat-card class="shipping-card">
-        <mat-card-header>
-          <mat-card-title>Contact Name</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-form-field class="full-width" style="width: 100%;">
-            <input matInput type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Name" required>
-          </mat-form-field>
-          <div style="display: flex; gap: 16px;">
-            <mat-form-field class="full-width" style="flex: 1;">
-              <mat-label>Item Type</mat-label>
-              <mat-select formControlName="typeId">
-                <mat-option *ngFor="let it of itemTypeLookupData" [value]="it.id">
-                  {{ it.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            
-            <mat-form-field class="full-width" style="flex: 1;">
-              <mat-label>Status</mat-label>
-              <mat-select formControlName="statusId">
-                <mat-option *ngFor="let st of itemStatusLookupData" [value]="st.id">
-                  {{ st.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+      <!-- Contact Information Tab -->
+      <mat-tab label="Contact Information">
+        <div style="margin-top: 16px;">
+          <app-contact-info-form #ContactForm
+                                 *ngIf="!dataloading"
+                                 [modelData]="currentData">
+          </app-contact-info-form>
+        </div>
+      </mat-tab>
+
+      <!-- Contact Entities Tab -->
+      <mat-tab label="Entities">
+        <div style="margin-top: 16px;">
+          <app-contact-entity-list 
+            *ngIf="!dataloading && currentData?.id"
+            [contactId]="currentData!.id">
+          </app-contact-entity-list>
+          <div *ngIf="!currentData?.id" style="padding: 20px; text-align: center; color: #666;">
+            <p>Please save the contact first before adding entities.</p>
           </div>
-        </mat-card-content>
-      </mat-card>
-    </form>
-
-    <mat-tab-group>
-      <mat-tab label="Information">
-        <app-contact-info-form #ContactForm
-                               *ngIf="!dataloading"
-                               [modelData]="currentData">
-        </app-contact-info-form>
-
+        </div>
       </mat-tab>
     </mat-tab-group>
-
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>

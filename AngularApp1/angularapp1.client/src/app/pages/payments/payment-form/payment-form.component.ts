@@ -13,11 +13,13 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
 import { Payment } from '../../../core/models/payment.model';
 import { ApiService } from '../../../core/api.service';
 import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
+import { ApiEntityService } from '../../../core/services/api-entity.service';
 
 interface PaymentMode {
   Mode: string;
   DisplayMode: string;
   includedTypes: string[];
+  DefaultType?: string;
 }
 
 interface PaymentConfig {
@@ -54,10 +56,11 @@ export class PaymentFormComponent implements OnInit, OnChanges {
 
   public paymentForm!: FormGroup;
   public isNewRecord: boolean = true;
-  public titleInfo: string = 'Add Payment';
+  public titleInfo: string = 'Add Cash Transaction';
   public itemTypes: any[] = [];
-  public allItemTypes: any[] = []; // Store all item types for client-side filtering
+  public allItemTypes: any[] = [];
   public itemStatuses: any[] = [];
+  public entities: any[] = [];
 
   // Payment mode configuration
   public paymentModes: PaymentMode[] = [];
@@ -71,7 +74,8 @@ export class PaymentFormComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private apiSysFeaturesService: ApiSysFeaturesService
+    private apiSysFeaturesService: ApiSysFeaturesService,
+    private apiEntityService: ApiEntityService
   ) {
     this.initForm();
   }
@@ -80,11 +84,16 @@ export class PaymentFormComponent implements OnInit, OnChanges {
     this.loadPaymentConfiguration();
     this.loadAllItemTypes();
     this.loadItemStatuses();
+    this.loadEntities();
     this.updateFormData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['payment'] && !changes['payment'].firstChange) {
+      // When payment changes, we need to re-detect mode and update form
+      if (this.payment && this.payment.id && this.payment.itemTypeId && this.allItemTypes.length > 0 && this.paymentModes.length > 0) {
+        this.setModeFromItemType(this.payment.itemTypeId);
+      }
       this.updateFormData();
     }
     if (changes['defaultMode'] && !changes['defaultMode'].firstChange) {
@@ -100,7 +109,6 @@ export class PaymentFormComponent implements OnInit, OnChanges {
             const config: PaymentConfig = JSON.parse(feature.settings);
             this.paymentModes = config.Modes || [];
             
-            // Set initial mode (RECEIPT by default)
             // Set initial mode based on defaultMode or RECEIPT as fallback
             this.applyDefaultMode();
             
@@ -124,6 +132,12 @@ export class PaymentFormComponent implements OnInit, OnChanges {
   private applyDefaultMode(): void {
     if (this.paymentModes.length === 0) return;
 
+    // If editing a payment, determine mode from its item type
+    if (this.payment && this.payment.id && this.payment.itemTypeId && this.allItemTypes.length > 0) {
+      this.setModeFromItemType(this.payment.itemTypeId);
+      return;
+    }
+
     // If defaultMode is provided from list filter, use it
     if (this.defaultMode) {
       const isReceipt = this.defaultMode === 'RECEIPT';
@@ -134,6 +148,32 @@ export class PaymentFormComponent implements OnInit, OnChanges {
       // Otherwise use RECEIPT as default
       this.setMode(true);
     }
+  }
+
+  private setModeFromItemType(itemTypeId: number): void {
+    // Find the item type
+    const itemType = this.allItemTypes.find(type => type.id === itemTypeId);
+    
+    if (!itemType) {
+      console.warn(`Item type with ID ${itemTypeId} not found`);
+      this.setMode(true); // Default to RECEIPT
+      return;
+    }
+
+    // Find which mode includes this item type code
+    for (const mode of this.paymentModes) {
+      if (mode.includedTypes && mode.includedTypes.includes(itemType.code)) {
+        const isReceipt = mode.Mode === 'RECEIPT';
+        this.isReceiptMode = isReceipt;
+        this.setMode(isReceipt);
+        console.log(`Set mode to ${mode.Mode} based on item type ${itemType.code}`);
+        return;
+      }
+    }
+
+    // If not found in any mode, default to RECEIPT
+    console.warn(`Item type ${itemType.code} not found in any mode configuration`);
+    this.setMode(true);
   }
 
   private loadAllItemTypes(): void {
@@ -147,6 +187,11 @@ export class PaymentFormComponent implements OnInit, OnChanges {
           this.filterItemTypesByMode(this.currentMode);
         } else {
           this.applyDefaultFilter();
+        }
+
+        // Re-apply mode detection if editing a payment
+        if (this.payment && this.payment.id && this.payment.itemTypeId && this.paymentModes.length > 0) {
+          this.setModeFromItemType(this.payment.itemTypeId);
         }
       },
       error: (err) => { 
@@ -175,12 +220,30 @@ export class PaymentFormComponent implements OnInit, OnChanges {
     );
     
     console.log(`Filtered to ${this.itemTypes.length} item types for mode ${mode.Mode}:`, mode.includedTypes);
+    
+    // Set default item type for new records only
+    if (this.isNewRecord && mode.DefaultType) {
+      this.setDefaultItemType(mode.DefaultType);
+    }
   }
 
   private loadItemStatuses(): void {
     this.apiService.getItemStatusesByClassName(this.itemClassName).subscribe({
       next: (res) => { this.itemStatuses = res; },
       error: (err) => { console.error('Error loading item statuses:', err); }
+    });
+  }
+
+  private loadEntities(): void {
+    this.apiEntityService.getEntities().subscribe({
+      next: (res) => { 
+        this.entities = res;
+        console.log(`Loaded ${res.length} entities`);
+      },
+      error: (err) => { 
+        console.error('Error loading entities:', err);
+        this.entities = [];
+      }
     });
   }
 
@@ -198,19 +261,40 @@ export class PaymentFormComponent implements OnInit, OnChanges {
       this.modeDisplayLabel = this.currentMode.DisplayMode;
       this.filterItemTypesByMode(this.currentMode);
       
-      // Reset itemTypeId when mode changes
-      this.paymentForm.patchValue({ itemTypeId: null });
+      // Only reset itemTypeId when mode changes for new records
+      // For editing, preserve the existing value
+      if (this.isNewRecord) {
+        // Reset itemTypeId when mode changes
+        this.paymentForm.patchValue({ itemTypeId: null });
+        
+        // Set default item type for the new mode
+        if (this.currentMode.DefaultType) {
+          this.setDefaultItemType(this.currentMode.DefaultType);
+        }
+      }
+    }
+  }
+
+  private setDefaultItemType(typeCode: string): void {
+    // Find the item type by code
+    const defaultType = this.itemTypes.find(type => type.code === typeCode);
+    
+    if (defaultType) {
+      this.paymentForm.patchValue({ itemTypeId: defaultType.id });
+      console.log(`Set default item type to ${typeCode} (ID: ${defaultType.id})`);
+    } else {
+      console.warn(`Default item type '${typeCode}' not found in available types`);
     }
   }
 
   private updateFormData(): void {
     if (this.payment && this.payment.id) {
       this.isNewRecord = false;
-      this.titleInfo = 'Edit Payment';
+      this.titleInfo = 'Edit Cash Transaction';
       this.populateForm();
     } else {
       this.isNewRecord = true;
-      this.titleInfo = 'Add Payment';
+      this.titleInfo = 'Add Cash Transaction';
       this.paymentForm.reset({
         id: null,
         trxDate: this.formatDateForInput(new Date()),

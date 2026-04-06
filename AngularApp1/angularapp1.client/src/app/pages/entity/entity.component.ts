@@ -4,6 +4,7 @@ import { ApiEntityService } from '../../core/services/api-entity.service';
 import { Router } from '@angular/router';
 import { EntityService } from '../../shared/entity.service';
 import { tableField } from '../../shared/models/entityListTableField';
+import { AdvancedFilterField } from '../../shared/entity-list-table/advanced-filter-dialog/advanced-filter-dialog.component';
 
 @Component({
   selector: 'app-entity',
@@ -18,6 +19,17 @@ export class EntityComponent {
 
   public get tableFields() {
     return this.getTableFields();
+  }
+
+  public get advancedFilterFields(): AdvancedFilterField[] {
+    return [
+      { key: 'name', label: 'Name', type: 'string' },
+      { key: 'description', label: 'Description', type: 'string' },
+      { key: 'remarks', label: 'Remarks', type: 'string' },
+      { key: 'code', label: 'Code', type: 'string' },
+      { key: 'contactNo1', label: 'Contact No 1', type: 'string' },
+      { key: 'email1', label: 'Email 1', type: 'string' }
+    ];
   }
 
   constructor(

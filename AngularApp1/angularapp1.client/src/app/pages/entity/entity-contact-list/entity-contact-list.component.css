@@ -1,0 +1,54 @@
+.entity-contact-container {
+  padding: 20px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-section h3 {
+  margin: 0;
+}
+
+.add-form {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+mat-form-field {
+  flex: 1;
+}

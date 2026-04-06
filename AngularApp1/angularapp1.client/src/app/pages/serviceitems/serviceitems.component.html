@@ -8,6 +8,7 @@
     <app-entity-list-table #ListTable
             (addRecordClicked)="onAddRecord()"
             [showEdit]="showEdit"
+            [showFilter]="true"
             [editTitle]="'Edit Service Item'"
             (editRecordClicked)="onEdit($event)"
             (onEditDetails)="onEditDetails($event)"

@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge, Subject } from 'rxjs';
+import { Observable, of as observableOf, merge, Subject, BehaviorSubject } from 'rxjs';
 
 // TODO: Replace this with your own data model type
 export interface EntityListTableItem {
@@ -15,30 +15,6 @@ export interface EntityListTableItem {
   sortOrder: string;
 }
 
-// TODO: replace this with real data from your application
-// const EXAMPLE_DATA: EntityListTableItem[] = [
-//  {id: 1, name: 'Hydrogen'},
-//  {id: 2, name: 'Helium'},
-//  {id: 3, name: 'Lithium'},
-//  {id: 4, name: 'Beryllium'},
-//  {id: 5, name: 'Boron'},
-//  {id: 6, name: 'Carbon'},
-//  {id: 7, name: 'Nitrogen'},
-//  {id: 8, name: 'Oxygen'},
-//  {id: 9, name: 'Fluorine'},
-//  {id: 10, name: 'Neon'},
-//  {id: 11, name: 'Sodium'},
-//  {id: 12, name: 'Magnesium'},
-//  {id: 13, name: 'Aluminum'},
-//  {id: 14, name: 'Silicon'},
-//  {id: 15, name: 'Phosphorus'},
-//  {id: 16, name: 'Sulfur'},
-//  {id: 17, name: 'Chlorine'},
-//  {id: 18, name: 'Argon'},
-//  {id: 19, name: 'Potassium'},
-//  {id: 20, name: 'Calcium'},
-// ];
-
 /**
  * Data source for the EntityListTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
@@ -49,9 +25,22 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   private dataChange = new Subject<void>();
+  private filterChange = new BehaviorSubject('');
 
   constructor() {
     super();
+  }
+
+  get filter(): string {
+    return this.filterChange.value;
+  }
+
+  set filter(filter: string) {
+    this.filterChange.next(filter);
+    // Reset to first page when filter changes
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
   }
 
   /**
@@ -70,9 +59,9 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
-      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange, this.dataChange)
+      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange, this.dataChange, this.filterChange)
         .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
+          return this.getPagedData(this.getSortedData(this.getFilteredData([...this.data])));
         }));
     } else {
       throw Error('Please set the paginator and sort on the data source before connecting.');
@@ -84,6 +73,24 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
    * any open connections or free any held resources that were set up during connect.
    */
   disconnect(): void {}
+
+  /**
+   * Filter the data (client-side). Searches across all properties of each item.
+   */
+  private getFilteredData(data: EntityListTableItem[]): EntityListTableItem[] {
+    if (!this.filter) {
+      return data;
+    }
+
+    const filterValue = this.filter.toLowerCase();
+    return data.filter(item => {
+      // Search across all properties
+      return Object.keys(item).some(key => {
+        const value = (item as any)[key];
+        return value != null && value.toString().toLowerCase().includes(filterValue);
+      });
+    });
+  }
 
   /**
    * Paginate the data (client-side). If you're using server-side pagination,

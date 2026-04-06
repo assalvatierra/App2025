@@ -1,4 +1,3 @@
-
 <mat-card>
   <mat-card-header>
     <mat-card-title>
@@ -9,11 +8,12 @@
     <app-entity-list-table #ListTable
             (addRecordClicked)="onAddRecord()"
             [showEdit]="showEdit"
+            [showFilter]="true"
             [editTitle]="'Edit City'"
             (editRecordClicked)="onEdit($event)"
             (onEditDetails)="onEditDetails($event)"
             (onArchiveRecord)="onArchive($event)"
-            [tableFields] = "tableFields">
+            [tableFields]="tableFields">
 
     </app-entity-list-table>
   </mat-card-content>

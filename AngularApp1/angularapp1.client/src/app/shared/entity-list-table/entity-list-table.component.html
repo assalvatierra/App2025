@@ -1,11 +1,70 @@
-
 <div class="mat-elevation-z2" *ngIf="tableFields.length">
 
-  <div *ngIf="showAdd" class="add-button">
-    <button mat-raised-button color="primary" (click)="onAddRecord()">
-      <mat-icon>add</mat-icon>
-      {{ addTitle }}
-    </button>
+  <div class="header-actions">
+    <div *ngIf="showAdd" class="add-button">
+      <button mat-raised-button color="primary" (click)="onAddRecord()">
+        <mat-icon>add</mat-icon>
+        {{ addTitle }}
+      </button>
+    </div>
+
+    <div class="filter-actions">
+      <button *ngIf="showFilter" 
+              mat-button 
+              (click)="toggleBasicFilterPopup()" 
+              class="filter-toggle-btn">
+        <mat-icon>filter_list</mat-icon>
+        Basic Filter
+        <span *ngIf="filterValue" class="filter-badge">1</span>
+      </button>
+
+      <button *ngIf="showAdvancedFilter" 
+              mat-raised-button 
+              color="accent"
+              (click)="openAdvancedFilterDialog()" 
+              class="advanced-filter-btn">
+        <mat-icon>tune</mat-icon>
+        Advanced Filter
+        <span *ngIf="getAdvancedFilterCount() > 0" class="filter-badge">
+          {{ getAdvancedFilterCount() }}
+        </span>
+      </button>
+
+      <button *ngIf="showAdvancedFilter && getAdvancedFilterCount() > 0" 
+              mat-icon-button
+              matTooltip="Clear advanced filters"
+              (click)="clearAdvancedFilters()">
+        <mat-icon>clear_all</mat-icon>
+      </button>
+
+      <!-- Basic Filter Popup -->
+      <div *ngIf="showFilter && filterPopupVisible" class="filter-popup">
+        <div class="filter-popup-header">
+          <span>Basic Filter</span>
+          <button mat-icon-button (click)="closeBasicFilterPopup()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="filter-popup-content">
+          <mat-form-field class="filter-field" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput 
+                   [(ngModel)]="filterValue"
+                   (keyup)="applyFilter($event)" 
+                   placeholder="Search..." 
+                   #filterInput>
+            <button *ngIf="filterValue" 
+                    matSuffix 
+                    mat-icon-button 
+                    aria-label="Clear" 
+                    (click)="clearFilter()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
   </div>
 
   <table mat-table class="full-width-table" matSort aria-label="Elements" *ngIf="!isLoading">
@@ -25,9 +84,7 @@
     </ng-container>
     <ng-container *ngFor="let field of tableFields" [matColumnDef]="field.key">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{
- field.label
-        }}
+        {{ field.label }}
       </th>
       <td mat-cell *matCellDef="let row">{{ row[field.key] }}</td>
     </ng-container>

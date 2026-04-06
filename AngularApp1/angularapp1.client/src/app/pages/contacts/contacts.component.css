@@ -5,6 +5,41 @@
   font-weight: 500;
 }
 
+.filter-warning {
+  margin-bottom: 16px;
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.warning-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.warning-content mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  flex: 1;
+}
+
+.warning-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #e65100;
+}
+
+.warning-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
 mat-accordion {
   margin-bottom: 24px;
 }

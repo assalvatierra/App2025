@@ -1,0 +1,55 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>
+    <mat-icon>tune</mat-icon>
+    Advanced Filters
+  </h2>
+
+  <mat-dialog-content>
+    <div class="filter-info">
+      <p class="filter-description">{{ getFilterDescription() }}</p>
+      <p class="filter-count" *ngIf="getActiveFilterCount() > 0">
+        <mat-icon>check_circle</mat-icon>
+        {{ getActiveFilterCount() }} filter(s) active
+      </p>
+    </div>
+
+    <form [formGroup]="filterForm" class="filter-form">
+      <div class="filter-grid">
+        <mat-form-field 
+          *ngFor="let field of filterFields" 
+          appearance="outline" 
+          class="filter-field">
+          <mat-label>{{ field.label }}</mat-label>
+          <input 
+            matInput 
+            [formControlName]="field.key" 
+            [placeholder]="'Enter ' + field.label.toLowerCase()">
+          <mat-icon matPrefix>search</mat-icon>
+          <button 
+            *ngIf="filterForm.get(field.key)?.value" 
+            matSuffix 
+            mat-icon-button 
+            type="button"
+            (click)="filterForm.get(field.key)?.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button mat-raised-button (click)="onClear()">
+      <mat-icon>clear_all</mat-icon>
+      Clear All
+    </button>
+    <button mat-raised-button color="primary" (click)="onApply()">
+      <mat-icon>check</mat-icon>
+      Apply Filters
+    </button>
+  </mat-dialog-actions>
+</div>

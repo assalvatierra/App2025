@@ -15,3 +15,29 @@
   width: 100%;
 }
 
+.tab-content {
+  padding: 20px 0;
+}
+
+.info-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+  color: #666;
+}
+
+.info-message mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: #2196F3;
+}
+
+.info-message p {
+  margin: 0;
+  font-size: 16px;
+}
+

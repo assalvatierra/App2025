@@ -1,71 +1,5 @@
 <ui-page-title [title]="'Contacts'"></ui-page-title>
 
-<mat-accordion>
-  <mat-expansion-panel [expanded]="filterExpanded" (opened)="filterExpanded = true" (closed)="filterExpanded = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon>filter_list</mat-icon>
-        <span class="filter-title">Filter Contacts</span>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ getFilterDescription() }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <div class="filter-container">
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="filterName" placeholder="Enter contact name">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Remarks</mat-label>
-        <input matInput [(ngModel)]="filterRemarks" placeholder="Enter remarks">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="filterEmail1" placeholder="Enter email">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Contact No</mat-label>
-        <input matInput [(ngModel)]="filterContactNo1" placeholder="Enter contact number">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Active Status</mat-label>
-        <mat-select [(ngModel)]="filterIsActive">
-          <mat-option [value]="null">All</mat-option>
-          <mat-option [value]="true">Active</mat-option>
-          <mat-option [value]="false">Inactive</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="filter-field">
-        <mat-label>Archive Status</mat-label>
-        <mat-select [(ngModel)]="filterIsArchived">
-          <mat-option [value]="null">All</mat-option>
-          <mat-option [value]="false">Not Archived</mat-option>
-          <mat-option [value]="true">Archived</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div class="filter-buttons">
-        <button mat-raised-button color="primary" (click)="onFilter()">
-          <mat-icon>search</mat-icon>
-          Apply Filter
-        </button>
-        <button mat-raised-button (click)="onClearFilter()">
-          <mat-icon>clear</mat-icon>
-          Clear Filter
-        </button>
-      </div>
-    </div>
-
-  </mat-expansion-panel>
-</mat-accordion>
-
 <mat-card>
   <mat-card-header>
     <mat-card-title>
@@ -77,6 +11,9 @@
                            (addRecordClicked)="onAddRecord()"
                            [showEdit]="showEdit"
                            [editTitle]="'Edit Contact'"
+                           [showFilter]="true"
+                           [showAdvancedFilter]="true"
+                           [advancedFilterFields]="advancedFilterFields"
                            (editRecordClicked)="onEdit($event)"
                            (editDetailClicked)="onEditDetails($event)"
                            (archiveClicked)="onArchive($event)"

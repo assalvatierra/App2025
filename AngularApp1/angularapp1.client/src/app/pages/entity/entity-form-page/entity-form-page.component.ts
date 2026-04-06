@@ -22,7 +22,7 @@ export class EntityFormPageComponent implements AfterViewInit {
   @ViewChild('ContactForm') contactInfo!: ContactInfoFormComponent;
   public currentData: any;
   public dataloading: boolean = true;
-  private paramId: number = 0;
+  public paramId: number = 0;
 
   public dataForm: any;
   public cities: any[] = [];
@@ -212,7 +212,7 @@ export class EntityFormPageComponent implements AfterViewInit {
   public itemTypeLookupData: any[] = [];
   private getApiItemTypeLookupData(): void {
     this.dataloading = true;
-    this.apiService.getItemTypes()
+    this.apiService.getItemTypesByClassName('Entity')
       .subscribe({
         next: (res: any) => {
           this.itemTypeLookupData = res;
@@ -229,7 +229,7 @@ export class EntityFormPageComponent implements AfterViewInit {
   public itemStatusLookupData: any[] = [];
   private getApiItemStatusLookupData(): void {
     this.dataloading = true;
-    this.apiService.getItemStatuses()
+    this.apiService.getItemStatusesByClassName('Entity')
       .subscribe({
         next: (res: any) => {
           this.itemStatusLookupData = res;

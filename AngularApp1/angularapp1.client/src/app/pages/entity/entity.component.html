@@ -11,6 +11,9 @@
     <app-entity-list-table #ListTable
                           (addRecordClicked)="onAddRecord()"
                           [showEdit]="showEdit"
+                          [showFilter]="true"
+                          [showAdvancedFilter]="true"
+                          [advancedFilterFields]="advancedFilterFields"
                           [editTitle]="'Edit'"
                           (editRecordClicked)="onEdit($event)"
                           (onEditDetails)="onEditDetails($event)"

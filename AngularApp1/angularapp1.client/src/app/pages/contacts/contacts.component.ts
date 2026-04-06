@@ -5,6 +5,7 @@ import { EntityListTableComponent } from '../../shared/entity-list-table/entity-
 import { tableField } from '../../shared/models/entityListTableField';
 import { ContactDataService } from './services/contact-data.service';
 import { Contact } from '../../core/models/contact.model';
+import { AdvancedFilterField } from '../../shared/entity-list-table/advanced-filter-dialog/advanced-filter-dialog.component';
 
 @Component({
   selector: 'app-contacts',
@@ -35,6 +36,17 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
 
   public get tableFields() {
     return this.getTableFields();
+  }
+
+  public get advancedFilterFields(): AdvancedFilterField[] {
+    return [
+      { key: 'name', label: 'Name', type: 'string' },
+      { key: 'remarks', label: 'Remarks', type: 'string' },
+      { key: 'contactNo1', label: 'Contact No 1', type: 'string' },
+      { key: 'contactNo2', label: 'Contact No 2', type: 'string' },
+      { key: 'email1', label: 'Email 1', type: 'string' },
+      { key: 'email2', label: 'Email 2', type: 'string' }
+    ];
   }
 
   constructor(
@@ -170,13 +182,31 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
+   * Check if any legacy filters are active
+   */
+  hasActiveLegacyFilters(): boolean {
+    return !!(
+      (this.filterName && this.filterName.trim()) ||
+      (this.filterRemarks && this.filterRemarks.trim()) ||
+      (this.filterEmail1 && this.filterEmail1.trim()) ||
+      (this.filterContactNo1 && this.filterContactNo1.trim()) ||
+      (this.filterIsActive !== null && this.filterIsActive !== undefined) ||
+      (this.filterIsArchived !== null && this.filterIsArchived !== undefined)
+    );
+  }
+
+  /**
    * Apply current filters to contacts
    */
   private applyFilters(): void {
+    console.log('=== Applying Legacy Expansion Panel Filters ===');
     let filtered = [...this.allContacts];
+
+    let hasLegacyFilters = false;
 
     // Filter by name
     if (this.filterName && this.filterName.trim()) {
+      hasLegacyFilters = true;
       const nameFilter = this.filterName.toLowerCase().trim();
       filtered = filtered.filter(c => 
         c.name?.toLowerCase().includes(nameFilter)
@@ -185,6 +215,7 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
 
     // Filter by remarks
     if (this.filterRemarks && this.filterRemarks.trim()) {
+      hasLegacyFilters = true;
       const remarksFilter = this.filterRemarks.toLowerCase().trim();
       filtered = filtered.filter(c => 
         c.remarks?.toLowerCase().includes(remarksFilter)
@@ -193,6 +224,7 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
 
     // Filter by email1
     if (this.filterEmail1 && this.filterEmail1.trim()) {
+      hasLegacyFilters = true;
       const emailFilter = this.filterEmail1.toLowerCase().trim();
       filtered = filtered.filter(c => 
         c.email1?.toLowerCase().includes(emailFilter)
@@ -201,6 +233,7 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
 
     // Filter by contactNo1
     if (this.filterContactNo1 && this.filterContactNo1.trim()) {
+      hasLegacyFilters = true;
       const contactFilter = this.filterContactNo1.toLowerCase().trim();
       filtered = filtered.filter(c => 
         c.contactNo1?.toLowerCase().includes(contactFilter)
@@ -209,17 +242,29 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
 
     // Filter by isActive
     if (this.filterIsActive !== null && this.filterIsActive !== undefined) {
+      hasLegacyFilters = true;
       filtered = filtered.filter(c => c.isActive === this.filterIsActive);
     }
 
     // Filter by isArchived
     if (this.filterIsArchived !== null && this.filterIsArchived !== undefined) {
+      hasLegacyFilters = true;
       filtered = filtered.filter(c => c.isArchived === this.filterIsArchived);
     }
 
+    console.log('Has legacy filters:', hasLegacyFilters);
+    console.log('Filtered contacts:', filtered.length, 'of', this.allContacts.length);
+    
     this.contacts = filtered;
+    
     if (this.TableList) {
-      this.initializeEntityList(this.contacts);
+      // Always pass ALL data to allow table filters to work independently
+      // The expansion panel filter is for display purposes only when using table filters
+      this.initializeEntityList(this.allContacts);
+      
+      if (hasLegacyFilters) {
+        console.warn('Note: Legacy expansion panel filters are active but table shows all data. Use Clear Filter button or use table-level filters instead.');
+      }
     }
   }
 
@@ -251,6 +296,10 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
    * Initialize entity list table with data
    */
   private initializeEntityList(contacts: Contact[]): void {
+    console.log('=== Initializing Contact List ===');
+    console.log('Contacts to display:', contacts.length);
+    console.log('All contacts available:', this.allContacts.length);
+    
     // Map contacts to table-friendly format matching EntityListTableItem interface
     const mappedData = contacts.map(contact => ({
       id: contact.id || 0,
@@ -267,6 +316,7 @@ export class ContactsComponent implements AfterViewInit, OnDestroy {
       isArchived: contact.isArchived ? 'Yes' : 'No'
     }));
 
+    console.log('Mapped data count:', mappedData.length);
     this.TableList.initialize(mappedData);
   }
 }

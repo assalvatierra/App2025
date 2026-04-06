@@ -2,7 +2,9 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, Injec
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { EntityListTableDataSource, EntityListTableItem } from './entity-list-table-datasource';
+import { AdvancedFilterDialogComponent, AdvancedFilterField } from './advanced-filter-dialog/advanced-filter-dialog.component';
 
 @Component({
   selector: 'app-entity-list-table',
@@ -28,27 +30,24 @@ export class EntityListTableComponent implements OnInit, AfterViewInit {
   @Output() archiveClicked = new EventEmitter<any>();
 
   @Input() showEditDetails: boolean = true;
+  @Input() showFilter: boolean = true;
+  @Input() showAdvancedFilter: boolean = false;
+  @Input() advancedFilterFields: AdvancedFilterField[] = [];
 
   dataSource = new EntityListTableDataSource();
+  filterValue: string = '';
+  filterPopupVisible: boolean = false;
+  advancedFilters: { [key: string]: any } = {};
+  private allData: EntityListTableItem[] = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns: any[] = [];
-  //displayedColumns = ['actions', 'id', 'name', 'description', 'remarks', 'code', 'sortOrder'];
 
   @Input()
   public get tableFields(): any {
     return this._tableFields;
   }
   public set tableFields(value: any) {
-    // Format of table fields 
-    // this._tableFields = [
-    //  { key: 'id', label: 'Id' },
-    //  { key: 'name', label: 'Name' },
-    //  { key: 'description', label: 'Description' },
-    //  { key: 'remarks', label: 'Remarks' },
-    //  { key: 'code', label: 'Code' },
-    //  { key: 'sortOrder', label: 'Sort Order' }
-    //];
     this._tableFields = value;
   }
 
@@ -57,7 +56,7 @@ export class EntityListTableComponent implements OnInit, AfterViewInit {
   private _viewInitialized: boolean = false;
   private _pendingData: EntityListTableItem[] | null = null;
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -92,12 +91,122 @@ export class EntityListTableComponent implements OnInit, AfterViewInit {
     this.archiveClicked.emit(param);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.dataSource.filter = '';
+  }
+
+  toggleBasicFilterPopup() {
+    this.filterPopupVisible = !this.filterPopupVisible;
+  }
+
+  closeBasicFilterPopup() {
+    this.filterPopupVisible = false;
+  }
+
+  openAdvancedFilterDialog() {
+    const dialogRef = this.dialog.open(AdvancedFilterDialogComponent, {
+      width: '700px',
+      maxWidth: '90vw',
+      data: {
+        filterFields: this.advancedFilterFields,
+        currentFilters: this.advancedFilters
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.advancedFilters = result;
+        this.applyAdvancedFilters();
+      }
+    });
+  }
+
+  private applyAdvancedFilters() {
+    console.log('=== Applying Advanced Filters ===');
+    console.log('All data count:', this.allData.length);
+    console.log('Active filters:', this.advancedFilters);
+
+    if (!this.allData || this.allData.length === 0) {
+      console.warn('No data available to filter');
+      return;
+    }
+
+    let filtered = [...this.allData];
+    const filterKeys = Object.keys(this.advancedFilters);
+    const hasActiveFilters = filterKeys.some(key => {
+      const value = this.advancedFilters[key];
+      return value !== null && value !== undefined && value !== '';
+    });
+
+    if (hasActiveFilters) {
+      // Apply advanced filters
+      Object.keys(this.advancedFilters).forEach(key => {
+        const filterValue = this.advancedFilters[key];
+        if (filterValue !== null && filterValue !== undefined && filterValue !== '') {
+          console.log(`Filtering by ${key}: ${filterValue}`);
+          filtered = filtered.filter(item => {
+            const itemValue = (item as any)[key];
+            if (itemValue === null || itemValue === undefined) {
+              return false;
+            }
+            const match = itemValue.toString().toLowerCase().includes(filterValue.toLowerCase());
+            return match;
+          });
+        }
+      });
+      console.log('Filtered data count:', filtered.length);
+    } else {
+      console.log('No active filters, showing all data');
+    }
+
+    // Update the datasource with filtered data
+    this.dataSource.data = filtered;
+    
+    // Reset paginator
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    
+    // Trigger refresh
+    this.dataSource.refresh();
+    
+    console.log('=== Advanced Filters Applied ===');
+  }
+
+  getAdvancedFilterCount(): number {
+    return Object.keys(this.advancedFilters).filter(key => {
+      const value = this.advancedFilters[key];
+      return value !== null && value !== undefined && value !== '';
+    }).length;
+  }
+
+  clearAdvancedFilters() {
+    console.log('=== Clearing Advanced Filters ===');
+    this.advancedFilters = {};
+    // Reset to show all data
+    this.dataSource.data = [...this.allData];
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.dataSource.refresh();
+    console.log('Advanced filters cleared, showing all data:', this.allData.length);
+  }
+
   /* Methods */
 
   initialize(param: EntityListTableItem[]): void {
     console.log('=== EntityListTableComponent.initialize called ===');
     console.log('Received data count:', param.length);
     console.log('View initialized:', this._viewInitialized);
+
+    // Store all data for advanced filtering
+    this.allData = [...param];
 
     if (this._viewInitialized) {
       this._applyData(param);

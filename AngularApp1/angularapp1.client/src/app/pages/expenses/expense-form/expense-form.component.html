@@ -102,6 +102,13 @@
         </app-expense-job-list>
       </mat-tab>
 
+      <!-- Payments Tab -->
+      <mat-tab label="Payments">
+        <app-expense-payment-list
+          [expenseId]="currentData?.id || null">
+        </app-expense-payment-list>
+      </mat-tab>
+
       <!-- Status Tab -->
       <mat-tab label="Status">
         <app-expense-status-list

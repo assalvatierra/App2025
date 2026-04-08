@@ -112,6 +112,13 @@
         </app-receivable-job-list>
       </mat-tab>
 
+      <!-- Payments Tab -->
+      <mat-tab label="Payments">
+        <app-receivable-payment-list
+          [receivableId]="currentData?.id || null">
+        </app-receivable-payment-list>
+      </mat-tab>
+
       <!-- Status Tab -->
       <mat-tab label="Status">
         <app-receivable-status-list

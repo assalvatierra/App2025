@@ -1,0 +1,101 @@
+<div class="payment-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Payments</mat-card-title>
+      <div class="header-actions">
+        <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="!expenseId">
+          <mat-icon>add</mat-icon>
+          Link Payment
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Form Section -->
+      <div *ngIf="showForm" class="form-section">
+        <form [formGroup]="expensePaymentForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Payment *</mat-label>
+            <mat-select formControlName="paymentsId">
+              <mat-option [value]="null">Select Payment</mat-option>
+              <mat-option *ngFor="let payment of payments" [value]="payment.id">
+                Payment #{{ payment.id }} - {{ payment.trxDate | date }} - {{ payment.amount | currency }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="expensePaymentForm.get('paymentsId')?.hasError('required')">
+              Payment is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="button-container">
+            <button mat-raised-button color="primary" type="submit" [disabled]="expensePaymentForm.invalid">
+              {{ isEditing ? 'Update' : 'Add' }}
+            </button>
+            <button mat-raised-button type="button" (click)="onCancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Table Section -->
+      <div *ngIf="!expenseId" class="no-data-message">
+        <p>Please save the expense first to link payments.</p>
+      </div>
+
+      <div *ngIf="expenseId && expensePayments.length === 0 && !showForm" class="no-data-message">
+        <p>No payments linked yet. Click "Link Payment" to add one.</p>
+      </div>
+
+      <table mat-table [dataSource]="expensePayments" class="mat-elevation-z2" *ngIf="expensePayments.length > 0">
+        <!-- Payment Column -->
+        <ng-container matColumnDef="payment">
+          <th mat-header-cell *matHeaderCellDef>Payment</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getPaymentInfo(element.paymentsId).ref }}
+          </td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getPaymentInfo(element.paymentsId).amount | currency }}
+          </td>
+        </ng-container>
+
+        <!-- Transaction Date Column -->
+        <ng-container matColumnDef="trxDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getPaymentInfo(element.paymentsId).trxDate }}
+          </td>
+        </ng-container>
+
+        <!-- Remarks Column -->
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef>Remarks</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getPaymentInfo(element.paymentsId).remarks }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="onEdit(element)" title="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(element)" title="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

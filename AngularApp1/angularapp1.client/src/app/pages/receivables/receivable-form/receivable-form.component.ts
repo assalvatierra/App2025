@@ -13,6 +13,7 @@ import { Receivable } from '../../../core/models/receivable.model';
 import { ReceivableCustomerListComponent } from '../receivable-customer-list/receivable-customer-list.component';
 import { ReceivableJobListComponent } from '../receivable-job-list/receivable-job-list.component';
 import { ReceivableStatusListComponent } from '../receivable-status-list/receivable-status-list.component';
+import { ReceivablePaymentListComponent } from '../receivable-payment-list/receivable-payment-list.component';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 import { ApiService } from '../../../core/api.service';
 
@@ -34,7 +35,8 @@ import { ApiService } from '../../../core/api.service';
     UiPageTitleComponent,
     ReceivableCustomerListComponent,
     ReceivableJobListComponent,
-    ReceivableStatusListComponent
+    ReceivableStatusListComponent,
+    ReceivablePaymentListComponent
   ]
 })
 export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges {

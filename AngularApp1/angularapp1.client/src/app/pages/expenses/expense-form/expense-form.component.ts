@@ -12,6 +12,7 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
 import { Expense } from '../../../core/models/expense.model';
 import { ExpenseStatusListComponent } from '../expense-status-list/expense-status-list.component';
 import { ExpenseJobListComponent } from '../expense-job-list/expense-job-list.component';
+import { ExpensePaymentListComponent } from '../expense-payment-list/expense-payment-list.component';
 import { ApiService } from '../../../core/api.service';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 
@@ -32,7 +33,8 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
     MatTabsModule,
     UiPageTitleComponent,
     ExpenseStatusListComponent,
-    ExpenseJobListComponent
+    ExpenseJobListComponent,
+    ExpensePaymentListComponent
   ]
 })
 export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {

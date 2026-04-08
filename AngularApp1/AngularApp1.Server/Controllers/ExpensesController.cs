@@ -27,6 +27,7 @@ namespace AngularApp1.Server.Controllers
         {
             return await _context.Expenses
                 .Include(e => e.ExpenseStatuses)
+                .Include(e => e.ItemType)
                 .ToListAsync();
         }
 
@@ -37,6 +38,7 @@ namespace AngularApp1.Server.Controllers
             var expenses = await _context.Expenses
                 .Where(e => e.EntityId == entityId)
                 .Include(e => e.ExpenseStatuses)
+                .Include(e => e.ItemType)
                 .ToListAsync();
 
             return expenses;
@@ -48,6 +50,7 @@ namespace AngularApp1.Server.Controllers
         {
             var expense = await _context.Expenses
                 .Include(e => e.ExpenseStatuses)
+                .Include(e => e.ItemType)
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if (expense == null)
@@ -87,11 +90,24 @@ namespace AngularApp1.Server.Controllers
 
             expense.LastEditOn = DateTime.Now;
 
-            _context.Entry(expense).State = EntityState.Modified;
+            // Get the existing expense from database
+            var existingExpense = await _context.Expenses.FindAsync(id);
+            if (existingExpense == null)
+            {
+                return NotFound();
+            }
 
-            // Do not overwrite CreatedBy / CreatedOn
-            _context.Entry(expense).Property(e => e.CreatedBy).IsModified = false;
-            _context.Entry(expense).Property(e => e.CreatedOn).IsModified = false;
+            // Update only the properties we want to modify
+            existingExpense.TrxDate = expense.TrxDate;
+            existingExpense.Amount = expense.Amount;
+            existingExpense.EntityId = expense.EntityId;
+            existingExpense.ItemTypeId = expense.ItemTypeId;
+            existingExpense.Remarks = expense.Remarks;
+            existingExpense.IsActive = expense.IsActive;
+            existingExpense.IsArchived = expense.IsArchived;
+            existingExpense.IsPrivate = expense.IsPrivate;
+            existingExpense.LastEditBy = expense.LastEditBy;
+            existingExpense.LastEditOn = expense.LastEditOn;
 
             try
             {

@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +15,7 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
 import { SharedModule } from '../../../shared/shared.module';
 import { tableField } from '../../../shared/models/entityListTableField';
 import { Receivable } from '../../../core/models/receivable.model';
+import { ApiService } from '../../../core/api.service';
 
 @Component({
   selector: 'app-receivable-list',
@@ -38,7 +39,7 @@ import { Receivable } from '../../../core/models/receivable.model';
     SharedModule
   ]
 })
-export class ReceivableListComponent implements AfterViewInit, OnChanges {
+export class ReceivableListComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('ListTable') TableList: any;
 
   @Input() receivables: Receivable[] = [];
@@ -58,8 +59,16 @@ export class ReceivableListComponent implements AfterViewInit, OnChanges {
   public filterEntityId?: number;
   public filterIsActive?: boolean | null = null;
 
+  public itemTypes: any[] = [];
+
   public get tableFields() {
     return this.getTableFields();
+  }
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.loadItemTypes();
   }
 
   ngAfterViewInit(): void {
@@ -70,6 +79,22 @@ export class ReceivableListComponent implements AfterViewInit, OnChanges {
     if ((changes['receivables'] || changes['filterName'] || changes['filterEntityId'] || changes['filterIsActive']) && this.TableList) {
       this.initializeList();
     }
+  }
+
+  private loadItemTypes(): void {
+    this.apiService.getItemTypesByClassName('Receivable').subscribe({
+      next: (itemTypes: any[]) => {
+        console.log('ItemTypes loaded for receivable list:', itemTypes);
+        this.itemTypes = itemTypes;
+        // Re-initialize the list after ItemTypes are loaded to update the display
+        if (this.TableList && this.receivables.length > 0) {
+          this.initializeList();
+        }
+      },
+      error: (err: any) => {
+        console.error('Error loading item types:', err);
+      }
+    });
   }
 
   private initializeList(): void {
@@ -83,6 +108,8 @@ export class ReceivableListComponent implements AfterViewInit, OnChanges {
         amount: item.amount?.toFixed(2) || '0.00',
         entityId: item.entityId,
         entityName: this.getEntityName(item.entityId || 0),
+        itemTypeId: item.itemTypeId,
+        itemTypeName: this.getItemTypeName(item.itemTypeId || 0),
         isActive: item.isActive ? 'Yes' : 'No',
         createdOn: item.createdOn ? new Date(item.createdOn).toLocaleDateString() : ''
       }));
@@ -145,6 +172,16 @@ export class ReceivableListComponent implements AfterViewInit, OnChanges {
     return entity ? entity.name : 'Unknown';
   }
 
+  private getItemTypeName(itemTypeId: number): string {
+    if (!itemTypeId) return '';
+    
+    // If itemTypes haven't loaded yet, return a loading indicator
+    if (this.itemTypes.length === 0) return '...';
+    
+    const itemType = this.itemTypes.find(it => it.id === itemTypeId);
+    return itemType ? itemType.name : 'Unknown';
+  }
+
   private getTableFields(): tableField[] {
     return [
       { key: 'id', label: 'ID' },
@@ -152,6 +189,7 @@ export class ReceivableListComponent implements AfterViewInit, OnChanges {
       { key: 'trxDate', label: 'Transaction Date' },
       { key: 'amount', label: 'Amount' },
       { key: 'entityName', label: 'Entity' },
+      { key: 'itemTypeName', label: 'Item Type' },
       { key: 'isActive', label: 'Active' },
       { key: 'createdOn', label: 'Created On' }
     ];

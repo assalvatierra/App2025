@@ -115,6 +115,7 @@ export class ApiReceivablesService {
       trxDate: data.trxDate ? new Date(data.trxDate) : new Date(),
       amount: data.amount,
       entityId: data.entityId,
+      itemTypeId: data.itemTypeId,
       remarks: data.remarks,
       createdOn: data.createdOn ? new Date(data.createdOn) : undefined,
       createdBy: data.createdBy,

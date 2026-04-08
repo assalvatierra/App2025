@@ -13,6 +13,7 @@ export interface Expense {
   isActive?: boolean;
   remarks?: string;
   entityId?: number;
+  itemTypeId?: number;
   expensePayments?: ExpensePayment[];
   expenseStatuses?: ExpenseStatus[];
   jobExpenses?: JobExpense[];

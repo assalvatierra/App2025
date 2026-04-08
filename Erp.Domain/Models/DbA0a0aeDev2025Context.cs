@@ -44,6 +44,10 @@ public partial class DbA0a0aeDev2025Context : DbContext
             entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
             entity.Property(e => e.LastEditBy).HasMaxLength(4000);
             entity.Property(e => e.Remarks).HasMaxLength(4000);
+
+            entity.HasOne(d => d.ItemType).WithMany()
+                .HasForeignKey(d => d.ItemTypeId)
+                .HasConstraintName("FK_Expense_ItemType");
         });
 
         modelBuilder.Entity<ExpensePayment>(entity =>
@@ -114,6 +118,10 @@ public partial class DbA0a0aeDev2025Context : DbContext
             entity.Property(e => e.LastEditBy).HasMaxLength(4000);
             entity.Property(e => e.Remarks).HasMaxLength(4000);
             entity.Property(e => e.TrxRef).HasMaxLength(4000);
+
+            entity.HasOne(d => d.ItemType).WithMany()
+                .HasForeignKey(d => d.ItemTypeId)
+                .HasConstraintName("FK_Receivable_ItemType");
         });
 
         modelBuilder.Entity<ReceivableCustomer>(entity =>

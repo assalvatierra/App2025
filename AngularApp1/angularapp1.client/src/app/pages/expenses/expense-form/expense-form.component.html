@@ -41,6 +41,16 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Item Type</mat-label>
+              <mat-select formControlName="itemTypeId">
+                <mat-option [value]="null">Select Item Type</mat-option>
+                <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.id">
+                  {{ itemType.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
               <mat-label>Remarks</mat-label>
               <textarea matInput formControlName="remarks" rows="3" placeholder="Enter remarks"></textarea>
             </mat-form-field>

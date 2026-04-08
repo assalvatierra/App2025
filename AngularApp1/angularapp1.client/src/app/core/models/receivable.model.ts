@@ -5,6 +5,7 @@ export interface Receivable {
   trxDate: Date;
   amount: number;
   entityId?: number;
+  itemTypeId?: number;
   createdBy?: string;
   createdOn?: Date;
   lastEditBy?: string;

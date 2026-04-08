@@ -31,6 +31,10 @@ public partial class Receivable
 
     public int? EntityId { get; set; }
 
+    public int? ItemTypeId { get; set; }
+
+    public virtual ItemType? ItemType { get; set; }
+
     public virtual ICollection<JobReceivable> JobReceivables { get; set; } = new List<JobReceivable>();
 
     public virtual ICollection<ReceivableCustomer> ReceivableCustomers { get; set; } = new List<ReceivableCustomer>();

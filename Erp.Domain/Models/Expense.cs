@@ -29,6 +29,10 @@ public partial class Expense
 
     public int? EntityId { get; set; }
 
+    public int? ItemTypeId { get; set; }
+
+    public virtual ItemType? ItemType { get; set; }
+
     public virtual ICollection<ExpensePayment> ExpensePayments { get; set; } = new List<ExpensePayment>();
 
     public virtual ICollection<ExpenseStatus> ExpenseStatuses { get; set; } = new List<ExpenseStatus>();

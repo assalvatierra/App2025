@@ -30,6 +30,7 @@ namespace AngularApp1.Server.Controllers
                 .Include(r => r.ReceivableCustomers)
                 .Include(r => r.ReceivablePayments)
                 .Include(r => r.ReceivableStatuses)
+                .Include(r => r.ItemType)
                 .ToListAsync();
         }
 
@@ -43,6 +44,7 @@ namespace AngularApp1.Server.Controllers
                 .Include(r => r.ReceivableCustomers)
                 .Include(r => r.ReceivablePayments)
                 .Include(r => r.ReceivableStatuses)
+                .Include(r => r.ItemType)
                 .ToListAsync();
 
             return receivables;
@@ -57,6 +59,7 @@ namespace AngularApp1.Server.Controllers
                 .Include(r => r.ReceivableCustomers)
                 .Include(r => r.ReceivablePayments)
                 .Include(r => r.ReceivableStatuses)
+                .Include(r => r.ItemType)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (receivable == null)
@@ -76,6 +79,7 @@ namespace AngularApp1.Server.Controllers
                 .Include(r => r.ReceivableCustomers)
                 .Include(r => r.ReceivablePayments)
                 .Include(r => r.ReceivableStatuses)
+                .Include(r => r.ItemType)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (receivable == null)
@@ -96,11 +100,26 @@ namespace AngularApp1.Server.Controllers
                 return BadRequest();
             }
 
-            // Update LastEditOn and LastEditBy
-            receivable.LastEditOn = DateTime.Now;
-            // Note: LastEditBy should be set from the authenticated user context
+            // Get the existing receivable from database
+            var existingReceivable = await _context.Receivables.FindAsync(id);
+            if (existingReceivable == null)
+            {
+                return NotFound();
+            }
 
-            _context.Entry(receivable).State = EntityState.Modified;
+            // Update only the properties we want to modify
+            existingReceivable.TrxRef = receivable.TrxRef;
+            existingReceivable.TrxDate = receivable.TrxDate;
+            existingReceivable.Amount = receivable.Amount;
+            existingReceivable.EntityId = receivable.EntityId;
+            existingReceivable.ItemTypeId = receivable.ItemTypeId;
+            existingReceivable.Remarks = receivable.Remarks;
+            existingReceivable.IsActive = receivable.IsActive;
+            existingReceivable.IsArchived = receivable.IsArchived;
+            existingReceivable.IsPrivate = receivable.IsPrivate;
+            existingReceivable.LastEditBy = receivable.LastEditBy;
+            existingReceivable.LastEditOn = DateTime.Now;
+            // CreatedBy and CreatedOn are NOT updated (preserved)
 
             try
             {

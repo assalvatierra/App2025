@@ -51,6 +51,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
   public titleInfo: string = 'Add Receivable';
   public jobs: any[] = [];
   public itemStatuses: any[] = [];
+  public itemTypes: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
   ngOnInit(): void {
     this.loadJobs();
     this.loadItemStatuses();
+    this.loadItemTypes();
     this.updateFormData();
   }
 
@@ -91,6 +93,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
         trxDate: '',
         amount: 0,
         entityId: null,
+        itemTypeId: null,
         remarks: '',
         isActive: true,
         isArchived: false,
@@ -124,6 +127,18 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
     });
   }
 
+  private loadItemTypes(): void {
+    this.apiService.getItemTypesByClassName('Receivable').subscribe({
+      next: (itemTypes: any[]) => {
+        console.log('Item types loaded for Receivable:', itemTypes);
+        this.itemTypes = itemTypes;
+      },
+      error: (err: any) => {
+        console.error('Error loading item types:', err);
+      }
+    });
+  }
+
   private initForm(): void {
     this.receivableForm = this.fb.group({
       id: [null],
@@ -131,6 +146,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
       trxDate: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(0)]],
       entityId: [null],
+      itemTypeId: [null],
       remarks: ['', Validators.required],
       isActive: [true],
       isArchived: [false],
@@ -148,6 +164,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
         trxDate: this.currentData.trxDate ? this.formatDateForInput(this.currentData.trxDate) : '',
         amount: this.currentData.amount,
         entityId: this.currentData.entityId,
+        itemTypeId: this.currentData.itemTypeId,
         remarks: this.currentData.remarks || '',
         isActive: this.currentData.isActive,
         isArchived: this.currentData.isArchived,
@@ -174,6 +191,7 @@ export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges
         trxDate: new Date(formValue.trxDate),
         amount: parseFloat(formValue.amount),
         entityId: formValue.entityId,
+        itemTypeId: formValue.itemTypeId,
         remarks: formValue.remarks || '',
         isActive: formValue.isActive,
         isArchived: formValue.isArchived,

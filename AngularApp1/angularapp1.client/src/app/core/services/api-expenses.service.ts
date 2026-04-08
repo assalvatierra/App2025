@@ -183,6 +183,7 @@ export class ApiExpensesService {
       isActive: data.isActive,
       remarks: data.remarks,
       entityId: data.entityId,
+      itemTypeId: data.itemTypeId,
       expensePayments: data.expensePayments,
       expenseStatuses: data.expenseStatuses
     };

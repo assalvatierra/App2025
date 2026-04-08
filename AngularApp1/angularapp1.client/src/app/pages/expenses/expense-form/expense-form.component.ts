@@ -49,6 +49,7 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
   public titleInfo: string = 'Add Expense';
   public itemStatuses: any[] = [];
   public jobs: any[] = [];
+  public itemTypes: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +62,7 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit(): void {
     this.loadItemStatuses();
     this.loadJobs();
+    this.loadItemTypes();
     this.updateFormData();
   }
 
@@ -86,6 +88,7 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
         trxDate: this.formatDateForInput(new Date()),
         amount: 0,
         entityId: null,
+        itemTypeId: null,
         remarks: '',
         isActive: true,
         isArchived: false,
@@ -120,12 +123,25 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
+  private loadItemTypes(): void {
+    this.apiService.getItemTypesByClassName('Expense').subscribe({
+      next: (itemTypes: any[]) => {
+        console.log('Item types loaded for Expense:', itemTypes);
+        this.itemTypes = itemTypes;
+      },
+      error: (err: any) => {
+        console.error('Error loading item types:', err);
+      }
+    });
+  }
+
   private initForm(): void {
     this.expenseForm = this.fb.group({
       id: [null],
       trxDate: [this.formatDateForInput(new Date()), Validators.required],
       amount: [0, [Validators.required, Validators.min(0)]],
       entityId: [null],
+      itemTypeId: [null],
       remarks: [''],
       isActive: [true],
       isArchived: [false],
@@ -142,6 +158,7 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
         trxDate: this.currentData.trxDate ? this.formatDateForInput(this.currentData.trxDate) : '',
         amount: this.currentData.amount,
         entityId: this.currentData.entityId,
+        itemTypeId: this.currentData.itemTypeId,
         remarks: this.currentData.remarks || '',
         isActive: this.currentData.isActive,
         isArchived: this.currentData.isArchived,
@@ -167,6 +184,7 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
         trxDate: new Date(formValue.trxDate),
         amount: parseFloat(formValue.amount),
         entityId: formValue.entityId,
+        itemTypeId: formValue.itemTypeId,
         remarks: formValue.remarks || '',
         isActive: formValue.isActive,
         isArchived: formValue.isArchived,

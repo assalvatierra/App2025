@@ -11,24 +11,45 @@
         <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
           <div class="form-container">
 
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Transaction Date *</mat-label>
-              <input matInput type="date" formControlName="trxDate" required>
-              <mat-error *ngIf="expenseForm.get('trxDate')?.hasError('required')">
-                Transaction Date is required
-              </mat-error>
-            </mat-form-field>
+            <!-- Transaction Reference and Date Row -->
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Transaction Reference</mat-label>
+                <input matInput formControlName="trxRef" placeholder="Enter transaction reference">
+              </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Amount *</mat-label>
-              <input matInput type="number" formControlName="amount" required placeholder="Enter amount">
-              <mat-error *ngIf="expenseForm.get('amount')?.hasError('required')">
-                Amount is required
-              </mat-error>
-              <mat-error *ngIf="expenseForm.get('amount')?.hasError('min')">
-                Amount must be greater than or equal to 0
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Transaction Date *</mat-label>
+                <input matInput type="date" formControlName="trxDate" required>
+                <mat-error *ngIf="expenseForm.get('trxDate')?.hasError('required')">
+                  Transaction Date is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Amount and Item Type Row -->
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Amount *</mat-label>
+                <input matInput type="number" formControlName="amount" required placeholder="Enter amount">
+                <mat-error *ngIf="expenseForm.get('amount')?.hasError('required')">
+                  Amount is required
+                </mat-error>
+                <mat-error *ngIf="expenseForm.get('amount')?.hasError('min')">
+                  Amount must be greater than or equal to 0
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Item Type</mat-label>
+                <mat-select formControlName="itemTypeId">
+                  <mat-option [value]="null">Select Item Type</mat-option>
+                  <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.id">
+                    {{ itemType.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Entity</mat-label>
@@ -36,16 +57,6 @@
                 <mat-option [value]="null">Select Entity</mat-option>
                 <mat-option *ngFor="let entity of entities" [value]="entity.id">
                   {{ entity.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Item Type</mat-label>
-              <mat-select formControlName="itemTypeId">
-                <mat-option [value]="null">Select Item Type</mat-option>
-                <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.id">
-                  {{ itemType.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>

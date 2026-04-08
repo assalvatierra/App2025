@@ -4,8 +4,19 @@
   gap: 16px;
 }
 
+.form-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
 .full-width {
   width: 100%;
+}
+
+.half-width {
+  width: 100%;
+  flex: 1;
 }
 
 .checkbox-container {

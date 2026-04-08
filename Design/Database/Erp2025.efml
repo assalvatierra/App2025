@@ -582,6 +582,9 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
       <column name="" />
     </id>
+    <property name="TrxRef" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b1f6fabb-7a6f-4ce0-95a0-f45562392e6d">
+      <column name="" />
+    </property>
     <property name="TrxDate" type="Date" p1:ValidateRequired="true" p1:Guid="32535eb7-d6bd-4915-af3b-c6c35ed8f845">
       <column name="" />
     </property>

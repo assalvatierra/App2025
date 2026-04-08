@@ -14,6 +14,7 @@ export interface Expense {
   remarks?: string;
   entityId?: number;
   itemTypeId?: number;
+  trxRef?: string;
   expensePayments?: ExpensePayment[];
   expenseStatuses?: ExpenseStatus[];
   jobExpenses?: JobExpense[];

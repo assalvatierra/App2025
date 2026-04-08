@@ -31,6 +31,8 @@ public partial class Expense
 
     public int? ItemTypeId { get; set; }
 
+    public string? TrxRef { get; set; }
+
     public virtual ItemType? ItemType { get; set; }
 
     public virtual ICollection<ExpensePayment> ExpensePayments { get; set; } = new List<ExpensePayment>();

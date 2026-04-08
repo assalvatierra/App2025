@@ -107,6 +107,7 @@ export class ExpenseListComponent implements OnInit, AfterViewInit, OnChanges {
         entityName: this.getEntityName(item.entityId || 0),
         itemTypeId: item.itemTypeId,
         itemTypeName: this.getItemTypeName(item.itemTypeId || 0),
+        trxRef: item.trxRef || '',
         isActive: item.isActive ? 'Yes' : 'No',
         createdOn: item.createdOn ? new Date(item.createdOn).toLocaleDateString() : '',
         remarks: item.remarks || ''
@@ -179,6 +180,7 @@ export class ExpenseListComponent implements OnInit, AfterViewInit, OnChanges {
       { key: 'amount', label: 'Amount' },
       { key: 'entityName', label: 'Entity' },
       { key: 'itemTypeName', label: 'Item Type' },
+      { key: 'trxRef', label: 'Transaction Ref' },
       { key: 'remarks', label: 'Remarks' },
       { key: 'isActive', label: 'Active' },
       { key: 'createdOn', label: 'Created On' }

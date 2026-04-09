@@ -15,19 +15,52 @@
         <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="form-container">
 
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>
-                <strong [ngStyle]="{'color': isReceiptMode ? 'green' : 'red', 'font-size': '1.2em'}">
-                  {{ modeDisplayLabel }} Type
-                </strong>
-              </mat-label>
-              <mat-select formControlName="itemTypeId">
-                <mat-option [value]="null">— None —</mat-option>
-                <mat-option *ngFor="let type of itemTypes" [value]="type.id">
-                  {{ type.name }} <span *ngIf="type.code" class="type-code">({{ type.code }})</span>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <div class="row-container">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>
+                  <strong [ngStyle]="{'color': isReceiptMode ? 'green' : 'red', 'font-size': '1.2em'}">
+                    {{ modeDisplayLabel }} Type
+                  </strong>
+                </mat-label>
+                <mat-select formControlName="itemTypeId">
+                  <mat-option [value]="null">— None —</mat-option>
+                  <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+                    {{ type.name }} <span *ngIf="type.code" class="type-code">({{ type.code }})</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Transaction Date *</mat-label>
+                <input matInput type="date" formControlName="trxDate" required>
+                <mat-error *ngIf="paymentForm.get('trxDate')?.hasError('required')">
+                  Transaction Date is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="row-container">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Amount *</mat-label>
+                <input matInput type="number" formControlName="amount" required placeholder="0.00">
+                <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">
+                  Amount is required
+                </mat-error>
+                <mat-error *ngIf="paymentForm.get('amount')?.hasError('min')">
+                  Amount must be 0 or greater
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Item Status</mat-label>
+                <mat-select formControlName="itemStatusId">
+                  <mat-option [value]="null">— None —</mat-option>
+                  <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
+                    {{ status.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Party</mat-label>
@@ -37,25 +70,6 @@
                   {{ entity.name }}<span *ngIf="entity.code"> ({{ entity.code }})</span>
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Transaction Date *</mat-label>
-              <input matInput type="date" formControlName="trxDate" required>
-              <mat-error *ngIf="paymentForm.get('trxDate')?.hasError('required')">
-                Transaction Date is required
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Amount *</mat-label>
-              <input matInput type="number" formControlName="amount" required placeholder="0.00">
-              <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">
-                Amount is required
-              </mat-error>
-              <mat-error *ngIf="paymentForm.get('amount')?.hasError('min')">
-                Amount must be 0 or greater
-              </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
@@ -69,16 +83,6 @@
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Additional Info</mat-label>
               <textarea matInput formControlName="additionalInfo" rows="2" placeholder="Optional additional information"></textarea>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Item Status</mat-label>
-              <mat-select formControlName="itemStatusId">
-                <mat-option [value]="null">— None —</mat-option>
-                <mat-option *ngFor="let status of itemStatuses" [value]="status.id">
-                  {{ status.name }}
-                </mat-option>
-              </mat-select>
             </mat-form-field>
 
             <div class="checkbox-container">

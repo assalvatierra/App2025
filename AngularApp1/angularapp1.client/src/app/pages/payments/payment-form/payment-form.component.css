@@ -5,6 +5,16 @@
   padding-top: 16px;
 }
 
+.row-container {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.row-container > * {
+  flex: 1;
+}
+
 .full-width {
   width: 100%;
 }

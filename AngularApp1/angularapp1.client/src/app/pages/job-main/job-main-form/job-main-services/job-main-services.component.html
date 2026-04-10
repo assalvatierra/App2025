@@ -1,17 +1,97 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      Services
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <app-entity-list-table #ListTable
-                           (addRecordClicked)="onAddRecord()"
-                           [editTitle]="'Edit Service'"
-                           [showEditDetails]="false"
-                           (editRecordClicked)="onEdit($event)"
-                           [tableFields]="tableFields">
-    </app-entity-list-table>
-  </mat-card-content>
-</mat-card>
+<div class="job-services-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Services</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="services-actions">
+        <button mat-raised-button color="primary" (click)="onAddRecord()">
+          <mat-icon>add</mat-icon>
+          Add Service
+        </button>
+      </div>
+
+      <div *ngIf="dataloading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!dataloading && jobServices.length === 0" class="no-data-message">
+        <p>No services associated with this job. Click "Add Service" to add one.</p>
+      </div>
+
+      <div *ngIf="!dataloading && jobServices.length > 0" class="services-table">
+        <table mat-table [dataSource]="jobServices" class="full-width">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+
+          <!-- Service Item Column -->
+          <ng-container matColumnDef="serviceItem">
+            <th mat-header-cell *matHeaderCellDef>Service</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.serviceItem?.description || 'N/A' }}
+            </td>
+          </ng-container>
+
+          <!-- Date Start Column -->
+          <ng-container matColumnDef="dateStart">
+            <th mat-header-cell *matHeaderCellDef>Start Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.dateStart | date:'short' }}</td>
+          </ng-container>
+
+          <!-- Date End Column -->
+          <ng-container matColumnDef="dateEnd">
+            <th mat-header-cell *matHeaderCellDef>End Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.dateEnd | date:'short' }}</td>
+          </ng-container>
+
+          <!-- Particulars Column -->
+          <ng-container matColumnDef="particulars">
+            <th mat-header-cell *matHeaderCellDef>Particulars</th>
+            <td mat-cell *matCellDef="let element">{{ element.particulars || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Quoted Amount Column -->
+          <ng-container matColumnDef="quotedAmt">
+            <th mat-header-cell *matHeaderCellDef>Quoted Amt</th>
+            <td mat-cell *matCellDef="let element">{{ element.quotedAmt | currency }}</td>
+          </ng-container>
+
+          <!-- Supplier Amount Column -->
+          <ng-container matColumnDef="supplierAmt">
+            <th mat-header-cell *matHeaderCellDef>Supplier Amt</th>
+            <td mat-cell *matCellDef="let element">{{ element.supplierAmt | currency }}</td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="itemStatusId">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.itemStatus?.description || element.itemStatusId || 'N/A' }}
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" (click)="onEdit(element.id)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDelete(element.id)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
 

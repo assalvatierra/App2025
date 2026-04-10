@@ -21,6 +21,7 @@ export interface JobService {
   serviceItem: any;
   supplierId: number;
   itemStatusId: number;
+  itemStatus: any;
   sortOrder: number;
   // Add or remove properties here to match the new JobService.cs definition
 }

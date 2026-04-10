@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiJobServiceService, JobService } from '../../../../../core/services/api-job-service.service';
 import { catchError } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog'; // If you're passing data
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../../../../core/api.service';
+import { ApiEntityService } from '../../../../../core/services/api-entity.service';
 
 @Component({
   selector: 'app-job-main-service-dialog',
@@ -19,80 +20,150 @@ export class JobMainServiceDialogComponent implements OnInit {
   jobServiceForm: FormGroup;
   isEditMode: boolean = false;
   serviceId: number = 0;
-  loadError: boolean = false; // Added to handle load errors
+  jobMainId: number = 0;
+  loadError: boolean = false;
 
   public itemStatuses: any[] = [];
   public serviceItems: any[] = [];
+  public suppliers: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<JobMainServiceDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, // If you're receiving data
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private apiService: ApiJobServiceService,
     private apiServiceLookup: ApiService,
+    private apiEntityService: ApiEntityService,
     private route: ActivatedRoute,
-    public router: Router  // Changed from private to public
+    public router: Router
   ) {
     this.jobServiceForm = this.fb.group({
       id: [0],
       jobMainId: [null, Validators.required],
       particulars: [''],
-      dateStart: [''],
-      dateEnd: [''],
+      dateStart: [null],
+      dateEnd: [null],
       quotedAmt: [0],
       supplierAmt: [0],
-      createdBy: [''],
-      createdOn: [null],
-      lastEditBy: [''],
-      lastEditOn: [null],
+      createdBy: ['System', Validators.required],
+      createdOn: [new Date(), Validators.required],
+      lastEditBy: ['System', Validators.required],
+      lastEditOn: [new Date(), Validators.required],
       isArchived: [false],
       isPrivate: [false],
       isActive: [true],
       serviceItemId: [null],
       supplierId: [null],
       itemStatusId: [null],
-      sortOrder: [0],
-      // Add or remove controls to match the new JobService definition
+      sortOrder: [0]
     });
   }
 
   ngOnInit() {
     this.loadServiceItems();
     this.loadItemStatuses();
+    this.loadSuppliers();
 
-    this.route.params.subscribe(params => {
-      this.serviceId = this.data.serviceId;
-      this.isEditMode = this.serviceId !== 0;
-      if (this.isEditMode) {
-        this.loadJobService();
-      }
-    });
+    // Get data from parent component
+    this.serviceId = this.data.serviceId || 0;
+    this.jobMainId = this.data.jobMainId || 0;
+    this.isEditMode = this.serviceId !== 0;
+
+    // Set jobMainId in form
+    if (this.jobMainId > 0) {
+      this.jobServiceForm.patchValue({ jobMainId: this.jobMainId });
+    }
+
+    if (this.isEditMode) {
+      this.loadJobService();
+    }
   }
 
   onCancelClick(): void {
-    this.dialogRef.close(); // Close without a result
+    this.dialogRef.close(false);
   }
 
   onSaveClick(): void {
-    this.onSubmit();
-    this.dialogRef.close('Some result'); // Close with a result
+    if (this.jobServiceForm.valid) {
+      this.onSubmit();
+    } else {
+      console.log('Form validation errors:', this.jobServiceForm.errors);
+      Object.keys(this.jobServiceForm.controls).forEach(key => {
+        const control = this.jobServiceForm.get(key);
+        if (control?.invalid) {
+          console.log(`Field ${key} errors:`, control.errors);
+        }
+      });
+      alert('Please fill in all required fields');
+    }
   }
 
 
   onSubmit() {
     if (this.jobServiceForm.valid) {
-      const jobService = this.jobServiceForm.value;
+      const formValue = this.jobServiceForm.value;
+      
+      // Create the payload matching the backend model
+      const jobService: any = {
+        jobMainId: formValue.jobMainId,
+        particulars: formValue.particulars || null,
+        dateStart: formValue.dateStart ? new Date(formValue.dateStart).toISOString() : null,
+        dateEnd: formValue.dateEnd ? new Date(formValue.dateEnd).toISOString() : null,
+        quotedAmt: formValue.quotedAmt || 0,
+        supplierAmt: formValue.supplierAmt || 0,
+        createdBy: formValue.createdBy || 'System',
+        createdOn: new Date().toISOString(),
+        lastEditBy: 'System',
+        lastEditOn: new Date().toISOString(),
+        isArchived: formValue.isArchived || false,
+        isPrivate: formValue.isPrivate || false,
+        isActive: formValue.isActive !== false,
+        serviceItemId: formValue.serviceItemId || null,
+        supplierId: formValue.supplierId || null,
+        itemStatusId: formValue.itemStatusId || null,
+        sortOrder: formValue.sortOrder || 0
+      };
+
+      // For edit mode, include the ID
+      if (this.isEditMode) {
+        jobService.id = this.serviceId;
+        jobService.createdBy = formValue.createdBy;
+        jobService.createdOn = formValue.createdOn;
+      }
+
+      console.log('Submitting job service:', jobService);
+
       if (this.isEditMode) {
         this.apiService.updateJobService(this.serviceId, jobService).subscribe({
-          //next: () => this.router.navigate(['/job-service']),
-          error: (error) => console.error('Update error:', error)
+          next: () => {
+            console.log('Service updated successfully');
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error('Update error:', error);
+            const errorMessage = error.error?.title || error.error?.message || error.message || 'Unknown error';
+            alert('Error updating service: ' + errorMessage);
+          }
         });
       } else {
+        // For create, don't send the ID field
+        delete jobService.id;
+        
         this.apiService.createJobService(jobService).subscribe({
-          //next: () => this.router.navigate(['/job-service']),
-          error: (error) => console.error('Create error:', error)
+          next: () => {
+            console.log('Service created successfully');
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error('Create error:', error);
+            console.error('Error details:', error.error);
+            const errorMessage = error.error?.title || error.error?.message || error.message || 'Unknown error';
+            alert('Error creating service: ' + errorMessage);
+          }
         });
       }
+    } else {
+      alert('Please fill in all required fields');
     }
   }
 
@@ -106,11 +177,8 @@ export class JobMainServiceDialogComponent implements OnInit {
       )
       .subscribe({
         next: (service: JobService) => {
-          // Convert jobDate to date input format if needed
           let _dateStart: string | null = service.dateStart ? new Date(service.dateStart).toISOString().split('T')[0] : null;
           let _dateEnd: string | null = service.dateEnd ? new Date(service.dateEnd).toISOString().split('T')[0] : null;
-
-          //let _dateStart = Date.now();
 
           this.jobServiceForm.patchValue({
             id: service.id,
@@ -151,7 +219,6 @@ export class JobMainServiceDialogComponent implements OnInit {
           console.error('Service Items Load error:', error);
         }
       });
-
   }
 
   private loadItemStatuses() {
@@ -163,11 +230,23 @@ export class JobMainServiceDialogComponent implements OnInit {
         error: (error) => {
           this.loadError = true;
           console.error('Statuses Load error:', error);
-
         }
       })
   }
 
+  private loadSuppliers() {
+    this.apiEntityService.getEntities()
+      .subscribe({
+        next: (items: any[]) => {
+          // Filter entities that are suppliers (you may need to adjust based on your entity type)
+          this.suppliers = items;
+        },
+        error: (error) => {
+          this.loadError = true;
+          console.error('Suppliers Load error:', error);
+        }
+      })
+  }
 
 }
 

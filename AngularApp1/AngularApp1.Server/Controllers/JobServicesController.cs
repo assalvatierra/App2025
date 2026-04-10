@@ -36,6 +36,7 @@ namespace AngularApp1.Server.Controllers
             var jobService = await _context.JobService
                 .Where(js => js.JobMainId == JobId)
                 .Include(js => js.ServiceItem)
+                .Include(js => js.ItemStatus)
                 .ToListAsync();
             
             // Return empty list instead of NotFound for consistency
@@ -48,6 +49,7 @@ namespace AngularApp1.Server.Controllers
         {
             var jobService = await _context.JobService
                 .Include(js => js.ServiceItem)
+                .Include(js => js.ItemStatus)
                 .FirstOrDefaultAsync(js => js.Id == id);
 
             if (jobService == null)

@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Add' }} Status</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="statusForm">
+    <div class="form-container">
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="itemStatusId" required>
+          <mat-option *ngFor="let status of itemStatusLookupData" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="statusForm.get('itemStatusId')?.hasError('required')">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="statusDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="statusForm.get('statusDate')?.hasError('required')">
+          Status date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Remarks</mat-label>
+        <textarea matInput formControlName="remarks" rows="4" placeholder="Enter any remarks"></textarea>
+      </mat-form-field>
+
+    </div>
+  </form>
+
+  <div *ngIf="dataloading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="dataloading">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="dataloading || !statusForm.valid">
+    {{ isEditMode ? 'Update' : 'Save' }}
+  </button>
+</mat-dialog-actions>

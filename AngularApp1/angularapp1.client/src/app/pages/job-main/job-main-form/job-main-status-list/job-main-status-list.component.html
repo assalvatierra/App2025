@@ -1,0 +1,76 @@
+<div class="job-status-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Job Status History</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="status-actions">
+        <button mat-raised-button color="primary" (click)="onAddRecord()">
+          <mat-icon>add</mat-icon>
+          Add Status
+        </button>
+      </div>
+
+      <div *ngIf="dataloading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!dataloading && jobMainStatuses.length === 0" class="no-data-message">
+        <p>No status records for this job. Click "Add Status" to add one.</p>
+      </div>
+
+      <div *ngIf="!dataloading && jobMainStatuses.length > 0" class="status-table">
+        <table mat-table [dataSource]="jobMainStatuses" class="full-width">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+
+          <!-- Status Date Column -->
+          <ng-container matColumnDef="statusDate">
+            <th mat-header-cell *matHeaderCellDef>Status Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.statusDate | date:'medium' }}</td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="itemStatusId">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ getStatusName(element.itemStatusId) }}
+            </td>
+          </ng-container>
+
+          <!-- Remarks Column -->
+          <ng-container matColumnDef="remarks">
+            <th mat-header-cell *matHeaderCellDef>Remarks</th>
+            <td mat-cell *matCellDef="let element">{{ element.remarks || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Created By Column -->
+          <ng-container matColumnDef="createdBy">
+            <th mat-header-cell *matHeaderCellDef>Created By</th>
+            <td mat-cell *matCellDef="let element">{{ element.createdBy || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" (click)="onEdit(element.id)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDelete(element.id)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

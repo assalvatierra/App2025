@@ -1,0 +1,124 @@
+.job-main-status-container {
+  padding: 20px;
+}
+
+.header-actions {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.add-form-card {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.status-list {
+  margin-top: 20px;
+}
+
+.job-status-container {
+  padding: 16px;
+}
+
+.status-actions {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.status-actions button {
+  margin-right: 8px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.status-table {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  font-weight: 600;
+  color: #424242;
+  background-color: #f5f5f5;
+}
+
+td.mat-cell {
+  padding: 8px;
+}
+
+.mat-column-id {
+  max-width: 80px;
+}
+
+.mat-column-statusDate {
+  min-width: 150px;
+}
+
+.mat-column-itemStatusId {
+  min-width: 120px;
+}
+
+.mat-column-remarks {
+  min-width: 200px;
+}
+
+.mat-column-createdBy {
+  min-width: 120px;
+}
+
+.mat-column-actions {
+  width: 120px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .job-status-container {
+    padding: 8px;
+  }
+
+  .status-table {
+    font-size: 12px;
+  }
+
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 4px;
+  }
+}

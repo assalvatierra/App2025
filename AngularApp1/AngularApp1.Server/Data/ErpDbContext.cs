@@ -33,6 +33,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobService> JobService { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobMainStatus> JobMainStatus { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatusClass> ItemStatusClass { get; set; } = default!;
         

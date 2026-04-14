@@ -11,20 +11,22 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<JobMainStatus> JobMainStatuses { get; set; }
+    public virtual DbSet<JobServiceResource> JobServiceResources { get; set; }
+
+    public virtual DbSet<ResourceEntity> ResourceEntities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<JobMainStatus>(entity =>
+        modelBuilder.Entity<JobServiceResource>(entity =>
         {
-            entity.ToTable("JobMainStatus");
+            entity.ToTable("JobServiceResource");
+        });
 
-            entity.Property(e => e.CreatedBy).HasMaxLength(4000);
-            entity.Property(e => e.IsActive).HasColumnName("isActive");
-            entity.Property(e => e.IsArchived).HasColumnName("isArchived");
-            entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
-            entity.Property(e => e.LastEditBy).HasMaxLength(4000);
-            entity.Property(e => e.Remarks).HasMaxLength(4000);
+        modelBuilder.Entity<ResourceEntity>(entity =>
+        {
+            entity.ToTable("ResourceEntity");
+
+            entity.Property(e => e.Id).HasMaxLength(4000);
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -7,4 +7,9 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\angularapp1.client\browser\</BuildOutputFolder>
   </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties angular_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

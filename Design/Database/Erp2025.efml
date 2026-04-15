@@ -890,6 +890,28 @@
       <property name="isActive" />
     </component>
   </class>
+  <class name="JobServiceResource" entity-set="JobServiceResource" p1:Guid="0304fba1-b842-4bd9-991f-125029f937bc">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="cf307d6f-7057-481d-a7e7-9ff98728421b">
+      <column name="" />
+    </id>
+    <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="6e4ba585-e7c8-45f1-9ec4-60a4e6cccf55">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="ded35a57-6b48-471c-930b-ece950f95b50">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ResourceEntity" entity-set="ResourceEntity" p1:Guid="597654fe-ec50-4e29-adf1-3ada793e8ec0">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="3eee98d1-0d08-4ca1-9eea-d5d7e2f97ab4">
+      <column name="" />
+    </id>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="690ec299-1979-44c3-adc8-20280f030fad">
+      <column name="" not-null="False" />
+    </property>
+    <property name="EntityId" type="Int32" p1:ValidateRequired="true" p1:Guid="631be60d-3249-4647-b1a8-3226a3d10390">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1401,6 +1423,38 @@
       </end1>
       <end2 multiplicity="Many" name="JobMainStatuses" class="ItemStatus" relation-class="JobMainStatus" lazy="False" p1:Guid="2e9cc2ea-f104-4dab-b4f1-52a55156a242">
         <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="JobService_JobServiceResource" cardinality="OneToMany" p1:Guid="8336c893-f3ac-4e9a-adff-496e47be12ee">
+      <end1 multiplicity="One" name="JobService" class="JobServiceResource" relation-class="JobService" constrained="True" lazy="False" p1:Guid="1ef83332-1c92-4b35-8288-74085c6336d4">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceResources" class="JobService" relation-class="JobServiceResource" lazy="False" p1:Guid="fd19bb49-0b2d-43f1-8910-029656437ddd">
+        <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="Resource_JobServiceResource" cardinality="OneToMany" p1:Guid="e8c8239d-fd5e-4dd6-b605-46f1794fed19">
+      <end1 multiplicity="One" name="Resource" class="JobServiceResource" relation-class="Resource" constrained="True" lazy="False" p1:Guid="ae7dbc64-0a9a-41f2-a9b5-c0b7e739fbf9">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceResources" class="Resource" relation-class="JobServiceResource" lazy="False" p1:Guid="225b263d-cc3a-4e2e-bca9-e6092b0242f9">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="Resource_ResourceEntity" cardinality="OneToMany" p1:Guid="e5823a73-dcf8-46ff-a7d0-9570db2b1322">
+      <end1 multiplicity="One" name="Resource" class="ResourceEntity" relation-class="Resource" constrained="True" lazy="False" p1:Guid="23466896-2b89-439a-ab78-64081c7eef4c">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceEntities" class="Resource" relation-class="ResourceEntity" lazy="False" p1:Guid="044be3cd-74ee-4163-884e-fd0375f6cc10">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="Entity_ResourceEntity" cardinality="OneToMany" p1:Guid="e680e735-96c4-4096-8d15-aafa16300196">
+      <end1 multiplicity="One" name="Entity" class="ResourceEntity" relation-class="Entity" constrained="True" lazy="False" p1:Guid="5f1b0102-ae3c-4544-8144-b4caf31d170f">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceEntities" class="Entity" relation-class="ResourceEntity" lazy="False" p1:Guid="a97cc2a6-e1eb-4cbb-8ee1-a849fd0a91f5">
+        <property name="EntityId" />
       </end2>
     </association>
   </associations>

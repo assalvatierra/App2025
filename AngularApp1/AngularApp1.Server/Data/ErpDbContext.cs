@@ -15,8 +15,7 @@ namespace AngularApp1.Server.Data
         }
 
         public DbSet<Erp.Domain.Models.SysFeature> SysFeature { get; set; } = default!;
-        public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!
-;
+        public DbSet<Erp.Domain.Models.Agent> Agent{ get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentBin> AgentBin { get; set; } = default!;
         public DbSet<Erp.Domain.Models.AgentInstruction> AgentInstruction { get; set; } = default!;
         public DbSet<AgentTask> AgentTask { get; set; }
@@ -42,6 +41,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobTimesheet> JobTimesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobServiceTimesheet> JobServiceTimesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ResourceEntity> ResourceEntity { get; set; } = default!;
         public DbSet<Erp.Domain.Models.TimesheetExpenseDetail> TimesheetExpenseDetail { get; set; } = default!;
 
         // Receivable related DbSets

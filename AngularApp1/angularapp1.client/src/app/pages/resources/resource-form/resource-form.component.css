@@ -1,3 +1,66 @@
+:host {
+    max-width: 1280px;
+    text-align: center;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+table {
+    margin: 0 auto;
+}
+
+.App-Title {
+    margin-left:20px;
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+  box-shadow: 2px 3px 3px rgb(128, 128, 128);
+}
+
+.content {
+    padding: 24px;
+    background-color: rgb(240, 240, 240);
+    border-color: lightgray;
+    border:1px;
+    text-align: left;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 54px);
+}
+
+mat-sidenav,
+mat-sidenav-content {
+    transition: all 500ms ease-in-out;
+ }
+
+.nav-top {
+   width: 100%;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Tab content styling */
+.tab-content {
+    padding: 24px;
+    min-height: 400px;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -6,8 +69,18 @@
   max-width: 800px;
 }
 
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
 .full-width {
   width: 100%;
+}
+
+.half-width {
+  flex: 1;
 }
 
 .button-container {
@@ -16,6 +89,49 @@
   margin-top: 20px;
 }
 
+/* Entities tab styling */
+.entities-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.entities-header h3 {
+    margin: 0;
+}
+
+.entities-table {
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.entity-code {
+    color: #666;
+    font-size: 0.9em;
+    margin-left: 8px;
+    font-style: italic;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 48px;
+}
+
+.no-data {
+    text-align: center;
+    padding: 48px;
+    color: #666;
+}
+
+.no-data .hint {
+    margin-top: 12px;
+    font-size: 0.9em;
+    color: #999;
+    font-style: italic;
+}
+
+/* Loading overlay */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -32,4 +148,8 @@
 .spinner {
   color: white;
   font-size: 24px;
+  background-color: white;
+  padding: 24px 48px;
+  border-radius: 4px;
+  font-size: 18px;
 }

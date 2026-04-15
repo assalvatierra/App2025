@@ -7,10 +7,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
+import { ApiResourceEntityService } from '../../../core/services/api-resource-entity.service';
 import { ApiService } from '../../../core/api.service';
 import { Resource } from '../../../core/models/timesheet.model';
+import { ResourceEntity } from '../../../core/models/resource-entity.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
+import { AddEntityDialogComponent } from './add-entity-dialog.component';
 
 @Component({
   selector: 'app-resource-form',
@@ -25,6 +33,11 @@ import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-titl
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule,
+    MatSnackBarModule,
     UiPageTitleComponent
   ]
 })
@@ -40,12 +53,20 @@ export class ResourceFormComponent implements AfterViewInit {
   public itemTypes: any[] = [];
   public itemStatuses: any[] = [];
 
+  // Resource Entities
+  public resourceEntities: ResourceEntity[] = [];
+  public displayedColumns: string[] = ['entityName', 'status', 'actions'];
+  public entitiesLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private apiResources: ApiResourcesService,
+    private apiResourceEntity: ApiResourceEntityService,
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.initForm();
   }
@@ -64,6 +85,7 @@ export class ResourceFormComponent implements AfterViewInit {
     if (this.paramId !== 0) {
       this.titleInfo = 'Edit Resource';
       this.retrieveApiData(this.paramId);
+      this.loadResourceEntities(this.paramId);
     } else {
       this.titleInfo = 'Add New Resource';
       this.setDefaultData();
@@ -110,6 +132,28 @@ export class ResourceFormComponent implements AfterViewInit {
     this.router.navigate(['/resources']);
   }
 
+  onAddEntity(): void {
+    const dialogRef = this.dialog.open(AddEntityDialogComponent, {
+      width: '500px',
+      data: {
+        resourceId: this.paramId,
+        resourceName: this.currentData?.name || 'Resource'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addResourceEntity(result);
+      }
+    });
+  }
+
+  onDeleteEntity(entityId: number): void {
+    if (confirm('Are you sure you want to remove this entity from the resource?')) {
+      this.deleteResourceEntity(entityId);
+    }
+  }
+
   /* API calls */
   private loadLookupData(): void {
     // Load item types filtered by 'RESOURCE' class
@@ -129,6 +173,64 @@ export class ResourceFormComponent implements AfterViewInit {
       },
       error: (err) => {
         console.error('Error loading item statuses:', err);
+      }
+    });
+  }
+
+  private loadResourceEntities(resourceId: number): void {
+    this.entitiesLoading = true;
+    this.apiResourceEntity.getByResource(resourceId).subscribe({
+      next: (res) => {
+        this.resourceEntities = res;
+        this.entitiesLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading resource entities:', err);
+        this.entitiesLoading = false;
+      }
+    });
+  }
+
+  private addResourceEntity(data: any): void {
+    this.entitiesLoading = true;
+    this.apiResourceEntity.addResourceEntity(data).subscribe({
+      next: () => {
+        this.snackBar.open('Entity added successfully!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+        this.loadResourceEntities(this.paramId);
+      },
+      error: (err) => {
+        console.error('Error adding resource entity:', err);
+        this.snackBar.open('Error adding entity. Please try again.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+        this.entitiesLoading = false;
+      }
+    });
+  }
+
+  private deleteResourceEntity(id: number): void {
+    this.apiResourceEntity.deleteResourceEntity(id).subscribe({
+      next: () => {
+        this.snackBar.open('Entity removed successfully!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+        this.loadResourceEntities(this.paramId);
+      },
+      error: (err) => {
+        console.error('Error deleting resource entity:', err);
+        this.snackBar.open('Error removing entity. Please try again.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
       }
     });
   }

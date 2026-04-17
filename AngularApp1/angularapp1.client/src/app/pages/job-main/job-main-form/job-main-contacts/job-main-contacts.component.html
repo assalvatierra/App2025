@@ -1,0 +1,77 @@
+<div class="job-contacts-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Job Contacts</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="contacts-actions">
+        <button mat-raised-button color="primary" (click)="onAddClick()">
+          <mat-icon>add</mat-icon>
+          Add Contact
+        </button>
+      </div>
+
+      <div *ngIf="dataloading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!dataloading && mergedContacts.length === 0" class="no-data-message">
+        <p>No contacts associated with this job. Click "Add Contact" to add one.</p>
+      </div>
+
+      <div *ngIf="!dataloading && mergedContacts.length > 0" class="contacts-table">
+        <table mat-table [dataSource]="mergedContacts" class="full-width mat-elevation-z2">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.jobContactId || element.contactId || element.id }}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="contactNo1">
+            <th mat-header-cell *matHeaderCellDef>Phone</th>
+            <td mat-cell *matCellDef="let element">{{ element.contactNo1 || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email1">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.email1 || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Notes Column -->
+          <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef>Notes</th>
+            <td mat-cell *matCellDef="let element">{{ element.notes || '' }}</td>
+          </ng-container>
+
+          <!-- Source Column -->
+          <ng-container matColumnDef="source">
+            <th mat-header-cell *matHeaderCellDef>Source</th>
+            <td mat-cell *matCellDef="let element">{{ element.source }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" *ngIf="element.jobContactId" (click)="onRemove(element)" matTooltip="Remove from Job">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

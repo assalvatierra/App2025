@@ -1,0 +1,84 @@
+.job-contacts-container {
+	width: 100%;
+	padding: 16px 0;
+}
+
+.contacts-actions {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.contacts-actions button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.contacts-table {
+	width: 100%;
+	overflow-x: auto;
+}
+
+.full-width {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table {
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+th {
+	background-color: #f5f5f5;
+	font-weight: 600;
+	padding: 12px;
+	text-align: left;
+	border-bottom: 2px solid #ddd;
+}
+
+td {
+	padding: 12px;
+	border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+	background-color: #f9f9f9;
+}
+
+.loading-spinner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px 0;
+}
+
+.no-data-message {
+	text-align: center;
+	padding: 32px;
+	color: #999;
+	font-size: 14px;
+}
+
+button[mat-icon-button] {
+	margin: 0 4px;
+}
+
+@media (max-width: 768px) {
+	.contacts-actions {
+		flex-direction: column;
+	}
+
+	.contacts-table {
+		overflow-x: auto;
+	}
+
+	table {
+		font-size: 12px;
+	}
+
+	th, td {
+		padding: 8px;
+	}
+}

@@ -327,4 +327,24 @@ export class ApiService {
     return this.http.delete<any>(`${this.baseUrl}/api/JobMains/${id}`);
   }
 
+  // JOB CONTACTS (optional - backend may or may not expose this)
+  getJobContactsByJobMain(jobMainId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/JobContacts/ByJobMain/${jobMainId}`);
+  }
+
+  addJobContact(jobMainId: number, contactId: number, isPrimary?: boolean, notes?: string): Observable<any> {
+    const payload: any = { jobMainId: jobMainId, contactId: contactId };
+    if (isPrimary !== undefined) {
+      payload.isPrimary = isPrimary;
+    }
+    if (notes !== undefined) {
+      payload.notes = notes;
+    }
+    return this.http.post<any>(`${this.baseUrl}/api/JobContacts`, payload);
+  }
+
+  deleteJobContact(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/JobContacts/${id}`);
+  }
+
 }

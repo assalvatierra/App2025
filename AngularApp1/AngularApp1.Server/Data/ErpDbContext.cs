@@ -31,7 +31,8 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ServiceItem> ServiceItem { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobService> JobService { get; set; } = default!;
-        public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
+    public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
+    public DbSet<Erp.Domain.Models.JobContact> JobContacts { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMainStatus> JobMainStatus { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatusClass> ItemStatusClass { get; set; } = default!;
@@ -66,6 +67,20 @@ namespace AngularApp1.Server.Data
 
             // Map JobCustomers DbSet to JobCustomer table (singular)
             modelBuilder.Entity<JobCustomer>().ToTable("JobCustomer");
+
+            // Map JobContacts DbSet to JobContact table (singular)
+            modelBuilder.Entity<JobContact>().ToTable("JobContact");
+
+            // Configure JobContact relationships
+            modelBuilder.Entity<JobContact>()
+                .HasOne(jc => jc.Contact)
+                .WithMany(c => c.JobContacts)
+                .HasForeignKey(jc => jc.ContactId);
+
+            modelBuilder.Entity<JobContact>()
+                .HasOne(jc => jc.JobMain)
+                .WithMany(jm => jm.JobContacts)
+                .HasForeignKey(jc => jc.JobMainId);
 
             // Configure relationships
             modelBuilder.Entity<JobCustomer>()

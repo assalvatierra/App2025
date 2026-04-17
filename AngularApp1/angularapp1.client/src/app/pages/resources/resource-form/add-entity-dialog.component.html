@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Add Entity to {{ data.resourceName }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="entityForm" class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select Entity</mat-label>
+      <mat-select formControlName="entityId" required (selectionChange)="onEntitySelected($event.value)">
+        <mat-option *ngFor="let entity of availableEntities" [value]="entity.id">
+          {{ entity.name }} ({{ entity.code }})
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="entityForm.get('entityId')?.hasError('required')">
+        Entity is required
+      </mat-error>
+    </mat-form-field>
+
+    <div *ngIf="selectedEntity" class="entity-details">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput
+                  [value]="selectedEntity.description || 'No description available'"
+                  readonly
+                  rows="3"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Remarks</mat-label>
+        <textarea matInput
+                  [value]="selectedEntity.remarks || 'No remarks available'"
+                  readonly
+                  rows="2"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <input matInput
+               [value]="getEntityStatus()"
+               readonly>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div *ngIf="loading" class="loading-message">
+    Loading entities...
+  </div>
+
+  <div *ngIf="!loading && availableEntities.length === 0" class="no-entities">
+    No entities available to add.
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary"
+          (click)="onSave()"
+          [disabled]="!entityForm.valid || loading">
+    Add Entity
+  </button>
+</mat-dialog-actions>

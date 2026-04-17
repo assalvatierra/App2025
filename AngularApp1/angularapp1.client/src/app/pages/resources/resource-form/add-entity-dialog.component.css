@@ -1,0 +1,43 @@
+ .dialog-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  padding: 16px 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+mat-dialog-content {
+  min-height: 300px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.entity-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.entity-details mat-form-field {
+  pointer-events: none;
+}
+
+.entity-details mat-form-field input,
+.entity-details mat-form-field textarea {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.loading-message,
+.no-entities {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+}

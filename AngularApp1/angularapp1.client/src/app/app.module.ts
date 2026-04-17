@@ -66,6 +66,7 @@ import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main
 import { JobMainServicesComponent } from './pages/job-main/job-main-form/job-main-services/job-main-services.component';
 import { JobMainServiceDialogComponent } from './pages/job-main/job-main-form/job-main-services/job-main-service-dialog/job-main-service-dialog.component'; 
 import { JobMainCustomerComponent } from './pages/job-main/job-main-form/job-main-customer/job-main-customer.component';
+import { JobMainContactsComponent } from './pages/job-main/job-main-form/job-main-contacts/job-main-contacts.component';
 import { JobCustomerDetailsComponent } from './pages/job-main/job-main-form/job-main-customer/job-customer-details/job-customer-details.component';
 import { JobCustomerFormComponent } from './pages/job-main/job-main-form/job-main-customer/job-customer-form/job-customer-form.component';
 import { JobMainStatusListComponent } from './pages/job-main/job-main-form/job-main-status-list/job-main-status-list.component';
@@ -115,6 +116,7 @@ import { EntityContactListComponent } from './pages/entity/entity-contact-list/e
     JobMainServicesComponent,
     JobMainServiceDialogComponent,
     JobMainCustomerComponent,
+  JobMainContactsComponent,
     JobMainStatusListComponent,
     JobMainStatusDialogComponent,
     EntityContactListComponent

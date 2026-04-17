@@ -37,6 +37,9 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ItemTypeClass> ItemTypeClass { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ItemStatusClass> ItemStatusClass { get; set; } = default!;
         
+        // Job Service Requirements
+        public DbSet<Erp.Domain.Models.JobServiceRequirement> JobServiceRequirement { get; set; } = default!;
+        
         // Timesheet related DbSets
         public DbSet<Erp.Domain.Models.Timesheet> Timesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobTimesheet> JobTimesheet { get; set; } = default!;
@@ -44,6 +47,9 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ResourceEntity> ResourceEntity { get; set; } = default!;
         public DbSet<Erp.Domain.Models.TimesheetExpenseDetail> TimesheetExpenseDetail { get; set; } = default!;
+
+        // Resource Calendar related DbSets
+        public DbSet<Erp.Domain.Models.JobServiceResource> JobServiceResource { get; set; } = default!;
 
         // Receivable related DbSets
         public DbSet<Erp.Domain.Models.Receivable> Receivables { get; set; } = default!;
@@ -92,6 +98,9 @@ namespace AngularApp1.Server.Data
                 .HasOne(jc => jc.Customer)
                 .WithMany(e => e.JobCustomers)
                 .HasForeignKey(jc => jc.CustomerId);
+
+            // Configure JobServiceRequirement
+            modelBuilder.Entity<JobServiceRequirement>().ToTable("JobServiceRequirement");
 
             // Configure Timesheet relationships
             modelBuilder.Entity<Timesheet>()

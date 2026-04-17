@@ -33,6 +33,7 @@ import { TimesheetFormComponent } from './pages/timesheets/timesheet-form/timesh
 import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approval/timesheet-approval.component';
 import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
+import { ResourceCalendarComponent } from './pages/resources/resource-calendar/resource-calendar.component';
 import { ReceivablesComponent } from './pages/receivables/receivables.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
@@ -173,6 +174,12 @@ const routeConfig: Routes = [
     {
       path: 'resources/form/:id',
       component: ResourceFormComponent,
+      canActivate: [AuthGuard]
+    },
+    // Resource Calendar routes
+    {
+      path: 'resource-calendar',
+      component: ResourceCalendarComponent,
       canActivate: [AuthGuard]
     },
     // Receivables routes

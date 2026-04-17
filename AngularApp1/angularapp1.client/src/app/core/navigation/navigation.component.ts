@@ -126,6 +126,20 @@ export class NavigationComponent implements OnInit {
       ]
     },
     {
+      name: 'Resource Planning',
+      label: 'Resource Planning',
+      icon: 'calendar_month',
+      route: '',
+      subItems: [
+        { 
+          name: 'Resource Calendar',
+          label: 'Resource Calendar',
+          icon: 'event', 
+          route: 'resource-calendar'
+        }
+      ]
+    },
+    {
       name: 'Organization',
       label: 'Organization',
       icon: 'business', 
@@ -246,7 +260,7 @@ export class NavigationComponent implements OnInit {
       // If no filter, show all items
       console.log('✅ No filter applied - showing all menu items');
       this.menuItems.set([...this.allMenuItems]);
-      //this.isFilteringComplete.set(true);
+      this.isFilteringComplete.set(true); // FIX: Mark filtering as complete even when no filter
       return;
     }
 

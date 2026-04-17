@@ -1,0 +1,117 @@
+<h2 mat-dialog-title>Service Requirements - {{ data.serviceName }}</h2>
+
+<mat-dialog-content>
+  <div class="dialog-container">
+    <!-- Add Button (shown when form is hidden) -->
+    <div class="add-button-container" *ngIf="!showForm">
+      <button mat-raised-button color="primary" (click)="onShowForm()">
+        <mat-icon>add</mat-icon>
+        Add Requirement
+      </button>
+    </div>
+
+    <!-- Add/Edit Form (shown when showForm is true) -->
+    <mat-card class="requirement-form-card" *ngIf="showForm">
+      <mat-card-header>
+        <mat-card-title>{{ isEditMode ? 'Edit' : 'Add' }} Requirement</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="requirementForm" class="requirement-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Required Quantity</mat-label>
+              <input matInput type="number" formControlName="requiredQty" required min="1">
+              <mat-error *ngIf="requirementForm.get('requiredQty')?.hasError('required')">
+                Quantity is required
+              </mat-error>
+              <mat-error *ngIf="requirementForm.get('requiredQty')?.hasError('min')">
+                Quantity must be at least 1
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Item Type</mat-label>
+              <mat-select formControlName="itemTypeId">
+                <mat-option [value]="null">None</mat-option>
+                <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes" rows="2" placeholder="Enter any notes"></textarea>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" (click)="onSubmitRequirement()" [disabled]="!requirementForm.valid">
+              <mat-icon>save</mat-icon>
+              {{ isEditMode ? 'Update' : 'Submit' }}
+            </button>
+            <button mat-button (click)="onCancelForm()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Requirements List -->
+    <div class="requirements-list">
+      <h3>Current Requirements</h3>
+      
+      <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading && requirements.length === 0" class="no-data">
+        <p>No requirements defined for this service yet.</p>
+      </div>
+
+      <table mat-table [dataSource]="requirements" *ngIf="!loading && requirements.length > 0">
+        <!-- Item Type Column -->
+        <ng-container matColumnDef="itemType">
+          <th mat-header-cell *matHeaderCellDef>Item Type</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getItemTypeName(element.itemTypeId) }}
+          </td>
+        </ng-container>
+
+        <!-- Required Quantity Column -->
+        <ng-container matColumnDef="requiredQty">
+          <th mat-header-cell *matHeaderCellDef>Qty</th>
+          <td mat-cell *matCellDef="let element">{{ element.requiredQty }}</td>
+        </ng-container>
+
+        <!-- Notes Column -->
+        <ng-container matColumnDef="notes">
+          <th mat-header-cell *matHeaderCellDef>Notes</th>
+          <td mat-cell *matCellDef="let element">{{ element.notes || 'N/A' }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="onEditRequirement(element)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDeleteRequirement(element.id)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="onClose()">Close</button>
+</mat-dialog-actions>

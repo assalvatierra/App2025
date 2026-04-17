@@ -11,22 +11,15 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<JobServiceResource> JobServiceResources { get; set; }
-
-    public virtual DbSet<ResourceEntity> ResourceEntities { get; set; }
+    public virtual DbSet<JobServiceRequirement> JobServiceRequirements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<JobServiceResource>(entity =>
+        modelBuilder.Entity<JobServiceRequirement>(entity =>
         {
-            entity.ToTable("JobServiceResource");
-        });
+            entity.ToTable("JobServiceRequirement");
 
-        modelBuilder.Entity<ResourceEntity>(entity =>
-        {
-            entity.ToTable("ResourceEntity");
-
-            entity.Property(e => e.Id).HasMaxLength(4000);
+            entity.Property(e => e.Notes).HasMaxLength(4000);
         });
 
         OnModelCreatingPartial(modelBuilder);

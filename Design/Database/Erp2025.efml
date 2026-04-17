@@ -912,6 +912,23 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="JobServiceRequirement" entity-set="JobServiceRequirement" p1:Guid="28ac49a7-42b1-4673-9130-ca42120f2b5f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="789e1db5-aa28-4f69-b474-0bc69f43e5eb">
+      <column name="" not-null="False" />
+    </id>
+    <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="740eb5db-c490-4a32-86c6-f2d4cfabec8c">
+      <column name="" not-null="False" />
+    </property>
+    <property name="RequiredQty" type="Int32" p1:ValidateRequired="true" p1:Guid="67f59fab-ce88-40f5-8ab8-103179bca761">
+      <column name="" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="8c131b95-d0fc-444f-bfe5-f98a075a78c8">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="bd10db7c-66c7-4882-bb80-5c837be44923">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1455,6 +1472,22 @@
       </end1>
       <end2 multiplicity="Many" name="ResourceEntities" class="Entity" relation-class="ResourceEntity" lazy="False" p1:Guid="a97cc2a6-e1eb-4cbb-8ee1-a849fd0a91f5">
         <property name="EntityId" />
+      </end2>
+    </association>
+    <association name="JobService_JobServiceRequirement" cardinality="OneToMany" p1:Guid="3f417c9f-4a68-4f0c-bc92-04865b2cc3a7">
+      <end1 multiplicity="One" name="JobService" class="JobServiceRequirement" relation-class="JobService" constrained="True" lazy="False" p1:Guid="e773ae6d-1a85-40b9-9140-c5cbf84c0a05">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceRequirements" class="JobService" relation-class="JobServiceRequirement" lazy="False" p1:Guid="75df362e-2286-45c0-8e58-39fa6cdc4c9d">
+        <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="ItemType_JobServiceRequirement" cardinality="OneToMany" p1:Guid="e4b01f99-7ab2-40e4-bfa4-2a517197e6e2">
+      <end1 multiplicity="One" name="ItemType" class="JobServiceRequirement" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="d7b622a0-469a-4137-9742-58058816fa55">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobServiceRequirements" class="ItemType" relation-class="JobServiceRequirement" lazy="False" p1:Guid="77efed87-b9d9-47e3-98b7-4f78acdd9d56">
+        <property name="ItemTypeId" />
       </end2>
     </association>
   </associations>

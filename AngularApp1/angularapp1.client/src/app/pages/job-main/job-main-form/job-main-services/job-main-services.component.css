@@ -63,6 +63,53 @@ tr:hover {
 
 button[mat-icon-button] {
   margin: 0 4px;
+  position: relative;
+}
+
+/* Requirements button with badge styling */
+button[mat-icon-button].has-requirements {
+  position: relative;
+}
+
+.requirement-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ff4081;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Icon transition effect */
+button[mat-icon-button] mat-icon {
+  transition: transform 0.2s ease;
+}
+
+button[mat-icon-button]:hover mat-icon {
+  transform: scale(1.1);
+}
+
+button[mat-icon-button].has-requirements:hover mat-icon {
+  transform: scale(1.15);
 }
 
 @media (max-width: 768px) {
@@ -80,5 +127,11 @@ button[mat-icon-button] {
 
   th, td {
     padding: 8px;
+  }
+
+  .requirement-badge {
+    font-size: 9px;
+    min-width: 16px;
+    height: 16px;
   }
 }

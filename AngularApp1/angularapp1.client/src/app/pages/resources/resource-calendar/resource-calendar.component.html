@@ -1,0 +1,158 @@
+<ui-page-title [title]="titleInfo"></ui-page-title>
+
+<mat-card class="calendar-container">
+  <mat-card-header>
+    <mat-card-title>
+      <div class="header-row">
+        <span>{{ titleInfo }}</span>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <form [formGroup]="filterForm" class="filter-form">
+        <div class="filter-row">
+          <!-- Date Range Section -->
+          <div class="date-range-group">
+            <label class="date-range-label">Date Range</label>
+            <div class="date-inputs">
+              <mat-form-field appearance="outline" class="date-field">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY">
+                <mat-hint>From</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+
+              <span class="date-separator">to</span>
+
+              <mat-form-field appearance="outline" class="date-field">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY">
+                <mat-hint>To</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Resource Filter -->
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Resources</mat-label>
+            <mat-select formControlName="selectedResources" multiple>
+              <mat-option *ngFor="let resource of availableResources" [value]="resource.id">
+                {{ resource.name }} ({{ resource.code }})
+              </mat-option>
+            </mat-select>
+            <mat-hint>Select resources to filter</mat-hint>
+          </mat-form-field>
+
+          <!-- Status Filter -->
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="selectedStatuses" multiple>
+              <mat-option *ngFor="let status of availableStatuses" [value]="status.id">
+                {{ status.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Select statuses to filter</mat-hint>
+          </mat-form-field>
+
+          <!-- Action Buttons -->
+          <div class="button-group">
+            <button mat-raised-button color="primary" (click)="onApplyFilter()" [disabled]="isLoading">
+              <mat-icon>filter_alt</mat-icon>
+              Apply
+            </button>
+            <button mat-raised-button (click)="onResetFilter()" [disabled]="isLoading">
+              <mat-icon>clear</mat-icon>
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Navigation Section -->
+    <div class="navigation-section">
+      <div class="nav-buttons">
+        <button mat-icon-button (click)="navigateToPreviousMonth()" [disabled]="isLoading" matTooltip="Previous Month">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-raised-button (click)="navigateToToday()" [disabled]="isLoading">
+          Today
+        </button>
+        <button mat-icon-button (click)="navigateToNextMonth()" [disabled]="isLoading" matTooltip="Next Month">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <h2 class="month-year">{{ getMonthYear() }}</h2>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading calendar data...</p>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div *ngIf="!isLoading && calendarData.length > 0" class="calendar-grid">
+      <!-- Header Row with Dates -->
+      <div class="calendar-header">
+        <div class="resource-column-header">Resource</div>
+        <div *ngFor="let day of calendarDays" class="day-header" [class.today]="isToday(day)">
+          <div class="day-name">{{ getDayOfWeek(day) }}</div>
+          <div class="day-date">{{ formatDate(day) }}</div>
+        </div>
+      </div>
+
+      <!-- Resource Rows -->
+      <div *ngFor="let resource of calendarData" class="resource-row">
+        <div class="resource-name">
+          <div class="resource-title">{{ resource.resourceName }}</div>
+          <div class="resource-code">{{ resource.resourceCode }}</div>
+        </div>
+
+        <!-- Day Cells -->
+        <div *ngFor="let day of calendarDays" 
+             class="day-cell" 
+             [class.today]="isToday(day)"
+             [class.has-entries]="getEntriesForDate(resource, day).length > 0"
+             [class.empty-cell]="getEntriesForDate(resource, day).length === 0">
+          
+          <!-- Entries for this day -->
+          <div *ngFor="let entry of getEntriesForDate(resource, day)" 
+               class="calendar-entry"
+               (click)="onEntryClick(entry)"
+               [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')">
+            <div class="entry-header">
+              <span class="entry-job">{{ entry.jobReference }}</span>
+            </div>
+            <div class="entry-customer">{{ entry.customerName || 'N/A' }}</div>
+            <div class="entry-time" *ngIf="entry.startTime">
+              {{ formatTime(entry.startTime) }}
+              <span *ngIf="entry.endTime"> - {{ formatTime(entry.endTime) }}</span>
+            </div>
+            <div class="entry-status" *ngIf="entry.statusName">
+              <span class="status-badge">{{ entry.statusName }}</span>
+            </div>
+          </div>
+          
+          <!-- Empty cell indicator -->
+          <div *ngIf="getEntriesForDate(resource, day).length === 0" class="empty-cell-placeholder">
+            <!-- Empty cell - available for assignment -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Data Message -->
+    <div *ngIf="!isLoading && availableResources.length === 0" class="no-data">
+      <mat-icon class="no-data-icon">event_busy</mat-icon>
+      <p>No resources available in the system.</p>
+      <p class="hint">Please add resources in the Resources master file.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

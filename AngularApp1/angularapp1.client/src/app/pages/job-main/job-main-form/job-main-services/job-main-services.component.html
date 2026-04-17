@@ -74,6 +74,24 @@
             </td>
           </ng-container>
 
+          <!-- Requirements Column (UPDATED) -->
+          <ng-container matColumnDef="requirements">
+            <th mat-header-cell *matHeaderCellDef>Requirements</th>
+            <td mat-cell *matCellDef="let element">
+              <button 
+                mat-icon-button 
+                [color]="hasRequirements(element.id) ? 'accent' : 'primary'" 
+                (click)="onManageRequirements(element)" 
+                [matTooltip]="hasRequirements(element.id) ? 'Manage Requirements (' + getRequirementCount(element.id) + ')' : 'Add Requirements'"
+                [class.has-requirements]="hasRequirements(element.id)">
+                <mat-icon>{{ hasRequirements(element.id) ? 'fact_check' : 'list_alt' }}</mat-icon>
+                <span class="requirement-badge" *ngIf="hasRequirements(element.id)">
+                  {{ getRequirementCount(element.id) }}
+                </span>
+              </button>
+            </td>
+          </ng-container>
+
           <!-- Actions Column -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>

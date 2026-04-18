@@ -6,7 +6,8 @@ import {
   ResourceCalendarDto,
   CalendarFilterOptions,
   ResourceOption,
-  StatusOption
+  StatusOption,
+  JobCalendarDto
 } from '../models/resource-calendar.model';
 
 @Injectable({
@@ -37,6 +38,25 @@ export class ApiResourceCalendarService {
 
     return this.http.get<ResourceCalendarDto[]>(this.apiUrl, { params }).pipe(
       map(data => this.mapCalendarData(data))
+    );
+  }
+
+  /**
+   * Get jobs with services for calendar display
+   * @param options Filter options including date range
+   * @returns Observable of job calendar data
+   */
+  getJobsCalendar(options: CalendarFilterOptions): Observable<JobCalendarDto[]> {
+    let params = new HttpParams()
+      .set('startDate', this.formatDate(options.startDate))
+      .set('endDate', this.formatDate(options.endDate));
+
+    if (options.statusIds && options.statusIds.length > 0) {
+      params = params.set('statusIds', options.statusIds.join(','));
+    }
+
+    return this.http.get<JobCalendarDto[]>(`${this.apiUrl}/jobs`, { params }).pipe(
+      map(data => this.mapJobCalendarData(data))
     );
   }
 
@@ -78,6 +98,23 @@ export class ApiResourceCalendarService {
         ...day,
         date: new Date(day.date),
         entries: day.entries || []
+      }))
+    }));
+  }
+
+  /**
+   * Map job calendar data from API response
+   * @param data Raw API response
+   * @returns Mapped job calendar data
+   */
+  private mapJobCalendarData(data: any[]): JobCalendarDto[] {
+    return data.map(job => ({
+      ...job,
+      services: job.services.map((service: any) => ({
+        ...service,
+        dateStart: service.dateStart ? new Date(service.dateStart) : undefined,
+        dateEnd: service.dateEnd ? new Date(service.dateEnd) : undefined,
+        requirements: service.requirements || []
       }))
     }));
   }

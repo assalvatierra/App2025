@@ -1,0 +1,18 @@
+<div class="job-card" [class.compact]="compact">
+  <div class="job-header">
+    <span class="job-ref">{{ job.jobReference }}</span>
+    <span class="job-customer" *ngIf="job.customerName">{{ job.customerName }}</span>
+  </div>
+  
+  <div class="job-services" *ngIf="resourceTypeSummaries.length > 0">
+    <div *ngFor="let summary of resourceTypeSummaries" 
+         class="service-requirement"
+         [class]="getAllocationStatus(summary)"
+         [matTooltip]="getTooltip(summary)">
+      <mat-icon [style.color]="getResourceColor(summary.resourceType)" class="resource-icon">
+        {{ getResourceIcon(summary.resourceType) }}
+      </mat-icon>
+      <span class="quantity">{{ summary.allocatedQuantity }}/{{ summary.requiredQuantity }}</span>
+    </div>
+  </div>
+</div>

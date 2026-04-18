@@ -53,4 +53,44 @@ namespace Erp.Domain.DTOs
         public List<int>? ResourceIds { get; set; }
         public List<int>? StatusIds { get; set; }
     }
+
+    /// <summary>
+    /// DTO representing a job with services for calendar display
+    /// </summary>
+    public class JobCalendarDto
+    {
+        public int JobMainId { get; set; }
+        public string JobReference { get; set; } = string.Empty;
+        public string? CustomerName { get; set; }
+        public List<JobServiceCalendarDto> Services { get; set; } = new();
+    }
+
+    /// <summary>
+    /// DTO representing a job service with resource requirements
+    /// </summary>
+    public class JobServiceCalendarDto
+    {
+        public int Id { get; set; }
+        public int JobMainId { get; set; }
+        public int? ServiceItemId { get; set; }
+        public string? ServiceItemName { get; set; }
+        public DateTime? DateStart { get; set; }
+        public DateTime? DateEnd { get; set; }
+        public string? Particulars { get; set; }
+        public List<ServiceRequirementDto> Requirements { get; set; } = new();
+    }
+
+    /// <summary>
+    /// DTO representing a single service requirement
+    /// </summary>
+    public class ServiceRequirementDto
+    {
+        public int Id { get; set; }
+        public int RequiredQty { get; set; }
+        public int? ItemTypeId { get; set; }
+        public string? ItemTypeName { get; set; }
+        public string ResourceType { get; set; } = "Other"; // Driver, Vehicle, Other
+        public int AllocatedQuantity { get; set; }
+        public string? Notes { get; set; }
+    }
 }

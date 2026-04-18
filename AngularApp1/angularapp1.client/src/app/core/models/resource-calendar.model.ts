@@ -49,3 +49,32 @@ export interface StatusOption {
   name: string;
   code: string;
 }
+
+// Job Calendar Models
+export interface JobCalendarDto {
+  jobMainId: number;
+  jobReference: string;
+  customerName?: string;
+  services: JobServiceCalendarDto[];
+}
+
+export interface JobServiceCalendarDto {
+  id: number;
+  jobMainId: number;
+  serviceItemId?: number;
+  serviceItemName?: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  particulars?: string;
+  requirements: ServiceRequirementDto[];
+}
+
+export interface ServiceRequirementDto {
+  id: number;
+  requiredQty: number;
+  itemTypeId?: number;
+  itemTypeName?: string;
+  resourceType: 'Driver' | 'Vehicle' | 'Other';
+  allocatedQuantity: number;
+  notes?: string;
+}

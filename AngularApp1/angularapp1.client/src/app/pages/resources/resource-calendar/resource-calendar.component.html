@@ -21,7 +21,6 @@
               <mat-form-field appearance="outline" class="date-field">
                 <mat-label>Start Date</mat-label>
                 <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="MM/DD/YYYY">
-                <mat-hint>From</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
               </mat-form-field>
@@ -31,7 +30,6 @@
               <mat-form-field appearance="outline" class="date-field">
                 <mat-label>End Date</mat-label>
                 <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="MM/DD/YYYY">
-                <mat-hint>To</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
               </mat-form-field>
@@ -46,7 +44,6 @@
                 {{ resource.name }} ({{ resource.code }})
               </mat-option>
             </mat-select>
-            <mat-hint>Select resources to filter</mat-hint>
           </mat-form-field>
 
           <!-- Status Filter -->
@@ -57,7 +54,6 @@
                 {{ status.name }}
               </mat-option>
             </mat-select>
-            <mat-hint>Select statuses to filter</mat-hint>
           </mat-form-field>
 
           <!-- Action Buttons -->
@@ -105,6 +101,37 @@
         <div *ngFor="let day of calendarDays" class="day-header" [class.today]="isToday(day)">
           <div class="day-name">{{ getDayOfWeek(day) }}</div>
           <div class="day-date">{{ formatDate(day) }}</div>
+        </div>
+      </div>
+
+      <!-- Jobs Row (First Row) -->
+      <div class="jobs-row">
+        <div class="resource-name jobs-label">
+          <div class="resource-title">
+            <mat-icon>work</mat-icon>
+            Jobs
+          </div>
+          <div class="resource-code">Service Requirements</div>
+        </div>
+
+        <!-- Job Cells for each day -->
+        <div *ngFor="let day of calendarDays" 
+             class="day-cell job-cell" 
+             [class.today]="isToday(day)"
+             [class.has-jobs]="getJobsForDate(day).length > 0">
+          
+          <!-- Job cards for this day -->
+          <app-job-card *ngFor="let job of getJobsForDate(day)" 
+                        [job]="job"
+                        [compact]="true"
+                        (click)="onJobClick(job)"
+                        class="job-card-wrapper">
+          </app-job-card>
+          
+          <!-- Empty cell indicator -->
+          <div *ngIf="getJobsForDate(day).length === 0" class="empty-cell-placeholder">
+            No jobs scheduled
+          </div>
         </div>
       </div>
 

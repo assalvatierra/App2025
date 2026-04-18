@@ -185,7 +185,107 @@ namespace AngularApp1.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Get jobs with services for calendar display
+        /// </summary>
+        /// <param name="startDate">Start date for calendar view</param>
+        /// <param name="endDate">End date for calendar view</param>
+        /// <param name="statusIds">Comma-separated status IDs to filter (optional)</param>
+        /// <returns>List of jobs with service requirements</returns>
+        [HttpGet("jobs")]
+        public async Task<ActionResult<List<JobCalendarDto>>> GetJobsCalendar(
+            [FromQuery] DateTime startDate,
+            [FromQuery] DateTime endDate,
+            [FromQuery] string? statusIds = null)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Getting jobs calendar from {StartDate} to {EndDate}",
+                    startDate, endDate);
+
+                var statusIdList = ParseIds(statusIds);
+
+                // Query jobs with services in the date range
+                var query = from js in _context.JobService
+                           join jm in _context.JobMain on js.JobMainId equals jm.Id
+                           where js.DateStart.HasValue
+                                 && js.DateStart.Value.Date <= endDate.Date
+                                 && (!js.DateEnd.HasValue || js.DateEnd.Value.Date >= startDate.Date)
+                           select new
+                           {
+                               JobService = js,
+                               JobMain = jm
+                           };
+
+                // Apply status filter
+                if (statusIdList.Any())
+                {
+                    query = query.Where(q => q.JobService.ItemStatusId.HasValue 
+                                            && statusIdList.Contains(q.JobService.ItemStatusId.Value));
+                }
+
+                var jobServices = await query.ToListAsync();
+
+                // Get customer names for all jobs
+                var jobMainIds = jobServices.Select(js => js.JobMain.Id).Distinct().ToList();
+                var jobCustomers = await GetJobCustomers(jobMainIds);
+
+                // Get service items
+                var serviceItemIds = jobServices.Where(js => js.JobService.ServiceItemId.HasValue)
+                                               .Select(js => js.JobService.ServiceItemId!.Value)
+                                               .Distinct()
+                                               .ToList();
+                var serviceItems = await GetServiceItems(serviceItemIds);
+
+                // Get job service IDs for requirements lookup
+                var jobServiceIds = jobServices.Select(js => js.JobService.Id).ToList();
+                var serviceRequirements = await GetJobServiceRequirements(jobServiceIds);
+                var itemTypes = await GetItemTypes(serviceRequirements.Values.SelectMany(r => r.Select(req => req.ItemTypeId)).Distinct().Where(id => id.HasValue).Select(id => id!.Value).ToList());
+
+                // Group by job and build result
+                var result = jobServices
+                    .GroupBy(js => js.JobMain)
+                    .Select(g =>
+                    {
+                        return new JobCalendarDto
+                        {
+                            JobMainId = g.Key.Id,
+                            JobReference = g.Key.Description ?? $"Job #{g.Key.Id}",
+                            CustomerName = jobCustomers.ContainsKey(g.Key.Id) ? jobCustomers[g.Key.Id] : null,
+                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes)).ToList()
+                        };
+                    })
+                    .OrderBy(j => j.JobMainId)
+                    .ToList();
+
+                _logger.LogInformation("Retrieved {Count} jobs for calendar", result.Count);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving jobs calendar data");
+                return StatusCode(500, new
+                {
+                    message = "Error retrieving jobs calendar data",
+                    error = ex.Message
+                });
+            }
+        }
+
         #region Private Helper Methods
+
+        // Resource type keyword lists
+        private static readonly string[] DriverKeywords = new[] 
+        { 
+            "driver", "chauffeur", "operator", "pilot" 
+        };
+
+        private static readonly string[] VehicleKeywords = new[] 
+        { 
+            "vehicle", "car", "van", "bus", "truck", "transport" 
+        };
 
         /// <summary>
         /// Parse comma-separated IDs into a list of integers
@@ -251,6 +351,65 @@ namespace AngularApp1.Server.Controllers
         }
 
         /// <summary>
+        /// Get service items information
+        /// </summary>
+        private async Task<Dictionary<int, (string Name, int? ItemTypeId)>> GetServiceItems(List<int> serviceItemIds)
+        {
+            if (!serviceItemIds.Any())
+                return new Dictionary<int, (string, int?)>();
+
+            var items = await _context.ServiceItem
+                .Where(si => serviceItemIds.Contains(si.Id))
+                .Select(si => new
+                {
+                    si.Id,
+                    Name = si.Name ?? si.Description ?? "Unknown",
+                    si.ItemTypeId
+                })
+                .ToListAsync();
+
+            return items.ToDictionary(i => i.Id, i => (i.Name, i.ItemTypeId));
+        }
+
+        /// <summary>
+        /// Get job service requirements
+        /// </summary>
+        private async Task<Dictionary<int, List<JobServiceRequirement>>> GetJobServiceRequirements(List<int> jobServiceIds)
+        {
+            if (!jobServiceIds.Any())
+                return new Dictionary<int, List<JobServiceRequirement>>();
+
+            var requirements = await _context.JobServiceRequirement
+                .Where(jsr => jobServiceIds.Contains(jsr.JobServiceId ?? 0))
+                .ToListAsync();
+
+            return requirements
+                .GroupBy(r => r.JobServiceId ?? 0)
+                .ToDictionary(g => g.Key, g => g.ToList());
+        }
+
+        /// <summary>
+        /// Get item types information
+        /// </summary>
+        private async Task<Dictionary<int, (string Name, string? Code)>> GetItemTypes(List<int> itemTypeIds)
+        {
+            if (!itemTypeIds.Any())
+                return new Dictionary<int, (string, string?)>();
+
+            var types = await _context.ItemType
+                .Where(it => itemTypeIds.Contains(it.Id))
+                .Select(it => new
+                {
+                    it.Id,
+                    Name = it.Name ?? "Unknown",
+                    it.Code
+                })
+                .ToListAsync();
+
+            return types.ToDictionary(t => t.Id, t => (t.Name, t.Code));
+        }
+
+        /// <summary>
         /// Generate calendar days with entries
         /// </summary>
         private List<CalendarDayDto> GenerateDays<T>(
@@ -301,6 +460,101 @@ namespace AngularApp1.Server.Controllers
             }
 
             return days;
+        }
+
+        /// <summary>
+        /// Build job service calendar DTO with resource type categorization
+        /// </summary>
+        private JobServiceCalendarDto BuildJobServiceCalendar(
+            JobService jobService,
+            Dictionary<int, (string Name, int? ItemTypeId)> serviceItems,
+            Dictionary<int, List<JobServiceRequirement>> serviceRequirements,
+            Dictionary<int, (string Name, string? Code)> itemTypes)
+        {
+            // Get service item info
+            string? serviceItemName = null;
+            if (jobService.ServiceItemId.HasValue && serviceItems.ContainsKey(jobService.ServiceItemId.Value))
+            {
+                var serviceItem = serviceItems[jobService.ServiceItemId.Value];
+                serviceItemName = serviceItem.Name;
+            }
+
+            // Build requirements list
+            var requirements = new List<ServiceRequirementDto>();
+
+            if (serviceRequirements.ContainsKey(jobService.Id))
+            {
+                var jobServiceReqs = serviceRequirements[jobService.Id];
+
+                foreach (var req in jobServiceReqs)
+                {
+                    string? itemTypeName = null;
+                    string resourceType = "Other";
+
+                    // Get item type name and determine resource type
+                    if (req.ItemTypeId.HasValue && itemTypes.ContainsKey(req.ItemTypeId.Value))
+                    {
+                        itemTypeName = itemTypes[req.ItemTypeId.Value].Name;
+                        resourceType = DetermineResourceType(itemTypeName, req.ItemTypeId);
+                    }
+
+                    // Count allocated resources for this specific requirement's item type
+                    // For now, we'll count all allocated resources for the job service
+                    // TODO: Improve to track allocation per requirement
+                    var allocatedForType = _context.JobServiceResource
+                        .Count(jsr => jsr.JobServiceId == jobService.Id);
+
+                    requirements.Add(new ServiceRequirementDto
+                    {
+                        Id = req.Id,
+                        RequiredQty = req.RequiredQty,
+                        ItemTypeId = req.ItemTypeId,
+                        ItemTypeName = itemTypeName,
+                        ResourceType = resourceType,
+                        AllocatedQuantity = allocatedForType,
+                        Notes = req.Notes
+                    });
+                }
+            }
+
+            return new JobServiceCalendarDto
+            {
+                Id = jobService.Id,
+                JobMainId = jobService.JobMainId ?? 0,
+                ServiceItemId = jobService.ServiceItemId,
+                ServiceItemName = serviceItemName,
+                DateStart = jobService.DateStart,
+                DateEnd = jobService.DateEnd,
+                Particulars = jobService.Particulars,
+                Requirements = requirements
+            };
+        }
+
+        /// <summary>
+        /// Determine resource type (Driver, Vehicle, Other) based on service item
+        /// </summary>
+        private string DetermineResourceType(string? serviceItemName, int? itemTypeId)
+        {
+            if (serviceItemName == null)
+                return "Other";
+
+            var nameLower = serviceItemName.ToLower();
+
+            // Check for driver-related keywords
+            if (DriverKeywords.Any(keyword => nameLower.Contains(keyword)))
+            {
+                return "Driver";
+            }
+
+            // Check for vehicle-related keywords
+            if (VehicleKeywords.Any(keyword => nameLower.Contains(keyword)))
+            {
+                return "Vehicle";
+            }
+
+            // TODO: Can also check itemTypeId against known type IDs in the database
+            // For now, default to "Other"
+            return "Other";
         }
 
         #endregion

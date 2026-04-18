@@ -10,16 +10,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, forkJoin } from 'rxjs';
 
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { ApiResourceCalendarService } from '../../../core/services/api-resource-calendar.service';
+import { JobCardComponent, JobCardData } from './job-card/job-card.component';
 import {
   ResourceCalendarDto,
   CalendarDayDto,
   CalendarEntryDto,
   ResourceOption,
-  StatusOption
+  StatusOption,
+  JobCalendarDto
 } from '../../../core/models/resource-calendar.model';
 
 @Component({
@@ -37,7 +39,8 @@ import {
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    UiPageTitleComponent
+    UiPageTitleComponent,
+    JobCardComponent
   ],
   templateUrl: './resource-calendar.component.html',
   styleUrls: ['./resource-calendar.component.css']
@@ -51,6 +54,7 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
   // Calendar data
   calendarData: ResourceCalendarDto[] = [];
   calendarDays: Date[] = [];
+  jobsCalendar: JobCalendarDto[] = [];
   
   // Filter options
   availableResources: ResourceOption[] = [];
@@ -138,22 +142,29 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
       statusIds: formValue.selectedStatuses || []
     };
 
-    this.calendarService.getCalendarData(filterOptions)
+    // Load both resource calendar and jobs calendar
+    forkJoin({
+      resources: this.calendarService.getCalendarData(filterOptions),
+      jobs: this.calendarService.getJobsCalendar(filterOptions)
+    })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (data) => {
+        next: ({ resources, jobs }) => {
           // Generate calendar days first
           this.generateCalendarDays(filterOptions.startDate, filterOptions.endDate);
           
           // If no resource filter is applied, ensure ALL resources are shown
           if (!filterOptions.resourceIds || filterOptions.resourceIds.length === 0) {
-            this.calendarData = this.ensureAllResourcesDisplayed(data);
+            this.calendarData = this.ensureAllResourcesDisplayed(resources);
           } else {
             // If resources are filtered, only show filtered resources
-            this.calendarData = data;
+            this.calendarData = resources;
           }
           
+          this.jobsCalendar = jobs;
+          
           console.log('Calendar data loaded:', this.calendarData.length, 'resources');
+          console.log('Jobs calendar loaded:', this.jobsCalendar.length, 'jobs');
           this.isLoading = false;
         },
         error: (err) => {
@@ -335,5 +346,89 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
   onEntryClick(entry: CalendarEntryDto): void {
     console.log('Entry clicked:', entry);
     // TODO: Open detail dialog or navigate to job details
+  }
+
+  /**
+   * Get job services (cards) for a specific date
+   * Each service becomes a separate card displayed on its date range
+   */
+  getJobsForDate(date: Date): JobCardData[] {
+    const cards: JobCardData[] = [];
+
+    this.jobsCalendar.forEach(job => {
+      job.services.forEach(service => {
+        // Check if this service's date range includes the specified date
+        if (service.dateStart && this.isDateInServiceRange(date, service.dateStart, service.dateEnd)) {
+          cards.push({
+            id: service.id, // Use service ID as the card ID
+            jobMainId: job.jobMainId,
+            jobReference: job.jobReference,
+            customerName: job.customerName,
+            service: {
+              id: service.id,
+              jobMainId: service.jobMainId,
+              serviceItemId: service.serviceItemId,
+              serviceItemName: service.serviceItemName,
+              dateStart: service.dateStart,
+              dateEnd: service.dateEnd,
+              particulars: service.particulars,
+              requirements: service.requirements.map(r => ({
+                id: r.id,
+                requiredQty: r.requiredQty,
+                itemTypeId: r.itemTypeId,
+                itemTypeName: r.itemTypeName,
+                resourceType: r.resourceType,
+                allocatedQuantity: r.allocatedQuantity,
+                notes: r.notes
+              }))
+            }
+          });
+        }
+      });
+    });
+
+    return cards;
+  }
+
+  /**
+   * Check if a date is within the service's date range
+   */
+  private isDateInServiceRange(date: Date, startDate?: Date, endDate?: Date): boolean {
+    if (!startDate) return false;
+
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0);
+    
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    
+    const end = endDate ? new Date(endDate) : start;
+    end.setHours(0, 0, 0, 0);
+    
+    return checkDate >= start && checkDate <= end;
+  }
+
+  /**
+   * Check if a date is within the job's date range (legacy method, no longer used)
+   */
+  private isDateInRange(date: Date, startDate: Date, endDate: Date): boolean {
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0);
+    
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    
+    const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+    
+    return checkDate >= start && checkDate <= end;
+  }
+
+  /**
+   * Handle job card click
+   */
+  onJobClick(job: JobCardData): void {
+    console.log('Job service clicked:', job);
+    // TODO: Open job service details dialog or navigate to job service page
   }
 }

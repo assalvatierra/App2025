@@ -12,7 +12,7 @@
 
 /* Filters Section */
 .filters-section {
-  padding: 20px;
+  padding: 8px 12px;
   border-bottom: 1px solid #e0e0e0;
   background: linear-gradient(to bottom, #fafafa 0%, #f5f5f5 100%);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -24,20 +24,21 @@
 
 .filter-row {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  gap: 8px;
+  align-items: center;
   flex-wrap: wrap;
 }
 
 /* Date Range Group */
 .date-range-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
-  padding: 12px 16px;
+  align-items: center;
+  padding: 6px 10px;
   background-color: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
 }
@@ -48,49 +49,51 @@
 }
 
 .date-range-label {
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #3f51b5;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  margin-right: 4px;
 }
 
 .date-inputs {
   display: flex;
-  gap: 12px;
+  gap: 6px;
   align-items: center;
 }
 
 .date-field {
-  flex: 0 1 200px;
-  min-width: 180px;
+  flex: 0 1 160px;
+  min-width: 140px;
 }
 
 .date-separator {
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   color: #666;
   font-weight: 500;
-  padding: 0 4px;
-  margin-top: -8px;
+  padding: 0 2px;
 }
 
 .filter-field {
-  flex: 1 1 220px;
-  min-width: 200px;
+  flex: 1 1 180px;
+  min-width: 160px;
 }
 
 .button-group {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
-  margin-top: auto;
-  padding-top: 8px;
+  padding-top: 0;
+  margin-left: auto;
 }
 
 .button-group button {
-  min-width: 100px;
+  min-width: 80px;
+  height: 36px;
   font-weight: 500;
+  font-size: 0.875rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 }
@@ -268,73 +271,64 @@
   border: 1px dashed #fbc02d;
 }
 
-/* Empty Cell Placeholder */
-.empty-cell-placeholder {
-  min-height: 70px;
+/* Jobs Row Styling */
+.jobs-row {
+  display: flex;
+  border-bottom: 2px solid #9c27b0;
+  min-height: 120px;
+  background-color: #f3e5f5;
+}
+
+.jobs-row:hover {
+  background-color: #ede7f6;
+}
+
+.jobs-label {
+  background-color: #f3e5f5 !important;
+  border-right: 2px solid #9c27b0;
+}
+
+.jobs-label .resource-title {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #bdbdbd;
+  gap: 8px;
+  color: #7b1fa2;
+}
+
+.jobs-label .resource-code {
+  color: #9c27b0;
   font-size: 0.75rem;
-  font-style: italic;
 }
 
-/* Calendar Entries */
-.calendar-entry {
-  background-color: #2196f3;
-  color: white;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  font-size: 0.875rem;
+.job-cell {
+  background-color: #fafafa;
+  min-height: 120px;
 }
 
-.calendar-entry:hover {
-  background-color: #1976d2;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transform: translateY(-1px);
+.job-cell.today {
+  background-color: #fff9c4;
 }
 
-.entry-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
+.job-cell.has-jobs {
+  background-color: #f3e5f5;
 }
 
-.entry-job {
-  font-weight: 600;
-  font-size: 0.875rem;
+.job-cell.today.has-jobs {
+  background-color: #fff59d;
 }
 
-.entry-customer {
-  font-size: 0.75rem;
-  opacity: 0.9;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.job-cell .empty-cell-placeholder {
+  color: #9c27b0;
+  opacity: 0.5;
 }
 
-.entry-time {
-  font-size: 0.75rem;
-  opacity: 0.9;
-  margin-bottom: 4px;
+.job-card-wrapper {
+  display: block;
+  margin-bottom: 6px;
 }
 
-.entry-status {
-  margin-top: 4px;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 500;
+.job-card-wrapper:last-child {
+  margin-bottom: 0;
 }
 
 /* No Data Message */
@@ -467,4 +461,48 @@
 
 ::ng-deep .date-range-group .mat-datepicker-toggle:hover {
   color: #303f9f;
+}
+
+/* Compact form fields in filters */
+::ng-deep .filters-section .mat-mdc-form-field {
+  font-size: 0.813rem;
+  line-height: 1.2;
+}
+
+::ng-deep .filters-section .mat-mdc-text-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .filters-section .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+::ng-deep .filters-section .mat-mdc-form-field-infix {
+  min-height: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+::ng-deep .filters-section .mat-mdc-floating-label {
+  font-size: 0.813rem;
+}
+
+::ng-deep .filters-section .mat-mdc-form-field-icon-suffix {
+  padding: 0 8px;
+}
+
+::ng-deep .filters-section .mat-mdc-outlined-button {
+  padding: 0 12px;
+  line-height: 36px;
+}
+
+::ng-deep .filters-section .mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
+
+::ng-deep .filters-section .mat-mdc-form-field-hint {
+  display: none;
 }

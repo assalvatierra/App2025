@@ -50,4 +50,6 @@ public partial class JobService
     public virtual ServiceItem? ServiceItem { get; set; }
 
     public virtual Entity? Supplier { get; set; }
+
+    public virtual ICollection<JobServiceResource> JobServiceResources { get; set; } = new List<JobServiceResource>();
 }

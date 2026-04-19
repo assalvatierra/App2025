@@ -243,6 +243,9 @@ namespace AngularApp1.Server.Controllers
                 var serviceRequirements = await GetJobServiceRequirements(jobServiceIds);
                 var itemTypes = await GetItemTypes(serviceRequirements.Values.SelectMany(r => r.Select(req => req.ItemTypeId)).Distinct().Where(id => id.HasValue).Select(id => id!.Value).ToList());
 
+                // Pre-fetch resource allocations for all job services to avoid synchronous queries later
+                var resourceAllocations = await GetJobServiceResourceAllocations(jobServiceIds);
+
                 // Group by job and build result
                 var result = jobServices
                     .GroupBy(js => js.JobMain)
@@ -253,7 +256,7 @@ namespace AngularApp1.Server.Controllers
                             JobMainId = g.Key.Id,
                             JobReference = g.Key.Description ?? $"Job #{g.Key.Id}",
                             CustomerName = jobCustomers.ContainsKey(g.Key.Id) ? jobCustomers[g.Key.Id] : null,
-                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes)).ToList()
+                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes, resourceAllocations)).ToList()
                         };
                     })
                     .OrderBy(j => j.JobMainId)
@@ -410,6 +413,27 @@ namespace AngularApp1.Server.Controllers
         }
 
         /// <summary>
+        /// Get resource allocations count for job services
+        /// </summary>
+        private async Task<Dictionary<int, int>> GetJobServiceResourceAllocations(List<int> jobServiceIds)
+        {
+            if (!jobServiceIds.Any())
+                return new Dictionary<int, int>();
+
+            var allocations = await _context.JobServiceResource
+                .Where(jsr => jobServiceIds.Contains(jsr.JobServiceId ?? 0))
+                .GroupBy(jsr => jsr.JobServiceId ?? 0)
+                .Select(g => new
+                {
+                    JobServiceId = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            return allocations.ToDictionary(a => a.JobServiceId, a => a.Count);
+        }
+
+        /// <summary>
         /// Generate calendar days with entries
         /// </summary>
         private List<CalendarDayDto> GenerateDays<T>(
@@ -469,7 +493,8 @@ namespace AngularApp1.Server.Controllers
             JobService jobService,
             Dictionary<int, (string Name, int? ItemTypeId)> serviceItems,
             Dictionary<int, List<JobServiceRequirement>> serviceRequirements,
-            Dictionary<int, (string Name, string? Code)> itemTypes)
+            Dictionary<int, (string Name, string? Code)> itemTypes,
+            Dictionary<int, int> resourceAllocations)
         {
             // Get service item info
             string? serviceItemName = null;
@@ -498,11 +523,10 @@ namespace AngularApp1.Server.Controllers
                         resourceType = DetermineResourceType(itemTypeName, req.ItemTypeId);
                     }
 
-                    // Count allocated resources for this specific requirement's item type
-                    // For now, we'll count all allocated resources for the job service
-                    // TODO: Improve to track allocation per requirement
-                    var allocatedForType = _context.JobServiceResource
-                        .Count(jsr => jsr.JobServiceId == jobService.Id);
+                    // Get allocated resources count from pre-computed data
+                    var allocatedForType = resourceAllocations.ContainsKey(jobService.Id) 
+                        ? resourceAllocations[jobService.Id] 
+                        : 0;
 
                     requirements.Add(new ServiceRequirementDto
                     {

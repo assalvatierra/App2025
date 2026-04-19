@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>Service Resources - {{ data.serviceName }}</h2>
+
+<mat-dialog-content>
+  <div class="dialog-container">
+    <!-- Add Button (shown when form is hidden) -->
+    <div class="add-button-container" *ngIf="!showForm">
+      <button mat-raised-button color="primary" (click)="onShowForm()">
+        <mat-icon>add</mat-icon>
+        Assign Resource
+      </button>
+    </div>
+
+    <!-- Add Form (shown when showForm is true) -->
+    <mat-card class="resource-form-card" *ngIf="showForm">
+      <mat-card-header>
+        <mat-card-title>Assign Resource</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="resourceForm" class="resource-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select Resource</mat-label>
+            <mat-select formControlName="resourceId" required>
+              <mat-option [value]="null">-- Select a Resource --</mat-option>
+              <mat-option *ngFor="let resource of availableResources" [value]="resource.id">
+                {{ resource.name }} ({{ resource.code }})
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="resourceForm.get('resourceId')?.hasError('required')">
+              Resource is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" (click)="onSubmitResource()" [disabled]="!resourceForm.valid">
+              <mat-icon>add_circle</mat-icon>
+              Assign
+            </button>
+            <button mat-button (click)="onCancelForm()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Resources List -->
+    <div class="resources-list">
+      <h3>Assigned Resources</h3>
+      
+      <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading && jobServiceResources.length === 0" class="no-data">
+        <p>No resources assigned to this service yet.</p>
+      </div>
+
+      <table mat-table [dataSource]="jobServiceResources" *ngIf="!loading && jobServiceResources.length > 0">
+        <!-- Resource Name Column -->
+        <ng-container matColumnDef="resourceName">
+          <th mat-header-cell *matHeaderCellDef>Resource Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getResourceName(element.resourceId) }}
+          </td>
+        </ng-container>
+
+        <!-- Resource Code Column -->
+        <ng-container matColumnDef="resourceCode">
+          <th mat-header-cell *matHeaderCellDef>Code</th>
+          <td mat-cell *matCellDef="let element">{{ getResourceCode(element.resourceId) }}</td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element">{{ getResourceDescription(element.resourceId) }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="onDeleteResource(element.id)" matTooltip="Remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="onClose()">Close</button>
+</mat-dialog-actions>

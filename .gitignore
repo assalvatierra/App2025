@@ -128,3 +128,6 @@ Thumbs.db
 /Playwright/test-results
 Playwright/test-results/.last-run.json
 /Erp.Domain/obj
+/Design/Database/Generated
+/Erp.Domain/bin/Debug
+/Erp.Domain/obj

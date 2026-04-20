@@ -1,0 +1,167 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Job Services List</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Date Filter -->
+    <div class="date-filter-container">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Date From</mat-label>
+        <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dateFrom">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Date To</mat-label>
+        <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dateTo">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="applyDateFilter()" class="apply-button">
+        <mat-icon>filter_alt</mat-icon>
+        Apply Filter
+      </button>
+    </div>
+
+    <!-- Client Calendar -->
+    <div class="calendar-container" *ngIf="!isLoading && uniqueCustomers.length > 0">
+      <h3>Client Calendar ({{ formatDate(dateFrom) }} - {{ formatDate(dateTo) }})</h3>
+      <div class="calendar-grid">
+        <table class="calendar-table">
+          <thead>
+            <tr>
+              <th class="customer-header">Customer</th>
+              <th *ngFor="let day of calendarDays" class="day-header">
+                <div class="day-info">
+                  <div class="day-of-week">{{ formatDayOfWeek(day) }}</div>
+                  <div class="day-date">{{ formatCalendarDate(day) }}</div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of uniqueCustomers">
+              <td class="customer-cell">{{ customer }}</td>
+              <td *ngFor="let day of calendarDays" class="calendar-cell">
+                <!-- Empty cells for now - will add data later -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter job services..." #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-container" *ngIf="!isLoading">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
+
+        <!-- Job Reference Column -->
+        <ng-container matColumnDef="jobReference">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Job Reference</th>
+          <td mat-cell *matCellDef="let service">{{ service.jobReference }}</td>
+        </ng-container>
+
+        <!-- Customer Name Column -->
+        <ng-container matColumnDef="customerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+          <td mat-cell *matCellDef="let service">{{ service.customerName || '-' }}</td>
+        </ng-container>
+
+        <!-- Service Item Column -->
+        <ng-container matColumnDef="serviceItemName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
+          <td mat-cell *matCellDef="let service">{{ service.serviceItemName || '-' }}</td>
+        </ng-container>
+
+        <!-- Start Date Column -->
+        <ng-container matColumnDef="dateStart">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+          <td mat-cell *matCellDef="let service">{{ formatDate(service.dateStart) }}</td>
+        </ng-container>
+
+        <!-- End Date Column -->
+        <ng-container matColumnDef="dateEnd">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+          <td mat-cell *matCellDef="let service">{{ formatDate(service.dateEnd) }}</td>
+        </ng-container>
+
+        <!-- Particulars Column -->
+        <ng-container matColumnDef="particulars">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Particulars</th>
+          <td mat-cell *matCellDef="let service">
+            <span [matTooltip]="service.particulars || ''" matTooltipPosition="above">
+              {{ service.particulars || '-' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Resource Status Column -->
+        <ng-container matColumnDef="resourceStatus">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let service">
+            <mat-icon 
+              [color]="getResourceStatusColor(service)" 
+              [matTooltip]="getResourceStatusText(service)"
+              matTooltipPosition="above">
+              {{ getResourceStatusIcon(service) }}
+            </mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Assigned Resources Column -->
+        <ng-container matColumnDef="assignedResources">
+          <th mat-header-cell *matHeaderCellDef>Assigned Resources</th>
+          <td mat-cell *matCellDef="let service">
+            <span 
+              [matTooltip]="getAssignedResourcesText(service.assignedResources)" 
+              matTooltipPosition="above"
+              [class.no-resources]="!service.hasResourcesAssigned">
+              {{ getAssignedResourcesText(service.assignedResources) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Requirements Column -->
+        <ng-container matColumnDef="requirements">
+          <th mat-header-cell *matHeaderCellDef>Requirements</th>
+          <td mat-cell *matCellDef="let service">
+            <span [matTooltip]="getRequirementsText(service.requirements)" matTooltipPosition="above">
+              {{ getRequirementsText(service.requirements) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No Data Row -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No job services found matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator 
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        showFirstLastButtons
+        aria-label="Select page of job services">
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

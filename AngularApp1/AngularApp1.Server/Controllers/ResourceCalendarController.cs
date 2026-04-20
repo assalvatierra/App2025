@@ -231,6 +231,9 @@ namespace AngularApp1.Server.Controllers
                 var jobMainIds = jobServices.Select(js => js.JobMain.Id).Distinct().ToList();
                 var jobCustomers = await GetJobCustomers(jobMainIds);
 
+                _logger.LogInformation("Found {CustomerCount} customers for {JobCount} jobs", 
+                    jobCustomers.Count, jobMainIds.Count);
+
                 // Get service items
                 var serviceItemIds = jobServices.Where(js => js.JobService.ServiceItemId.HasValue)
                                                .Select(js => js.JobService.ServiceItemId!.Value)
@@ -245,6 +248,7 @@ namespace AngularApp1.Server.Controllers
 
                 // Pre-fetch resource allocations for all job services to avoid synchronous queries later
                 var resourceAllocations = await GetJobServiceResourceAllocations(jobServiceIds);
+                var assignedResources = await GetAssignedResources(jobServiceIds);
 
                 // Group by job and build result
                 var result = jobServices
@@ -256,7 +260,7 @@ namespace AngularApp1.Server.Controllers
                             JobMainId = g.Key.Id,
                             JobReference = g.Key.Description ?? $"Job #{g.Key.Id}",
                             CustomerName = jobCustomers.ContainsKey(g.Key.Id) ? jobCustomers[g.Key.Id] : null,
-                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes, resourceAllocations)).ToList()
+                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes, resourceAllocations, assignedResources)).ToList()
                         };
                     })
                     .OrderBy(j => j.JobMainId)
@@ -319,7 +323,8 @@ namespace AngularApp1.Server.Controllers
             if (!jobMainIds.Any())
                 return new Dictionary<int, string>();
 
-            var customers = await (from jc in _context.JobCustomers
+            // First try to get primary customers
+            var primaryCustomers = await (from jc in _context.JobCustomers
                                   join e in _context.Entity on jc.CustomerId equals e.Id
                                   where jobMainIds.Contains(jc.JobMainId ?? 0) 
                                         && jc.IsPrimary
@@ -329,7 +334,33 @@ namespace AngularApp1.Server.Controllers
                                       CustomerName = e.Name ?? "N/A"
                                   }).ToListAsync();
 
-            return customers.ToDictionary(c => c.JobMainId, c => c.CustomerName);
+            var result = primaryCustomers.ToDictionary(c => c.JobMainId, c => c.CustomerName);
+
+            // For jobs without primary customer, get the first customer
+            var jobsWithoutPrimary = jobMainIds.Except(result.Keys).ToList();
+
+            if (jobsWithoutPrimary.Any())
+            {
+                var fallbackCustomers = await (from jc in _context.JobCustomers
+                                              join e in _context.Entity on jc.CustomerId equals e.Id
+                                              where jobsWithoutPrimary.Contains(jc.JobMainId ?? 0)
+                                              group new { jc.JobMainId, e.Name } by jc.JobMainId into g
+                                              select new
+                                              {
+                                                  JobMainId = g.Key ?? 0,
+                                                  CustomerName = g.Select(x => x.Name).FirstOrDefault() ?? "N/A"
+                                              }).ToListAsync();
+
+                foreach (var customer in fallbackCustomers)
+                {
+                    if (!result.ContainsKey(customer.JobMainId))
+                    {
+                        result.Add(customer.JobMainId, customer.CustomerName);
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -434,6 +465,37 @@ namespace AngularApp1.Server.Controllers
         }
 
         /// <summary>
+        /// Get assigned resources for job services
+        /// </summary>
+        private async Task<Dictionary<int, List<AssignedResourceDto>>> GetAssignedResources(List<int> jobServiceIds)
+        {
+            if (!jobServiceIds.Any())
+                return new Dictionary<int, List<AssignedResourceDto>>();
+
+            var assignments = await (from jsr in _context.JobServiceResource
+                                    join r in _context.Resource on jsr.ResourceId equals r.Id
+                                    where jobServiceIds.Contains(jsr.JobServiceId ?? 0)
+                                    select new
+                                    {
+                                        JobServiceId = jsr.JobServiceId ?? 0,
+                                        ResourceDto = new AssignedResourceDto
+                                        {
+                                            JobServiceResourceId = jsr.Id,
+                                            ResourceId = r.Id,
+                                            ResourceName = r.Name ?? "Unknown",
+                                            ResourceCode = r.Code
+                                        }
+                                    }).ToListAsync();
+
+            return assignments
+                .GroupBy(a => a.JobServiceId)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Select(a => a.ResourceDto).ToList()
+                );
+        }
+
+        /// <summary>
         /// Generate calendar days with entries
         /// </summary>
         private List<CalendarDayDto> GenerateDays<T>(
@@ -494,7 +556,8 @@ namespace AngularApp1.Server.Controllers
             Dictionary<int, (string Name, int? ItemTypeId)> serviceItems,
             Dictionary<int, List<JobServiceRequirement>> serviceRequirements,
             Dictionary<int, (string Name, string? Code)> itemTypes,
-            Dictionary<int, int> resourceAllocations)
+            Dictionary<int, int> resourceAllocations,
+            Dictionary<int, List<AssignedResourceDto>> assignedResources)
         {
             // Get service item info
             string? serviceItemName = null;
@@ -541,6 +604,11 @@ namespace AngularApp1.Server.Controllers
                 }
             }
 
+            // Get assigned resources for this job service
+            var serviceAssignedResources = assignedResources.ContainsKey(jobService.Id)
+                ? assignedResources[jobService.Id]
+                : new List<AssignedResourceDto>();
+
             return new JobServiceCalendarDto
             {
                 Id = jobService.Id,
@@ -550,7 +618,9 @@ namespace AngularApp1.Server.Controllers
                 DateStart = jobService.DateStart,
                 DateEnd = jobService.DateEnd,
                 Particulars = jobService.Particulars,
-                Requirements = requirements
+                Requirements = requirements,
+                AssignedResources = serviceAssignedResources,
+                HasResourcesAssigned = serviceAssignedResources.Any()
             };
         }
 

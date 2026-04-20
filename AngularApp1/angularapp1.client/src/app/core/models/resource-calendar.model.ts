@@ -67,6 +67,15 @@ export interface JobServiceCalendarDto {
   dateEnd?: Date;
   particulars?: string;
   requirements: ServiceRequirementDto[];
+  assignedResources: AssignedResourceDto[];
+  hasResourcesAssigned: boolean;
+}
+
+export interface AssignedResourceDto {
+  jobServiceResourceId: number;
+  resourceId: number;
+  resourceName: string;
+  resourceCode?: string;
 }
 
 export interface ServiceRequirementDto {

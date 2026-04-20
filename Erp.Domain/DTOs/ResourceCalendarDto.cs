@@ -78,6 +78,19 @@ namespace Erp.Domain.DTOs
         public DateTime? DateEnd { get; set; }
         public string? Particulars { get; set; }
         public List<ServiceRequirementDto> Requirements { get; set; } = new();
+        public List<AssignedResourceDto> AssignedResources { get; set; } = new();
+        public bool HasResourcesAssigned { get; set; }
+    }
+
+    /// <summary>
+    /// DTO representing an assigned resource to a job service
+    /// </summary>
+    public class AssignedResourceDto
+    {
+        public int JobServiceResourceId { get; set; }
+        public int ResourceId { get; set; }
+        public string ResourceName { get; set; } = string.Empty;
+        public string? ResourceCode { get; set; }
     }
 
     /// <summary>

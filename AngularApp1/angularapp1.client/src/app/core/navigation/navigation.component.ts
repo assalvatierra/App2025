@@ -136,6 +136,12 @@ export class NavigationComponent implements OnInit {
           label: 'Resource Calendar',
           icon: 'event', 
           route: 'resource-calendar'
+        },
+        { 
+          name: 'Client Calendar',
+          label: 'Client Calendar',
+          icon: 'view_list', 
+          route: 'client-calendar'
         }
       ]
     },

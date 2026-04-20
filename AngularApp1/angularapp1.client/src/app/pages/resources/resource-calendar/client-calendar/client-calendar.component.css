@@ -28,6 +28,14 @@ mat-card-title {
   height: 56px;
 }
 
+.view-toggle {
+  height: 56px;
+}
+
+.view-toggle mat-button-toggle {
+  height: 56px;
+}
+
 .filter-field {
   width: 100%;
   max-width: 500px;
@@ -195,11 +203,31 @@ td.mat-cell span {
 
 .calendar-cell {
   padding: 12px;
-  text-align: center;
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
   min-height: 50px;
   vertical-align: top;
+  background-color: white;
+  min-width: 120px;
+}
+
+.calendar-cell > * {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.calendar-cell > *:last-child {
+  margin-bottom: 0;
+}
+
+.calendar-cell.has-data {
+  background-color: #e3f2fd;
+}
+
+/* Separator between requirements and resources */
+.calendar-cell app-assigned-resource-cell:not(:empty) {
+  padding-top: 8px;
+  border-top: 1px dashed #e0e0e0;
 }
 
 .calendar-table tbody tr:hover {

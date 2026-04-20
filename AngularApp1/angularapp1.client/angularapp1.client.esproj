@@ -7,6 +7,9 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\angularapp1.client\browser\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\app\pages\resources\resource-calendar\client-calendar\calendar-cell\" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties angular_1json__JsonSchema="" />

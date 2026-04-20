@@ -24,6 +24,17 @@
         <mat-icon>filter_alt</mat-icon>
         Apply Filter
       </button>
+
+      <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle">
+        <mat-button-toggle value="compact">
+          <mat-icon>view_compact</mat-icon>
+          Compact
+        </mat-button-toggle>
+        <mat-button-toggle value="expanded">
+          <mat-icon>view_agenda</mat-icon>
+          Expanded
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
 
     <!-- Client Calendar -->
@@ -45,8 +56,24 @@
           <tbody>
             <tr *ngFor="let customer of uniqueCustomers">
               <td class="customer-cell">{{ customer }}</td>
-              <td *ngFor="let day of calendarDays" class="calendar-cell">
-                <!-- Empty cells for now - will add data later -->
+              <td *ngFor="let day of calendarDays" 
+                  class="calendar-cell" 
+                  [class.has-data]="hasCellData(customer, day) || hasAssignedResources(customer, day)">
+                <!-- Service Requirements (Gray Theme) -->
+                <app-service-requirement-cell 
+                  [items]="getCellItems(customer, day)"
+                  [customerName]="customer"
+                  [date]="day"
+                  [viewMode]="viewMode">
+                </app-service-requirement-cell>
+
+                <!-- Assigned Resources (Colored Theme) -->
+                <app-assigned-resource-cell 
+                  [resources]="getAssignedResources(customer, day)"
+                  [customerName]="customer"
+                  [date]="day"
+                  [viewMode]="viewMode">
+                </app-assigned-resource-cell>
               </td>
             </tr>
           </tbody>

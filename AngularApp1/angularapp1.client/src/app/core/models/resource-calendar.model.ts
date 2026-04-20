@@ -76,6 +76,7 @@ export interface AssignedResourceDto {
   resourceId: number;
   resourceName: string;
   resourceCode?: string;
+  resourceType?: string; // Driver, Vehicle, Equipment, Other
 }
 
 export interface ServiceRequirementDto {

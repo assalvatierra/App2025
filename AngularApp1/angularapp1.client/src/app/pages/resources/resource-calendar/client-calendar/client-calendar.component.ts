@@ -13,9 +13,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { ApiResourceCalendarService } from '../../../../core/services/api-resource-calendar.service';
 import { JobCalendarDto, JobServiceCalendarDto } from '../../../../core/models/resource-calendar.model';
+import { ServiceRequirementCellComponent, ServiceRequirementCellItem } from './service-requirement-cell/service-requirement-cell.component';
+import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assigned-resource-cell/assigned-resource-cell.component';
+
 
 @Component({
   selector: 'app-client-calendar',
@@ -34,7 +38,10 @@ import { JobCalendarDto, JobServiceCalendarDto } from '../../../../core/models/r
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonToggleModule,
+    ServiceRequirementCellComponent,
+    AssignedResourceCellComponent
   ],
   templateUrl: './client-calendar.component.html',
   styleUrls: ['./client-calendar.component.css']
@@ -61,6 +68,9 @@ export class ClientCalendarComponent implements OnInit {
   calendarDays: Date[] = [];
   dateFrom: Date;
   dateTo: Date;
+  calendarData: Map<string, ServiceRequirementCellItem[]> = new Map();
+  assignedResourceData: Map<string, AssignedResourceCellItem[]> = new Map();
+  viewMode: 'compact' | 'expanded' = 'compact';
 
   constructor(private calendarService: ApiResourceCalendarService) {
     const today = new Date();
@@ -95,6 +105,8 @@ export class ClientCalendarComponent implements OnInit {
         const jobServices = this.flattenJobServices(jobs);
         this.dataSource.data = jobServices;
         this.updateUniqueCustomers();
+        this.populateCalendarData();
+        this.populateAssignedResourceData();
         this.isLoading = false;
       },
       error: (error) => {
@@ -152,7 +164,132 @@ export class ClientCalendarComponent implements OnInit {
         return;
       }
       this.generateCalendarDays();
+      this.populateCalendarData();
+      this.populateAssignedResourceData();
     }
+  }
+
+  private populateCalendarData(): void {
+    this.calendarData.clear();
+
+    this.dataSource.data.forEach(service => {
+      if (!service.customerName || !service.requirements || service.requirements.length === 0) {
+        return;
+      }
+
+      const serviceStartDate = service.dateStart ? new Date(service.dateStart) : null;
+      const serviceEndDate = service.dateEnd ? new Date(service.dateEnd) : null;
+
+      if (!serviceStartDate || !serviceEndDate) {
+        return;
+      }
+
+      serviceStartDate.setHours(0, 0, 0, 0);
+      serviceEndDate.setHours(0, 0, 0, 0);
+
+      service.requirements.forEach(requirement => {
+        const currentDate = new Date(serviceStartDate);
+
+        while (currentDate <= serviceEndDate) {
+          const key = this.getCalendarKey(service.customerName, currentDate);
+
+          if (!this.calendarData.has(key)) {
+            this.calendarData.set(key, []);
+          }
+
+          const cellItem: ServiceRequirementCellItem = {
+            customerId: service.jobMainId,
+            customerName: service.customerName,
+            dateFrom: new Date(serviceStartDate),
+            dateTo: new Date(serviceEndDate),
+            itemType: requirement.itemTypeName || 'Unknown',
+            requiredQty: requirement.requiredQty,
+            notes: requirement.notes || service.particulars || '',
+            jobReference: service.jobReference
+          };
+
+          this.calendarData.get(key)?.push(cellItem);
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      });
+    });
+  }
+
+  private populateAssignedResourceData(): void {
+    this.assignedResourceData.clear();
+
+    this.dataSource.data.forEach(service => {
+      if (!service.customerName || !service.assignedResources || service.assignedResources.length === 0) {
+        return;
+      }
+
+      const serviceStartDate = service.dateStart ? new Date(service.dateStart) : null;
+      const serviceEndDate = service.dateEnd ? new Date(service.dateEnd) : null;
+
+      if (!serviceStartDate || !serviceEndDate) {
+        return;
+      }
+
+      serviceStartDate.setHours(0, 0, 0, 0);
+      serviceEndDate.setHours(0, 0, 0, 0);
+
+      service.assignedResources.forEach(resource => {
+        const currentDate = new Date(serviceStartDate);
+
+        while (currentDate <= serviceEndDate) {
+          const key = this.getCalendarKey(service.customerName, currentDate);
+
+          if (!this.assignedResourceData.has(key)) {
+            this.assignedResourceData.set(key, []);
+          }
+
+          const cellItem: AssignedResourceCellItem = {
+            jobServiceResourceId: resource.jobServiceResourceId,
+            resourceId: resource.resourceId,
+            resourceName: resource.resourceName,
+            resourceCode: resource.resourceCode,
+            resourceType: resource.resourceType || 'Other',
+            customerName: service.customerName,
+            jobReference: service.jobReference,
+            dateFrom: new Date(serviceStartDate),
+            dateTo: new Date(serviceEndDate),
+            notes: service.particulars
+          };
+
+          this.assignedResourceData.get(key)?.push(cellItem);
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      });
+    });
+  }
+
+  private getCalendarKey(customerName: string, date: Date): string {
+    const dateStr = date.toISOString().split('T')[0];
+    return `${customerName}|${dateStr}`;
+  }
+
+  getCellItems(customer: string, day: Date): ServiceRequirementCellItem[] {
+    const key = this.getCalendarKey(customer, day);
+    return this.calendarData.get(key) || [];
+  }
+
+  getAssignedResources(customer: string, day: Date): AssignedResourceCellItem[] {
+    const key = this.getCalendarKey(customer, day);
+    return this.assignedResourceData.get(key) || [];
+  }
+
+  hasCellData(customer: string, day: Date): boolean {
+    const items = this.getCellItems(customer, day);
+    return items.length > 0;
+  }
+
+  hasAssignedResources(customer: string, day: Date): boolean {
+    const resources = this.getAssignedResources(customer, day);
+    return resources.length > 0;
+  }
+
+  toggleViewMode(): void {
+    this.viewMode = this.viewMode === 'compact' ? 'expanded' : 'compact';
   }
 
   formatCalendarDate(date: Date): string {

@@ -1,0 +1,36 @@
+<div class="cell-content" *ngIf="resources.length > 0">
+  <!-- Compact Mode -->
+  <div *ngIf="viewMode === 'compact'" class="compact-view">
+    <div *ngFor="let resource of resources" 
+         class="cell-resource compact"
+         [matTooltip]="getResourceTooltip(resource)"
+         matTooltipPosition="above">
+      <mat-icon 
+        class="resource-icon" 
+        [style.color]="getResourceIconColor(resource.resourceType)">
+        {{ getResourceIcon(resource.resourceType) }}
+      </mat-icon>
+      <span class="resource-initials">{{ getResourceInitials(resource.resourceName) }}</span>
+    </div>
+  </div>
+
+  <!-- Expanded Mode -->
+  <div *ngIf="viewMode === 'expanded'" class="expanded-view">
+    <div *ngFor="let resource of resources" 
+         class="cell-resource expanded"
+         [matTooltip]="getResourceTooltip(resource)"
+         matTooltipPosition="above">
+      <div class="resource-header">
+        <mat-icon 
+          class="resource-icon-expanded" 
+          [style.color]="getResourceIconColor(resource.resourceType)">
+          {{ getResourceIcon(resource.resourceType) }}
+        </mat-icon>
+        <div class="resource-name">{{ resource.resourceName }}</div>
+      </div>
+      <div class="resource-code" *ngIf="resource.resourceCode">Code: {{ resource.resourceCode }}</div>
+      <div class="resource-type">{{ resource.resourceType }}</div>
+      <div class="resource-job" *ngIf="resource.jobReference">{{ resource.jobReference }}</div>
+    </div>
+  </div>
+</div>

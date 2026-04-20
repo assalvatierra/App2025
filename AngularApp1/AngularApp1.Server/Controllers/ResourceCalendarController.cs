@@ -474,25 +474,50 @@ namespace AngularApp1.Server.Controllers
 
             var assignments = await (from jsr in _context.JobServiceResource
                                     join r in _context.Resource on jsr.ResourceId equals r.Id
+                                    join it in _context.ItemType on r.ItemTypeId equals it.Id into itemTypeJoin
+                                    from it in itemTypeJoin.DefaultIfEmpty()
                                     where jobServiceIds.Contains(jsr.JobServiceId ?? 0)
                                     select new
                                     {
                                         JobServiceId = jsr.JobServiceId ?? 0,
-                                        ResourceDto = new AssignedResourceDto
-                                        {
-                                            JobServiceResourceId = jsr.Id,
-                                            ResourceId = r.Id,
-                                            ResourceName = r.Name ?? "Unknown",
-                                            ResourceCode = r.Code
-                                        }
+                                        Resource = r,
+                                        ItemTypeName = it != null ? it.Name : null
                                     }).ToListAsync();
 
-            return assignments
+            var result = assignments
                 .GroupBy(a => a.JobServiceId)
                 .ToDictionary(
                     g => g.Key,
-                    g => g.Select(a => a.ResourceDto).ToList()
+                    g => g.Select(a => new AssignedResourceDto
+                    {
+                        JobServiceResourceId = 0, // Will be set below
+                        ResourceId = a.Resource.Id,
+                        ResourceName = a.Resource.Name ?? "Unknown",
+                        ResourceCode = a.Resource.Code,
+                        ResourceType = DetermineResourceTypeForResource(a.Resource.Name, a.Resource.Code, a.ItemTypeName)
+                    }).ToList()
                 );
+
+            // Get JobServiceResource IDs
+            var jsrIds = await _context.JobServiceResource
+                .Where(jsr => jobServiceIds.Contains(jsr.JobServiceId ?? 0))
+                .Select(jsr => new { jsr.Id, jsr.JobServiceId, jsr.ResourceId })
+                .ToListAsync();
+
+            // Update JobServiceResourceId in the result
+            foreach (var kvp in result)
+            {
+                foreach (var resource in kvp.Value)
+                {
+                    var jsrMatch = jsrIds.FirstOrDefault(j => j.JobServiceId == kvp.Key && j.ResourceId == resource.ResourceId);
+                    if (jsrMatch != null)
+                    {
+                        resource.JobServiceResourceId = jsrMatch.Id;
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -648,6 +673,35 @@ namespace AngularApp1.Server.Controllers
 
             // TODO: Can also check itemTypeId against known type IDs in the database
             // For now, default to "Other"
+            return "Other";
+        }
+
+        /// <summary>
+        /// Determine resource type for assigned resources based on resource name, code, and item type
+        /// </summary>
+        private string DetermineResourceTypeForResource(string? resourceName, string? resourceCode, string? itemTypeName)
+        {
+            // Combine name, code, and item type for matching
+            var combined = $"{resourceName} {resourceCode} {itemTypeName}".ToLower();
+
+            // Check for driver-related keywords
+            if (DriverKeywords.Any(keyword => combined.Contains(keyword)))
+            {
+                return "Driver";
+            }
+
+            // Check for vehicle-related keywords
+            if (VehicleKeywords.Any(keyword => combined.Contains(keyword)))
+            {
+                return "Vehicle";
+            }
+
+            // Check for equipment keywords
+            if (combined.Contains("equipment") || combined.Contains("tool"))
+            {
+                return "Equipment";
+            }
+
             return "Other";
         }
 

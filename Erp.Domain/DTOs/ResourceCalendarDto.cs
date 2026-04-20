@@ -91,6 +91,7 @@ namespace Erp.Domain.DTOs
         public int ResourceId { get; set; }
         public string ResourceName { get; set; } = string.Empty;
         public string? ResourceCode { get; set; }
+        public string ResourceType { get; set; } = "Other"; // Driver, Vehicle, Equipment, Other
     }
 
     /// <summary>

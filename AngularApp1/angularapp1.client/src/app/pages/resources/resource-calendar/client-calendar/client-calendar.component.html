@@ -1,51 +1,134 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Job Services List</mat-card-title>
+    <mat-card-title>Resource Management</mat-card-title>
+    <mat-card-subtitle>Manage job service allocations and resource assignments</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <!-- Date Filter -->
-    <div class="date-filter-container">
-      <mat-form-field appearance="outline" class="date-field">
-        <mat-label>Date From</mat-label>
-        <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dateFrom">
-        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFrom></mat-datepicker>
-      </mat-form-field>
+    <!-- Filter Toolbar -->
+    <div class="filter-toolbar">
+      <!-- Date Range Section -->
+      <div class="toolbar-section date-section">
+        <div class="section-header">
+          <mat-icon class="section-icon">date_range</mat-icon>
+          <span class="section-title">Date Range</span>
+        </div>
+        <div class="section-content">
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>From</mat-label>
+            <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dateFrom">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="date-field">
-        <mat-label>Date To</mat-label>
-        <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dateTo">
-        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-        <mat-datepicker #pickerTo></mat-datepicker>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>To</mat-label>
+            <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dateTo">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="applyDateFilter()" class="apply-button">
-        <mat-icon>filter_alt</mat-icon>
-        Apply Filter
-      </button>
+          <button mat-raised-button color="primary" (click)="applyDateFilter()" class="apply-button">
+            <mat-icon>filter_alt</mat-icon>
+            Apply
+          </button>
+        </div>
+      </div>
 
-      <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle">
-        <mat-button-toggle value="compact">
-          <mat-icon>view_compact</mat-icon>
-          Compact
-        </mat-button-toggle>
-        <mat-button-toggle value="expanded">
-          <mat-icon>view_agenda</mat-icon>
-          Expanded
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <!-- Divider -->
+      <div class="toolbar-divider"></div>
+
+      <!-- Display Options Section -->
+      <div class="toolbar-section view-section">
+        <div class="section-header">
+          <mat-icon class="section-icon">visibility</mat-icon>
+          <span class="section-title">Display Options</span>
+        </div>
+        <div class="section-content">
+          <!-- View Mode Toggle -->
+          <div class="display-control-group">
+            <label class="control-label">View:</label>
+            <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle" aria-label="Calendar view mode">
+              <mat-button-toggle value="compact" matTooltip="Compact view - icons and initials">
+                <mat-icon>view_compact</mat-icon>
+                <span class="toggle-label">Compact</span>
+              </mat-button-toggle>
+              <mat-button-toggle value="expanded" matTooltip="Expanded view - full details">
+                <mat-icon>view_agenda</mat-icon>
+                <span class="toggle-label">Expanded</span>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+          <!-- Density Mode Toggle -->
+          <div class="display-control-group">
+            <label class="control-label">Density:</label>
+            <mat-button-toggle-group [(ngModel)]="densityMode" class="density-toggle" aria-label="Calendar density mode">
+              <mat-button-toggle value="comfortable" matTooltip="Comfortable - spacious layout with extra padding">
+                <mat-icon>view_comfy</mat-icon>
+                <span class="toggle-label">Comfortable</span>
+              </mat-button-toggle>
+              <mat-button-toggle value="compact" matTooltip="Compact - balanced spacing">
+                <mat-icon>view_compact_alt</mat-icon>
+                <span class="toggle-label">Compact</span>
+              </mat-button-toggle>
+              <mat-button-toggle value="dense" matTooltip="Dense - minimal spacing for maximum data">
+                <mat-icon>view_stream</mat-icon>
+                <span class="toggle-label">Dense</span>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+          <!-- Layout Mode Toggle -->
+          <div class="display-control-group">
+            <label class="control-label">Layout:</label>
+            <mat-button-toggle-group [(ngModel)]="layoutMode" class="layout-toggle" aria-label="Calendar layout mode">
+              <mat-button-toggle value="calendar" matTooltip="Calendar - horizontal grid layout">
+                <mat-icon>calendar_view_month</mat-icon>
+                <span class="toggle-label">Calendar</span>
+              </mat-button-toggle>
+              <mat-button-toggle value="stack" matTooltip="Stack - vertical mobile-friendly layout">
+                <mat-icon>view_list</mat-icon>
+                <span class="toggle-label">Stack</span>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Client Calendar -->
-    <div class="calendar-container" *ngIf="!isLoading && uniqueCustomers.length > 0">
-      <h3>Client Calendar ({{ formatDate(dateFrom) }} - {{ formatDate(dateTo) }})</h3>
+    <!-- Tab Navigation -->
+    <mat-tab-group animationDuration="300ms" class="view-tabs">
+      <!-- Calendar View Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">calendar_month</mat-icon>
+          Calendar View
+        </ng-template>
+
+        <!-- Calendar Content -->
+        <div class="tab-content">
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="!isLoading && uniqueCustomers.length === 0">
+            <mat-icon class="empty-icon">event_busy</mat-icon>
+            <h3>No Job Services Found</h3>
+            <p>Try adjusting your date range or check if there are any scheduled services.</p>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="calendar-container" *ngIf="!isLoading && uniqueCustomers.length > 0 && layoutMode === 'calendar'" 
+               [class.density-comfortable]="densityMode === 'comfortable'"
+               [class.density-compact]="densityMode === 'compact'"
+               [class.density-dense]="densityMode === 'dense'">
       <div class="calendar-grid">
         <table class="calendar-table">
           <thead>
             <tr>
               <th class="customer-header">Customer</th>
-              <th *ngFor="let day of calendarDays" class="day-header">
+              <th *ngFor="let day of calendarDays" 
+                  class="day-header"
+                  [class.weekend]="isWeekend(day)"
+                  [class.today]="isToday(day)">
                 <div class="day-info">
                   <div class="day-of-week">{{ formatDayOfWeek(day) }}</div>
                   <div class="day-date">{{ formatCalendarDate(day) }}</div>
@@ -58,7 +141,9 @@
               <td class="customer-cell">{{ customer }}</td>
               <td *ngFor="let day of calendarDays" 
                   class="calendar-cell" 
-                  [class.has-data]="hasCellData(customer, day) || hasAssignedResources(customer, day)">
+                  [class.has-data]="hasCellData(customer, day) || hasAssignedResources(customer, day)"
+                  [class.weekend]="isWeekend(day)"
+                  [class.today]="isToday(day)">
                 <!-- Service Requirements (Gray Theme) -->
                 <app-service-requirement-cell 
                   [items]="getCellItems(customer, day)"
@@ -81,19 +166,106 @@
       </div>
     </div>
 
-    <!-- Filter -->
-    <mat-form-field appearance="outline" class="filter-field">
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter job services..." #input>
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+          <!-- Stack Layout (Mobile-Friendly) -->
+          <div class="stack-container" *ngIf="!isLoading && uniqueCustomers.length > 0 && layoutMode === 'stack'"
+               [class.density-comfortable]="densityMode === 'comfortable'"
+               [class.density-compact]="densityMode === 'compact'"
+               [class.density-dense]="densityMode === 'dense'">
 
-    <!-- Loading Spinner -->
-    <div *ngIf="isLoading" class="loading-container">
-      <mat-spinner></mat-spinner>
-    </div>
+            <!-- Customer Accordion -->
+            <mat-accordion multi class="customer-accordion">
+              <mat-expansion-panel *ngFor="let customer of uniqueCustomers" class="customer-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="customer-title">
+                    <mat-icon class="customer-icon">business</mat-icon>
+                    {{ customer }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
 
-    <!-- Data Table -->
+                <!-- Date Cards for this Customer -->
+                <div class="date-cards">
+                  <div *ngFor="let day of calendarDays" class="date-card"
+                       [class.weekend]="isWeekend(day)"
+                       [class.today]="isToday(day)"
+                       [class.has-data]="hasCellData(customer, day) || hasAssignedResources(customer, day)">
+
+                    <!-- Date Header -->
+                    <div class="date-header">
+                      <mat-icon class="date-icon">event</mat-icon>
+                      <div class="date-info">
+                        <span class="day-name">{{ formatDayOfWeek(day) }}</span>
+                        <span class="date-value">{{ formatCalendarDate(day) }}</span>
+                      </div>
+                    </div>
+
+                    <!-- Service Requirements -->
+                    <div class="requirements-section" *ngIf="hasCellData(customer, day)">
+                      <div class="section-label">
+                        <mat-icon class="section-icon">assignment</mat-icon>
+                        <span>Requirements</span>
+                      </div>
+                      <app-service-requirement-cell 
+                        [items]="getCellItems(customer, day)"
+                        [customerName]="customer"
+                        [date]="day"
+                        [viewMode]="viewMode">
+                      </app-service-requirement-cell>
+                    </div>
+
+                    <!-- Assigned Resources -->
+                    <div class="resources-section" *ngIf="hasAssignedResources(customer, day)">
+                      <div class="section-label">
+                        <mat-icon class="section-icon">assignment_ind</mat-icon>
+                        <span>Assigned</span>
+                      </div>
+                      <app-assigned-resource-cell 
+                        [resources]="getAssignedResources(customer, day)"
+                        [customerName]="customer"
+                        [date]="day"
+                        [viewMode]="viewMode">
+                      </app-assigned-resource-cell>
+                    </div>
+
+                    <!-- Empty State for Day -->
+                    <div class="day-empty" *ngIf="!hasCellData(customer, day) && !hasAssignedResources(customer, day)">
+                      <mat-icon class="empty-day-icon">event_available</mat-icon>
+                      <span class="empty-day-text">No services scheduled</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+          <!-- Loading Spinner -->
+          <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner></mat-spinner>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- List View Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">list</mat-icon>
+          List View
+        </ng-template>
+
+        <!-- List Content -->
+        <div class="tab-content">
+          <!-- Filter -->
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter job services..." #input>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <!-- Loading Spinner -->
+          <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <!-- Data Table -->
     <div class="table-container" *ngIf="!isLoading">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
 
@@ -190,5 +362,8 @@
         aria-label="Select page of job services">
       </mat-paginator>
     </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </mat-card-content>
 </mat-card>

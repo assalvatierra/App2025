@@ -3,7 +3,7 @@ mat-card {
 }
 
 mat-card-header {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 mat-card-title {
@@ -12,28 +12,263 @@ mat-card-title {
   color: #333;
 }
 
-.date-filter-container {
+mat-card-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+/* Filter Toolbar - Material Design Pattern */
+.filter-toolbar {
   display: flex;
-  gap: 16px;
-  align-items: center;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  overflow: hidden;
+}
+
+/* Toolbar Sections */
+.toolbar-section {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.toolbar-section.date-section {
+  flex: 2;
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+}
+
+.toolbar-section.view-section {
+  flex: 1;
+  background: #ffffff;
+  min-width: 280px;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e3f2fd;
+}
+
+.section-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #1976d2;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #424242;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Section Content */
+.section-content {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
   flex-wrap: wrap;
 }
 
-.date-field {
-  width: 200px;
+/* Toolbar Divider */
+.toolbar-divider {
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #e0e0e0 10%,
+    #e0e0e0 90%,
+    transparent 100%
+  );
+  align-self: stretch;
 }
 
+/* Date Fields */
+.date-field {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.date-field .mat-mdc-form-field {
+  font-size: 14px;
+}
+
+/* Apply Button */
 .apply-button {
   height: 56px;
+  min-width: 120px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
 }
 
-.view-toggle {
-  height: 56px;
+.apply-button:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
 }
 
-.view-toggle mat-button-toggle {
+.apply-button mat-icon {
+  margin-right: 8px;
+}
+
+/* View Toggle */
+.view-toggle,
+.density-toggle {
   height: 56px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.view-toggle mat-button-toggle,
+.density-toggle mat-button-toggle {
+  height: 56px;
+  border: none;
+}
+
+.view-toggle .mat-button-toggle-checked,
+.density-toggle .mat-button-toggle-checked {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.toggle-label {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Display Control Groups */
+.display-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.control-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Layout */
+@media (max-width: 1200px) {
+  .filter-toolbar {
+    flex-direction: column;
+  }
+
+  .toolbar-divider {
+    display: none;
+  }
+
+  .toolbar-section {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .toolbar-section:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-field,
+  .apply-button,
+  .view-toggle,
+  .density-toggle {
+    width: 100%;
+  }
+
+  .toggle-label {
+    display: inline;
+  }
+
+  .display-control-group {
+    width: 100%;
+  }
+
+  /* Stack density toggles vertically on mobile */
+  .density-toggle {
+    height: auto;
+  }
+
+  .density-toggle mat-button-toggle {
+    height: 48px;
+  }
+}
+
+/* Tab Styles */
+.view-tabs {
+  margin-top: 0;
+}
+
+.view-tabs .mat-mdc-tab-labels {
+  background-color: #fafafa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.tab-content {
+  padding: 24px 0;
+  min-height: 400px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 72px;
+  width: 72px;
+  height: 72px;
+  color: #bdbdbd;
+  margin: 0 auto 24px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #424242;
+  margin: 0 0 12px 0;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 24px 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .filter-field {
@@ -66,7 +301,7 @@ th.mat-header-cell {
 
 td.mat-cell {
   font-size: 13px;
-  color: #666;
+  color: #616161;  /* Changed from #666 for better WCAG AA compliance */
 }
 
 tr.mat-row:hover {
@@ -87,7 +322,7 @@ mat-paginator {
 .mat-cell[colspan] {
   text-align: center;
   font-style: italic;
-  color: #999;
+  color: #757575;  /* Changed from #999 for WCAG AA compliance */
 }
 
 /* Resource status styling */
@@ -115,17 +350,9 @@ td.mat-cell span {
 
 /* Calendar styling */
 .calendar-container {
-  margin-bottom: 30px;
-  padding: 16px;
   background-color: #fafafa;
   border-radius: 4px;
-}
-
-.calendar-container h3 {
-  margin: 0 0 16px 0;
-  font-size: 18px;
-  font-weight: 500;
-  color: #333;
+  padding: 0;
 }
 
 .calendar-grid {
@@ -169,6 +396,23 @@ td.mat-cell span {
   border-bottom: 2px solid #e0e0e0;
   border-right: 1px solid #e0e0e0;
   min-width: 80px;
+  transition: all 0.2s ease;
+}
+
+/* Quick Win #1: Weekend highlighting */
+.day-header.weekend {
+  background-color: #f5f5f5;
+}
+
+/* Quick Win #2: Today highlighting */
+.day-header.today {
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+  color: white;
+}
+
+.day-header.today .day-of-week,
+.day-header.today .day-date {
+  color: white;
 }
 
 .day-info {
@@ -179,13 +423,13 @@ td.mat-cell span {
 
 .day-of-week {
   font-weight: 600;
-  color: #666;
+  color: #616161;  /* Changed from #666 for better contrast - WCAG AA compliant */
   text-transform: uppercase;
 }
 
 .day-date {
   font-size: 11px;
-  color: #999;
+  color: #666;  /* Changed from #999 for WCAG AA compliance (5.7:1 contrast) */
 }
 
 .customer-cell {
@@ -209,6 +453,44 @@ td.mat-cell span {
   vertical-align: top;
   background-color: white;
   min-width: 120px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Quick Win #1: Weekend highlighting for cells */
+.calendar-cell.weekend {
+  background-color: #fafafa;
+}
+
+/* Quick Win #2: Today highlighting for cells */
+.calendar-cell.today {
+  border-left: 3px solid #1976d2;
+  background-color: #e3f2fd;
+}
+
+.calendar-cell.today.weekend {
+  background-color: #e3f2fd;
+}
+
+/* Quick Win #5: Improved hover effects */
+.calendar-cell:hover {
+  background-color: #f5f5f5;
+  box-shadow: inset 0 0 0 2px #2196f3;
+  transform: scale(1.01);
+  z-index: 1;
+  cursor: pointer;
+}
+
+.calendar-cell.today:hover {
+  background-color: #bbdefb;
+}
+
+.calendar-cell.has-data {
+  background-color: #fff;
+}
+
+.calendar-cell.has-data:hover {
+  background-color: #e8f4f8;
 }
 
 .calendar-cell > * {
@@ -218,10 +500,6 @@ td.mat-cell span {
 
 .calendar-cell > *:last-child {
   margin-bottom: 0;
-}
-
-.calendar-cell.has-data {
-  background-color: #e3f2fd;
 }
 
 /* Separator between requirements and resources */
@@ -236,4 +514,510 @@ td.mat-cell span {
 
 .calendar-table tbody tr:hover .customer-cell {
   background-color: #eeeeee;
+}
+
+/* ============================================
+   DENSITY MODES
+   ============================================ */
+
+/* Comfortable Mode - Spacious layout with extra padding */
+.density-comfortable .customer-header {
+  padding: 16px 20px;
+  font-size: 15px;
+}
+
+.density-comfortable .day-header {
+  padding: 12px 16px;
+}
+
+.density-comfortable .day-of-week {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.density-comfortable .day-date {
+  font-size: 12px;
+}
+
+.density-comfortable .customer-cell {
+  padding: 16px 20px;
+  font-size: 14px;
+}
+
+.density-comfortable .calendar-cell {
+  padding: 16px;
+  min-height: 80px;
+  min-width: 140px;
+}
+
+.density-comfortable .calendar-cell > * {
+  margin-bottom: 16px;
+}
+
+/* Compact Mode - Balanced spacing (default) */
+.density-compact .customer-header {
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.density-compact .day-header {
+  padding: 8px 12px;
+}
+
+.density-compact .day-of-week {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.density-compact .day-date {
+  font-size: 11px;
+}
+
+.density-compact .customer-cell {
+  padding: 12px 16px;
+  font-size: 13px;
+}
+
+.density-compact .calendar-cell {
+  padding: 12px;
+  min-height: 60px;
+  min-width: 120px;
+}
+
+.density-compact .calendar-cell > * {
+  margin-bottom: 12px;
+}
+
+/* ==========================================
+   STACK LAYOUT (Mobile-Friendly)
+   ========================================== */
+
+.stack-container {
+  padding: 16px 0;
+}
+
+/* Customer Accordion */
+.customer-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.customer-panel {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease;
+}
+
+.customer-panel:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.customer-panel.mat-expanded {
+  margin: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.customer-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.customer-icon {
+  color: #1976d2;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Date Cards */
+.date-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.date-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.date-card.has-data {
+  border-left: 4px solid #1976d2;
+}
+
+.date-card.weekend {
+  background-color: #fafafa;
+}
+
+.date-card.today {
+  background-color: #e3f2fd;
+  border-left: 4px solid #1976d2;
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+}
+
+.date-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(4px);
+}
+
+/* Date Header */
+.date-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.date-icon {
+  color: #1976d2;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.day-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-value {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Requirements and Resources Sections */
+.requirements-section,
+.resources-section {
+  margin-bottom: 16px;
+}
+
+.requirements-section:last-child,
+.resources-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #616161;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.section-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #757575;
+}
+
+/* Empty Day State */
+.day-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #9e9e9e;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.empty-day-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+
+.empty-day-text {
+  opacity: 0.7;
+}
+
+/* ==========================================
+   STACK LAYOUT - DENSITY MODES
+   ========================================== */
+
+/* Comfortable Density */
+.stack-container.density-comfortable .date-card {
+  padding: 20px;
+}
+
+.stack-container.density-comfortable .date-header {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.stack-container.density-comfortable .requirements-section,
+.stack-container.density-comfortable .resources-section {
+  margin-bottom: 20px;
+}
+
+.stack-container.density-comfortable .section-label {
+  padding: 8px 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* Compact Density (Default) */
+.stack-container.density-compact .date-card {
+  padding: 16px;
+}
+
+.stack-container.density-compact .date-header {
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.stack-container.density-compact .requirements-section,
+.stack-container.density-compact .resources-section {
+  margin-bottom: 16px;
+}
+
+.stack-container.density-compact .section-label {
+  padding: 6px 8px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+/* Dense Density */
+.stack-container.density-dense .date-card {
+  padding: 12px;
+}
+
+.stack-container.density-dense .date-header {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.stack-container.density-dense .requirements-section,
+.stack-container.density-dense .resources-section {
+  margin-bottom: 12px;
+}
+
+.stack-container.density-dense .section-label {
+  padding: 4px 6px;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.stack-container.density-dense .day-name {
+  font-size: 12px;
+}
+
+.stack-container.density-dense .date-value {
+  font-size: 11px;
+}
+
+.stack-container.density-dense .day-empty {
+  padding: 16px;
+  font-size: 12px;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN - AUTO LAYOUT SWITCHING
+   ========================================== */
+
+/* Mobile: Stack layout recommended */
+@media (max-width: 768px) {
+  /* Hide calendar grid on very small screens */
+  .calendar-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Stack layout optimizations */
+  .stack-container {
+    padding: 8px 0;
+  }
+
+  .customer-accordion {
+    gap: 12px;
+  }
+
+  .date-cards {
+    gap: 8px;
+  }
+
+  .date-card {
+    padding: 12px;
+  }
+
+  /* Touch-friendly tap targets */
+  .customer-panel mat-expansion-panel-header {
+    min-height: 56px;
+  }
+
+  /* Adjust section labels for mobile */
+  .section-label {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+/* Tablet: Both layouts work */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .stack-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop: Calendar layout preferred */
+@media (min-width: 1201px) {
+  .stack-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Make date cards more compact on desktop */
+  .date-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+}
+
+/* Dense Mode - Minimal spacing for maximum data */
+.density-dense .customer-header {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.density-dense .day-header {
+  padding: 6px 8px;
+}
+
+.density-dense .day-of-week {
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.density-dense .day-date {
+  font-size: 10px;
+}
+
+.density-dense .customer-cell {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.density-dense .calendar-cell {
+  padding: 8px;
+  min-height: 40px;
+  min-width: 100px;
+}
+
+.density-dense .calendar-cell > * {
+  margin-bottom: 8px;
+}
+
+/* Density mode adjustments for child components */
+.density-comfortable .cell-item.compact,
+.density-comfortable .cell-resource.compact {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.density-comfortable .cell-item.expanded,
+.density-comfortable .cell-resource.expanded {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.density-compact .cell-item.compact,
+.density-compact .cell-resource.compact {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.density-compact .cell-item.expanded,
+.density-compact .cell-resource.expanded {
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.density-dense .cell-item.compact,
+.density-dense .cell-resource.compact {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.density-dense .cell-item.expanded,
+.density-dense .cell-resource.expanded {
+  padding: 6px;
+  margin-bottom: 6px;
+  font-size: 11px;
+}
+
+/* Icon sizes for density modes */
+.density-comfortable .item-icon,
+.density-comfortable .resource-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.density-compact .item-icon,
+.density-compact .resource-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.density-dense .item-icon,
+.density-dense .resource-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Adjust font sizes in child components */
+.density-comfortable .item-type,
+.density-comfortable .resource-name {
+  font-size: 13px;
+}
+
+.density-comfortable .item-qty,
+.density-comfortable .resource-code {
+  font-size: 12px;
+}
+
+.density-dense .item-type,
+.density-dense .resource-name {
+  font-size: 11px;
+}
+
+.density-dense .item-qty,
+.density-dense .resource-code,
+.density-dense .item-job,
+.density-dense .resource-job {
+  font-size: 9px;
 }

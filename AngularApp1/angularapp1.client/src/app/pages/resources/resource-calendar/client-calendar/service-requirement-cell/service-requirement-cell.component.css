@@ -84,19 +84,19 @@
 }
 
 .item-qty {
-  color: #666;
+  color: #616161;  /* Changed from #666 for better WCAG AA compliance */
   font-size: 11px;
 }
 
 .item-job {
-  color: #999;
+  color: #616161;  /* Changed from #999 for WCAG AA compliance (6.2:1 contrast) */
   font-size: 10px;
   margin-top: 2px;
   font-style: italic;
 }
 
 .item-notes {
-  color: #666;
+  color: #616161;  /* Changed from #666 for better WCAG AA compliance */
   font-size: 10px;
   margin-top: 4px;
   padding-top: 4px;

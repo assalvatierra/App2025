@@ -14,6 +14,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ApiResourceCalendarService } from '../../../../core/services/api-resource-calendar.service';
 import { JobCalendarDto, JobServiceCalendarDto } from '../../../../core/models/resource-calendar.model';
@@ -40,6 +42,8 @@ import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assig
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonToggleModule,
+    MatTabsModule,
+    MatExpansionModule,
     ServiceRequirementCellComponent,
     AssignedResourceCellComponent
   ],
@@ -71,6 +75,8 @@ export class ClientCalendarComponent implements OnInit {
   calendarData: Map<string, ServiceRequirementCellItem[]> = new Map();
   assignedResourceData: Map<string, AssignedResourceCellItem[]> = new Map();
   viewMode: 'compact' | 'expanded' = 'compact';
+  densityMode: 'comfortable' | 'compact' | 'dense' = 'compact';
+  layoutMode: 'calendar' | 'stack' = 'calendar';
 
   constructor(private calendarService: ApiResourceCalendarService) {
     const today = new Date();
@@ -347,6 +353,21 @@ export class ClientCalendarComponent implements OnInit {
     if (!date) return '-';
     const d = new Date(date);
     return d.toLocaleDateString();
+  }
+
+  // Quick Win #1: Check if date is weekend
+  isWeekend(date: Date): boolean {
+    const day = date.getDay();
+    return day === 0 || day === 6; // Sunday = 0, Saturday = 6
+  }
+
+  // Quick Win #2: Check if date is today
+  isToday(date: Date): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0);
+    return checkDate.getTime() === today.getTime();
   }
 }
 

@@ -16,11 +16,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { ApiResourceCalendarService } from '../../../../core/services/api-resource-calendar.service';
 import { JobCalendarDto, JobServiceCalendarDto } from '../../../../core/models/resource-calendar.model';
 import { ServiceRequirementCellComponent, ServiceRequirementCellItem } from './service-requirement-cell/service-requirement-cell.component';
 import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assigned-resource-cell/assigned-resource-cell.component';
+import { DisplayOptionsDialogComponent, DisplayOptionsData } from './display-options-dialog/display-options-dialog.component';
 
 
 @Component({
@@ -44,6 +46,7 @@ import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assig
     MatButtonToggleModule,
     MatTabsModule,
     MatExpansionModule,
+    MatDialogModule,
     ServiceRequirementCellComponent,
     AssignedResourceCellComponent
   ],
@@ -78,7 +81,10 @@ export class ClientCalendarComponent implements OnInit {
   densityMode: 'comfortable' | 'compact' | 'dense' = 'compact';
   layoutMode: 'calendar' | 'stack' = 'calendar';
 
-  constructor(private calendarService: ApiResourceCalendarService) {
+  constructor(
+    private calendarService: ApiResourceCalendarService,
+    private dialog: MatDialog
+  ) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     this.dateFrom = new Date(today);
@@ -96,6 +102,25 @@ export class ClientCalendarComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openDisplayOptions(): void {
+    const dialogRef = this.dialog.open(DisplayOptionsDialogComponent, {
+      width: '500px',
+      data: {
+        viewMode: this.viewMode,
+        densityMode: this.densityMode,
+        layoutMode: this.layoutMode
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: DisplayOptionsData) => {
+      if (result) {
+        this.viewMode = result.viewMode;
+        this.densityMode = result.densityMode;
+        this.layoutMode = result.layoutMode;
+      }
+    });
   }
 
   loadJobServices(): void {

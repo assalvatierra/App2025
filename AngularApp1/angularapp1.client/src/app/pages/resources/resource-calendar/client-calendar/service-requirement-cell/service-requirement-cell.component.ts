@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,23 @@ export class ServiceRequirementCellComponent {
   @Input() customerName: string = '';
   @Input() date: Date = new Date();
   @Input() viewMode: 'compact' | 'expanded' = 'expanded';
+  @Input() showBlankCell: boolean = true;
+  @Output() blankCellClick = new EventEmitter<{ customerName: string; date: Date }>();
+
+  get hasContent(): boolean {
+    return this.items.length > 0 || this.showBlankCell;
+  }
+
+  get isBlankOnly(): boolean {
+    return this.items.length === 0 && this.showBlankCell;
+  }
+
+  onBlankCellClick(): void {
+    this.blankCellClick.emit({
+      customerName: this.customerName,
+      date: this.date
+    });
+  }
 
   getItemTooltip(item: ServiceRequirementCellItem): string {
     const parts = [

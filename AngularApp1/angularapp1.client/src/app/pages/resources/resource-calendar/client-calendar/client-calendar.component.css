@@ -85,6 +85,10 @@ mat-card-subtitle {
   flex-wrap: wrap;
 }
 
+.date-section .section-content {
+  align-items: center;
+}
+
 /* Toolbar Divider */
 .toolbar-divider {
   width: 1px;
@@ -108,6 +112,16 @@ mat-card-subtitle {
   font-size: 14px;
 }
 
+.date-field ::ng-deep .mat-mdc-text-field-wrapper {
+  height: 56px;
+}
+
+.date-field ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+}
+
 /* Apply Button */
 .apply-button {
   height: 56px;
@@ -116,6 +130,7 @@ mat-card-subtitle {
   letter-spacing: 0.5px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
+  align-self: center;
 }
 
 .apply-button:hover {
@@ -190,6 +205,31 @@ mat-card-subtitle {
   }
 }
 
+/* Display Options Button */
+.display-options-button {
+  height: 56px;
+  min-width: 200px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  align-self: center;
+}
+
+.display-options-button:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
+}
+
+.display-options-button mat-icon {
+  margin-right: 8px;
+}
+
+.view-section .section-content {
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .section-content {
     flex-direction: column;
@@ -198,6 +238,7 @@ mat-card-subtitle {
 
   .date-field,
   .apply-button,
+  .display-options-button,
   .view-toggle,
   .density-toggle {
     width: 100%;

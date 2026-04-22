@@ -80,10 +80,10 @@ export class ClientCalendarComponent implements OnInit {
   viewMode: 'compact' | 'expanded' = 'compact';
   densityMode: 'comfortable' | 'compact' | 'dense' = 'compact';
   layoutMode: 'calendar' | 'stack' = 'calendar';
+  displayOptionsExpanded = false;
 
   constructor(
-    private calendarService: ApiResourceCalendarService,
-    private dialog: MatDialog
+    private calendarService: ApiResourceCalendarService
   ) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -104,24 +104,7 @@ export class ClientCalendarComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDisplayOptions(): void {
-    const dialogRef = this.dialog.open(DisplayOptionsDialogComponent, {
-      width: '500px',
-      data: {
-        viewMode: this.viewMode,
-        densityMode: this.densityMode,
-        layoutMode: this.layoutMode
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((result: DisplayOptionsData) => {
-      if (result) {
-        this.viewMode = result.viewMode;
-        this.densityMode = result.densityMode;
-        this.layoutMode = result.layoutMode;
-      }
-    });
-  }
+  // openDisplayOptions removed; display options are now inline in the template
 
   loadJobServices(): void {
     this.isLoading = true;

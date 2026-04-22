@@ -37,13 +37,85 @@
 
       <!-- Divider -->
       <div class="toolbar-divider"></div>
-
-      <!-- Display Options Button -->
-      <div class="toolbar-section view-section">
-        <button mat-raised-button (click)="openDisplayOptions()" class="display-options-button">
-          <mat-icon>visibility</mat-icon>
-          Display Options
-        </button>
+      <!-- Display Options Collapsible -->
+      <div class="toolbar-section view-section" style="min-width:320px;max-width:500px;">
+        <div style="display: flex; align-items: flex-end; gap: 1rem;">
+          <!-- View Mode Toggle (Always Visible) -->
+          <div class="option-group" style="margin-bottom: 0;" *ngIf="!displayOptionsExpanded">
+            <!--<mat-icon class="dialog-icon">visibility</mat-icon>
+            <label class="option-label">View Mode</label>-->
+            <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle" aria-label="Calendar view mode">
+              <mat-button-toggle value="compact" matTooltip="Compact view - icons and initials">
+                <mat-icon>view_compact</mat-icon>
+                <span class="toggle-label">Compact</span>
+              </mat-button-toggle>
+              <mat-button-toggle value="expanded" matTooltip="Expanded view - full details">
+                <mat-icon>view_agenda</mat-icon>
+                <span class="toggle-label">Expanded</span>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          <!-- Collapsible: Density/Layout -->
+          <mat-expansion-panel class="display-options-panel" style="min-width:220px;"
+            [expanded]="displayOptionsExpanded"
+            (opened)="displayOptionsExpanded = true"
+            (closed)="displayOptionsExpanded = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <!--<mat-icon class="dialog-icon">visibility</mat-icon>-->
+                More
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="options-container">
+              <!-- View Mode Toggle (Duplicate) -->
+              <div class="option-group">
+                <label class="option-label">View Mode</label>
+                <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle" aria-label="Calendar view mode">
+                  <mat-button-toggle value="compact" matTooltip="Compact view - icons and initials">
+                    <mat-icon>view_compact</mat-icon>
+                    <span class="toggle-label">Compact</span>
+                  </mat-button-toggle>
+                  <mat-button-toggle value="expanded" matTooltip="Expanded view - full details">
+                    <mat-icon>view_agenda</mat-icon>
+                    <span class="toggle-label">Expanded</span>
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <!-- Density Mode Toggle -->
+              <div class="option-group">
+                <label class="option-label">Density Mode</label>
+                <mat-button-toggle-group [(ngModel)]="densityMode" class="density-toggle" aria-label="Calendar density mode">
+                  <mat-button-toggle value="comfortable" matTooltip="Comfortable - spacious layout with extra padding">
+                    <mat-icon>view_comfy</mat-icon>
+                    <span class="toggle-label">Comfortable</span>
+                  </mat-button-toggle>
+                  <mat-button-toggle value="compact" matTooltip="Compact - balanced spacing">
+                    <mat-icon>view_compact_alt</mat-icon>
+                    <span class="toggle-label">Compact</span>
+                  </mat-button-toggle>
+                  <mat-button-toggle value="dense" matTooltip="Dense - minimal spacing for maximum data">
+                    <mat-icon>view_stream</mat-icon>
+                    <span class="toggle-label">Dense</span>
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <!-- Layout Mode Toggle -->
+              <div class="option-group">
+                <label class="option-label">Layout Mode</label>
+                <mat-button-toggle-group [(ngModel)]="layoutMode" class="layout-toggle" aria-label="Calendar layout mode">
+                  <mat-button-toggle value="calendar" matTooltip="Calendar - horizontal grid layout">
+                    <mat-icon>calendar_view_month</mat-icon>
+                    <span class="toggle-label">Calendar</span>
+                  </mat-button-toggle>
+                  <mat-button-toggle value="stack" matTooltip="Stack - vertical mobile-friendly layout">
+                    <mat-icon>view_list</mat-icon>
+                    <span class="toggle-label">Stack</span>
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
       </div>
     </div>
 

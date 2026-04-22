@@ -802,263 +802,36 @@ td.mat-cell span {
   opacity: 0.7;
 }
 
-/* ==========================================
-   STACK LAYOUT - DENSITY MODES
-   ========================================== */
-
-/* Comfortable Density */
-.stack-container.density-comfortable .date-card {
-  padding: 20px;
+/* --- Alignment Fix for Option Group and Expansion Panel --- */
+.toolbar-section.view-section > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
-.stack-container.density-comfortable .date-header {
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-}
-
-.stack-container.density-comfortable .requirements-section,
-.stack-container.density-comfortable .resources-section {
-  margin-bottom: 20px;
-}
-
-.stack-container.density-comfortable .section-label {
-  padding: 8px 12px;
-  font-size: 13px;
-  margin-bottom: 12px;
-}
-
-/* Compact Density (Default) */
-.stack-container.density-compact .date-card {
-  padding: 16px;
-}
-
-.stack-container.density-compact .date-header {
-  padding-bottom: 12px;
-  margin-bottom: 12px;
-}
-
-.stack-container.density-compact .requirements-section,
-.stack-container.density-compact .resources-section {
-  margin-bottom: 16px;
-}
-
-.stack-container.density-compact .section-label {
-  padding: 6px 8px;
-  font-size: 12px;
+.option-group {
+  margin-top: 8px;
   margin-bottom: 8px;
 }
 
-/* Dense Density */
-.stack-container.density-dense .date-card {
-  padding: 12px;
+/* --- Ensure Option Group Button Height Matches Expansion Panel Header --- */
+.option-group .view-toggle {
+  height: 48px !important;
+  min-height: 48px !important;
+  align-items: center;
+  display: flex;
 }
 
-.stack-container.density-dense .date-header {
-  padding-bottom: 8px;
-  margin-bottom: 8px;
+.option-group .view-toggle mat-button-toggle {
+  height: 48px !important;
+  min-height: 48px !important;
+  display: flex;
+  align-items: center;
 }
 
-.stack-container.density-dense .requirements-section,
-.stack-container.density-dense .resources-section {
-  margin-bottom: 12px;
-}
-
-.stack-container.density-dense .section-label {
-  padding: 4px 6px;
-  font-size: 11px;
-  margin-bottom: 6px;
-}
-
-.stack-container.density-dense .day-name {
-  font-size: 12px;
-}
-
-.stack-container.density-dense .date-value {
-  font-size: 11px;
-}
-
-.stack-container.density-dense .day-empty {
-  padding: 16px;
-  font-size: 12px;
-}
-
-/* ==========================================
-   RESPONSIVE DESIGN - AUTO LAYOUT SWITCHING
-   ========================================== */
-
-/* Mobile: Stack layout recommended */
-@media (max-width: 768px) {
-  /* Hide calendar grid on very small screens */
-  .calendar-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Stack layout optimizations */
-  .stack-container {
-    padding: 8px 0;
-  }
-
-  .customer-accordion {
-    gap: 12px;
-  }
-
-  .date-cards {
-    gap: 8px;
-  }
-
-  .date-card {
-    padding: 12px;
-  }
-
-  /* Touch-friendly tap targets */
-  .customer-panel mat-expansion-panel-header {
-    min-height: 56px;
-  }
-
-  /* Adjust section labels for mobile */
-  .section-label {
-    font-size: 11px;
-    padding: 4px 6px;
-  }
-}
-
-/* Tablet: Both layouts work */
-@media (min-width: 769px) and (max-width: 1200px) {
-  .stack-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-}
-
-/* Desktop: Calendar layout preferred */
-@media (min-width: 1201px) {
-  .stack-container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  /* Make date cards more compact on desktop */
-  .date-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-}
-
-/* Dense Mode - Minimal spacing for maximum data */
-.density-dense .customer-header {
-  padding: 8px 12px;
-  font-size: 13px;
-}
-
-.density-dense .day-header {
-  padding: 6px 8px;
-}
-
-.density-dense .day-of-week {
-  font-size: 11px;
-  margin-bottom: 2px;
-}
-
-.density-dense .day-date {
-  font-size: 10px;
-}
-
-.density-dense .customer-cell {
-  padding: 8px 12px;
-  font-size: 12px;
-}
-
-.density-dense .calendar-cell {
-  padding: 8px;
-  min-height: 40px;
-  min-width: 100px;
-}
-
-.density-dense .calendar-cell > * {
-  margin-bottom: 8px;
-}
-
-/* Density mode adjustments for child components */
-.density-comfortable .cell-item.compact,
-.density-comfortable .cell-resource.compact {
-  padding: 6px 10px;
-  font-size: 12px;
-}
-
-.density-comfortable .cell-item.expanded,
-.density-comfortable .cell-resource.expanded {
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.density-compact .cell-item.compact,
-.density-compact .cell-resource.compact {
-  padding: 4px 8px;
-  font-size: 11px;
-}
-
-.density-compact .cell-item.expanded,
-.density-compact .cell-resource.expanded {
-  padding: 8px;
-  margin-bottom: 8px;
-}
-
-.density-dense .cell-item.compact,
-.density-dense .cell-resource.compact {
-  padding: 2px 6px;
-  font-size: 10px;
-}
-
-.density-dense .cell-item.expanded,
-.density-dense .cell-resource.expanded {
-  padding: 6px;
-  margin-bottom: 6px;
-  font-size: 11px;
-}
-
-/* Icon sizes for density modes */
-.density-comfortable .item-icon,
-.density-comfortable .resource-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-}
-
-.density-compact .item-icon,
-.density-compact .resource-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-}
-
-.density-dense .item-icon,
-.density-dense .resource-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-}
-
-/* Adjust font sizes in child components */
-.density-comfortable .item-type,
-.density-comfortable .resource-name {
-  font-size: 13px;
-}
-
-.density-comfortable .item-qty,
-.density-comfortable .resource-code {
-  font-size: 12px;
-}
-
-.density-dense .item-type,
-.density-dense .resource-name {
-  font-size: 11px;
-}
-
-.density-dense .item-qty,
-.density-dense .resource-code,
-.density-dense .item-job,
-.density-dense .resource-job {
-  font-size: 9px;
+/* Match expansion panel header height */
+mat-expansion-panel-header.mat-expansion-panel-header {
+  min-height: 48px !important;
+  height: 48px !important;
+  align-items: center;
 }

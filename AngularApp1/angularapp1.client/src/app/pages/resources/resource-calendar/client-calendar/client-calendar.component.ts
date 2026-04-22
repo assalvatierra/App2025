@@ -309,6 +309,28 @@ export class ClientCalendarComponent implements OnInit {
     return this.assignedResourceData.get(key) || [];
   }
 
+  // ...shouldShowBlankCell method here...
+  /**
+   * Determines if the blank cell (add service-requirement) should be shown for a calendar cell.
+   * Returns true if there is remaining required quantity after deducting assigned resources.
+   */
+  shouldShowBlankCell(customer: string, day: Date): boolean {
+    const requirements = this.getCellItems(customer, day);
+    const assigned = this.getAssignedResources(customer, day);
+    debugger;
+    // For each requirement, check if assigned resources of the same type fulfill the required quantity
+    for (const req of requirements) {
+      const reqType = (req.itemType || '').toLowerCase();
+      const assignedOfType = assigned.filter(r => (r.resourceType || '').toLowerCase() === reqType).length;
+      if ((req.requiredQty || 0) > assignedOfType) {
+        // Still need more resources of this type
+        return true;
+      }
+    }
+    // All requirements are fulfilled by assigned resources of the same type
+    return false;
+  }
+
   hasCellData(customer: string, day: Date): boolean {
     const items = this.getCellItems(customer, day);
     return items.length > 0;

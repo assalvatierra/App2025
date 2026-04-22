@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { AssignedResourceCellItem } from '../assigned-resource-cell/assigned-resource-cell.component';
 
 @Component({
   selector: 'app-service-requirement-cell',
@@ -16,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ServiceRequirementCellComponent {
   @Input() items: ServiceRequirementCellItem[] = [];
+  @Input() assignedResources: AssignedResourceCellItem[] = [];
   @Input() customerName: string = '';
   @Input() date: Date = new Date();
   @Input() viewMode: 'compact' | 'expanded' = 'expanded';
@@ -50,6 +52,13 @@ export class ServiceRequirementCellComponent {
       parts.push(`Notes: ${item.notes}`);
     }
 
+    // Include assigned resources info in tooltip if any
+    const assigned = this.getAssignedForItem(item);
+    if (assigned.length > 0) {
+      const names = assigned.map(a => a.resourceName + (a.resourceCode ? ` (${a.resourceCode})` : '')).join(', ');
+      parts.push(`Assigned: ${names}`);
+    }
+
     return parts.join('\n');
   }
 
@@ -81,6 +90,25 @@ export class ServiceRequirementCellComponent {
     } else {
       return '#9e9e9e';  // Gray 500
     }
+  }
+
+  /**
+   * Returns the assigned resources that match the given requirement item.
+   * Matching is performed by comparing itemType to resourceType (case-insensitive substring match) to allow flexibility.
+   */
+  getAssignedForItem(item: ServiceRequirementCellItem): AssignedResourceCellItem[] {
+    if (!this.assignedResources || this.assignedResources.length === 0) return [];
+    const reqType = (item.itemType || '').toLowerCase();
+    return this.assignedResources.filter(r => {
+      const resType = (r.resourceType || '').toLowerCase();
+      const resName = (r.resourceName || '').toLowerCase();
+      // match by type or by name containing the requirement type
+      return resType.includes(reqType) || resName.includes(reqType) || reqType.includes(resType);
+    });
+  }
+
+  getAssignedCount(item: ServiceRequirementCellItem): number {
+    return this.getAssignedForItem(item).length;
   }
 
   private formatDate(date: Date): string {

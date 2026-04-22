@@ -97,19 +97,20 @@
                 <!-- Service Requirements (Gray Theme) -->
                 <app-service-requirement-cell 
                   [items]="getCellItems(customer, day)"
+                  [assignedResources]="getAssignedResources(customer, day)"
                   [customerName]="customer"
                   [date]="day"
                   [viewMode]="viewMode"
-                  [showBlankCell]="false">
+                  [showBlankCell]="shouldShowBlankCell(customer, day)">
                 </app-service-requirement-cell>
 
                 <!-- Assigned Resources (Colored Theme) -->
-                <app-assigned-resource-cell 
+                <!--<app-assigned-resource-cell 
                   [resources]="getAssignedResources(customer, day)"
                   [customerName]="customer"
                   [date]="day"
                   [viewMode]="viewMode">
-                </app-assigned-resource-cell>
+                </app-assigned-resource-cell>-->
               </td>
             </tr>
           </tbody>
@@ -157,10 +158,11 @@
                       </div>
                       <app-service-requirement-cell 
                         [items]="getCellItems(customer, day)"
+                        [assignedResources]="getAssignedResources(customer, day)"
                         [customerName]="customer"
                         [date]="day"
                         [viewMode]="viewMode"
-                        [showBlankCell]="false">
+                        [showBlankCell]="shouldShowBlankCell(customer, day)">
                       </app-service-requirement-cell>
                     </div>
 

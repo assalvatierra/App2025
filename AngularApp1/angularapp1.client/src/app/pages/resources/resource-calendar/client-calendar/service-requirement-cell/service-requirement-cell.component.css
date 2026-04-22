@@ -89,20 +89,34 @@
 }
 
 .item-job {
-  color: #616161;  /* Changed from #999 for WCAG AA compliance (6.2:1 contrast) */
+  color: #616161; /* Changed from #999 for WCAG AA compliance (6.2:1 contrast) */
   font-size: 10px;
   margin-top: 2px;
-  font-style: italic;
+  font-style: normal;
 }
 
 .item-notes {
   color: #616161;  /* Changed from #666 for better WCAG AA compliance */
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 4px;
   padding-top: 4px;
-  border-top: 1px solid #e0e0e0;
-  font-style: italic;
+  border-bottom: 1px solid #e0e0e0;
+  font-style: normal;
   max-height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.assigned-section {
+  margin-top: 8px;
+}
+
+.assigned-label,
+.assigned-list {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.assigned-list span {
+  color: #1976d2;
 }

@@ -189,6 +189,15 @@
   font-weight: 600;
 }
 
+.day-header.weekend {
+  background-color: #f1f8e9; /* subtle green for weekend headers */
+  color: #33691e;
+}
+
+.day-header.weekend.today {
+  background-color: #dcedc8; /* slightly stronger if today */
+}
+
 .day-name {
   font-size: 0.875rem;
   color: #666;
@@ -271,6 +280,10 @@
   border: 1px dashed #fbc02d;
 }
 
+.day-cell.weekend {
+  background-color: #fffde7; /* light yellow background on weekends */
+}
+
 /* Jobs Row Styling */
 .jobs-row {
   display: flex;
@@ -317,18 +330,17 @@
   background-color: #fff59d;
 }
 
-.job-cell .empty-cell-placeholder {
-  color: #9c27b0;
-  opacity: 0.5;
+.job-cell.weekend {
+  background-color: #fff3e0; /* light orange for jobs row weekends */
 }
 
-.job-card-wrapper {
-  display: block;
-  margin-bottom: 6px;
+/* Ensure priority of weekend classes over default .today styles */
+.day-cell.weekend.today {
+  background-color: #fff9c4; /* keep today's highlight on weekend */
 }
 
-.job-card-wrapper:last-child {
-  margin-bottom: 0;
+.job-cell.weekend.today {
+  background-color: #fff59d;
 }
 
 /* No Data Message */

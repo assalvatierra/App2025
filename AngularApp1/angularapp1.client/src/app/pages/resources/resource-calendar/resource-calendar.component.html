@@ -98,7 +98,7 @@
       <!-- Header Row with Dates -->
       <div class="calendar-header">
         <div class="resource-column-header">Resource</div>
-        <div *ngFor="let day of calendarDays" class="day-header" [class.today]="isToday(day)">
+        <div *ngFor="let day of calendarDays" class="day-header" [class.today]="isToday(day)" [class.weekend]="isWeekend(day)">
           <div class="day-name">{{ getDayOfWeek(day) }}</div>
           <div class="day-date">{{ formatDate(day) }}</div>
         </div>
@@ -118,7 +118,8 @@
         <div *ngFor="let day of calendarDays" 
              class="day-cell job-cell" 
              [class.today]="isToday(day)"
-             [class.has-jobs]="getJobsForDate(day).length > 0">
+             [class.has-jobs]="getJobsForDate(day).length > 0"
+             [class.weekend]="isWeekend(day)">
           
           <!-- Job cards for this day -->
           <app-job-card *ngFor="let job of getJobsForDate(day)" 
@@ -130,7 +131,7 @@
           
           <!-- Empty cell indicator -->
           <div *ngIf="getJobsForDate(day).length === 0" class="empty-cell-placeholder">
-            No jobs scheduled
+            
           </div>
         </div>
       </div>
@@ -145,32 +146,43 @@
         <!-- Day Cells -->
         <div *ngFor="let day of calendarDays" 
              class="day-cell" 
-             [class.today]="isToday(day)"
-             [class.has-entries]="getEntriesForDate(resource, day).length > 0"
-             [class.empty-cell]="getEntriesForDate(resource, day).length === 0">
+             [class.weekend]="isWeekend(day)" 
+             [class.today]="isToday(day)">
           
-          <!-- Entries for this day -->
-          <div *ngFor="let entry of getEntriesForDate(resource, day)" 
-               class="calendar-entry"
-               (click)="onEntryClick(entry)"
-               [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')">
-            <div class="entry-header">
-              <span class="entry-job">{{ entry.jobReference }}</span>
+          <!-- Card view: show up to 3 entries, with overflow indicator -->
+          <ng-container *ngIf="getEntriesForDate(resource, day).length > 0; else emptyCell">
+            <div class="entry-cards">
+              <mat-card *ngFor="let entry of getEntriesForDate(resource, day) | slice:0:3" class="entry-card" (click)="onEntryClick(entry)" [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')">
+                <mat-card-header>
+                <!--  <div mat-card-avatar class="entry-avatar">{{ entry.jobReference ? entry.jobReference.charAt(0) : 'J' }}</div>-->
+                  <mat-card-title class="entry-title">{{ entry.jobReference }}</mat-card-title>
+                  <mat-card-subtitle class="entry-subtitle">{{ entry.customerName || 'N/A' }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="entry-content">
+                  <div class="entry-details">
+                    <div class="entry-time" *ngIf="entry.startTime">{{ formatTime(entry.startTime) }}<span *ngIf="entry.endTime"> - {{ formatTime(entry.endTime) }}</span></div>
+                    <div class="entry-particulars" *ngIf="entry.particulars">{{ entry.particulars }}</div>
+                  </div>
+                </mat-card-content>
+                <mat-card-actions *ngIf="entry.statusName">
+                  <span class="status-badge">{{ entry.statusName }}</span>
+                </mat-card-actions>
+              </mat-card>
             </div>
-            <div class="entry-customer">{{ entry.customerName || 'N/A' }}</div>
-            <div class="entry-time" *ngIf="entry.startTime">
-              {{ formatTime(entry.startTime) }}
-              <span *ngIf="entry.endTime"> - {{ formatTime(entry.endTime) }}</span>
+
+            <!-- Overflow indicator -->
+            <div class="overflow-indicator" *ngIf="getEntriesForDate(resource, day).length > 3">
+              +{{ getEntriesForDate(resource, day).length - 3 }} more
             </div>
-            <div class="entry-status" *ngIf="entry.statusName">
-              <span class="status-badge">{{ entry.statusName }}</span>
+          </ng-container>
+
+          <!-- Empty cell -->
+          <ng-template #emptyCell>
+            <div class="empty-cell-placeholder">
+              <!-- Empty cell - available for assignment -->
             </div>
-          </div>
-          
-          <!-- Empty cell indicator -->
-          <div *ngIf="getEntriesForDate(resource, day).length === 0" class="empty-cell-placeholder">
-            <!-- Empty cell - available for assignment -->
-          </div>
+          </ng-template>
+
         </div>
       </div>
     </div>

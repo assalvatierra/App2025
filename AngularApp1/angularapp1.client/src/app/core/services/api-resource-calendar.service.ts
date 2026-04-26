@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import {
   ResourceCalendarDto,
   CalendarFilterOptions,
@@ -9,6 +9,7 @@ import {
   StatusOption,
   JobCalendarDto
 } from '../models/resource-calendar.model';
+import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,28 +17,57 @@ import {
 export class ApiResourceCalendarService {
   private apiUrl = '/api/ResourceCalendar';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   /**
-   * Get resource calendar data for a specific date range
-   * @param options Filter options including date range and optional resource/status filters
-   * @returns Observable of resource calendar data
+   * Get calendar rows (resources) for the provided date range.
+   * Resolves item type by human-readable class name 'RESOURCE' and fetches resources by that type.
+   * Falls back to active resources if no item type is found.
    */
-  getCalendarData(options: CalendarFilterOptions): Observable<ResourceCalendarDto[]> {
-    let params = new HttpParams()
-      .set('startDate', this.formatDate(options.startDate))
-      .set('endDate', this.formatDate(options.endDate));
+  getCalendarResources(options: CalendarFilterOptions): Observable<ResourceCalendarDto[]> {
+    return this.apiService.getItemTypesByClassName('RESOURCE').pipe(
+      switchMap((types: any[]) => {
+        if (types && types.length > 0) {
+          const itemTypeId = types[0].id;
+          return this.http.get<ResourceOption[]>(`/api/Resources/ByType/${itemTypeId}`);
+        }
+        return this.http.get<ResourceOption[]>(`/api/Resources/Active`);
+      }),
+      map((resources: ResourceOption[]) => {
+        // Build day range
+        const start = new Date(options.startDate);
+        const end = new Date(options.endDate);
+        const days: Date[] = [];
+        const cur = new Date(start);
+        cur.setHours(0, 0, 0, 0);
+        while (cur <= end) {
+          days.push(new Date(cur));
+          cur.setDate(cur.getDate() + 1);
+        }
 
-    if (options.resourceIds && options.resourceIds.length > 0) {
-      params = params.set('resourceIds', options.resourceIds.join(','));
-    }
+        // Map resources into ResourceCalendarDto and include itemTypeId/sortOrder
+        const rows: ResourceCalendarDto[] = resources.map(r => ({
+          resourceId: r.id,
+          resourceName: r.name,
+          resourceCode: r.code || '',
+          itemTypeId: r.itemTypeId,
+          sortOrder: r.sortOrder,
+          days: days.map(d => ({ date: new Date(d), entries: [] }))
+        }));
 
-    if (options.statusIds && options.statusIds.length > 0) {
-      params = params.set('statusIds', options.statusIds.join(','));
-    }
+        // Sort by itemTypeId, then sortOrder, then resourceName
+        rows.sort((a, b) => {
+          const aType = a.itemTypeId ?? 0;
+          const bType = b.itemTypeId ?? 0;
+          if (aType !== bType) return aType - bType;
+          const aSort = a.sortOrder ?? 0;
+          const bSort = b.sortOrder ?? 0;
+          if (aSort !== bSort) return aSort - bSort;
+          return a.resourceName.localeCompare(b.resourceName);
+        });
 
-    return this.http.get<ResourceCalendarDto[]>(this.apiUrl, { params }).pipe(
-      map(data => this.mapCalendarData(data))
+        return rows;
+      })
     );
   }
 
@@ -65,7 +95,16 @@ export class ApiResourceCalendarService {
    * @returns Observable of resource options
    */
   getAvailableResources(): Observable<ResourceOption[]> {
-    return this.http.get<ResourceOption[]>(`${this.apiUrl}/resources`);
+    // Use Resources Active endpoint which includes itemTypeId and sortOrder
+    return this.http.get<any[]>(`/api/Resources/Active`).pipe(
+      map(data => data.map(d => ({
+        id: (d as any).id,
+        name: (d as any).name,
+        code: (d as any).code,
+        itemTypeId: (d as any).itemTypeId,
+        sortOrder: (d as any).sortOrder
+      })))
+    );
   }
 
   /**

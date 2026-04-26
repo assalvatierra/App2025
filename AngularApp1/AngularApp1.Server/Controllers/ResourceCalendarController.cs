@@ -551,11 +551,11 @@ namespace AngularApp1.Server.Controllers
                             Particulars = d.Particulars,
                             StartTime = d.StartTime,
                             EndTime = d.EndTime,
-                            StatusName = d.StatusId.HasValue && statuses.ContainsKey(d.StatusId.Value) 
-                                ? statuses[d.StatusId.Value].Name 
+                            StatusName = statuses.ContainsKey(d.StatusId)
+                                ? statuses[d.StatusId].Name
                                 : null,
-                            StatusCode = d.StatusId.HasValue && statuses.ContainsKey(d.StatusId.Value) 
-                                ? statuses[d.StatusId.Value].Code 
+                            StatusCode = statuses.ContainsKey(d.StatusId)
+                                ? statuses[d.StatusId].Code
                                 : null,
                             QuotedAmt = d.QuotedAmt,
                             SupplierAmt = d.SupplierAmt

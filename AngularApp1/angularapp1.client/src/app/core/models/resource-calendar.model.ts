@@ -8,6 +8,9 @@ export interface ResourceCalendarDto {
   resourceName: string;
   resourceCode: string;
   days: CalendarDayDto[];
+  // New: include item type and sort order to allow UI sorting/grouping
+  itemTypeId?: number;
+  sortOrder?: number;
 }
 
 export interface CalendarDayDto {
@@ -42,6 +45,9 @@ export interface ResourceOption {
   id: number;
   name: string;
   code: string;
+  // New: include item type id and sort order if provided by API
+  itemTypeId?: number;
+  sortOrder?: number;
 }
 
 export interface StatusOption {

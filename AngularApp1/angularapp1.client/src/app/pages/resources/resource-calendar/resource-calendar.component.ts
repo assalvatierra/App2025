@@ -144,9 +144,9 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
       statusIds: formValue.selectedStatuses || []
     };
 
-    // Load both resource calendar and jobs calendar
+    // Load both resource calendar rows and jobs calendar
     forkJoin({
-      resources: this.calendarService.getCalendarData(filterOptions),
+      resources: this.calendarService.getCalendarResources(filterOptions),
       jobs: this.calendarService.getJobsCalendar(filterOptions)
     })
       .pipe(takeUntil(this.destroy$))
@@ -162,6 +162,9 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
             // If resources are filtered, only show filtered resources
             this.calendarData = resources;
           }
+
+          // Merge job/service assignments into resource rows so entries appear under correct resource
+          this.mergeJobAssignmentsIntoResources(this.calendarData, jobs);
           
           this.jobsCalendar = jobs;
           
@@ -174,6 +177,81 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       });
+  }
+
+  /**
+   * Merge job/service assigned resources into the resource rows
+   * so that CalendarEntryDto items are placed in the correct resource.days entries
+   */
+  private mergeJobAssignmentsIntoResources(resources: ResourceCalendarDto[], jobs: JobCalendarDto[]): void {
+    if (!resources || !jobs) return;
+
+    // Build index for quick resource lookup
+    const resourceMap = new Map<number, ResourceCalendarDto>();
+    resources.forEach(r => resourceMap.set(r.resourceId, r));
+
+    jobs.forEach(job => {
+      job.services.forEach(service => {
+        if (!service.dateStart) return; // skip services without date
+
+        const serviceStart = new Date(service.dateStart as any);
+        const serviceEnd = service.dateEnd ? new Date(service.dateEnd as any) : new Date(service.dateStart as any);
+
+        // For each assigned resource on the service
+        (service.assignedResources || []).forEach(assigned => {
+          const target = resourceMap.get(assigned.resourceId);
+          if (!target) return; // resource not in current rows
+
+          // Ensure days array exists
+          target.days = target.days || this.calendarDays.map(d => ({ date: new Date(d), entries: [] }));
+
+          // For each calendar day in target that falls within service range, add entry
+          for (const day of target.days) {
+            const dayDate = new Date(day.date);
+            dayDate.setHours(0, 0, 0, 0);
+
+            const startDate = new Date(serviceStart);
+            startDate.setHours(0, 0, 0, 0);
+            const endDate = new Date(serviceEnd);
+            endDate.setHours(0, 0, 0, 0);
+
+            if (dayDate >= startDate && dayDate <= endDate) {
+              const entry: CalendarEntryDto = {
+                id: assigned.jobServiceResourceId || 0,
+                jobServiceResourceId: assigned.jobServiceResourceId || 0,
+                jobServiceId: service.id,
+                jobMainId: job.jobMainId,
+                jobReference: job.jobReference,
+                customerName: job.customerName,
+                particulars: service.particulars,
+                startTime: this.formatTimeFromDate(service.dateStart),
+                endTime: this.formatTimeFromDate(service.dateEnd),
+                statusName: undefined,
+                statusCode: undefined,
+                quotedAmt: undefined,
+                supplierAmt: undefined
+              };
+
+              day.entries = day.entries || [];
+              // Avoid duplicates: check if entry with same jobServiceResourceId exists
+              const exists = day.entries.some(e => e.jobServiceResourceId === entry.jobServiceResourceId && e.jobServiceId === entry.jobServiceId);
+              if (!exists) {
+                day.entries.push(entry);
+              }
+            }
+          }
+        });
+      });
+    });
+  }
+
+  private formatTimeFromDate(date?: Date): string | undefined {
+    if (!date) return undefined;
+    const d = new Date(date as any);
+    const hh = d.getHours().toString().padStart(2, '0');
+    const mm = d.getMinutes().toString().padStart(2, '0');
+    const ss = d.getSeconds().toString().padStart(2, '0');
+    return `${hh}:${mm}:${ss}`;
   }
 
   /**
@@ -196,6 +274,8 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
           resourceId: resource.id,
           resourceName: resource.name,
           resourceCode: resource.code || '',
+          itemTypeId: resource.itemTypeId,
+          sortOrder: resource.sortOrder,
           days: this.calendarDays.map(date => ({
             date: date,
             entries: []
@@ -205,9 +285,17 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
       }
     });
     
-    // Convert map back to array and sort by resource name
+    // Convert map back to array and sort by itemTypeId, sortOrder, then resource name
     return Array.from(resourcesWithData.values())
-      .sort((a, b) => a.resourceName.localeCompare(b.resourceName));
+      .sort((a, b) => {
+        const aType = a.itemTypeId ?? 0;
+        const bType = b.itemTypeId ?? 0;
+        if (aType !== bType) return aType - bType;
+        const aSort = a.sortOrder ?? 0;
+        const bSort = b.sortOrder ?? 0;
+        if (aSort !== bSort) return aSort - bSort;
+        return a.resourceName.localeCompare(b.resourceName);
+      });
   }
 
   private generateCalendarDays(startDate: Date, endDate: Date): void {
@@ -306,6 +394,14 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
     return date1.getDate() === date2.getDate() &&
            date1.getMonth() === date2.getMonth() &&
            date1.getFullYear() === date2.getFullYear();
+  }
+
+  // New: determine if a date falls on a weekend
+  isWeekend(date: Date): boolean {
+    if (!date) return false;
+    const d = new Date(date);
+    const day = d.getDay(); // 0 = Sunday, 6 = Saturday
+    return day === 0 || day === 6;
   }
 
   isToday(date: Date): boolean {

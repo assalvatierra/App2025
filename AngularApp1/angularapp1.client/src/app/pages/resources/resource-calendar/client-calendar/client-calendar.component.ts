@@ -73,8 +73,8 @@ export class ClientCalendarComponent implements OnInit {
   isLoading = false;
   uniqueCustomers: string[] = [];
   calendarDays: Date[] = [];
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: Date | null;
+  dateTo: Date | null;
   calendarData: Map<string, ServiceRequirementCellItem[]> = new Map();
   assignedResourceData: Map<string, AssignedResourceCellItem[]> = new Map();
   viewMode: 'compact' | 'expanded' = 'compact';
@@ -96,7 +96,6 @@ export class ClientCalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadJobServices();
-    this.generateCalendarDays();
   }
 
   ngAfterViewInit(): void {
@@ -108,16 +107,28 @@ export class ClientCalendarComponent implements OnInit {
 
   loadJobServices(): void {
     this.isLoading = true;
+    debugger;
+    // Use component's date range (dateFrom/dateTo) for filtering.
+    // If dateFrom is null -> default to today. If dateTo is null -> default to today + 15 days.
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
 
-    // Get current month date range
-    const today = new Date();
-    const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const startDate = this.dateFrom ? new Date(this.dateFrom) : new Date(now);
+    startDate.setHours(0, 0, 0, 0);
+
+    const endDate = this.dateTo ? new Date(this.dateTo) : new Date(new Date(now).setDate(now.getDate() + 15));
+    endDate.setHours(0, 0, 0, 0);
+
+    // Persist normalized values back to component so other methods can use them
+    this.dateFrom = new Date(startDate);
+    this.dateTo = new Date(endDate);
 
     this.calendarService.getJobsCalendar({ startDate, endDate }).subscribe({
       next: (jobs: JobCalendarDto[]) => {
         const jobServices = this.flattenJobServices(jobs);
         this.dataSource.data = jobServices;
+        // regenerate calendar days based on the currently selected date range
+        this.generateCalendarDays();
         this.updateUniqueCustomers();
         this.populateCalendarData();
         this.populateAssignedResourceData();
@@ -138,7 +149,8 @@ export class ClientCalendarComponent implements OnInit {
         result.push({
           ...service,
           jobReference: job.jobReference,
-          customerName: job.customerName || ''
+          // Use jobReference as a fallback when customer name is missing so the calendar still shows a row
+          customerName: job.customerName || job.jobReference || 'Unknown Customer'
         });
       });
     });
@@ -159,10 +171,10 @@ export class ClientCalendarComponent implements OnInit {
   private generateCalendarDays(): void {
     this.calendarDays = [];
 
-    const currentDate = new Date(this.dateFrom);
+    const currentDate = new Date(this.dateFrom || new Date());
     currentDate.setHours(0, 0, 0, 0);
 
-    const endDate = new Date(this.dateTo);
+    const endDate = new Date(this.dateTo || currentDate);
     endDate.setHours(0, 0, 0, 0);
 
     while (currentDate <= endDate) {
@@ -172,15 +184,27 @@ export class ClientCalendarComponent implements OnInit {
   }
 
   applyDateFilter(): void {
-    if (this.dateFrom && this.dateTo) {
-      if (this.dateFrom > this.dateTo) {
-        alert('Date From must be before or equal to Date To');
-        return;
-      }
-      this.generateCalendarDays();
-      this.populateCalendarData();
-      this.populateAssignedResourceData();
+    // If either date is null, apply defaults (today and today+15)
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    if (!this.dateFrom) {
+      this.dateFrom = new Date(now);
     }
+
+    if (!this.dateTo) {
+      const dt = new Date(now);
+      dt.setDate(dt.getDate() + 15);
+      this.dateTo = dt;
+    }
+
+    if (this.dateFrom > this.dateTo) {
+      alert('Date From must be before or equal to Date To');
+      return;
+    }
+
+    // Reload job services using the updated date range so customer list and calendar data refresh
+    this.loadJobServices();
   }
 
   private populateCalendarData(): void {
@@ -300,7 +324,7 @@ export class ClientCalendarComponent implements OnInit {
   shouldShowBlankCell(customer: string, day: Date): boolean {
     const requirements = this.getCellItems(customer, day);
     const assigned = this.getAssignedResources(customer, day);
-    debugger;
+    
     // For each requirement, check if assigned resources of the same type fulfill the required quantity
     for (const req of requirements) {
       const reqType = (req.itemType || '').toLowerCase();

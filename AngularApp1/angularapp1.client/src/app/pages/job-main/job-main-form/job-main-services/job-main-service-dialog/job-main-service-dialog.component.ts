@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiJobServiceService, JobService } from '../../../../../core/services/api-job-service.service';
@@ -7,6 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../../../../core/api.service';
 import { ApiEntityService } from '../../../../../core/services/api-entity.service';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-job-main-service-dialog',
@@ -15,7 +17,7 @@ import { ApiEntityService } from '../../../../../core/services/api-entity.servic
   styleUrl: './job-main-service-dialog.component.css'
 })
 
-export class JobMainServiceDialogComponent implements OnInit {
+export class JobMainServiceDialogComponent implements OnInit, OnDestroy {
 
   jobServiceForm: FormGroup;
   isEditMode: boolean = false;
@@ -27,6 +29,9 @@ export class JobMainServiceDialogComponent implements OnInit {
   public serviceItems: any[] = [];
   public suppliers: any[] = [];
 
+  private dateStartSub?: Subscription;
+  private lastDateStart: Date | null = null; // track previous dateStart value
+
   constructor(
     public dialogRef: MatDialogRef<JobMainServiceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,7 +40,8 @@ export class JobMainServiceDialogComponent implements OnInit {
     private apiServiceLookup: ApiService,
     private apiEntityService: ApiEntityService,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.jobServiceForm = this.fb.group({
       id: [0],
@@ -69,14 +75,70 @@ export class JobMainServiceDialogComponent implements OnInit {
     this.jobMainId = this.data.jobMainId || 0;
     this.isEditMode = this.serviceId !== 0;
 
-    // Set jobMainId in form
+    // Set jobMainId in form without emitting valueChanges
     if (this.jobMainId > 0) {
-      this.jobServiceForm.patchValue({ jobMainId: this.jobMainId });
+      this.jobServiceForm.patchValue({ jobMainId: this.jobMainId }, { emitEvent: false });
     }
 
     if (this.isEditMode) {
       this.loadJobService();
     }
+
+    // Initialize lastDateStart from current control value (if any)
+    const dateStartControl = this.jobServiceForm.get('dateStart');
+    const dateEndControl = this.jobServiceForm.get('dateEnd');
+
+    if (dateStartControl) {
+      const initial = dateStartControl.value;
+      this.lastDateStart = initial ? (initial instanceof Date ? initial : new Date(initial)) : null;
+    }
+
+    // When Date Start changes, ensure Date End is at least the same date
+    if (dateStartControl && dateEndControl) {
+      this.dateStartSub = dateStartControl.valueChanges.subscribe((newStart: any) => {
+        if (!newStart) {
+          // update lastDateStart and exit
+          this.lastDateStart = null;
+          return;
+        }
+
+        // Normalize values to Date objects for comparison
+        const startDate = newStart instanceof Date ? newStart : new Date(newStart);
+        const endVal = dateEndControl.value;
+        const endDate = endVal ? (endVal instanceof Date ? endVal : new Date(endVal)) : null;
+
+        let reason: string | null = null;
+
+        // If previously dateStart and dateEnd were equal, update end to match new start
+        const prevStart = this.lastDateStart;
+        if (prevStart && endDate && prevStart.getTime() === endDate.getTime()) {
+          dateEndControl.setValue(startDate, { emitEvent: false });
+          reason = 'Date End matched previous Date Start and was updated to remain equal.';
+        } else {
+          // Otherwise if end is null or earlier than start, set end to the same as start
+          if (!endDate) {
+            dateEndControl.setValue(startDate, { emitEvent: false });
+            reason = 'Date End was empty and was set to Date Start.';
+          } else if (endDate.getTime() < startDate.getTime()) {
+            dateEndControl.setValue(startDate, { emitEvent: false });
+            reason = 'Date End was earlier than Date Start and was adjusted.';
+          }
+        }
+
+        // Show snackbar if we changed dateEnd
+        if (reason) {
+          const display = startDate.toLocaleDateString();
+          this.snackBar.open(`Date End set to ${display}: ${reason}`, 'Dismiss', { duration: 6000 });
+        }
+
+        // Update lastDateStart for next change
+        this.lastDateStart = startDate;
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.dateStartSub?.unsubscribe();
   }
 
   onCancelClick(): void {
@@ -97,7 +159,6 @@ export class JobMainServiceDialogComponent implements OnInit {
       alert('Please fill in all required fields');
     }
   }
-
 
   onSubmit() {
     if (this.jobServiceForm.valid) {
@@ -177,8 +238,8 @@ export class JobMainServiceDialogComponent implements OnInit {
       )
       .subscribe({
         next: (service: JobService) => {
-          let _dateStart: string | null = service.dateStart ? new Date(service.dateStart).toISOString().split('T')[0] : null;
-          let _dateEnd: string | null = service.dateEnd ? new Date(service.dateEnd).toISOString().split('T')[0] : null;
+          let _dateStart: Date | null = service.dateStart ? new Date(service.dateStart) : null;
+          let _dateEnd: Date | null = service.dateEnd ? new Date(service.dateEnd) : null;
 
           this.jobServiceForm.patchValue({
             id: service.id,
@@ -199,7 +260,10 @@ export class JobMainServiceDialogComponent implements OnInit {
             supplierId: service.supplierId,
             itemStatusId: service.itemStatusId,
             sortOrder: service.sortOrder
-          });
+          }, { emitEvent: false });
+
+          // store lastDateStart so we can detect previous equality with dateEnd
+          this.lastDateStart = _dateStart;
         },
         error: (error) => {
           this.loadError = true;

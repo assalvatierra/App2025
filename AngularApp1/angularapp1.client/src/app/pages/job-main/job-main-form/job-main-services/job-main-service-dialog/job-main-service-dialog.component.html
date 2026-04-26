@@ -45,13 +45,17 @@
             <div class="col">
               <mat-form-field class="full-width">
                 <mat-label>Date Start</mat-label>
-                <input matInput type="date" formControlName="dateStart">
+                <input matInput [matDatepicker]="startPicker" formControlName="dateStart">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field class="full-width">
                 <mat-label>Date End</mat-label>
-                <input matInput type="date" formControlName="dateEnd" />
+                <input matInput [matDatepicker]="endPicker" formControlName="dateEnd" />
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
               </mat-form-field>
             </div>
           </div>

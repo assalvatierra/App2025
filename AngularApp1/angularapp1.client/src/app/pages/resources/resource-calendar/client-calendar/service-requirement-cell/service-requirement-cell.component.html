@@ -1,4 +1,4 @@
-<div class="cell-content" *ngIf="items.length > 0">
+<div class="cell-content" *ngIf="items.length > 0 || showBlankCell">
   <!-- Compact Mode -->
   <div *ngIf="viewMode === 'compact'" class="compact-view">
     <div *ngFor="let item of items" 
@@ -7,10 +7,15 @@
          matTooltipPosition="above">
       <mat-icon 
         class="item-icon" 
-        [style.color]="getItemIconColor(item.itemType)">
+        [style.color]="getAssignedCount(item) < item.requiredQty ? '#d32f2f' : getItemIconColor(item.itemType)">
         {{ getItemIcon(item.itemType) }}
       </mat-icon>
       <span class="item-qty-compact">{{ item.requiredQty }}</span>
+      <span class="item-assigned-count" *ngIf="getAssignedCount(item) > 0">({{ getAssignedCount(item) }})</span>
+    </div>
+
+    <div class="cell-blank" *ngIf="items.length === 0 && showBlankCell" (click)="onBlankCellClick()">
+      <mat-icon>add_circle</mat-icon>
     </div>
   </div>
 
@@ -23,7 +28,7 @@
       <div class="item-header">
         <mat-icon 
           class="item-icon-expanded" 
-          [style.color]="getItemIconColor(item.itemType)">
+          [style.color]="getAssignedCount(item) < item.requiredQty ? '#d32f2f' : getItemIconColor(item.itemType)">
           {{ getItemIcon(item.itemType) }}
         </mat-icon>
         <div class="item-type">{{ item.itemType }}</div>
@@ -31,6 +36,17 @@
       <div class="item-qty">Qty: {{ item.requiredQty }}</div>
       <div class="item-job" *ngIf="item.jobReference">{{ item.jobReference }}</div>
       <div class="item-notes" *ngIf="item.notes">{{ item.notes }}</div>
+      <div class="assigned-section" *ngIf="getAssignedCount(item) > 0">
+        <div class="assigned-label">Assigned:</div>
+        <div class="assigned-list">
+          <span *ngFor="let a of getAssignedForItem(item)">{{ a.resourceName }}<span *ngIf="a.resourceCode"> ({{ a.resourceCode }})</span>{{ a !== getAssignedForItem(item)[getAssignedForItem(item).length - 1] ? ', ' : '' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cell-blank" *ngIf="items.length === 0 && showBlankCell" (click)="onBlankCellClick()">
+      <mat-icon>add_circle</mat-icon>
+      <span>Add Requirement</span>
     </div>
   </div>
 </div>

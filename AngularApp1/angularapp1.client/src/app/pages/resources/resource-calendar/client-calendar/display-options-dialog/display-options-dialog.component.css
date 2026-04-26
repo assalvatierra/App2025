@@ -1,0 +1,68 @@
+.dialog-icon {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.options-container {
+  padding: 16px 0;
+  min-width: 400px;
+}
+
+.option-group {
+  margin-bottom: 24px;
+}
+
+.option-group:last-child {
+  margin-bottom: 0;
+}
+
+.option-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+}
+
+.view-toggle,
+.density-toggle,
+.layout-toggle {
+  display: flex;
+  width: 100%;
+}
+
+mat-button-toggle {
+  flex: 1;
+}
+
+.toggle-label {
+  margin-left: 8px;
+}
+
+mat-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+}
+
+mat-dialog-actions button {
+  margin-left: 8px;
+}
+
+mat-dialog-actions button:first-child {
+  margin-left: 0;
+}
+
+@media (max-width: 600px) {
+  .options-container {
+    min-width: 280px;
+  }
+
+  .toggle-label {
+    display: none;
+  }
+}

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>
+  <mat-icon class="dialog-icon">visibility</mat-icon>
+  Display Options
+</h2>
+
+<mat-dialog-content>
+  <div class="options-container">
+    <!-- View Mode Toggle -->
+    <div class="option-group">
+      <label class="option-label">View Mode</label>
+      <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle" aria-label="Calendar view mode">
+        <mat-button-toggle value="compact" matTooltip="Compact view - icons and initials">
+          <mat-icon>view_compact</mat-icon>
+          <span class="toggle-label">Compact</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="expanded" matTooltip="Expanded view - full details">
+          <mat-icon>view_agenda</mat-icon>
+          <span class="toggle-label">Expanded</span>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Density Mode Toggle -->
+    <div class="option-group">
+      <label class="option-label">Density Mode</label>
+      <mat-button-toggle-group [(ngModel)]="densityMode" class="density-toggle" aria-label="Calendar density mode">
+        <mat-button-toggle value="comfortable" matTooltip="Comfortable - spacious layout with extra padding">
+          <mat-icon>view_comfy</mat-icon>
+          <span class="toggle-label">Comfortable</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="compact" matTooltip="Compact - balanced spacing">
+          <mat-icon>view_compact_alt</mat-icon>
+          <span class="toggle-label">Compact</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="dense" matTooltip="Dense - minimal spacing for maximum data">
+          <mat-icon>view_stream</mat-icon>
+          <span class="toggle-label">Dense</span>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Layout Mode Toggle -->
+    <div class="option-group">
+      <label class="option-label">Layout Mode</label>
+      <mat-button-toggle-group [(ngModel)]="layoutMode" class="layout-toggle" aria-label="Calendar layout mode">
+        <mat-button-toggle value="calendar" matTooltip="Calendar - horizontal grid layout">
+          <mat-icon>calendar_view_month</mat-icon>
+          <span class="toggle-label">Calendar</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="stack" matTooltip="Stack - vertical mobile-friendly layout">
+          <mat-icon>view_list</mat-icon>
+          <span class="toggle-label">Stack</span>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onApply()">
+    <mat-icon>check</mat-icon>
+    Apply
+  </button>
+</mat-dialog-actions>

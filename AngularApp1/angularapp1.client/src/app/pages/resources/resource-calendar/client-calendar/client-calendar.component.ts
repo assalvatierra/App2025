@@ -16,11 +16,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { ApiResourceCalendarService } from '../../../../core/services/api-resource-calendar.service';
 import { JobCalendarDto, JobServiceCalendarDto } from '../../../../core/models/resource-calendar.model';
 import { ServiceRequirementCellComponent, ServiceRequirementCellItem } from './service-requirement-cell/service-requirement-cell.component';
 import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assigned-resource-cell/assigned-resource-cell.component';
+import { DisplayOptionsDialogComponent, DisplayOptionsData } from './display-options-dialog/display-options-dialog.component';
 
 
 @Component({
@@ -44,6 +46,7 @@ import { AssignedResourceCellComponent, AssignedResourceCellItem } from './assig
     MatButtonToggleModule,
     MatTabsModule,
     MatExpansionModule,
+    MatDialogModule,
     ServiceRequirementCellComponent,
     AssignedResourceCellComponent
   ],
@@ -77,8 +80,11 @@ export class ClientCalendarComponent implements OnInit {
   viewMode: 'compact' | 'expanded' = 'compact';
   densityMode: 'comfortable' | 'compact' | 'dense' = 'compact';
   layoutMode: 'calendar' | 'stack' = 'calendar';
+  displayOptionsExpanded = false;
 
-  constructor(private calendarService: ApiResourceCalendarService) {
+  constructor(
+    private calendarService: ApiResourceCalendarService
+  ) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     this.dateFrom = new Date(today);
@@ -97,6 +103,8 @@ export class ClientCalendarComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  // openDisplayOptions removed; display options are now inline in the template
 
   loadJobServices(): void {
     this.isLoading = true;
@@ -282,6 +290,28 @@ export class ClientCalendarComponent implements OnInit {
   getAssignedResources(customer: string, day: Date): AssignedResourceCellItem[] {
     const key = this.getCalendarKey(customer, day);
     return this.assignedResourceData.get(key) || [];
+  }
+
+  // ...shouldShowBlankCell method here...
+  /**
+   * Determines if the blank cell (add service-requirement) should be shown for a calendar cell.
+   * Returns true if there is remaining required quantity after deducting assigned resources.
+   */
+  shouldShowBlankCell(customer: string, day: Date): boolean {
+    const requirements = this.getCellItems(customer, day);
+    const assigned = this.getAssignedResources(customer, day);
+    debugger;
+    // For each requirement, check if assigned resources of the same type fulfill the required quantity
+    for (const req of requirements) {
+      const reqType = (req.itemType || '').toLowerCase();
+      const assignedOfType = assigned.filter(r => (r.resourceType || '').toLowerCase() === reqType).length;
+      if ((req.requiredQty || 0) > assignedOfType) {
+        // Still need more resources of this type
+        return true;
+      }
+    }
+    // All requirements are fulfilled by assigned resources of the same type
+    return false;
   }
 
   hasCellData(customer: string, day: Date): boolean {

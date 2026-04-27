@@ -89,9 +89,9 @@ export class ClientCalendarComponent implements OnInit {
     today.setHours(0, 0, 0, 0);
     this.dateFrom = new Date(today);
 
-    const sevenDaysLater = new Date(today);
-    sevenDaysLater.setDate(today.getDate() + 7);
-    this.dateTo = sevenDaysLater;
+    const fifteenDaysLater = new Date(today);
+    fifteenDaysLater.setDate(today.getDate() + 15);
+    this.dateTo = fifteenDaysLater;
   }
 
   ngOnInit(): void {

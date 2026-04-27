@@ -74,10 +74,14 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private calendarService: ApiResourceCalendarService
   ) {
-    // Initialize with current month
+    // Initialize with start = today and end = today + 15 days
     const today = new Date();
-    this.currentStartDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    this.currentEndDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    today.setHours(0, 0, 0, 0);
+    this.currentStartDate = new Date(today);
+    const end = new Date(today);
+    end.setDate(end.getDate() + 15);
+    end.setHours(0, 0, 0, 0);
+    this.currentEndDate = end;
   }
 
   ngOnInit(): void {
@@ -301,8 +305,11 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
   private generateCalendarDays(startDate: Date, endDate: Date): void {
     this.calendarDays = [];
     const current = new Date(startDate);
+    current.setHours(0, 0, 0, 0);
+    const last = new Date(endDate);
+    last.setHours(0, 0, 0, 0);
     
-    while (current <= endDate) {
+    while (current <= last) {
       this.calendarDays.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
@@ -317,8 +324,12 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
 
   onResetFilter(): void {
     const today = new Date();
-    this.currentStartDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    this.currentEndDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    today.setHours(0, 0, 0, 0);
+    this.currentStartDate = new Date(today);
+    const end = new Date(today);
+    end.setDate(end.getDate() + 15);
+    end.setHours(0, 0, 0, 0);
+    this.currentEndDate = end;
     
     this.filterForm.patchValue({
       startDate: this.currentStartDate,
@@ -372,8 +383,12 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
 
   navigateToToday(): void {
     const today = new Date();
-    this.currentStartDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    this.currentEndDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    today.setHours(0, 0, 0, 0);
+    this.currentStartDate = new Date(today);
+    const end = new Date(today);
+    end.setDate(end.getDate() + 15);
+    end.setHours(0, 0, 0, 0);
+    this.currentEndDate = end;
     
     this.filterForm.patchValue({
       startDate: this.currentStartDate,

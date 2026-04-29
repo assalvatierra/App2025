@@ -929,6 +929,32 @@
       <column name="" />
     </property>
   </class>
+  <class name="JobSchedule" entity-set="JobSchedule" p1:Guid="af3c14a0-ea01-45fa-9b01-03eed689eff9">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a6e9f860-5354-4dd9-9711-3a87cbb30a19">
+      <column name="" />
+    </id>
+    <property name="Estimated" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e482f107-9dfd-4818-8b24-65eb50291287">
+      <column name="" />
+    </property>
+    <property name="Actual" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e3e023ef-8683-434e-8af3-fd4a57c2ffd9">
+      <column name="" />
+    </property>
+    <property name="Leadtime" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b3fd42fa-4ee2-4044-b97a-41e27e654c33">
+      <column name="" />
+    </property>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a419ebca-8828-48f5-af7f-b6e5b5ba11e8">
+      <column name="" />
+    </property>
+    <property name="JobServiceId" type="Int32" p1:ValidateRequired="true" p1:Guid="e14804a4-8ecc-4871-b903-a05009d0bfce">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="a6a251d0-7d11-4295-834a-dc192478227d">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="ee4c7713-3f81-4227-96fe-ffae1b907eb8">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1488,6 +1514,30 @@
       </end1>
       <end2 multiplicity="Many" name="JobServiceRequirements" class="ItemType" relation-class="JobServiceRequirement" lazy="False" p1:Guid="77efed87-b9d9-47e3-98b7-4f78acdd9d56">
         <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="JobService_JobSchedule" cardinality="OneToMany" p1:Guid="660a701f-27b0-413f-b585-c583311af5fb">
+      <end1 multiplicity="One" name="JobService" class="JobSchedule" relation-class="JobService" constrained="True" lazy="False" p1:Guid="f7b0e9f4-c408-45fa-a8e8-6bbd4dd65bd4">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobSchedules" class="JobService" relation-class="JobSchedule" lazy="False" p1:Guid="9eb620fc-0363-48b7-a31e-3912a37dd87c">
+        <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="ItemType_JobSchedule" cardinality="OneToMany" p1:Guid="2031e5f7-e1d3-44cf-a625-4b4e181ba9bd">
+      <end1 multiplicity="One" name="ItemType" class="JobSchedule" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="f58e1641-652d-405b-bd69-ffe0d6952ddf">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobSchedules" class="ItemType" relation-class="JobSchedule" lazy="False" p1:Guid="877be5a2-38d1-439a-bd8f-88a882853722">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_JobSchedule" cardinality="OneToMany" p1:Guid="9b024ddb-3358-408d-9880-875442371e13">
+      <end1 multiplicity="One" name="ItemStatus" class="JobSchedule" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="6df599f7-5c1e-43d0-970c-3275610cc281">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobSchedules" class="ItemStatus" relation-class="JobSchedule" lazy="False" p1:Guid="6cb51dc6-138b-4b47-95aa-4ecbd6ad797b">
+        <property name="ItemStatusId" />
       </end2>
     </association>
   </associations>

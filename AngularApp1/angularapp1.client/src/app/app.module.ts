@@ -71,6 +71,8 @@ import { JobCustomerDetailsComponent } from './pages/job-main/job-main-form/job-
 import { JobCustomerFormComponent } from './pages/job-main/job-main-form/job-main-customer/job-customer-form/job-customer-form.component';
 import { JobMainStatusListComponent } from './pages/job-main/job-main-form/job-main-status-list/job-main-status-list.component';
 import { JobMainStatusDialogComponent } from './pages/job-main/job-main-form/job-main-status-list/job-main-status-dialog/job-main-status-dialog.component';
+import { JobMainScheduleComponent } from './pages/job-main/job-main-form/job-main-schedule/job-main-schedule.component';
+import { JobScheduleDialogComponent } from './pages/job-main/job-main-form/job-main-schedule/job-schedule-dialog/job-schedule-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -154,7 +156,9 @@ import { EntityContactListComponent } from './pages/entity/entity-contact-list/e
     MatTooltipModule,
     SharedModule, 
     JobServiceModule,
-    JobMainComponent
+    JobMainComponent,
+    JobMainScheduleComponent,
+    JobScheduleDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

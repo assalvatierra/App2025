@@ -1,0 +1,26 @@
+<div class="job-schedule-section">
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 12px;">
+    <button mat-raised-button color="primary" (click)="openJobScheduleDialog()">
+      <mat-icon>add</mat-icon> Add Job Schedule
+    </button>
+  </div>
+  <table mat-table [dataSource]="jobSchedules" class="mat-elevation-z1" style="width: 100%;">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="jobServiceId">
+      <th mat-header-cell *matHeaderCellDef> Job Service ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.jobServiceId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="openJobScheduleDialog(row)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteJobSchedule(row)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

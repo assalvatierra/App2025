@@ -5,7 +5,12 @@ import { Observable } from 'rxjs';
 export interface JobSchedule {
   id: number;
   jobServiceId?: number;
-  // Add other JobSchedule properties as needed
+  estimated?: string | Date | null;
+  actual?: string | Date | null;
+  leadtime?: number | null;
+  notes?: string | null;
+  itemTypeId?: number | null;
+  itemStatusId?: number | null;
 }
 
 @Injectable({ providedIn: 'root' })

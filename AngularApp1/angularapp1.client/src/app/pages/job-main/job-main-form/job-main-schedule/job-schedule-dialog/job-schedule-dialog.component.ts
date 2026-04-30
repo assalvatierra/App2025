@@ -1,4 +1,3 @@
-
 import { Component, Inject, Input, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobSchedule } from 'src/app/core/services/api-job-schedule.service';
@@ -52,7 +51,14 @@ export class JobScheduleDialogComponent implements OnInit {
   ngOnInit(): void {
     // Assign jobServices and build form in ngOnInit for correct binding
     this.jobServices = this.data.jobServices || [];
-    const estimatedDate = this.data.estimated ? new Date(this.data.estimated) : null;
+    // If jobServiceId is present, use the selected jobService's dateStart as estimatedDate
+    let estimatedDate = this.data.estimated ? new Date(this.data.estimated) : null;
+    if (!estimatedDate && this.data.jobServiceId && this.jobServices && this.jobServices.length > 0) {
+      const selectedService = this.jobServices.find(s => s.id === this.data.jobServiceId);
+      if (selectedService && selectedService.dateStart) {
+        estimatedDate = new Date(selectedService.dateStart);
+      }
+    }
     const actualDate = this.data.actual ? new Date(this.data.actual) : null;
     this.form = this.fb.group({
       id: [this.data.id],
@@ -92,5 +98,14 @@ export class JobScheduleDialogComponent implements OnInit {
 
   onCancel() {
     this.dialogRef.close();
+  }
+
+  onJobServiceChange(jobServiceId: number) {
+    const selectedService = this.jobServices.find(s => s.id === jobServiceId);
+    if (selectedService && selectedService.dateStart) {
+      this.form.patchValue({
+        estimatedDate: new Date(selectedService.dateStart)
+      });
+    }
   }
 }

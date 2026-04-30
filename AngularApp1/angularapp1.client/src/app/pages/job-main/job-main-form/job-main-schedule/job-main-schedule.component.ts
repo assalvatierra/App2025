@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiJobScheduleService, JobSchedule } from 'src/app/core/services/api-job-schedule.service';
 import { JobScheduleDialogComponent } from './job-schedule-dialog/job-schedule-dialog.component';
@@ -23,7 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     JobScheduleDialogComponent
   ]
 })
-export class JobMainScheduleComponent implements OnInit {
+export class JobMainScheduleComponent implements AfterViewInit {
   @Input() jobMainId!: number;
   jobSchedules: JobSchedule[] = [];
   jobServices: JobService[] = [];
@@ -35,12 +35,12 @@ export class JobMainScheduleComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.loadJobSchedules();
-    this.loadJobServices();
+    setTimeout(() => this.loadJobServices());
   }
 
-  loadJobSchedules() {
+  loadJobSchedules    () {
     if (!this.jobMainId) return;
     this.jobScheduleService.getByJobService(this.jobMainId).subscribe(data => {
       this.jobSchedules = data;
@@ -49,8 +49,8 @@ export class JobMainScheduleComponent implements OnInit {
 
   loadJobServices() {
     if (!this.jobMainId) return;
-    this.jobServiceService.getJobServices().subscribe(services => {
-      this.jobServices = services.filter(s => s.jobMainId === this.jobMainId);
+    this.jobServiceService.getJobsServiceByJobId(this.jobMainId).subscribe(services => {
+      this.jobServices = services;
     });
   }
 

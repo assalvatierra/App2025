@@ -1,40 +1,58 @@
 <h2 mat-dialog-title>{{ data.id ? 'Edit' : 'Add' }} Job Schedule</h2>
 <mat-dialog-content>
   <form [formGroup]="form">
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Job Service</mat-label>
-      <mat-select formControlName="jobServiceId">
-        <mat-option *ngFor="let svc of jobServices" [value]="svc.id">{{ svc.particulars || svc.id }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Estimated</mat-label>
-      <input matInput formControlName="estimated" type="datetime-local">
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Actual</mat-label>
-      <input matInput formControlName="actual" type="datetime-local">
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Leadtime</mat-label>
-      <input matInput formControlName="leadtime" type="number" step="0.01">
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Notes</mat-label>
-      <textarea matInput formControlName="notes"></textarea>
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Item Type</mat-label>
-      <mat-select formControlName="itemTypeId">
-        <mat-option *ngFor="let type of itemTypes" [value]="type.id">{{ type.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Item Status</mat-label>
-      <mat-select formControlName="itemStatusId">
-        <mat-option *ngFor="let status of itemStatuses" [value]="status.id">{{ status.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <ng-container *ngIf="jobServices && jobServices.length > 0">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Job Service</mat-label>
+        <mat-select formControlName="jobServiceId">
+          <mat-option *ngFor="let svc of jobServices" [value]="svc.id">{{ svc.particulars || svc.id }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div style="display: flex; gap: 8px;">
+        <mat-form-field appearance="outline" style="flex: 1;">
+          <mat-label>Estimated Date</mat-label>
+          <input matInput [matDatepicker]="estimatedDatePicker" formControlName="estimatedDate">
+          <mat-datepicker-toggle matSuffix [for]="estimatedDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #estimatedDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 120px;">
+          <mat-label>Estimated Time</mat-label>
+          <input matInput formControlName="estimatedTime" type="time">
+        </mat-form-field>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <mat-form-field appearance="outline" style="flex: 1;">
+          <mat-label>Actual Date</mat-label>
+          <input matInput [matDatepicker]="actualDatePicker" formControlName="actualDate">
+          <mat-datepicker-toggle matSuffix [for]="actualDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #actualDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 120px;">
+          <mat-label>Actual Time</mat-label>
+          <input matInput formControlName="actualTime" type="time">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Leadtime</mat-label>
+        <input matInput formControlName="leadtime" type="number" step="0.01">
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Item Type</mat-label>
+        <mat-select formControlName="itemTypeId">
+          <mat-option *ngFor="let type of itemTypes" [value]="type.id">{{ type.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Item Status</mat-label>
+        <mat-select formControlName="itemStatusId">
+          <mat-option *ngFor="let status of itemStatuses" [value]="status.id">{{ status.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

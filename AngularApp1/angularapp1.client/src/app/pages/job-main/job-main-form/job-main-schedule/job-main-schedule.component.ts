@@ -56,7 +56,7 @@ export class JobMainScheduleComponent implements AfterViewInit {
 
   openJobScheduleDialog(jobSchedule?: JobSchedule) {
     const dialogRef = this.dialog.open(JobScheduleDialogComponent, {
-      width: '400px',
+      width: '500px',
       data: {
         ...(jobSchedule ? { ...jobSchedule } : { jobServiceId: this.jobMainId }),
         jobServices: this.jobServices

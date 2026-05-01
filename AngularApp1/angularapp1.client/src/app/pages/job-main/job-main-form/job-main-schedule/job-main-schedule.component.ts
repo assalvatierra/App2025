@@ -64,10 +64,27 @@ export class JobMainScheduleComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result.id) {
-          this.jobScheduleService.update(result.id, result).subscribe(() => this.loadJobSchedules());
+        // Sanitize result for API
+        const toIsoString = (val: any) => {
+          if (!val) return null;
+          if (typeof val === 'string') return val;
+          if (val instanceof Date) return val.toISOString();
+          return val;
+        };
+        const sanitized: JobSchedule = {
+          id: result.id,
+          jobServiceId: result.jobServiceId,
+          estimated: toIsoString(result.estimated),
+          actual: toIsoString(result.actual),
+          leadtime: result.leadtime !== undefined && result.leadtime !== null && result.leadtime !== '' ? Number(result.leadtime) : null,
+          notes: result.notes ?? null,
+          itemTypeId: result.itemTypeId ?? null,
+          itemStatusId: result.itemStatusId ?? null
+        };
+        if (sanitized.id) {
+          this.jobScheduleService.update(sanitized.id, sanitized).subscribe(() => this.loadJobSchedules());
         } else {
-          this.jobScheduleService.create(result).subscribe(() => this.loadJobSchedules());
+          this.jobScheduleService.create(sanitized).subscribe(() => this.loadJobSchedules());
         }
       }
     });

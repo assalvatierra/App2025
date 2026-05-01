@@ -88,9 +88,9 @@ export class JobScheduleDialogComponent implements OnInit {
       itemTypeId: [this.data.itemTypeId],
       itemStatusId: [this.data.itemStatusId]
     });
-    // Filter itemTypes by class name 'JobSchedule'
+    // Filter itemTypes and itemStatuses by class name 'JobSchedule'
     this.api.getItemTypesByClassName('JobSchedule').subscribe(types => this.itemTypes = types);
-    this.api.getItemStatuses().subscribe(statuses => this.itemStatuses = statuses);
+    this.api.getItemStatusesByClassName('JobSchedule').subscribe(statuses => this.itemStatuses = statuses);
   }
 
   onSave() {

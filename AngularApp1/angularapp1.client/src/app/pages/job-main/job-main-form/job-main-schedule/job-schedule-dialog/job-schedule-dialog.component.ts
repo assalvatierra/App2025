@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-job-schedule-dialog',
@@ -28,7 +29,8 @@ import { CommonModule } from '@angular/common';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule
   ]
 })
 export class JobScheduleDialogComponent implements OnInit {
@@ -60,6 +62,19 @@ export class JobScheduleDialogComponent implements OnInit {
       }
     }
     const actualDate = this.data.actual ? new Date(this.data.actual) : null;
+    // Determine initial leadtime radio value and other value
+    let leadtimeRadio: any = null;
+    let leadtimeOther: any = '';
+    if (this.data.leadtime === 1 || this.data.leadtime === '1') {
+      leadtimeRadio = 1;
+    } else if (this.data.leadtime === 1.5 || this.data.leadtime === '1.5') {
+      leadtimeRadio = 1.5;
+    } else if (this.data.leadtime === 2 || this.data.leadtime === '2') {
+      leadtimeRadio = 2;
+    } else if (this.data.leadtime) {
+      leadtimeRadio = 'other';
+      leadtimeOther = this.data.leadtime;
+    }
     this.form = this.fb.group({
       id: [this.data.id],
       jobServiceId: [this.data.jobServiceId, Validators.required],
@@ -67,12 +82,14 @@ export class JobScheduleDialogComponent implements OnInit {
       estimatedTime: [estimatedDate ? estimatedDate.toISOString().substring(11, 16) : ''],
       actualDate: [actualDate ? actualDate : null],
       actualTime: [actualDate ? actualDate.toISOString().substring(11, 16) : ''],
-      leadtime: [this.data.leadtime],
+      leadtime: [leadtimeRadio],
+      leadtimeOther: [leadtimeOther],
       notes: [this.data.notes],
       itemTypeId: [this.data.itemTypeId],
       itemStatusId: [this.data.itemStatusId]
     });
-    this.api.getItemTypes().subscribe(types => this.itemTypes = types);
+    // Filter itemTypes by class name 'JobSchedule'
+    this.api.getItemTypesByClassName('JobSchedule').subscribe(types => this.itemTypes = types);
     this.api.getItemStatuses().subscribe(statuses => this.itemStatuses = statuses);
   }
 
@@ -87,8 +104,11 @@ export class JobScheduleDialogComponent implements OnInit {
         dt.setHours(Number(hours), Number(minutes), 0, 0);
         return dt.toISOString();
       };
+      // Determine leadtime value
+      let leadtimeValue = value.leadtime === 'other' ? value.leadtimeOther : value.leadtime;
       const result = {
         ...value,
+        leadtime: leadtimeValue,
         estimated: combineDateTime(value.estimatedDate, value.estimatedTime),
         actual: combineDateTime(value.actualDate, value.actualTime)
       };

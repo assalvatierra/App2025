@@ -1,1 +1,7 @@
 /* Dialog styles */
+
+::ng-deep .mat-dialog-container {
+  min-width: 750px;
+  width: 80vw;
+  max-width: 90vw;
+}

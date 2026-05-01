@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiJobScheduleService, JobSchedule } from 'src/app/core/services/api-job-schedule.service';
 import { JobScheduleDialogComponent } from './job-schedule-dialog/job-schedule-dialog.component';
@@ -23,7 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     JobScheduleDialogComponent
   ]
 })
-export class JobMainScheduleComponent implements AfterViewInit {
+export class JobMainScheduleComponent implements AfterViewInit, OnChanges {
   @Input() jobMainId!: number;
   jobSchedules: JobSchedule[] = [];
   jobServices: JobService[] = [];
@@ -35,14 +35,21 @@ export class JobMainScheduleComponent implements AfterViewInit {
     private dialog: MatDialog
   ) {}
 
+
   ngAfterViewInit(): void {
-    this.loadJobSchedules();
     setTimeout(() => this.loadJobServices());
   }
 
-  loadJobSchedules    () {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['jobMainId'] && this.jobMainId && this.jobMainId !== 0) {
+      this.loadJobSchedules();
+    }
+  }
+
+  loadJobSchedules() {
+    debugger;
     if (!this.jobMainId) return;
-    this.jobScheduleService.getByJobService(this.jobMainId).subscribe(data => {
+    this.jobScheduleService.getByJobId(this.jobMainId).subscribe(data => {
       this.jobSchedules = data;
     });
   }
@@ -71,8 +78,7 @@ export class JobMainScheduleComponent implements AfterViewInit {
           if (val instanceof Date) return val.toISOString();
           return val;
         };
-        const sanitized: JobSchedule = {
-          id: result.id,
+        const sanitized: any = {
           jobServiceId: result.jobServiceId,
           estimated: toIsoString(result.estimated),
           actual: toIsoString(result.actual),
@@ -81,10 +87,21 @@ export class JobMainScheduleComponent implements AfterViewInit {
           itemTypeId: result.itemTypeId ?? null,
           itemStatusId: result.itemStatusId ?? null
         };
-        if (sanitized.id) {
+        if (result.id) {
+          sanitized.id = result.id;
           this.jobScheduleService.update(sanitized.id, sanitized).subscribe(() => this.loadJobSchedules());
         } else {
-          this.jobScheduleService.create(sanitized).subscribe(() => this.loadJobSchedules());
+          debugger;
+          // Example: Adding error handling to your subscription
+          this.jobScheduleService.create(sanitized).subscribe({
+            next: (res) => console.log('Success!', res),
+            error: (err) => {
+              // Access the specific server-side validation messages
+              console.error('Backend returned:', err.error);
+            }
+          });
+
+          //this.jobScheduleService.create(sanitized).subscribe(() => this.loadJobSchedules());
         }
       }
     });

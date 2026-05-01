@@ -166,6 +166,9 @@ namespace AngularApp1.Server.Data
             // Map Payments DbSet to Payment table (singular)
             modelBuilder.Entity<Payment>().ToTable("Payment");
 
+            // map to singular
+            modelBuilder.Entity<JobSchedule>().ToTable("JobSchedule");
+
             // Map Expense DbSets to singular table names
             modelBuilder.Entity<Expense>().ToTable("Expense");
             modelBuilder.Entity<ExpenseStatus>().ToTable("ExpenseStatus");

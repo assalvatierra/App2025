@@ -15,11 +15,13 @@ export interface JobSchedule {
 
 @Injectable({ providedIn: 'root' })
 export class ApiJobScheduleService {
-  private url = '/api/JobSchedule';
+  //private url = '/api/JobSchedule';
+  private url = 'http://localhost:5157/api/JobSchedule';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<JobSchedule[]> {
+    debugger;
     return this.http.get<JobSchedule[]>(this.url);
   }
 
@@ -28,7 +30,12 @@ export class ApiJobScheduleService {
   }
 
   getByJobService(jobServiceId: number): Observable<JobSchedule[]> {
+    debugger;
     return this.http.get<JobSchedule[]>(`${this.url}/ByJobService/${jobServiceId}`);
+  }
+
+  getByJobId(jobMainId: number): Observable<JobSchedule[]> {
+    return this.http.get<JobSchedule[]>(`${this.url}/ByJobId/${jobMainId}`);
   }
 
   create(jobSchedule: JobSchedule): Observable<JobSchedule> {

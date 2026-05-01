@@ -90,6 +90,24 @@ namespace AngularApp1.Server.Controllers
             return NoContent();
         }
 
+        // GET: api/JobSchedule/ByJobId/5
+        [HttpGet("ByJobId/{jobMainId}")]
+        public async Task<ActionResult<IEnumerable<JobSchedule>>> GetByJobId(int jobMainId)
+        {
+            // Get JobService IDs for the given JobMainId
+            var jobServiceIds = await _context.Set<JobService>()
+                .Where(js => js.JobMainId == jobMainId)
+                .Select(js => js.Id)
+                .ToListAsync();
+
+            // Get JobSchedules for those JobService IDs
+            var schedules = await _context.Set<JobSchedule>()
+                .Where(s => s.JobServiceId.HasValue && jobServiceIds.Contains(s.JobServiceId.Value))
+                .ToListAsync();
+
+            return Ok(schedules);
+        }
+
         private bool JobScheduleExists(int id)
         {
             return _context.Set<JobSchedule>().Any(e => e.Id == id);

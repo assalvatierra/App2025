@@ -1,0 +1,59 @@
+
+<div class="job-schedule-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Schedules</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div style="display: flex; justify-content: flex-start; margin-bottom: 12px;">
+        <button mat-raised-button color="primary" (click)="openJobScheduleDialog()">
+          <mat-icon>add</mat-icon> Add Job Schedule
+        </button>
+      </div>
+      <div *ngIf="jobSchedules.length === 0" class="no-data-message">
+        <p>No schedules associated with this job. Click "Add Job Schedule" to add one.</p>
+      </div>
+      <div *ngIf="jobSchedules.length > 0" class="schedules-table">
+        <table mat-table [dataSource]="jobSchedules" class="mat-elevation-z1 full-width">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="jobServiceId">
+            <th mat-header-cell *matHeaderCellDef> Svc ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.jobServiceId}} </td>
+          </ng-container>
+          <ng-container matColumnDef="serviceParticulars">
+            <th mat-header-cell *matHeaderCellDef>Service</th>
+            <td mat-cell *matCellDef="let row"> {{getServiceParticulars(row.jobServiceId)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="itemTypeName">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let row"> {{getItemTypeName(row.itemTypeId)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="estimated">
+            <th mat-header-cell *matHeaderCellDef>Datetime</th>
+            <td mat-cell *matCellDef="let row"> {{row.estimated | date:'short'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="leadtime">
+            <th mat-header-cell *matHeaderCellDef> Lead(hrs) </th>
+            <td mat-cell *matCellDef="let row"> {{row.leadtime}} </td>
+          </ng-container>
+          <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef> Notes </th>
+            <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary" (click)="openJobScheduleDialog(row)"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="deleteJobSchedule(row)"><mat-icon>delete</mat-icon></button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

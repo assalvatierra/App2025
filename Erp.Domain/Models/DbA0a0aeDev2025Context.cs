@@ -11,14 +11,15 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<JobServiceRequirement> JobServiceRequirements { get; set; }
+    public virtual DbSet<JobSchedule> JobSchedules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<JobServiceRequirement>(entity =>
+        modelBuilder.Entity<JobSchedule>(entity =>
         {
-            entity.ToTable("JobServiceRequirement");
+            entity.ToTable("JobSchedule");
 
+            entity.Property(e => e.Leadtime).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Notes).HasMaxLength(4000);
         });
 

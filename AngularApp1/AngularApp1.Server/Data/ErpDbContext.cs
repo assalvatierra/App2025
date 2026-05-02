@@ -31,6 +31,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ServiceItem> ServiceItem { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMain> JobMain { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobService> JobService { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.JobSchedule> JobSchedules { get; set; } = default!;
     public DbSet<Erp.Domain.Models.JobCustomer> JobCustomers { get; set; } = default!;
     public DbSet<Erp.Domain.Models.JobContact> JobContacts { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobMainStatus> JobMainStatus { get; set; } = default!;
@@ -164,6 +165,9 @@ namespace AngularApp1.Server.Data
 
             // Map Payments DbSet to Payment table (singular)
             modelBuilder.Entity<Payment>().ToTable("Payment");
+
+            // map to singular
+            modelBuilder.Entity<JobSchedule>().ToTable("JobSchedule");
 
             // Map Expense DbSets to singular table names
             modelBuilder.Entity<Expense>().ToTable("Expense");

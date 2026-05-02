@@ -50,3 +50,7 @@ mat-form-field {
     gap: 0;
   }
 }
+/* Adds top margin to the Back to List button */
+.top-margin {
+  margin-top: 24px;
+}

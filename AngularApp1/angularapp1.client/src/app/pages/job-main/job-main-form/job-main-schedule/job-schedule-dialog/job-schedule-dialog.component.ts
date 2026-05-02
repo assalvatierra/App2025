@@ -53,15 +53,28 @@ export class JobScheduleDialogComponent implements OnInit {
   ngOnInit(): void {
     // Assign jobServices and build form in ngOnInit for correct binding
     this.jobServices = this.data.jobServices || [];
-    // If jobServiceId is present, use the selected jobService's dateStart as estimatedDate
-    let estimatedDate = this.data.estimated ? new Date(this.data.estimated) : null;
-    if (!estimatedDate && this.data.jobServiceId && this.jobServices && this.jobServices.length > 0) {
+    // Use raw DB values for estimated and actual, no Date object or timezone conversion
+    let estimatedDate = '';
+    let estimatedTime = '';
+    if (this.data.estimated) {
+      const [datePart, timePart] = this.data.estimated.split('T');
+      estimatedDate = datePart;
+      estimatedTime = timePart ? timePart.substring(0, 5) : '';
+    } else if (this.data.jobServiceId && this.jobServices && this.jobServices.length > 0) {
       const selectedService = this.jobServices.find(s => s.id === this.data.jobServiceId);
       if (selectedService && selectedService.dateStart) {
-        estimatedDate = new Date(selectedService.dateStart);
+        const [datePart, timePart] = selectedService.dateStart.split('T');
+        estimatedDate = datePart;
+        estimatedTime = timePart ? timePart.substring(0, 5) : '';
       }
     }
-    const actualDate = this.data.actual ? new Date(this.data.actual) : null;
+    let actualDate = '';
+    let actualTime = '';
+    if (this.data.actual) {
+      const [datePart, timePart] = this.data.actual.split('T');
+      actualDate = datePart;
+      actualTime = timePart ? timePart.substring(0, 5) : '';
+    }
     // Determine initial leadtime radio value and other value
     let leadtimeRadio: any = null;
     let leadtimeOther: any = '';
@@ -78,10 +91,10 @@ export class JobScheduleDialogComponent implements OnInit {
     this.form = this.fb.group({
       id: [this.data.id],
       jobServiceId: [this.data.jobServiceId, Validators.required],
-      estimatedDate: [estimatedDate ? estimatedDate : null],
-      estimatedTime: [estimatedDate ? estimatedDate.toISOString().substring(11, 16) : ''],
-      actualDate: [actualDate ? actualDate : null],
-      actualTime: [actualDate ? actualDate.toISOString().substring(11, 16) : ''],
+      estimatedDate: [estimatedDate],
+      estimatedTime: [estimatedTime],
+      actualDate: [actualDate],
+      actualTime: [actualTime],
       leadtime: [leadtimeRadio],
       leadtimeOther: [leadtimeOther],
       notes: [this.data.notes],
@@ -96,13 +109,15 @@ export class JobScheduleDialogComponent implements OnInit {
   onSave() {
     if (this.form.valid) {
       const value = this.form.value;
-      // Combine date and time fields into ISO strings or null
+      // Combine date and time fields into local datetime string (no timezone conversion)
       const combineDateTime = (date: Date, time: string) => {
         if (!date || !time) return null;
         const [hours, minutes] = time.split(':');
         const dt = new Date(date);
         dt.setHours(Number(hours), Number(minutes), 0, 0);
-        return dt.toISOString();
+        // Format as 'yyyy-MM-ddTHH:mm' (local time, no timezone info)
+        const pad = (n: number) => n < 10 ? '0' + n : n;
+        return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}T${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
       };
       // Determine leadtime value
       let leadtimeValue = value.leadtime === 'other' ? value.leadtimeOther : value.leadtime;

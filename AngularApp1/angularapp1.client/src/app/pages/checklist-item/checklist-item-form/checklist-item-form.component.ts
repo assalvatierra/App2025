@@ -149,8 +149,7 @@ export class ChecklistItemFormComponent implements OnInit, AfterViewInit {
   }
 
   private loadItemStatuses(): void {
-    // Assuming general item statuses for checklist items
-    this.apiService.getItemStatuses().subscribe({
+    this.apiService.getItemStatusesByClassName('CHECKLIST').subscribe({
       next: (res: any[]) => {
         this.itemStatuses = res;
       },
@@ -161,7 +160,7 @@ export class ChecklistItemFormComponent implements OnInit, AfterViewInit {
   }
 
   private loadItemTypes(): void {
-    this.apiService.getItemTypes().subscribe({
+    this.apiService.getItemTypesByClassName('CHECKLIST').subscribe({
       next: (res: any[]) => {
         this.itemTypes = res;
       },

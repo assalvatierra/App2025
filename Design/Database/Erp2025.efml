@@ -955,6 +955,53 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="ChecklistItem" entity-set="ChecklistItem" p1:Guid="f4e2d3b6-c39f-4942-9a73-55621dd9e312">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5bbd99d1-c7b1-40e1-82ba-2689d51c3361">
+      <column name="" />
+    </id>
+    <component name="EntityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="ce84ac8b-f3a8-41a5-ab14-6866f5e0e9c9">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="839597b2-9661-497e-bad4-10b33c21325b">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="8ec886b0-fb89-4d39-84de-c06569bc527f">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="ChecklistTransaction" entity-set="ChecklistTransaction" p1:Guid="16918008-b642-4067-8126-19371441fb65">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ffc0d2fd-d6ac-4071-9521-374bdd76715a">
+      <column name="" />
+    </id>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="4b9f471b-e34b-4760-a630-df44d445a371">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e0b3c183-0680-49a0-8b38-420a99e6ec14">
+      <column name="" />
+    </property>
+    <property name="IsDone" type="Boolean" p1:ValidateRequired="true" p1:Guid="a347c1cf-423d-4228-bbc8-8e479a52fa94">
+      <column name="" />
+    </property>
+    <property name="ChecklistItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="a736f5ce-10bc-4044-8c00-3e7d64538767">
+      <column name="" not-null="False" />
+    </property>
+    <property name="RefId" type="Int32" p1:ValidateRequired="true" p1:Guid="1e88a6ce-a996-4d38-a0ba-4c9533f7f4b4">
+      <column name="" not-null="False" />
+    </property>
+    <property name="RefObject" type="String" p1:ValidateRequired="true" p1:Guid="7ffb2f4a-6cb5-47fb-aaab-4f861d967ede">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1538,6 +1585,30 @@
       </end1>
       <end2 multiplicity="Many" name="JobSchedules" class="ItemStatus" relation-class="JobSchedule" lazy="False" p1:Guid="6cb51dc6-138b-4b47-95aa-4ecbd6ad797b">
         <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="ItemType_ChecklistItem" cardinality="OneToMany" p1:Guid="0582524e-37f1-4078-a490-fbec39b81bbd">
+      <end1 multiplicity="One" name="ItemType" class="ChecklistItem" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="b463abfd-1bf5-4fd7-865b-8db7ffd6a76d">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ChecklistItems" class="ItemType" relation-class="ChecklistItem" lazy="False" p1:Guid="b19160b6-9625-4ae0-9971-4018c4e8f243">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_ChecklistItem" cardinality="OneToMany" p1:Guid="6ef163c1-588a-4b9d-9267-018c7f268658">
+      <end1 multiplicity="One" name="ItemStatus" class="ChecklistItem" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="3f2ce081-0e3c-485d-870a-60d97ea601c1">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ChecklistItems" class="ItemStatus" relation-class="ChecklistItem" lazy="False" p1:Guid="1cbb291d-f2cf-4cd2-9f46-ec5089f796cd">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="ChecklistItem_JobMainChecklist" cardinality="OneToMany" p1:Guid="39a0d8ca-2280-458c-819a-ed8068fbba1b">
+      <end1 multiplicity="One" name="ChecklistItem" class="ChecklistTransaction" relation-class="ChecklistItem" constrained="True" lazy="False" p1:Guid="cb237896-a2b3-4e03-9571-b1c0d7bfb92d">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobMainChecklists" class="ChecklistItem" relation-class="ChecklistTransaction" lazy="False" p1:Guid="10bdc642-7c4f-4e8c-b404-3a2a210c10da">
+        <property name="ChecklistItemId" />
       </end2>
     </association>
   </associations>

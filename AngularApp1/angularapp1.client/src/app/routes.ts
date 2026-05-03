@@ -38,6 +38,9 @@ import { ClientCalendarComponent } from './pages/resources/resource-calendar/cli
 import { ReceivablesComponent } from './pages/receivables/receivables.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
+import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
+import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
+
 
 const routeConfig: Routes = [
 
@@ -134,6 +137,14 @@ const routeConfig: Routes = [
       component: ServiceItemsFormComponent
     },
     {
+      path: 'references/checklist-item',
+      component: ChecklistItemComponent
+    },
+    {
+      path: 'references/checklist-item/form/:id',
+      component: ChecklistItemFormComponent
+    },
+    {
       path: 'agents',
       component: AgentsComponent
     },
@@ -204,6 +215,17 @@ const routeConfig: Routes = [
     {
       path: 'expenses',
       component: ExpensesComponent,
+      canActivate: [AuthGuard]
+    },
+    // Checklist routes
+    {
+      path: 'checklist-items',
+      component: ChecklistItemComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'checklist-items/form/:id',
+      component: ChecklistItemFormComponent,
       canActivate: [AuthGuard]
     }
 

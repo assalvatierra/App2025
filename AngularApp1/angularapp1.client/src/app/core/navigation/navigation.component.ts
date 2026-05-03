@@ -184,6 +184,12 @@ export class NavigationComponent implements OnInit {
           route: 'references/serviceitems'
         },  
         { 
+          name: 'Checklist Items',
+          label: 'Checklist Items',
+          icon: 'checklist', 
+          route: 'references/checklist-item'
+        },  
+        { 
           name: 'Business Units',
           label: 'Business Units',
           icon: 'dashboard', 

@@ -78,6 +78,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntityContactListComponent } from './pages/entity/entity-contact-list/entity-contact-list.component';
+import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
+import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +123,9 @@ import { EntityContactListComponent } from './pages/entity/entity-contact-list/e
   JobMainContactsComponent,
     JobMainStatusListComponent,
     JobMainStatusDialogComponent,
-    EntityContactListComponent
+    EntityContactListComponent,
+    ChecklistItemComponent,
+    ChecklistItemFormComponent
   ],
   imports: [
     BrowserModule,

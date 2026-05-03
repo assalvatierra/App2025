@@ -68,6 +68,10 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ExpensePayment> ExpensePayments { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobExpense> JobExpenses { get; set; } = default!;
 
+        // Checklist related DbSets
+        public DbSet<Erp.Domain.Models.ChecklistItem> ChecklistItem { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ChecklistTransaction> ChecklistTransaction { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

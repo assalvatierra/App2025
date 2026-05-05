@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <ui-page-title [title]="'Checklist Transactions'"></ui-page-title>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Filter Section -->
+    <mat-card class="filter-card" *ngIf="!hideReferenceParam">
+      <mat-card-content>
+        <form [formGroup]="filterForm" class="filter-form">
+          <div class="filter-row">
+            <mat-form-field class="filter-field">
+              <mat-label>Reference Object</mat-label>
+              <input matInput formControlName="refObject" placeholder="e.g., JobMain">
+            </mat-form-field>
+            <mat-form-field class="filter-field">
+              <mat-label>Reference ID</mat-label>
+              <input matInput type="number" formControlName="refId" placeholder="Enter ID">
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Transactions List -->
+    <app-entity-list-table #ListTable
+            (addRecordClicked)="onAddRecord()"
+            [showEdit]="showEdit"
+            [showFilter]="true"
+            [editTitle]="'Edit Checklist Transaction'"
+            (editRecordClicked)="onEdit($event)"
+            (onEditDetails)="onEditDetails($event)"
+            (onArchiveRecord)="onArchive($event)"
+            [tableFields]="tableFields">
+    </app-entity-list-table>
+  </mat-card-content>
+</mat-card>

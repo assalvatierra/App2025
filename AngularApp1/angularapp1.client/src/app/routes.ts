@@ -40,6 +40,9 @@ import { PaymentsComponent } from './pages/payments/payments.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
 import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
+import { ChecklistTransactionComponent } from './pages/checklist-transaction/checklist-transaction.component';
+import { ChecklistTransactionFormComponent } from './pages/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
+import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
 
 
 const routeConfig: Routes = [
@@ -226,6 +229,21 @@ const routeConfig: Routes = [
     {
       path: 'checklist-items/form/:id',
       component: ChecklistItemFormComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'references/checklist-transactions',
+      component: ChecklistTransactionComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'references/checklist-transactions/form/:id',
+      component: ChecklistTransactionFormComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'references/checklist-form',
+      component: ChecklistFormComponent,
       canActivate: [AuthGuard]
     }
 

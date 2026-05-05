@@ -1,0 +1,23 @@
+/* Checklist Transaction Component Styles */
+
+.filter-card {
+  margin-bottom: 16px;
+  background-color: #f5f5f5;
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+}

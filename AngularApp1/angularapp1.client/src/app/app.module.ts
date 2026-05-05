@@ -80,6 +80,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntityContactListComponent } from './pages/entity/entity-contact-list/entity-contact-list.component';
 import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
 import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
+import { ChecklistTransactionComponent } from './pages/checklist-transaction/checklist-transaction.component';
+import { ChecklistTransactionFormComponent } from './pages/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
+import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +128,10 @@ import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-ite
     JobMainStatusDialogComponent,
     EntityContactListComponent,
     ChecklistItemComponent,
-    ChecklistItemFormComponent
+    ChecklistItemFormComponent,
+    ChecklistTransactionComponent,
+    ChecklistTransactionFormComponent,
+    ChecklistFormComponent
   ],
   imports: [
     BrowserModule,

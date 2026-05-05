@@ -1,0 +1,16 @@
+<div>
+  <form [formGroup]="filterForm">
+    <mat-form-field>
+      <mat-label>Reference Object</mat-label>
+      <mat-select formControlName="refObject">
+        <mat-option *ngFor="let opt of refObjectOptions" [value]="opt">{{opt}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Reference Id</mat-label>
+      <input matInput type="number" formControlName="refId">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onLoad()" [disabled]="!filterForm.valid">Load Checklist</button>
+  </form>
+  <app-checklist-transaction [refObject]="selectedRefObject" [refId]="selectedRefId" [hideReferenceParam]="true"></app-checklist-transaction>
+</div>

@@ -166,6 +166,32 @@ export class NavigationComponent implements OnInit {
       ]
     },
     {
+      name: 'Checklist',
+      label: 'Checklist',
+      icon: 'checklist',
+      route: '',
+      subItems: [
+        { 
+          name: 'Checklist Items',
+          label: 'Checklist Items',
+          icon: 'checklist', 
+          route: 'references/checklist-item'
+        },
+        { 
+          name: 'Checklist Transactions',
+          label: 'Checklist Transactions',
+          icon: 'assignment_turned_in', 
+          route: 'references/checklist-transactions'
+        },
+        { 
+          name: 'Checklist Form',
+          label: 'Checklist Form',
+          icon: 'assignment_turned_in', 
+          route: 'references/checklist-form'
+        }
+      ]
+    },
+    {
       name: 'Masterfiles',
       label: 'Masterfiles',
       icon: 'analytics', 
@@ -182,12 +208,6 @@ export class NavigationComponent implements OnInit {
           label: 'Service Items',
           icon: 'comment', 
           route: 'references/serviceitems'
-        },  
-        { 
-          name: 'Checklist Items',
-          label: 'Checklist Items',
-          icon: 'checklist', 
-          route: 'references/checklist-item'
         },  
         { 
           name: 'Business Units',

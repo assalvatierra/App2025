@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{TitleInfo}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="transactionForm" *ngIf="!dataloading">
+      <mat-card class="shipping-card">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Checklist Item</mat-label>
+                <mat-select formControlName="checklistItemId">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option *ngFor="let item of checklistItems" [value]="item.id">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col" *ngIf="!hideReferenceFields">
+              <mat-form-field class="full-width">
+                <mat-label>Reference Object</mat-label>
+                <input matInput formControlName="refObject" placeholder="e.g., JobMain">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" *ngIf="!hideReferenceFields">
+              <mat-form-field class="full-width">
+                <mat-label>Reference ID</mat-label>
+                <input matInput type="number" formControlName="refId">
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="3"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-checkbox formControlName="isDone">Is Done</mat-checkbox>
+            </div>
+            <div class="col">
+              <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-checkbox formControlName="isArchived">Is Archived</mat-checkbox>
+            </div>
+            <div class="col" *ngIf="!hideReferenceFields">
+              <mat-checkbox formControlName="isPrivate">Is Private</mat-checkbox>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div *ngIf="!ShowAddBtn">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </div>
+
+    <div *ngIf="ShowAddBtn">
+        <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

@@ -178,12 +178,6 @@ export class NavigationComponent implements OnInit {
           route: 'references/checklist-item'
         },
         { 
-          name: 'Checklist Transactions',
-          label: 'Checklist Transactions',
-          icon: 'assignment_turned_in', 
-          route: 'references/checklist-transactions'
-        },
-        { 
           name: 'Checklist Form',
           label: 'Checklist Form',
           icon: 'assignment_turned_in', 

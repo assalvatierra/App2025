@@ -40,8 +40,8 @@ import { PaymentsComponent } from './pages/payments/payments.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
 import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
-import { ChecklistTransactionComponent } from './pages/checklist-transaction/checklist-transaction.component';
-import { ChecklistTransactionFormComponent } from './pages/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
+import { ChecklistTransactionComponent } from './shared/checklist-transaction/checklist-transaction.component';
+import { ChecklistTransactionFormComponent } from './shared/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
 import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
 
 

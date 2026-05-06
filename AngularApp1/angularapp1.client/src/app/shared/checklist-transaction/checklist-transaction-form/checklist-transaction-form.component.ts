@@ -20,6 +20,7 @@ export class ChecklistTransactionFormComponent implements OnInit, AfterViewInit 
   public checklistItems: any[] = [];
   public transactionForm!: FormGroup;
   public hideReferenceFields: boolean = false;
+  public referenceObject: string = 'JOB';
 
   constructor(
     private api: ApiChecklistService,
@@ -31,6 +32,9 @@ export class ChecklistTransactionFormComponent implements OnInit, AfterViewInit 
   ) {
     this.currentData = this.getDefaultData();
     this.initForm();
+    if (this.data && this.data.referenceObject) {
+      this.referenceObject = this.data.referenceObject;
+    }
   }
 
   ngOnInit(): void {
@@ -163,7 +167,7 @@ export class ChecklistTransactionFormComponent implements OnInit, AfterViewInit 
   }
 
   private loadChecklistItems(): void {
-    this.api.getItems().subscribe({
+    this.api.getItems(this.referenceObject).subscribe({
       next: (res: any[]) => {
         this.checklistItems = res;
       },

@@ -6,6 +6,9 @@ import { tableField } from '../../shared/models/entityListTableField';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChecklistTransactionFormComponent } from './checklist-transaction-form/checklist-transaction-form.component';
+import { ChecklistTemplateDialogComponent } from './checklist-template-dialog/checklist-template-dialog.component';
+import { ChecklistTransaction } from '../../core/models/checklist.model';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-checklist-transaction',
@@ -54,7 +57,7 @@ export class ChecklistTransactionComponent implements AfterViewInit, OnChanges {
 
   onAddRecord() {
     const dialogRef = this.dialog.open(ChecklistTransactionFormComponent, {
-      data: { id: 0, refObject: this.refObject, refId: this.refId, hideReferenceFields: true }
+      data: { id: 0, refObject: this.refObject, refId: this.refId, hideReferenceFields: true, referenceObject: this.refObject }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -65,7 +68,7 @@ export class ChecklistTransactionComponent implements AfterViewInit, OnChanges {
 
   onEdit(param: any) {
     const dialogRef = this.dialog.open(ChecklistTransactionFormComponent, {
-      data: { id: param, hideReferenceFields: true }
+      data: { id: param, hideReferenceFields: true, referenceObject: this.refObject }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -87,6 +90,51 @@ export class ChecklistTransactionComponent implements AfterViewInit, OnChanges {
         }
       });
     }
+  }
+
+  onAddTemplate() {
+    const dialogRef = this.dialog.open(ChecklistTemplateDialogComponent, {
+      data: { refObject: this.refObject, refId: this.refId, referenceObject: this.refObject },
+      width: '520px'
+    });
+
+    dialogRef.afterClosed().subscribe((selectedItemIds: number[] | null) => {
+      if (selectedItemIds && selectedItemIds.length > 0) {
+        const addRequests = selectedItemIds.map(itemId => {
+          const transaction: ChecklistTransaction = {
+            id: 0,
+            createdBy: '',
+            createdOn: new Date().toISOString(),
+            lastEditBy: '',
+            lastEditOn: new Date().toISOString(),
+            isArchived: false,
+            isPrivate: false,
+            isActive: true,
+            isDone: false,
+            notes: '',
+            checklistItemId: itemId,
+            refId: this.refId,
+            refObject: this.refObject
+          };
+          return this.api.addTransaction(transaction);
+        });
+
+        let completed = 0;
+        addRequests.forEach(req => {
+          req.subscribe({
+            next: () => {
+              completed++;
+              if (completed === addRequests.length) {
+                this.retrieveApiData();
+              }
+            },
+            error: (err) => {
+              console.error('Error adding transaction from template:', err);
+            }
+          });
+        });
+      }
+    });
   }
 
   retrieveApiData() {
@@ -128,9 +176,12 @@ export class ChecklistTransactionComponent implements AfterViewInit, OnChanges {
   }
 
   private setupReactiveFiltering(): void {
-    // Automatically filter when form values change (with debounce)
-    this.filterForm.valueChanges.subscribe(() => {
-      this.retrieveApiData();
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      if (this.TableList) {
+        this.retrieveApiData();
+      }
     });
   }
 }

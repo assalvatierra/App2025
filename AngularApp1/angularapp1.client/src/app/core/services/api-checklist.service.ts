@@ -13,8 +13,10 @@ export class ApiChecklistService {
   constructor(private http: HttpClient) { }
 
   // Checklist Items
-  getItems(): Observable<ChecklistItem[]> {
-    return this.http.get<ChecklistItem[]>(`${this.baseUrl}/api/Checklist/items`).pipe(
+  getItems(itemTypeCode?: string): Observable<ChecklistItem[]> {
+    let params = new HttpParams();
+    if (itemTypeCode) params = params.set('itemTypeCode', itemTypeCode);
+    return this.http.get<ChecklistItem[]>(`${this.baseUrl}/api/Checklist/items`, { params }).pipe(
       map((res: any) => res.map((i: any) => this.mapItem(i)))
     );
   }

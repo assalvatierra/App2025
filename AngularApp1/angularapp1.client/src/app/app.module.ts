@@ -83,6 +83,8 @@ import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-ite
 import { ChecklistTransactionComponent } from './shared/checklist-transaction/checklist-transaction.component';
 import { ChecklistTransactionFormComponent } from './shared/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
 import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
+import { ChecklistTemplateDialogComponent } from './shared/checklist-transaction/checklist-template-dialog/checklist-template-dialog.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -131,7 +133,8 @@ import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.co
     ChecklistItemFormComponent,
     ChecklistTransactionComponent,
     ChecklistTransactionFormComponent,
-    ChecklistFormComponent
+    ChecklistFormComponent,
+    ChecklistTemplateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -164,6 +167,7 @@ import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.co
     MatChipsModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatDividerModule,
     SharedModule, 
     JobServiceModule,
     JobMainComponent,

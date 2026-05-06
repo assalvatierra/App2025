@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
@@ -9,8 +9,7 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
   templateUrl: './job-main-form.component.html',
   styleUrls: ['./job-main-form.component.css']
 })
-
-export class JobMainFormComponent implements AfterViewInit {
+export class JobMainFormComponent implements OnInit, AfterViewInit {
   public TitleInfo: string = '';
   public jobDescription: string = '';
   public paramId: number = 0;
@@ -23,28 +22,28 @@ export class JobMainFormComponent implements AfterViewInit {
     private route: ActivatedRoute,
   ) { }
 
-    ngAfterViewInit(): void {
-      this.paramId = Number(this.route.snapshot.paramMap.get('id'));
+  ngOnInit(): void {
+    this.paramId = Number(this.route.snapshot.paramMap.get('id'));
 
-      if (isNaN(this.paramId)) {
-        console.error('Invalid parameter ID:', this.paramId);
-        return;
-      }
-
-      this.TitleInfo = '' 
-        + ( this.paramId == 0 ? this.formModeLabel_add : this.formModeLabel_edit )
-        + ' ' + this.formLabel
-
+    if (isNaN(this.paramId)) {
+      console.error('Invalid parameter ID:', this.paramId);
+      return;
     }
 
-    onDescriptionChanged(description: string): void {
-      this.jobDescription = description;
+    this.TitleInfo = ''
+      + (this.paramId == 0 ? this.formModeLabel_add : this.formModeLabel_edit)
+      + ' ' + this.formLabel;
+  }
+
+  ngAfterViewInit(): void { }
+
+  onDescriptionChanged(description: string): void {
+    this.jobDescription = description;
   }
 
   onCancel(): void {
     this.router.navigate(['/Jobs']);
   }
-
 }
 
 
@@ -128,7 +127,7 @@ export class JobMainFormComponent implements AfterViewInit {
 //  private retrieveApiData(paramId: number): void {
 //    this.dataloading = true;
 //    this.api.getJobMain(paramId)
-//      .subscribe({
+///      .subscribe({
 //        next: (res: any) => {
 //          this.initializeData(res);
 //          this.setFormData(this.currentData);

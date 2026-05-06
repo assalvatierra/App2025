@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Add Template — {{ data.refObject }}</h2>
+
+<mat-dialog-content>
+  <div *ngIf="dataloading" class="loading-container">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    <p>Loading checklist items...</p>
+  </div>
+
+  <div *ngIf="!dataloading">
+    <!-- Select All / Clear All -->
+    <div class="selection-actions">
+      <mat-checkbox
+        [checked]="allSelected"
+        [indeterminate]="someSelected"
+        (change)="allSelected ? clearAll() : selectAll()">
+        Select All
+      </mat-checkbox>
+      <span class="selection-count">{{ selectedItems.size }} item(s) selected</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Checklist Items List -->
+    <mat-selection-list class="item-list">
+      <mat-list-option
+        *ngFor="let item of checklistItems"
+        [value]="item.id"
+        [selected]="isSelected(item.id)"
+        (click)="toggleSelection(item.id)">
+        <div matListItemTitle>{{ item.name }}</div>
+        <div matListItemLine *ngIf="item.description">{{ item.description }}</div>
+        <div matListItemLine *ngIf="item.code">
+          <mat-chip-set>
+            <mat-chip>{{ item.code }}</mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <div *ngIf="checklistItems.length === 0" class="empty-state">
+      <mat-icon>playlist_add</mat-icon>
+      <p>No checklist items available for <strong>{{ data.refObject }}</strong>.</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="selectedItems.size === 0"
+    (click)="onConfirm()">
+    <mat-icon>add_task</mat-icon> Add Selected ({{ selectedItems.size }})
+  </button>
+</mat-dialog-actions>

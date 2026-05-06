@@ -18,9 +18,19 @@ namespace AngularApp1.Server.Controllers
 
         // GET: api/Checklist/items
         [HttpGet("items")]
-        public async Task<ActionResult<IEnumerable<ChecklistItem>>> GetChecklistItems()
+        public async Task<ActionResult<IEnumerable<ChecklistItem>>> GetChecklistItems([FromQuery] string? itemTypeCode = null)
         {
-            var items = await _context.ChecklistItem
+            var query = _context.ChecklistItem.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(itemTypeCode))
+            {
+                var matchingTypeIds = _context.ItemType
+                    .Where(t => t.Code == itemTypeCode)
+                    .Select(t => t.Id);
+                query = query.Where(i => i.ItemTypeId != null && matchingTypeIds.Contains(i.ItemTypeId.Value));
+            }
+
+            var items = await query
                 .OrderBy(i => i.SortOrder)
                 .Select(i => new ChecklistItem
                 {

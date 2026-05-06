@@ -1,7 +1,8 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <ui-page-title [title]="'Checklist Transactions'"></ui-page-title>
+      <!--<ui-page-title [title]="'Checklist Transactions'"></ui-page-title>-->
+      <mat-card-title>Checklist Transactions</mat-card-title>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -34,5 +35,12 @@
             (onArchiveRecord)="onArchive($event)"
             [tableFields]="tableFields">
     </app-entity-list-table>
+
+    <!-- Add Template Button -->
+    <div class="add-template-btn">
+      <button mat-raised-button color="primary" (click)="onAddTemplate()">
+        <mat-icon>add</mat-icon> Add Template
+      </button>
+    </div>
   </mat-card-content>
 </mat-card>

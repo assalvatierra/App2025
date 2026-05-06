@@ -22,8 +22,7 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    MatCardModule,
-    JobScheduleDialogComponent
+    MatCardModule
   ]
 })
 export class JobMainScheduleComponent implements AfterViewInit, OnChanges {

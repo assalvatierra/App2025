@@ -1,0 +1,110 @@
+.resource-rate-container {
+  padding: 16px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-section h3 {
+  margin: 0;
+  color: #3f51b5;
+}
+
+.rate-form-card {
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.checkbox-group mat-checkbox {
+  margin-bottom: 8px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.no-data .hint {
+  font-size: 0.9em;
+  color: #999;
+  margin-top: 8px;
+}
+
+.rates-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.rates-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.rates-table td {
+  padding: 12px 16px;
+}
+
+.active {
+  color: #4caf50;
+}
+
+.inactive {
+  color: #f44336;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .rates-table {
+    font-size: 0.9em;
+  }
+
+  .rates-table td {
+    padding: 8px 12px;
+  }
+}

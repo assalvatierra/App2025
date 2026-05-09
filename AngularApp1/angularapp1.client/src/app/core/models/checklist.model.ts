@@ -23,4 +23,6 @@ export interface ChecklistTransaction {
   checklistItemId?: number | null;
   refId?: number | null;
   refObject: string;
+  checklistItemName?: string | null;
+  sortOrder?: number | null;
 }

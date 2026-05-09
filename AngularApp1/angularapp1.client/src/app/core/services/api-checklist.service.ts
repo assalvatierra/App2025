@@ -99,7 +99,9 @@ export class ApiChecklistService {
       isDone: data.isDone,
       checklistItemId: data.checklistItemId,
       refId: data.refId,
-      refObject: data.refObject
+      refObject: data.refObject,
+      checklistItemName: data.checklistItemName,
+      sortOrder: data.sortOrder
     };
   }
 }

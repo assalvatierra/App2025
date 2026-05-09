@@ -111,7 +111,7 @@ namespace AngularApp1.Server.Controllers
 
         // GET: api/Checklist/transactions?refObject=JobMain&refId=123
         [HttpGet("transactions")]
-        public async Task<ActionResult<IEnumerable<ChecklistTransaction>>> GetChecklistTransactions([FromQuery] string? refObject = null, [FromQuery] int? refId = null)
+        public async Task<ActionResult<IEnumerable<object>>> GetChecklistTransactions([FromQuery] string? refObject = null, [FromQuery] int? refId = null)
         {
             var query = _context.ChecklistTransaction.AsQueryable();
 
@@ -126,7 +126,27 @@ namespace AngularApp1.Server.Controllers
             }
 
             var transactions = await query
-                .OrderByDescending(t => t.CreatedOn)
+                .Include(t => t.ChecklistItem)
+                .OrderBy(t => t.ChecklistItem != null ? t.ChecklistItem.SortOrder : int.MaxValue)
+                .ThenByDescending(t => t.CreatedOn)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.CreatedBy,
+                    t.CreatedOn,
+                    t.LastEditBy,
+                    t.LastEditOn,
+                    t.IsArchived,
+                    t.IsPrivate,
+                    t.IsActive,
+                    t.Notes,
+                    t.IsDone,
+                    t.ChecklistItemId,
+                    t.RefId,
+                    t.RefObject,
+                    ChecklistItemName = t.ChecklistItem != null ? t.ChecklistItem.Name : null,
+                    SortOrder = t.ChecklistItem != null ? t.ChecklistItem.SortOrder : null
+                })
                 .ToListAsync();
 
             return Ok(transactions);

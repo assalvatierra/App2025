@@ -158,9 +158,8 @@ export class ChecklistTransactionComponent implements AfterViewInit, OnChanges {
   getTableFields(): tableField[] {
     return [
       { key: 'id', label: 'ID' },
-      { key: 'checklistItemId', label: 'Checklist Item ID' },
-      { key: 'refObject', label: 'Reference Object' },
-      { key: 'refId', label: 'Reference ID' },
+      { key: 'sortOrder', label: 'Order' },
+      { key: 'checklistItemName', label: 'Checklist Item' },
       { key: 'isDone', label: 'Done' },
       { key: 'notes', label: 'Notes' },
       { key: 'createdBy', label: 'Created By' },

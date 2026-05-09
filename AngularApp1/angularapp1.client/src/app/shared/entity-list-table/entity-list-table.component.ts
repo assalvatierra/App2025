@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, Inject, OnInit } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityListTableDataSource, EntityListTableItem } from './entity-list-table-datasource';
 import { AdvancedFilterDialogComponent, AdvancedFilterField } from './advanced-filter-dialog/advanced-filter-dialog.component';
@@ -33,6 +33,10 @@ export class EntityListTableComponent implements OnInit, AfterViewInit {
   @Input() showFilter: boolean = true;
   @Input() showAdvancedFilter: boolean = false;
   @Input() advancedFilterFields: AdvancedFilterField[] = [];
+
+  // New sorting inputs
+  @Input() sortColumn: string = '';
+  @Input() sortType: 'Ascending' | 'Descending' | '' = 'Ascending';
 
   dataSource = new EntityListTableDataSource();
   filterValue: string = '';
@@ -67,6 +71,20 @@ export class EntityListTableComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this._viewInitialized = true;
+    
+    // Apply initial sorting if provided
+    if (this.sortColumn && this.sortType && this.sort) {
+      const direction = this.sortType === 'Ascending' ? 'asc' : 'desc';
+      this.sort.active = this.sortColumn;
+      this.sort.direction = direction as 'asc' | 'desc';
+      
+      // Trigger the sort change
+      this.sort.sortChange.emit({
+        active: this.sortColumn,
+        direction: direction as 'asc' | 'desc'
+      } as Sort);
+    }
+    
     // Apply any data that arrived before the view was ready
     if (this._pendingData !== null) {
       this._applyData(this._pendingData);

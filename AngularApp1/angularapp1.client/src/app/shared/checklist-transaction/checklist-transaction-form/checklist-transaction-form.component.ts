@@ -91,6 +91,16 @@ export class ChecklistTransactionFormComponent implements OnInit, AfterViewInit 
     this.dialogRef.close();
   }
 
+  onSetDone(): void {
+    const currentDone = this.transactionForm.get('isDone')?.value ?? false;
+    this.transactionForm.patchValue({ isDone: !currentDone });
+    if (this.ShowAddBtn) {
+      this.onAdd();
+    } else {
+      this.onSubmit();
+    }
+  }
+
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;
     this.api.getTransaction(paramId)

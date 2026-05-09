@@ -33,6 +33,8 @@
             (editRecordClicked)="onEdit($event)"
             (onEditDetails)="onEditDetails($event)"
             (onArchiveRecord)="onArchive($event)"
+            [sortColumn]="'sortOrder'"
+            [sortType]="'Ascending'"
             [tableFields]="tableFields">
     </app-entity-list-table>
 

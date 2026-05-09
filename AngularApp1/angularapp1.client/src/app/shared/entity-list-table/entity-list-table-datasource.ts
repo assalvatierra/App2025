@@ -116,11 +116,18 @@ export class EntityListTableDataSource extends DataSource<EntityListTableItem> {
 
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
-      switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
-        default: return 0;
+      const sortColumn = this.sort?.active;
+      
+      // Type guard to ensure sortColumn is defined
+      if (!sortColumn) {
+        return 0;
       }
+      
+      // Get values dynamically based on the sort column
+      const aValue = (a as any)[sortColumn];
+      const bValue = (b as any)[sortColumn];
+      
+      return compare(aValue, bValue, isAsc);
     });
   }
 }

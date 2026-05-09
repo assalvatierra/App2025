@@ -577,6 +577,9 @@
     <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="a78938c4-fee3-48a5-842f-d387ce2cc17a">
       <column name="" not-null="False" />
     </property>
+    <property name="PayPeriodId" type="Int32" p1:ValidateRequired="true" p1:Guid="9c73a88b-af8c-4b02-b8ce-9ae704a968b9">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="Expense" entity-set="Expense" p1:Guid="456a3681-ef33-4557-87d0-f77e127f1c89">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5fc7832-092c-4d5c-b2c1-4ab65bd1e1c7">
@@ -1000,6 +1003,104 @@
     </property>
     <property name="RefObject" type="String" p1:ValidateRequired="true" p1:Guid="7ffb2f4a-6cb5-47fb-aaab-4f861d967ede">
       <column name="" />
+    </property>
+  </class>
+  <class name="ResourceRate" entity-set="ResourceRate" p1:Guid="9eef6914-975d-4c0a-8dbb-61e17882ed65">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a6d25c9a-5f77-4214-8ad7-d5101c294658">
+      <column name="" not-null="False" />
+    </id>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="26874ef9-0bf1-48ef-89bf-1d479ab8fcbc">
+      <column name="" not-null="False" />
+    </property>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="8ae3538b-18d6-48dc-a4d3-a08a09d89fb1">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="ValidFrom" type="DateTime" p1:ValidateRequired="true" p1:Guid="4b5723a9-6184-470c-934f-2cbdade7ff0d">
+      <column name="" />
+    </property>
+    <property name="ValidTo" type="DateTime" p1:ValidateRequired="true" p1:Guid="99b56e0b-d4e0-4dd6-a488-6b5084c57f62">
+      <column name="" />
+    </property>
+    <property name="Daily" type="Decimal" p1:ValidateRequired="true" p1:Guid="267a978d-1caf-4b41-a462-0bf412bd74a6">
+      <column name="" />
+    </property>
+    <property name="Monthly" type="Decimal" p1:ValidateRequired="true" p1:Guid="a240ab91-7e63-4eab-8a6f-259f25ebf9d7">
+      <column name="" />
+    </property>
+    <property name="Hourly" type="Decimal" p1:ValidateRequired="true" p1:Guid="a49620f8-9095-4b37-92ff-91ee9c44d61e">
+      <column name="" />
+    </property>
+    <property name="Percent" type="Decimal" p1:ValidateRequired="true" p1:Guid="1cab1864-114b-4223-93ff-71081a37d5b8">
+      <column name="" />
+    </property>
+    <property name="OtRate" type="Decimal" p1:ValidateRequired="true" p1:Guid="47d95653-b836-41fa-9164-fc845ba372e0">
+      <column name="" />
+    </property>
+  </class>
+  <class name="PayPeriod" entity-set="PayPeriod" p1:Guid="0ac9b7a8-d2f9-4716-9d20-59b00559b902">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="b7eddc3c-ffc4-425a-8ef7-fe6822aeb903">
+      <column name="" />
+    </id>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="05a33423-3362-477f-80ec-a4bdf5d270c3">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+    </component>
+    <property name="DateFrom" type="DateTime" p1:ValidateRequired="true" p1:Guid="e53d9067-fc27-4c41-b3da-45309dfbd92c">
+      <column name="" />
+    </property>
+    <property name="DateTo" type="DateTime" p1:ValidateRequired="true" p1:Guid="784a7284-beae-4406-8ccb-dc96cf6eb9c0">
+      <column name="" />
+    </property>
+    <property name="Notes" type="String" p1:ValidateRequired="true" p1:Guid="774e1124-90b7-40f7-b6c2-d954a7e614c4">
+      <column name="" />
+    </property>
+    <property name="PayDate" type="DateTime" p1:ValidateRequired="true" p1:Guid="aff34afa-3bfe-41ca-ae2f-a192d1336516">
+      <column name="" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="7baaad76-f299-485c-a0d3-85a17d022f2e">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="PayAdditions" entity-set="PayAdditions" p1:Guid="d995f6da-4253-419c-af0e-b50d79c4fa14">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f1118fb3-a897-4285-8e19-2576334af981">
+      <column name="" />
+    </id>
+    <property name="PayPeriodId" type="Int32" p1:ValidateRequired="true" p1:Guid="36707937-27b4-40ef-acf2-41f921da3209">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="e4db932d-11c0-4867-8ef7-68a731a9f203">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="777b2489-e150-4d5c-89cb-ed601ceaa479">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9588d305-9fcc-4308-9669-c570284e42df">
+      <column name="" />
+    </property>
+    <property name="isAdd" type="Boolean" p1:ValidateRequired="true" p1:Guid="24ee4fde-d28c-44a1-9aee-eecd59d642e4">
+      <column name="" />
+    </property>
+  </class>
+  <class name="PayExpense" entity-set="PayExpense" p1:Guid="8ce2694a-ed47-4076-a049-b54bd6b356f9">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="17d8dea7-6123-4f82-aa29-46bc091ad2bc">
+      <column name="" />
+    </id>
+    <property name="ExpenseId" type="Int32" p1:ValidateRequired="true" p1:Guid="a32cbc0a-301f-4598-8932-265bba2dbe2d">
+      <column name="" not-null="False" />
+    </property>
+    <property name="PayPeriodId" type="Int32" p1:ValidateRequired="true" p1:Guid="869d4f86-0ff2-4d27-9480-71bf99b3ec14">
+      <column name="" not-null="False" />
     </property>
   </class>
   <associations>
@@ -1609,6 +1710,62 @@
       </end1>
       <end2 multiplicity="Many" name="JobMainChecklists" class="ChecklistItem" relation-class="ChecklistTransaction" lazy="False" p1:Guid="10bdc642-7c4f-4e8c-b404-3a2a210c10da">
         <property name="ChecklistItemId" />
+      </end2>
+    </association>
+    <association name="Resource_ResourceRate" cardinality="OneToMany" p1:Guid="c6b87614-7efc-4bb1-a45a-1c6c943c94b0">
+      <end1 multiplicity="One" name="Resource" class="ResourceRate" relation-class="Resource" constrained="True" lazy="False" p1:Guid="4a5e006a-d70c-41ea-bf17-6cbf5690d64a">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceRates" class="Resource" relation-class="ResourceRate" lazy="False" p1:Guid="a352ba0f-5eee-4914-85b2-b226b215cb5b">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_PayPeriod" cardinality="OneToMany" p1:Guid="568451a0-8b0f-44de-871a-60a729bbaadb">
+      <end1 multiplicity="One" name="ItemStatus" class="PayPeriod" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="feb6994d-8f30-4afd-b333-369914a3ec6e">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayPeriods" class="ItemStatus" relation-class="PayPeriod" lazy="False" p1:Guid="a0b948a6-9c8c-4986-a5a2-4e29342a1481">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="PayPeriod_PayAdditions" cardinality="OneToMany" p1:Guid="d7ec9c6d-02fe-4617-b2e0-5d1a9023dbab">
+      <end1 multiplicity="One" name="PayPeriod" class="PayAdditions" relation-class="PayPeriod" constrained="True" lazy="False" p1:Guid="67ba1b6f-2281-44ef-8a40-39f8d6374e51">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayAdditions" class="PayPeriod" relation-class="PayAdditions" lazy="False" p1:Guid="69656ab7-e620-4398-b4d1-63c99221fded">
+        <property name="PayPeriodId" />
+      </end2>
+    </association>
+    <association name="Resource_PayAdditions" cardinality="OneToMany" p1:Guid="0dc94c80-6287-4ac1-9044-5393cbd44340">
+      <end1 multiplicity="One" name="Resource" class="PayAdditions" relation-class="Resource" constrained="True" lazy="False" p1:Guid="be790534-e90b-425c-af5e-ff46ab71c82b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayAdditions" class="Resource" relation-class="PayAdditions" lazy="False" p1:Guid="fd22a286-fb81-44e7-9cb8-442ba70939d8">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="PayPeriod_Timesheet" cardinality="OneToMany" p1:Guid="0110a274-9363-423e-98b5-3a195ff44c2f">
+      <end1 multiplicity="One" name="PayPeriod" class="Timesheet" relation-class="PayPeriod" constrained="True" lazy="False" p1:Guid="4c12d357-fb45-49c1-b9cc-ed78cb398d1b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Timesheets" class="PayPeriod" relation-class="Timesheet" lazy="False" p1:Guid="71dac53f-1a22-4014-8b5f-e29972f402f6">
+        <property name="PayPeriodId" />
+      </end2>
+    </association>
+    <association name="Expense_PayExpense" cardinality="OneToMany" p1:Guid="4754bec1-10a0-4f1b-9695-90605af44dd2">
+      <end1 multiplicity="One" name="Expense" class="PayExpense" relation-class="Expense" constrained="True" lazy="False" p1:Guid="f3b4ba9d-0f98-48df-86bf-4007cbc08143">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayExpenses" class="Expense" relation-class="PayExpense" lazy="False" p1:Guid="c40f1922-46bb-4ad3-9c1f-c8b59cac4cdc">
+        <property name="ExpenseId" />
+      </end2>
+    </association>
+    <association name="PayPeriod_PayExpense" cardinality="OneToMany" p1:Guid="0b1a4ac6-50a8-48b6-a26b-e35d51d6e42e">
+      <end1 multiplicity="One" name="PayPeriod" class="PayExpense" relation-class="PayPeriod" constrained="True" lazy="False" p1:Guid="c4938579-8053-47cf-845f-627216cd5408">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayExpenses" class="PayPeriod" relation-class="PayExpense" lazy="False" p1:Guid="6be74a35-ab78-43c5-8495-95f45604fe74">
+        <property name="PayPeriodId" />
       </end2>
     </association>
   </associations>

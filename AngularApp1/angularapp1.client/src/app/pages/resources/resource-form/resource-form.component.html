@@ -141,6 +141,16 @@
           </table>
         </div>
       </mat-tab>
+
+      <!-- Resource Rates Tab -->
+      <mat-tab label="Resource Rates" [disabled]="showAddBtn">
+        <div class="tab-content">
+          <app-resource-rate *ngIf="currentData?.id" [resourceId]="currentData?.id"></app-resource-rate>
+          <div *ngIf="!currentData?.id" class="no-data">
+            <p>Please save the resource first to manage rates.</p>
+          </div>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

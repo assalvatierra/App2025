@@ -19,6 +19,7 @@ import { Resource } from '../../../core/models/timesheet.model';
 import { ResourceEntity } from '../../../core/models/resource-entity.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { AddEntityDialogComponent } from './add-entity-dialog.component';
+import { ResourceRateComponent } from '../resource-rate/resource-rate.component';
 
 @Component({
   selector: 'app-resource-form',
@@ -38,7 +39,8 @@ import { AddEntityDialogComponent } from './add-entity-dialog.component';
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
-    UiPageTitleComponent
+    UiPageTitleComponent,
+    ResourceRateComponent
   ]
 })
 export class ResourceFormComponent implements AfterViewInit {

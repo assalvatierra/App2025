@@ -1,0 +1,89 @@
+<div class="resource-rate-container">
+  <div class="header-section">
+    <h3>Resource Rates</h3>
+    <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="loading">
+      <mat-icon>add</mat-icon>
+      Add Rate
+    </button>
+  </div>
+
+  <!-- Rates Table -->
+  <div *ngIf="loading" class="loading-spinner">
+    <p>Loading resource rates...</p>
+  </div>
+
+  <div *ngIf="!loading && resourceRates.length === 0" class="no-data">
+    <p>No resource rates found.</p>
+    <p class="hint">Click "Add Rate" button above to create a new resource rate.</p>
+  </div>
+
+  <table mat-table [dataSource]="resourceRates" class="rates-table" *ngIf="!loading && resourceRates.length > 0" matSort>
+    <!-- Valid From Column -->
+    <ng-container matColumnDef="validFrom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid From</th>
+      <td mat-cell *matCellDef="let element">{{ formatDate(element.validFrom) }}</td>
+    </ng-container>
+
+    <!-- Valid To Column -->
+    <ng-container matColumnDef="validTo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid To</th>
+      <td mat-cell *matCellDef="let element">{{ formatDate(element.validTo) }}</td>
+    </ng-container>
+
+    <!-- Daily Rate Column -->
+    <ng-container matColumnDef="daily">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Daily</th>
+      <td mat-cell *matCellDef="let element">{{ element.daily | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <!-- Hourly Rate Column -->
+    <ng-container matColumnDef="hourly">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hourly</th>
+      <td mat-cell *matCellDef="let element">{{ element.hourly | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <!-- Monthly Rate Column -->
+    <ng-container matColumnDef="monthly">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Monthly</th>
+      <td mat-cell *matCellDef="let element">{{ element.monthly | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <!-- Percentage Column -->
+    <ng-container matColumnDef="percent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Percent</th>
+      <td mat-cell *matCellDef="let element">{{ element.percent }}%</td>
+    </ng-container>
+
+    <!-- OT Rate Column -->
+    <ng-container matColumnDef="otRate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>OT Rate</th>
+      <td mat-cell *matCellDef="let element">{{ element.otRate | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <!-- Active Status Column -->
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef>Active</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon [class.active]="element.isActive" [class.inactive]="!element.isActive">
+          {{ element.isActive ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="onEdit(element)" title="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(element)" title="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

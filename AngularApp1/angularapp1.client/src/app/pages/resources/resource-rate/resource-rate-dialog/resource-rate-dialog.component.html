@@ -1,0 +1,101 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Resource Rate</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="rateForm" (ngSubmit)="onSave()">
+      <div class="form-grid">
+        <!-- Validity Period -->
+        <mat-form-field appearance="outline">
+          <mat-label>Valid From</mat-label>
+          <input matInput [matDatepicker]="validFromPicker" formControlName="validFrom" required>
+          <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #validFromPicker></mat-datepicker>
+          <mat-error *ngIf="rateForm.get('validFrom')?.hasError('required')">
+            Valid From date is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Valid To</mat-label>
+          <input matInput [matDatepicker]="validToPicker" formControlName="validTo" required>
+          <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #validToPicker></mat-datepicker>
+          <mat-error *ngIf="rateForm.get('validTo')?.hasError('required')">
+            Valid To date is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Rate Values -->
+        <mat-form-field appearance="outline">
+          <mat-label>Daily Rate</mat-label>
+          <input matInput type="text" numberFormatter [numberFormatter]="rateForm.get('daily')?.value" (numberFormatterChange)="rateForm.get('daily')?.setValue($event)" required>
+          <mat-error *ngIf="rateForm.get('daily')?.hasError('required')">
+            Daily rate is required
+          </mat-error>
+          <mat-error *ngIf="rateForm.get('daily')?.hasError('min')">
+            Daily rate must be positive
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Hourly Rate</mat-label>
+          <input matInput type="text" numberFormatter [numberFormatter]="rateForm.get('hourly')?.value" (numberFormatterChange)="rateForm.get('hourly')?.setValue($event)" required>
+          <mat-error *ngIf="rateForm.get('hourly')?.hasError('required')">
+            Hourly rate is required
+          </mat-error>
+          <mat-error *ngIf="rateForm.get('hourly')?.hasError('min')">
+            Hourly rate must be positive
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Monthly Rate</mat-label>
+          <input matInput type="text" numberFormatter [numberFormatter]="rateForm.get('monthly')?.value" (numberFormatterChange)="rateForm.get('monthly')?.setValue($event)" required>
+          <mat-error *ngIf="rateForm.get('monthly')?.hasError('required')">
+            Monthly rate is required
+          </mat-error>
+          <mat-error *ngIf="rateForm.get('monthly')?.hasError('min')">
+            Monthly rate must be positive
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Percentage (%)</mat-label>
+          <input matInput type="number" step="0.01" min="0" max="100" formControlName="percent" required>
+          <span matSuffix>%</span>
+          <mat-error *ngIf="rateForm.get('percent')?.hasError('required')">
+            Percentage is required
+          </mat-error>
+          <mat-error *ngIf="rateForm.get('percent')?.hasError('min') || rateForm.get('percent')?.hasError('max')">
+            Percentage must be between 0 and 100
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Overtime Rate</mat-label>
+          <input matInput type="text" numberFormatter [numberFormatter]="rateForm.get('otRate')?.value" (numberFormatterChange)="rateForm.get('otRate')?.setValue($event)" required>
+          <mat-error *ngIf="rateForm.get('otRate')?.hasError('required')">
+            Overtime rate is required
+          </mat-error>
+          <mat-error *ngIf="rateForm.get('otRate')?.hasError('min')">
+            Overtime rate must be positive
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Status Flags -->
+        <div class="checkbox-group">
+          <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+          <mat-checkbox formControlName="isPrivate">Private</mat-checkbox>
+          <mat-checkbox formControlName="isArchived">Archived</mat-checkbox>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="loading || rateForm.invalid">
+      {{ isEdit ? 'Update' : 'Add' }} Rate
+    </button>
+  </mat-dialog-actions>
+</div>

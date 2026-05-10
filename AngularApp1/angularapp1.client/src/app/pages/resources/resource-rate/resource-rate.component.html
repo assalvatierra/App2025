@@ -7,116 +7,6 @@
     </button>
   </div>
 
-  <!-- Rate Form -->
-  <mat-card *ngIf="showForm" class="rate-form-card">
-    <mat-card-header>
-      <mat-card-title>{{ editingRate ? 'Edit' : 'Add' }} Resource Rate</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="rateForm" (ngSubmit)="onSave()">
-        <div class="form-grid">
-          <!-- Validity Period -->
-          <mat-form-field appearance="outline">
-            <mat-label>Valid From</mat-label>
-            <input matInput [matDatepicker]="validFromPicker" formControlName="validFrom" required>
-            <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validFromPicker></mat-datepicker>
-            <mat-error *ngIf="rateForm.get('validFrom')?.hasError('required')">
-              Valid From date is required
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Valid To</mat-label>
-            <input matInput [matDatepicker]="validToPicker" formControlName="validTo" required>
-            <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validToPicker></mat-datepicker>
-            <mat-error *ngIf="rateForm.get('validTo')?.hasError('required')">
-              Valid To date is required
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Rate Values -->
-          <mat-form-field appearance="outline">
-            <mat-label>Daily Rate</mat-label>
-            <input matInput type="number" step="0.01" formControlName="daily" required>
-            <span matSuffix>USD</span>
-            <mat-error *ngIf="rateForm.get('daily')?.hasError('required')">
-              Daily rate is required
-            </mat-error>
-            <mat-error *ngIf="rateForm.get('daily')?.hasError('min')">
-              Daily rate must be positive
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Hourly Rate</mat-label>
-            <input matInput type="number" step="0.01" formControlName="hourly" required>
-            <span matSuffix>USD</span>
-            <mat-error *ngIf="rateForm.get('hourly')?.hasError('required')">
-              Hourly rate is required
-            </mat-error>
-            <mat-error *ngIf="rateForm.get('hourly')?.hasError('min')">
-              Hourly rate must be positive
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Monthly Rate</mat-label>
-            <input matInput type="number" step="0.01" formControlName="monthly" required>
-            <span matSuffix>USD</span>
-            <mat-error *ngIf="rateForm.get('monthly')?.hasError('required')">
-              Monthly rate is required
-            </mat-error>
-            <mat-error *ngIf="rateForm.get('monthly')?.hasError('min')">
-              Monthly rate must be positive
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Percentage (%)</mat-label>
-            <input matInput type="number" step="0.01" min="0" max="100" formControlName="percent" required>
-            <span matSuffix>%</span>
-            <mat-error *ngIf="rateForm.get('percent')?.hasError('required')">
-              Percentage is required
-            </mat-error>
-            <mat-error *ngIf="rateForm.get('percent')?.hasError('min') || rateForm.get('percent')?.hasError('max')">
-              Percentage must be between 0 and 100
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Overtime Rate</mat-label>
-            <input matInput type="number" step="0.01" formControlName="otRate" required>
-            <span matSuffix>USD</span>
-            <mat-error *ngIf="rateForm.get('otRate')?.hasError('required')">
-              Overtime rate is required
-            </mat-error>
-            <mat-error *ngIf="rateForm.get('otRate')?.hasError('min')">
-              Overtime rate must be positive
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Status Flags -->
-          <div class="checkbox-group">
-            <mat-checkbox formControlName="isActive">Active</mat-checkbox>
-            <mat-checkbox formControlName="isPrivate">Private</mat-checkbox>
-            <mat-checkbox formControlName="isArchived">Archived</mat-checkbox>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
-            {{ editingRate ? 'Update' : 'Add' }} Rate
-          </button>
-          <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-
   <!-- Rates Table -->
   <div *ngIf="loading" class="loading-spinner">
     <p>Loading resource rates...</p>
@@ -143,19 +33,19 @@
     <!-- Daily Rate Column -->
     <ng-container matColumnDef="daily">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Daily</th>
-      <td mat-cell *matCellDef="let element">{{ formatCurrency(element.daily) }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.daily | number:'1.2-2' }}</td>
     </ng-container>
 
     <!-- Hourly Rate Column -->
     <ng-container matColumnDef="hourly">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Hourly</th>
-      <td mat-cell *matCellDef="let element">{{ formatCurrency(element.hourly) }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.hourly | number:'1.2-2' }}</td>
     </ng-container>
 
     <!-- Monthly Rate Column -->
     <ng-container matColumnDef="monthly">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Monthly</th>
-      <td mat-cell *matCellDef="let element">{{ formatCurrency(element.monthly) }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.monthly | number:'1.2-2' }}</td>
     </ng-container>
 
     <!-- Percentage Column -->
@@ -167,7 +57,7 @@
     <!-- OT Rate Column -->
     <ng-container matColumnDef="otRate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>OT Rate</th>
-      <td mat-cell *matCellDef="let element">{{ formatCurrency(element.otRate) }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.otRate | number:'1.2-2' }}</td>
     </ng-container>
 
     <!-- Active Status Column -->

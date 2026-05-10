@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSortModule, MatSort } from '@angular/material/sort';
 import { ApiResourceRatesService } from '../../../core/services/api-resource-rates.service';
 import { ResourceRate } from '../../../core/models/resource-rate.model';
 import { ResourceRateDialogComponent, ResourceRateDialogData } from './resource-rate-dialog/resource-rate-dialog.component';
@@ -29,12 +29,15 @@ import { ResourceRateDialogComponent, ResourceRateDialogData } from './resource-
     MatSortModule
   ]
 })
-export class ResourceRateComponent implements OnInit, OnChanges {
+export class ResourceRateComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() resourceId?: number;
 
   public resourceRates: ResourceRate[] = [];
   public displayedColumns: string[] = ['validFrom', 'validTo', 'daily', 'hourly', 'monthly', 'percent', 'otRate', 'isActive', 'actions'];
   public loading: boolean = false;
+  public dataSource: MatTableDataSource<ResourceRate> = new MatTableDataSource();
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private apiResourceRatesService: ApiResourceRatesService,
@@ -54,13 +57,23 @@ export class ResourceRateComponent implements OnInit, OnChanges {
     }
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
+
   private loadResourceRates(): void {
     if (!this.resourceId) return;
-
     this.loading = true;
     this.apiResourceRatesService.getResourceRatesByResource(this.resourceId).subscribe({
       next: (rates) => {
-        this.resourceRates = [...rates];
+        this.dataSource.data = [...rates].sort((a, b) => {
+          const dateA = new Date(a.validFrom).getTime();
+          const dateB = new Date(b.validFrom).getTime();
+          if (dateA !== dateB) return dateA - dateB;
+          const dateToA = new Date(a.validTo).getTime();
+          const dateToB = new Date(b.validTo).getTime();
+          return dateToA - dateToB;
+        });
         this.loading = false;
       },
       error: (error) => {

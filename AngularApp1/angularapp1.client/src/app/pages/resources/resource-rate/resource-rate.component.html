@@ -12,12 +12,12 @@
     <p>Loading resource rates...</p>
   </div>
 
-  <div *ngIf="!loading && resourceRates.length === 0" class="no-data">
+  <div *ngIf="!loading && dataSource.data.length === 0" class="no-data">
     <p>No resource rates found.</p>
     <p class="hint">Click "Add Rate" button above to create a new resource rate.</p>
   </div>
 
-  <table mat-table [dataSource]="resourceRates" class="rates-table" *ngIf="!loading && resourceRates.length > 0" matSort>
+  <table mat-table [dataSource]="dataSource" class="rates-table" *ngIf="!loading && dataSource.data.length > 0" matSort>
     <!-- Valid From Column -->
     <ng-container matColumnDef="validFrom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid From</th>

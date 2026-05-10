@@ -148,7 +148,7 @@ export class ResourceRateDialogComponent implements OnInit {
       this.apiResourceRatesService.updateResourceRate(this.data.resourceRate.id, rateData).subscribe({
         next: (result) => {
           this.snackBar.open('Resource rate updated successfully', 'Close', { duration: 3000 });
-          this.dialogRef.close(result);
+          this.dialogRef.close(true);
         },
         error: (error) => {
           console.error('Error updating resource rate:', error);

@@ -43,7 +43,7 @@ import { ResourceRate } from '../../../core/models/resource-rate.model';
   ]
 })
 export class ResourceRateComponent implements OnInit, OnChanges {
-  @Input() resourceId!: number;
+  @Input() resourceId?: number;
 
   public resourceRates: ResourceRate[] = [];
   public displayedColumns: string[] = ['validFrom', 'validTo', 'daily', 'hourly', 'monthly', 'percent', 'otRate', 'isActive', 'actions'];
@@ -142,6 +142,11 @@ export class ResourceRateComponent implements OnInit, OnChanges {
   public onSave(): void {
     if (this.rateForm.invalid) {
       this.snackBar.open('Please fill in all required fields correctly', 'Close', { duration: 3000 });
+      return;
+    }
+
+    if (!this.resourceId) {
+      this.snackBar.open('Resource ID is required to save rates', 'Close', { duration: 3000 });
       return;
     }
 

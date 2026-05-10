@@ -47,6 +47,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.JobServiceTimesheet> JobServiceTimesheet { get; set; } = default!;
         public DbSet<Erp.Domain.Models.Resource> Resource { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ResourceEntity> ResourceEntity { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.ResourceRate> ResourceRates { get; set; } = default!;
         public DbSet<Erp.Domain.Models.TimesheetExpenseDetail> TimesheetExpenseDetail { get; set; } = default!;
 
         // Resource Calendar related DbSets
@@ -198,6 +199,23 @@ namespace AngularApp1.Server.Data
                 .WithMany(e => e.JobExpenses)
                 .HasForeignKey(je => je.ExpensesId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure ResourceRate
+            modelBuilder.Entity<ResourceRate>(entity =>
+            {
+                entity.ToTable("ResourceRate");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(4000);
+                entity.Property(e => e.Daily).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Hourly).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+                entity.Property(e => e.IsArchived).HasColumnName("isArchived");
+                entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
+                entity.Property(e => e.LastEditBy).HasMaxLength(4000);
+                entity.Property(e => e.Monthly).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.OtRate).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Percent).HasColumnType("decimal(18, 0)");
+            });
         }
     }
 }

@@ -32,6 +32,7 @@ import { TimesheetsListComponent } from './pages/timesheets/timesheets-list/time
 import { TimesheetFormComponent } from './pages/timesheets/timesheet-form/timesheet-form.component';
 import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approval/timesheet-approval.component';
 import { PayPeriodComponent } from './pages/timesheets/pay-period/pay-period.component';
+import { PayPeriodFormComponent } from './pages/timesheets/pay-period-form/pay-period-form.component';
 import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
 import { ResourceCalendarComponent } from './pages/resources/resource-calendar/resource-calendar.component';
@@ -184,6 +185,11 @@ const routeConfig: Routes = [
     {
       path: 'timesheets/pay-periods',
       component: PayPeriodComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'timesheets/pay-periods/form/:id',
+      component: PayPeriodFormComponent,
       canActivate: [AuthGuard]
     },
     // Resource routes

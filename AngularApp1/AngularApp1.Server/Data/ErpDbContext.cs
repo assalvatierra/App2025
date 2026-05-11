@@ -68,6 +68,7 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ExpenseStatus> ExpenseStatuses { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ExpensePayment> ExpensePayments { get; set; } = default!;
         public DbSet<Erp.Domain.Models.JobExpense> JobExpenses { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.PayExpense> PayExpenses { get; set; } = default!;
 
         // Checklist related DbSets
         public DbSet<Erp.Domain.Models.ChecklistItem> ChecklistItem { get; set; } = default!;
@@ -202,6 +203,9 @@ namespace AngularApp1.Server.Data
                 .WithMany(e => e.JobExpenses)
                 .HasForeignKey(je => je.ExpensesId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Map PayExpense to singular table name
+            modelBuilder.Entity<PayExpense>().ToTable("PayExpense");
 
             // Configure ResourceRate
             modelBuilder.Entity<ResourceRate>(entity =>

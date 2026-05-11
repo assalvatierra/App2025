@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PayPeriod } from '../models/pay-period.model';
+import { PayExpense } from '../models/pay-expense.model';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +112,19 @@ export class ApiPayPeriodsService {
   }
 
   /**
+   * Get expenses linked to a pay period
+   * @param id Pay period ID
+   * @returns Observable of PayExpense array
+   */
+  getPayPeriodExpenses(id: number): Observable<PayExpense[]> {
+    return this.http.get<PayExpense[]>(`${this.baseUrl}/api/PayPeriods/${id}/Expenses`).pipe(
+      map((res: any) => {
+        return res.map((expense: any) => this.mapPayExpense(expense));
+      })
+    );
+  }
+
+  /**
    * Helper method to map API response to PayPeriod model
    * @param data Raw API data
    * @returns Mapped PayPeriod object
@@ -130,6 +144,25 @@ export class ApiPayPeriodsService {
       notes: data.notes,
       payDate: new Date(data.payDate),
       itemStatusId: data.itemStatusId
+    };
+  }
+
+  /**
+   * Helper method to map API response to PayExpense model
+   * @param data Raw API data
+   * @returns Mapped PayExpense object
+   */
+  private mapPayExpense(data: any): PayExpense {
+    return {
+      id: data.id,
+      expenseId: data.expenseId,
+      trxDate: new Date(data.trxDate),
+      amount: data.amount,
+      remarks: data.remarks,
+      trxRef: data.trxRef,
+      itemTypeId: data.itemTypeId,
+      isActive: data.isActive,
+      isArchived: data.isArchived
     };
   }
 }

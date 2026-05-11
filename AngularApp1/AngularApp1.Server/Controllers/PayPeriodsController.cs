@@ -172,6 +172,38 @@ namespace AngularApp1.Server.Controllers
             return NoContent();
         }
 
+        // GET: api/PayPeriods/5/Expenses
+        [HttpGet("{id}/Expenses")]
+        public async Task<ActionResult<IEnumerable<object>>> GetPayPeriodExpenses(int id)
+        {
+            var payPeriod = await _context.PayPeriods.FindAsync(id);
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            var expenses = await _context.PayExpenses
+                .Where(pe => pe.PayPeriodId == id)
+                .Join(_context.Expenses,
+                    pe => pe.ExpenseId,
+                    e => e.Id,
+                    (pe, e) => new
+                    {
+                        Id = pe.Id,
+                        ExpenseId = e.Id,
+                        TrxDate = e.TrxDate,
+                        Amount = e.Amount,
+                        Remarks = e.Remarks,
+                        TrxRef = e.TrxRef,
+                        ItemTypeId = e.ItemTypeId,
+                        IsActive = e.IsActive,
+                        IsArchived = e.IsArchived
+                    })
+                .ToListAsync();
+
+            return Ok(expenses);
+        }
+
         private bool PayPeriodExists(int id)
         {
             return _context.PayPeriods.Any(e => e.Id == id);

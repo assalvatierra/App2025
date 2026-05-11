@@ -1,5 +1,5 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { ApiPayPeriodsService } from '../../../core/services/api-pay-periods.service';
 import { ApiService } from '../../../core/api.service';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
@@ -15,8 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { PayPeriodDialogComponent } from './pay-period-dialog/pay-period-dialog.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pay-period',
@@ -37,7 +36,7 @@ import { PayPeriodDialogComponent } from './pay-period-dialog/pay-period-dialog.
     CommonModule
   ]
 })
-export class PayPeriodComponent implements AfterViewInit {
+export class PayPeriodComponent implements AfterViewInit, OnInit {
   @ViewChild('ListTable') TableList!: EntityListTableComponent;
 
   public showEdit: boolean = true;
@@ -60,9 +59,19 @@ export class PayPeriodComponent implements AfterViewInit {
   constructor(
     private apiPayPeriods: ApiPayPeriodsService,
     private apiService: ApiService,
-    private router: Router,
-    private dialog: MatDialog
+    private router: Router
   ) { }
+
+  ngOnInit(): void {
+    // Subscribe to navigation events to refresh data when returning from form
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      if (event.url === '/timesheets/pay-periods') {
+        this.retrieveApiData();
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.loadLookupData();
@@ -70,31 +79,13 @@ export class PayPeriodComponent implements AfterViewInit {
   }
 
   onAddRecord() {
-    const dialogRef = this.dialog.open(PayPeriodDialogComponent, {
-      width: '600px',
-      data: { payPeriod: null }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.retrieveApiData();
-      }
-    });
+    this.router.navigate(['timesheets/pay-periods/form', 0]);
+    console.log('Add pay period clicked');
   }
 
   onEdit(param: any) {
-    const payPeriod = this.lastPayPeriodData.find(pp => pp.id === param);
-
-    const dialogRef = this.dialog.open(PayPeriodDialogComponent, {
-      width: '600px',
-      data: { payPeriod: payPeriod }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.retrieveApiData();
-      }
-    });
+    this.router.navigate(['timesheets/pay-periods/form', param]);
+    console.log('Edit pay period clicked', param);
   }
 
   onArchive(param: any) {

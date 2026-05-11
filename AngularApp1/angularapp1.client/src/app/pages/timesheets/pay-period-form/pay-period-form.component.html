@@ -1,0 +1,131 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ titleInfo }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="payPeriodForm" *ngIf="!dataloading">
+      <mat-card class="shipping-card">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Date From</mat-label>
+                <input matInput [matDatepicker]="dateFromPicker" formControlName="dateFrom" required>
+                <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateFromPicker></mat-datepicker>
+                <mat-error *ngIf="payPeriodForm.get('dateFrom')?.hasError('required')">
+                  Date From is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="dateToPicker" formControlName="dateTo" required>
+                <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateToPicker></mat-datepicker>
+                <mat-error *ngIf="payPeriodForm.get('dateTo')?.hasError('required')">
+                  Date To is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Pay Date</mat-label>
+                <input matInput [matDatepicker]="payDatePicker" formControlName="payDate" required>
+                <mat-datepicker-toggle matSuffix [for]="payDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #payDatePicker></mat-datepicker>
+                <mat-error *ngIf="payPeriodForm.get('payDate')?.hasError('required')">
+                  Pay Date is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="itemStatusId">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option *ngFor="let status of statuses" [value]="status.id">
+                    {{ status.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="3"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col checkbox-container">
+              <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+              <mat-checkbox formControlName="isPrivate">Private</mat-checkbox>
+              <mat-checkbox formControlName="isArchived">Archived</mat-checkbox>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+
+    <!-- Linked Expenses Section -->
+    <div *ngIf="paramId !== 0" class="expenses-section-wrapper">
+      <h3 class="section-title">Linked Expense Records</h3>
+      <div class="expenses-section">
+        <table *ngIf="linkedExpenses.length > 0 && !expensesLoading" class="expenses-table">
+          <thead>
+            <tr>
+              <th>Transaction Date</th>
+              <th>Amount</th>
+              <th>Reference</th>
+              <th>Remarks</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expense of linkedExpenses">
+              <td>{{ expense.trxDate | date:'mediumDate' }}</td>
+              <td>{{ expense.amount | currency }}</td>
+              <td>{{ expense.trxRef || '-' }}</td>
+              <td>{{ expense.remarks || '-' }}</td>
+              <td>
+                <span *ngIf="expense.isActive && !expense.isArchived" class="status-badge status-active">Active</span>
+                <span *ngIf="expense.isArchived" class="status-badge status-archived">Archived</span>
+                <span *ngIf="!expense.isActive && !expense.isArchived" class="status-badge status-inactive">Inactive</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p *ngIf="linkedExpenses.length === 0 && !expensesLoading" class="no-expenses-text">
+          No expense records linked to this pay period.
+        </p>
+        <p *ngIf="expensesLoading" class="loading-text">
+          Loading expenses...
+        </p>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div *ngIf="!showAddBtn">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </div>
+
+    <div *ngIf="showAddBtn">
+      <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <div class="spinner">Loading...</div>
+</div>

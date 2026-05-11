@@ -95,8 +95,8 @@ export class ResourceRateDialogComponent implements OnInit {
     this.isEdit = !!this.data.resourceRate;
     if (this.isEdit && this.data.resourceRate) {
       this.rateForm.patchValue({
-        validFrom: new Date(this.data.resourceRate.validFrom),
-        validTo: new Date(this.data.resourceRate.validTo),
+        validFrom: this.parseDate(this.data.resourceRate.validFrom),
+        validTo: this.parseDate(this.data.resourceRate.validTo),
         daily: this.data.resourceRate.daily,
         hourly: this.data.resourceRate.hourly,
         monthly: this.data.resourceRate.monthly,
@@ -107,6 +107,20 @@ export class ResourceRateDialogComponent implements OnInit {
         isArchived: this.data.resourceRate.isArchived
       });
     }
+  }
+
+  private parseDate(date: any): Date {
+    if (date instanceof Date) {
+      return date;
+    }
+    if (typeof date === 'string') {
+      const match = date.match(/\/Date\((\d+)\)\//);
+      if (match) {
+        return new Date(parseInt(match[1]));
+      }
+      return new Date(date);
+    }
+    return new Date();
   }
 
   private initializeForm(): void {
@@ -125,21 +139,37 @@ export class ResourceRateDialogComponent implements OnInit {
   }
 
   public onSave(): void {
+  debugger;
+
     if (this.rateForm.invalid) {
       this.snackBar.open('Please fill in all required fields correctly', 'Close', { duration: 3000 });
       return;
     }
-
+  
     const formValue = this.rateForm.value;
-    const rateData: ResourceRate = {
-      id: this.data.resourceRate?.id || 0,
+    // Create the payload matching the backend model
+    const rateData: any = {
       resourceId: this.data.resourceId,
+      validFrom: formValue.validFrom ? this.toLocalISOString(formValue.validFrom) : null,
+      validTo: formValue.validTo ? this.toLocalISOString(formValue.validTo) : null,
+      daily: formValue.daily || 0,
+      hourly: formValue.hourly || 0,
+      monthly: formValue.monthly || 0,
+      percent: formValue.percent || 0,
+      otRate: formValue.otRate || 0,
+      isActive: formValue.isActive !== false,
+      isPrivate: formValue.isPrivate || false,
+      isArchived: formValue.isArchived || false,
       createdBy: this.data.resourceRate?.createdBy || 'system',
-      createdOn: this.data.resourceRate?.createdOn || new Date(),
+      createdOn: this.data.resourceRate?.createdOn ? new Date(this.data.resourceRate.createdOn).toISOString() : new Date().toISOString(),
       lastEditBy: 'system',
-      lastEditOn: new Date(),
-      ...formValue
+      lastEditOn: new Date().toISOString()
     };
+
+    // For edit mode, include the ID
+    if (this.isEdit && this.data.resourceRate) {
+      rateData.id = this.data.resourceRate.id;
+    }
 
     this.loading = true;
 
@@ -174,5 +204,16 @@ export class ResourceRateDialogComponent implements OnInit {
 
   public onCancel(): void {
     this.dialogRef.close();
+  }
+
+  private toLocalISOString(date: Date): string {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   }
 }

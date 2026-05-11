@@ -204,9 +204,135 @@ namespace AngularApp1.Server.Controllers
             return Ok(expenses);
         }
 
+        // GET: api/PayPeriods/5/Timesheets
+        [HttpGet("{id}/Timesheets")]
+        public async Task<ActionResult<IEnumerable<object>>> GetPayPeriodTimesheets(int id)
+        {
+            var payPeriod = await _context.PayPeriods.FindAsync(id);
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            var timesheets = await _context.Timesheet
+                .Include(t => t.Resource)
+                .Include(t => t.ResourceId1Navigation)
+                .Where(t => t.TsDate >= payPeriod.DateFrom && t.TsDate <= payPeriod.DateTo)
+                .OrderByDescending(t => t.TsDate)
+                .Select(t => new
+                {
+                    Id = t.Id,
+                    TsDate = t.TsDate,
+                    Remarks = t.Remarks,
+                    ResourceId = t.ResourceId,
+                    ResourceName = t.Resource != null ? t.Resource.Name : null,
+                    ResourceCode = t.Resource != null ? t.Resource.Code : null,
+                    ResourceId1 = t.ResourceId1,
+                    ResourceId1Name = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Name : null,
+                    ResourceId1Code = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Code : null,
+                    ItemStatusId = t.ItemStatusId
+                })
+                .ToListAsync();
+
+            return Ok(timesheets);
+        }
+
+        // GET: api/PayPeriods/5/Additions
+        [HttpGet("{id}/Additions")]
+        public async Task<ActionResult<IEnumerable<PayAddition>>> GetPayPeriodAdditions(int id)
+        {
+            var payPeriod = await _context.PayPeriods.FindAsync(id);
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            var additions = await _context.PayAdditions
+                .Where(pa => pa.PayPeriodId == id)
+                .OrderByDescending(pa => pa.Id)
+                .ToListAsync();
+
+            return Ok(additions);
+        }
+
+        // GET: api/PayPeriods/Additions/5
+        [HttpGet("Additions/{id}")]
+        public async Task<ActionResult<PayAddition>> GetPayAddition(int id)
+        {
+            var payAddition = await _context.PayAdditions.FindAsync(id);
+
+            if (payAddition == null)
+            {
+                return NotFound();
+            }
+
+            return payAddition;
+        }
+
+        // POST: api/PayPeriods/Additions
+        [HttpPost("Additions")]
+        public async Task<ActionResult<PayAddition>> PostPayAddition(PayAddition payAddition)
+        {
+            _context.PayAdditions.Add(payAddition);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPayAddition", new { id = payAddition.Id }, payAddition);
+        }
+
+        // PUT: api/PayPeriods/Additions/5
+        [HttpPut("Additions/{id}")]
+        public async Task<IActionResult> PutPayAddition(int id, PayAddition payAddition)
+        {
+            if (id != payAddition.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(payAddition).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PayAdditionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/PayPeriods/Additions/5
+        [HttpDelete("Additions/{id}")]
+        public async Task<IActionResult> DeletePayAddition(int id)
+        {
+            var payAddition = await _context.PayAdditions.FindAsync(id);
+            if (payAddition == null)
+            {
+                return NotFound();
+            }
+
+            _context.PayAdditions.Remove(payAddition);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool PayPeriodExists(int id)
         {
             return _context.PayPeriods.Any(e => e.Id == id);
+        }
+
+        private bool PayAdditionExists(int id)
+        {
+            return _context.PayAdditions.Any(e => e.Id == id);
         }
     }
 }

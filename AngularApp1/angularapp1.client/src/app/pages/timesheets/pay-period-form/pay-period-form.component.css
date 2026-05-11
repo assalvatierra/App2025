@@ -47,6 +47,11 @@
   font-size: 24px;
 }
 
+/* Tab Content */
+.tab-content {
+  padding: 20px 0;
+}
+
 /* Linked Expenses Section */
 .expenses-section-wrapper {
   margin-top: 24px;

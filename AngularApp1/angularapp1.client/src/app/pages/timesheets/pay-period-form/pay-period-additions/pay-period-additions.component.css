@@ -1,0 +1,100 @@
+/* Additions Section */
+.additions-section-wrapper {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0;
+}
+
+/* Form Styles */
+.form-card {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-field-full {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* Additions Table */
+.additions-section {
+  margin-top: 8px;
+}
+
+.additions-table {
+  width: 100%;
+  font-size: 14px;
+}
+
+.additions-table th {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.54);
+  background-color: #f5f5f5;
+}
+
+.additions-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.no-additions-text {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  font-style: italic;
+  margin: 0;
+  padding: 16px 0;
+}
+
+.loading-text {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+  margin: 0;
+  padding: 16px 0;
+}
+
+/* Type Badges */
+.type-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.type-addition {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.type-deduction {
+  background-color: #ffebee;
+  color: #c62828;
+}

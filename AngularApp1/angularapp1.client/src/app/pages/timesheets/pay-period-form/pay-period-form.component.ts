@@ -10,11 +10,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiPayPeriodsService } from '../../../core/services/api-pay-periods.service';
 import { ApiService } from '../../../core/api.service';
 import { PayPeriod } from '../../../core/models/pay-period.model';
 import { PayExpense } from '../../../core/models/pay-expense.model';
+import { Timesheet } from '../../../core/models/timesheet.model';
+import { PayPeriodTimesheetComponent } from './pay-period-timesheet/pay-period-timesheet.component';
+import { PayPeriodAdditionsComponent } from './pay-period-additions/pay-period-additions.component';
 
 @Component({
   selector: 'app-pay-period-form',
@@ -32,7 +36,10 @@ import { PayExpense } from '../../../core/models/pay-expense.model';
     MatNativeDateModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatTabsModule,
+    MatSnackBarModule,
+    PayPeriodTimesheetComponent,
+    PayPeriodAdditionsComponent
   ]
 })
 export class PayPeriodFormComponent implements AfterViewInit {
@@ -49,6 +56,10 @@ export class PayPeriodFormComponent implements AfterViewInit {
   // Linked expenses
   public linkedExpenses: PayExpense[] = [];
   public expensesLoading: boolean = false;
+
+  // Linked timesheets
+  public linkedTimesheets: Timesheet[] = [];
+  public timesheetsLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +86,8 @@ export class PayPeriodFormComponent implements AfterViewInit {
     if (this.paramId !== 0) {
       this.titleInfo = 'Edit Pay Period';
       this.retrieveApiData(this.paramId);
+      this.loadLinkedExpenses(this.paramId);
+      this.loadLinkedTimesheets(this.paramId);
     } else {
       this.titleInfo = 'Add New Pay Period';
       this.setDefaultData();
@@ -313,6 +326,21 @@ export class PayPeriodFormComponent implements AfterViewInit {
       error: (err) => {
         console.error('Error loading linked expenses:', err);
         this.expensesLoading = false;
+      }
+    });
+  }
+
+  /* Linked Timesheets Methods */
+  private loadLinkedTimesheets(payPeriodId: number): void {
+    this.timesheetsLoading = true;
+    this.apiPayPeriods.getPayPeriodTimesheets(payPeriodId).subscribe({
+      next: (timesheets: Timesheet[]) => {
+        this.linkedTimesheets = timesheets;
+        this.timesheetsLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading linked timesheets:', err);
+        this.timesheetsLoading = false;
       }
     });
   }

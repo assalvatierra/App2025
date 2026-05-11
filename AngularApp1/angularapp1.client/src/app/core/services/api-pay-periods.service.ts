@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PayPeriod } from '../models/pay-period.model';
 import { PayExpense } from '../models/pay-expense.model';
+import { Timesheet } from '../models/timesheet.model';
+import { PayAddition } from '../models/pay-addition.model';
 
 @Injectable({
   providedIn: 'root'
@@ -125,6 +127,19 @@ export class ApiPayPeriodsService {
   }
 
   /**
+   * Get timesheets linked to a pay period
+   * @param id Pay period ID
+   * @returns Observable of Timesheet array
+   */
+  getPayPeriodTimesheets(id: number): Observable<Timesheet[]> {
+    return this.http.get<Timesheet[]>(`${this.baseUrl}/api/PayPeriods/${id}/Timesheets`).pipe(
+      map((res: any) => {
+        return res.map((timesheet: any) => this.mapTimesheet(timesheet));
+      })
+    );
+  }
+
+  /**
    * Helper method to map API response to PayPeriod model
    * @param data Raw API data
    * @returns Mapped PayPeriod object
@@ -164,5 +179,77 @@ export class ApiPayPeriodsService {
       isActive: data.isActive,
       isArchived: data.isArchived
     };
+  }
+
+  /**
+   * Helper method to map API response to Timesheet model
+   * @param data Raw API data
+   * @returns Mapped Timesheet object
+   */
+  private mapTimesheet(data: any): Timesheet {
+    return {
+      id: data.id,
+      tsDate: new Date(data.tsDate),
+      remarks: data.remarks,
+      resourceId: data.resourceId,
+      resourceId1: data.resourceId1,
+      itemStatusId: data.itemStatusId,
+      resource: data.resourceName ? {
+        id: data.resourceId,
+        name: data.resourceName,
+        code: data.resourceCode
+      } as any : undefined,
+      resourceId1Navigation: data.resourceId1Name ? {
+        id: data.resourceId1,
+        name: data.resourceId1Name,
+        code: data.resourceId1Code
+      } as any : undefined
+    };
+  }
+
+  /**
+   * Get additions linked to a pay period
+   * @param id Pay period ID
+   * @returns Observable of PayAddition array
+   */
+  getPayPeriodAdditions(id: number): Observable<PayAddition[]> {
+    return this.http.get<PayAddition[]>(`${this.baseUrl}/api/PayPeriods/${id}/Additions`);
+  }
+
+  /**
+   * Get a single pay addition by ID
+   * @param id Pay addition ID
+   * @returns Observable of PayAddition
+   */
+  getPayAddition(id: number): Observable<PayAddition> {
+    return this.http.get<PayAddition>(`${this.baseUrl}/api/PayPeriods/Additions/${id}`);
+  }
+
+  /**
+   * Add a new pay addition
+   * @param payAddition PayAddition object
+   * @returns Observable of created PayAddition
+   */
+  addPayAddition(payAddition: PayAddition): Observable<PayAddition> {
+    return this.http.post<PayAddition>(`${this.baseUrl}/api/PayPeriods/Additions`, payAddition);
+  }
+
+  /**
+   * Update an existing pay addition
+   * @param id Pay addition ID
+   * @param payAddition Updated PayAddition object
+   * @returns Observable of any
+   */
+  updatePayAddition(id: number, payAddition: PayAddition): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/PayPeriods/Additions/${id}`, payAddition);
+  }
+
+  /**
+   * Delete a pay addition
+   * @param id Pay addition ID
+   * @returns Observable of any
+   */
+  deletePayAddition(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/PayPeriods/Additions/${id}`);
   }
 }

@@ -76,6 +76,7 @@ namespace AngularApp1.Server.Data
 
         // PayPeriod related DbSets
         public DbSet<Erp.Domain.Models.PayPeriod> PayPeriods { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.PayAddition> PayAdditions { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -235,6 +236,12 @@ namespace AngularApp1.Server.Data
                 entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
                 entity.Property(e => e.LastEditBy).HasMaxLength(4000);
                 entity.Property(e => e.Notes).HasMaxLength(4000);
+            });
+
+            // Configure PayAddition
+            modelBuilder.Entity<PayAddition>(entity =>
+            {
+                entity.ToTable("PayAddition");
             });
         }
     }

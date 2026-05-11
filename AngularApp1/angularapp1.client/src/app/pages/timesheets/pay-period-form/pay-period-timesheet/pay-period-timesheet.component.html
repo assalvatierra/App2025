@@ -1,0 +1,41 @@
+<div class="timesheets-section-wrapper">
+  <h3 class="section-title">Related Timesheets</h3>
+  <div class="timesheets-section">
+    <table *ngIf="linkedTimesheets.length > 0 && !timesheetsLoading" class="timesheets-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Resource</th>
+          <th>Resource (Alt)</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let timesheet of linkedTimesheets">
+          <td>{{ timesheet.tsDate | date:'mediumDate' }}</td>
+          <td>
+            <span *ngIf="timesheet.resource">
+              {{ timesheet.resource.name }}
+              <span *ngIf="timesheet.resource.code" class="resource-code">({{ timesheet.resource.code }})</span>
+            </span>
+            <span *ngIf="!timesheet.resource">-</span>
+          </td>
+          <td>
+            <span *ngIf="timesheet.resourceId1Navigation">
+              {{ timesheet.resourceId1Navigation.name }}
+              <span *ngIf="timesheet.resourceId1Navigation.code" class="resource-code">({{ timesheet.resourceId1Navigation.code }})</span>
+            </span>
+            <span *ngIf="!timesheet.resourceId1Navigation">-</span>
+          </td>
+          <td>{{ timesheet.remarks || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="linkedTimesheets.length === 0 && !timesheetsLoading" class="no-timesheets-text">
+      No timesheets found for this pay period.
+    </p>
+    <p *ngIf="timesheetsLoading" class="loading-text">
+      Loading timesheets...
+    </p>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Pay Period' : 'Add Pay Period' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="payPeriodForm">
+    <div class="form-container">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date From</mat-label>
+        <input matInput [matDatepicker]="dateFromPicker" formControlName="dateFrom" required>
+        <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateFromPicker></mat-datepicker>
+        <mat-error *ngIf="payPeriodForm.get('dateFrom')?.hasError('required')">
+          Date From is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date To</mat-label>
+        <input matInput [matDatepicker]="dateToPicker" formControlName="dateTo" required>
+        <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateToPicker></mat-datepicker>
+        <mat-error *ngIf="payPeriodForm.get('dateTo')?.hasError('required')">
+          Date To is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Pay Date</mat-label>
+        <input matInput [matDatepicker]="payDatePicker" formControlName="payDate" required>
+        <mat-datepicker-toggle matSuffix [for]="payDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #payDatePicker></mat-datepicker>
+        <mat-error *ngIf="payPeriodForm.get('payDate')?.hasError('required')">
+          Pay Date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="itemStatusId">
+          <mat-option [value]="null">None</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes" rows="3"></textarea>
+      </mat-form-field>
+
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+        <mat-checkbox formControlName="isPrivate">Private</mat-checkbox>
+        <mat-checkbox formControlName="isArchived">Archived</mat-checkbox>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="loading || payPeriodForm.invalid">
+    {{ loading ? 'Saving...' : 'Save' }}
+  </button>
+</mat-dialog-actions>

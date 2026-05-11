@@ -122,6 +122,12 @@ export class NavigationComponent implements OnInit {
           label: 'Timesheet Approval',
           icon: 'approval', 
           route: 'timesheets/approval'
+        },
+        { 
+          name: 'Pay Periods',
+          label: 'Pay Periods',
+          icon: 'date_range', 
+          route: 'timesheets/pay-periods'
         }
       ]
     },

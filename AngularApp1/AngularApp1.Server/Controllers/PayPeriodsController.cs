@@ -1,0 +1,180 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AngularApp1.Server.Data;
+using Erp.Domain.Models;
+
+namespace AngularApp1.Server.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PayPeriodsController : ControllerBase
+    {
+        private readonly ErpDbContext _context;
+
+        public PayPeriodsController(ErpDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/PayPeriods
+        // GET: api/PayPeriods?isActive=true
+        // GET: api/PayPeriods?dateFrom=2024-01-01&dateTo=2024-12-31
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PayPeriod>>> GetPayPeriods(
+            [FromQuery] bool? isActive = null,
+            [FromQuery] DateTime? dateFrom = null,
+            [FromQuery] DateTime? dateTo = null,
+            [FromQuery] int? itemStatusId = null)
+        {
+            var query = _context.PayPeriods.AsQueryable();
+
+            if (isActive.HasValue)
+            {
+                query = query.Where(pp => pp.IsActive == isActive.Value);
+            }
+
+            if (dateFrom.HasValue)
+            {
+                query = query.Where(pp => pp.DateTo >= dateFrom.Value);
+            }
+
+            if (dateTo.HasValue)
+            {
+                query = query.Where(pp => pp.DateFrom <= dateTo.Value);
+            }
+
+            if (itemStatusId.HasValue)
+            {
+                query = query.Where(pp => pp.ItemStatusId == itemStatusId.Value);
+            }
+
+            var payPeriods = await query
+                .OrderByDescending(pp => pp.DateFrom)
+                .ToListAsync();
+
+            return Ok(payPeriods);
+        }
+
+        // GET: api/PayPeriods/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PayPeriod>> GetPayPeriod(int id)
+        {
+            var payPeriod = await _context.PayPeriods.FindAsync(id);
+
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            return payPeriod;
+        }
+
+        // GET: api/PayPeriods/Current
+        [HttpGet("Current")]
+        public async Task<ActionResult<PayPeriod>> GetCurrentPayPeriod()
+        {
+            var currentDate = DateTime.UtcNow.Date;
+
+            var payPeriod = await _context.PayPeriods
+                .Where(pp => pp.IsActive == true &&
+                            pp.DateFrom <= currentDate &&
+                            pp.DateTo >= currentDate)
+                .OrderByDescending(pp => pp.CreatedOn)
+                .FirstOrDefaultAsync();
+
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            return payPeriod;
+        }
+
+        // GET: api/PayPeriods/ByDate/{date}
+        [HttpGet("ByDate/{date}")]
+        public async Task<ActionResult<PayPeriod>> GetPayPeriodByDate(DateTime date)
+        {
+            var payPeriod = await _context.PayPeriods
+                .Where(pp => pp.DateFrom <= date && pp.DateTo >= date)
+                .OrderByDescending(pp => pp.CreatedOn)
+                .FirstOrDefaultAsync();
+
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            return payPeriod;
+        }
+
+        // PUT: api/PayPeriods/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPayPeriod(int id, PayPeriod payPeriod)
+        {
+            if (id != payPeriod.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(payPeriod).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PayPeriodExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/PayPeriods
+        [HttpPost]
+        public async Task<ActionResult<PayPeriod>> PostPayPeriod(PayPeriod payPeriod)
+        {
+            // Set audit fields
+            payPeriod.CreatedOn = DateTime.UtcNow;
+            payPeriod.LastEditOn = DateTime.UtcNow;
+
+            _context.PayPeriods.Add(payPeriod);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPayPeriod", new { id = payPeriod.Id }, payPeriod);
+        }
+
+        // DELETE: api/PayPeriods/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePayPeriod(int id)
+        {
+            var payPeriod = await _context.PayPeriods.FindAsync(id);
+            if (payPeriod == null)
+            {
+                return NotFound();
+            }
+
+            _context.PayPeriods.Remove(payPeriod);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool PayPeriodExists(int id)
+        {
+            return _context.PayPeriods.Any(e => e.Id == id);
+        }
+    }
+}

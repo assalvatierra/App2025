@@ -31,6 +31,7 @@ import { JobServiceFormComponent } from './pages/job-service/job-service-form/jo
 import { TimesheetsListComponent } from './pages/timesheets/timesheets-list/timesheets-list.component';
 import { TimesheetFormComponent } from './pages/timesheets/timesheet-form/timesheet-form.component';
 import { TimesheetApprovalComponent } from './pages/timesheets/timesheet-approval/timesheet-approval.component';
+import { PayPeriodComponent } from './pages/timesheets/pay-period/pay-period.component';
 import { ResourcesListComponent } from './pages/resources/resources-list/resources-list.component';
 import { ResourceFormComponent } from './pages/resources/resource-form/resource-form.component';
 import { ResourceCalendarComponent } from './pages/resources/resource-calendar/resource-calendar.component';
@@ -178,6 +179,11 @@ const routeConfig: Routes = [
     {
       path: 'timesheets/approval',
       component: TimesheetApprovalComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'timesheets/pay-periods',
+      component: PayPeriodComponent,
       canActivate: [AuthGuard]
     },
     // Resource routes

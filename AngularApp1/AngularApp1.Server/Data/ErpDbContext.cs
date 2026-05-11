@@ -73,6 +73,9 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.ChecklistItem> ChecklistItem { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ChecklistTransaction> ChecklistTransaction { get; set; } = default!;
 
+        // PayPeriod related DbSets
+        public DbSet<Erp.Domain.Models.PayPeriod> PayPeriods { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -215,6 +218,19 @@ namespace AngularApp1.Server.Data
                 entity.Property(e => e.Monthly).HasColumnType("decimal(18, 0)");
                 entity.Property(e => e.OtRate).HasColumnType("decimal(18, 0)");
                 entity.Property(e => e.Percent).HasColumnType("decimal(18, 0)");
+            });
+
+            // Configure PayPeriod
+            modelBuilder.Entity<PayPeriod>(entity =>
+            {
+                entity.ToTable("PayPeriod");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(4000);
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+                entity.Property(e => e.IsArchived).HasColumnName("isArchived");
+                entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
+                entity.Property(e => e.LastEditBy).HasMaxLength(4000);
+                entity.Property(e => e.Notes).HasMaxLength(4000);
             });
         }
     }

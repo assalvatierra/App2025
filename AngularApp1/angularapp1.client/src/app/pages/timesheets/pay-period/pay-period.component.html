@@ -1,0 +1,72 @@
+<ui-page-title [title]="'Pay Periods'"></ui-page-title>
+
+<mat-card class="filter-card">
+  <mat-card-header>
+    <mat-card-title>Filter Pay Periods</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Active Status</mat-label>
+        <mat-select [(ngModel)]="filterIsActive">
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option [value]="true">Active</mat-option>
+          <mat-option [value]="false">Inactive</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Date From</mat-label>
+        <input matInput [matDatepicker]="fromPicker" [(ngModel)]="filterDateFrom">
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Date To</mat-label>
+        <input matInput [matDatepicker]="toPicker" [(ngModel)]="filterDateTo">
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="filterItemStatusId">
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filter-buttons">
+        <button mat-raised-button color="primary" (click)="onFilter()">
+          Apply Filter
+        </button>
+        <button mat-raised-button (click)="onClearFilter()">
+          Clear Filter
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <app-entity-list-table
+      #ListTable
+      [tableFields]="tableFields"
+      [showEdit]="showEdit"
+      [showAdd]="true"
+      [addTitle]="'Add Pay Period'"
+      [editTitle]="'Edit Pay Period'"
+      (addRecordClicked)="onAddRecord()"
+      (editRecordClicked)="onEdit($event)"
+      (archiveClicked)="onArchive($event)"
+    ></app-entity-list-table>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="dataloading" class="loading-overlay">
+  <div class="spinner">Loading...</div>
+</div>

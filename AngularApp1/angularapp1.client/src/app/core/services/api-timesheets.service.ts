@@ -268,8 +268,10 @@ export class ApiTimesheetsService {
       resourceId: data.resourceId,
       resourceId1: data.resourceId1,
       itemStatusId: data.itemStatusId,
+      payPeriodId: data.payPeriodId,
       resource: data.resource,
       resourceId1Navigation: data.resourceId1Navigation,
+      payPeriod: data.payPeriod,
       linkedJobId: data.linkedJobId,
       linkedJobDescription: data.linkedJobDescription
     };

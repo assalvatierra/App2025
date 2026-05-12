@@ -39,6 +39,16 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="filterItemTypeId">
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+            {{ type.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <div class="filter-buttons">
         <button mat-raised-button color="primary" (click)="onFilter()">
           Apply Filter

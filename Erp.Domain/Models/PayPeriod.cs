@@ -30,4 +30,8 @@ public partial class PayPeriod
     public DateTime PayDate { get; set; }
 
     public int? ItemStatusId { get; set; }
+
+    public int? ItemTypeId { get; set; }
+
+    public virtual ItemType? ItemType { get; set; }
 }

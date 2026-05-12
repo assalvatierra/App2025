@@ -17,14 +17,15 @@ export class ApiPayPeriodsService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Get all pay periods or filter by isActive, dateFrom, dateTo, and/or itemStatusId
+   * Get all pay periods or filter by isActive, dateFrom, dateTo, itemStatusId, and/or itemTypeId
    * @param isActive Optional active status filter
    * @param dateFrom Optional date from filter
    * @param dateTo Optional date to filter
    * @param itemStatusId Optional item status ID filter
+   * @param itemTypeId Optional item type ID filter
    * @returns Observable of PayPeriod array
    */
-  getPayPeriods(isActive?: boolean, dateFrom?: Date, dateTo?: Date, itemStatusId?: number): Observable<PayPeriod[]> {
+  getPayPeriods(isActive?: boolean, dateFrom?: Date, dateTo?: Date, itemStatusId?: number, itemTypeId?: number): Observable<PayPeriod[]> {
     let params = new HttpParams();
 
     if (isActive !== undefined) {
@@ -41,6 +42,10 @@ export class ApiPayPeriodsService {
 
     if (itemStatusId) {
       params = params.set('itemStatusId', itemStatusId.toString());
+    }
+
+    if (itemTypeId) {
+      params = params.set('itemTypeId', itemTypeId.toString());
     }
 
     return this.http.get<PayPeriod[]>(`${this.baseUrl}/api/PayPeriods`, { params }).pipe(
@@ -158,7 +163,9 @@ export class ApiPayPeriodsService {
       dateTo: new Date(data.dateTo),
       notes: data.notes,
       payDate: new Date(data.payDate),
-      itemStatusId: data.itemStatusId
+      itemStatusId: data.itemStatusId,
+      itemTypeId: data.itemTypeId,
+      itemType: data.itemType
     };
   }
 
@@ -194,6 +201,7 @@ export class ApiPayPeriodsService {
       resourceId: data.resourceId,
       resourceId1: data.resourceId1,
       itemStatusId: data.itemStatusId,
+      payPeriodId: data.payPeriodId,
       resource: data.resourceName ? {
         id: data.resourceId,
         name: data.resourceName,

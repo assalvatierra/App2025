@@ -63,6 +63,22 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field class="full-width">
+                      <mat-label>Type</mat-label>
+                      <mat-select formControlName="itemTypeId">
+                        <mat-option [value]="null">None</mat-option>
+                        <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+                          {{ type.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
                       <mat-label>Notes</mat-label>
                       <textarea matInput formControlName="notes" rows="3"></textarea>
                     </mat-form-field>

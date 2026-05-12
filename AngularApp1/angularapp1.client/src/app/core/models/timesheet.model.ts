@@ -6,8 +6,10 @@ export interface Timesheet {
   resourceId?: number;
   resourceId1?: number;
   itemStatusId?: number;
+  payPeriodId?: number;
   resource?: Resource;
   resourceId1Navigation?: Resource;
+  payPeriod?: PayPeriod;
   linkedJobId?: number;
   linkedJobDescription?: string;
 }
@@ -38,6 +40,32 @@ export interface Resource {
   itemTypeCode?: string;
   itemStatusId?: number;
   jsonProperties?: string;
+}
+
+export interface PayPeriod {
+  id: number;
+  createdBy?: string;
+  createdOn: Date;
+  lastEditBy?: string;
+  lastEditOn: Date;
+  isArchived: boolean;
+  isPrivate: boolean;
+  isActive: boolean;
+  dateFrom: Date;
+  dateTo: Date;
+  notes?: string;
+  payDate: Date;
+  itemStatusId?: number;
+  itemTypeId?: number;
+  itemType?: ItemType;
+}
+
+export interface ItemType {
+  id: number;
+  name: string;
+  description?: string;
+  code?: string;
+  sortOrder?: number;
 }
 
 export interface ApprovalRequest {

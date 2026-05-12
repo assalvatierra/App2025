@@ -1071,6 +1071,9 @@
     <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="7baaad76-f299-485c-a0d3-85a17d022f2e">
       <column name="" not-null="False" />
     </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="926757c6-0c15-453b-b462-e17c596c15f3">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="PayAdditions" entity-set="PayAdditions" p1:Guid="d995f6da-4253-419c-af0e-b50d79c4fa14">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f1118fb3-a897-4285-8e19-2576334af981">
@@ -1766,6 +1769,14 @@
       </end1>
       <end2 multiplicity="Many" name="PayExpenses" class="PayPeriod" relation-class="PayExpense" lazy="False" p1:Guid="6be74a35-ab78-43c5-8495-95f45604fe74">
         <property name="PayPeriodId" />
+      </end2>
+    </association>
+    <association name="ItemType_PayPeriod" cardinality="OneToMany" p1:Guid="acfd51b7-b92a-4d0e-ba3f-535a8dd0eee9">
+      <end1 multiplicity="One" name="ItemType" class="PayPeriod" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="d602e04e-47a6-4c79-899e-d7f6c54fc767">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PayPeriods" class="ItemType" relation-class="PayPeriod" lazy="False" p1:Guid="0b4d3d8d-c021-4414-89b5-855c40622bae">
+        <property name="ItemTypeId" />
       </end2>
     </association>
   </associations>

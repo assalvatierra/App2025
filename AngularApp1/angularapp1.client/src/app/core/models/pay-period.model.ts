@@ -12,4 +12,16 @@ export interface PayPeriod {
   notes?: string;
   payDate: Date;
   itemStatusId?: number;
+  itemTypeId?: number;
+  itemType?: ItemType;
+}
+
+export interface ItemType {
+  id: number;
+  name: string;
+  description?: string;
+  remarks?: string;
+  code?: string;
+  sortOrder?: number;
+  itemTypeClassId?: number;
 }

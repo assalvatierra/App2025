@@ -16,7 +16,9 @@ import { ApiResourcesService } from '../../../core/services/api-resources.servic
 import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
 import { ApiService } from '../../../core/api.service';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
+import { ApiPayPeriodsService } from '../../../core/services/api-pay-periods.service';
 import { Timesheet, JobTimesheet, Resource } from '../../../core/models/timesheet.model';
+import { PayPeriod } from '../../../core/models/pay-period.model';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { TimesheetExpenseDetailsComponent } from '../timesheet-expense-details/timesheet-expense-details.component';
 import { TimesheetMainComponent } from '../timesheet-main/timesheet-main.component';
@@ -66,6 +68,7 @@ export class TimesheetFormComponent implements AfterViewInit {
   // Lookup data
   public resources: Resource[] = [];
   public statuses: any[] = [];
+  public payPeriods: PayPeriod[] = [];
 
   // Feature-driven resource dropdowns
   public resourceIdLabel: string = 'Resource/Employee';
@@ -92,6 +95,7 @@ export class TimesheetFormComponent implements AfterViewInit {
     private apiSysFeatures: ApiSysFeaturesService,
     private apiService: ApiService,
     private apiJobMain: ApiJobMainService,
+    private apiPayPeriods: ApiPayPeriodsService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -126,6 +130,7 @@ export class TimesheetFormComponent implements AfterViewInit {
       resourceId: ['', Validators.required],
       resourceId1: [''],
       itemStatusId: [1],
+      payPeriodId: [''],
       remarks: ['']
     });
   }
@@ -225,17 +230,20 @@ export class TimesheetFormComponent implements AfterViewInit {
 
   /* API calls */
   private loadLookupData(): void {
-    // Load all active resources, the TIMESHEET SysFeature, and statuses in parallel
+    // Load all active resources, pay periods, the TIMESHEET SysFeature, and statuses in parallel
     forkJoin({
       resources: this.apiResources.getActiveResources(),
       statuses: this.apiService.getItemStatusesByClassName('Timesheet'),
+      payPeriods: this.apiPayPeriods.getPayPeriods(true),
       feature: this.apiSysFeatures.getSysFeatureBySysCode('TIMESHEET')
     }).subscribe({
-      next: ({ resources, statuses, feature }) => {
+      next: ({ resources, statuses, payPeriods, feature }) => {
         this.resources = resources || [];
         this.statuses = statuses || [];
+        this.payPeriods = payPeriods || [];
 
         console.log('Loaded resources:', this.resources); // Debug log
+        console.log('Loaded pay periods:', this.payPeriods); // Debug log
         console.log('Feature settings:', feature?.settings); // Debug log
 
         // Apply SysFeature column config to map labels and filter resources by includedTypes
@@ -362,13 +370,14 @@ export class TimesheetFormComponent implements AfterViewInit {
   private updateCurrentDataValues(): void {
     if (this.timesheetForm && this.timesheetForm.valid) {
       const formValue = this.timesheetForm.value;
-      
+
       this.currentData = {
         id: this.paramId,
         tsDate: formValue.tsDate,
         resourceId: formValue.resourceId,
         resourceId1: formValue.resourceId1 || undefined,
         itemStatusId: formValue.itemStatusId,
+        payPeriodId: formValue.payPeriodId || undefined,
         remarks: formValue.remarks || undefined
       };
     }
@@ -381,6 +390,7 @@ export class TimesheetFormComponent implements AfterViewInit {
       resourceId: undefined,
       resourceId1: undefined,
       itemStatusId: 1,
+      payPeriodId: undefined,
       remarks: undefined
     };
     this.setFormData(this.currentData);
@@ -393,6 +403,7 @@ export class TimesheetFormComponent implements AfterViewInit {
         resourceId: data.resourceId || '',
         resourceId1: data.resourceId1 || '',
         itemStatusId: data.itemStatusId || 1,
+        payPeriodId: data.payPeriodId || '',
         remarks: data.remarks || ''
       });
     }

@@ -35,6 +35,7 @@ namespace AngularApp1.Server.Controllers
             var query = _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .AsQueryable();
 
             if (resourceId.HasValue)
@@ -86,8 +87,10 @@ namespace AngularApp1.Server.Controllers
                     ResourceId = t.ResourceId,
                     ResourceId1 = t.ResourceId1,
                     ItemStatusId = t.ItemStatusId,
+                    PayPeriodId = t.PayPeriodId,
                     Resource = t.Resource,
                     ResourceId1Navigation = t.ResourceId1Navigation,
+                    PayPeriod = t.PayPeriod,
                     LinkedJobId = job?.JobMainId,
                     LinkedJobDescription = job?.JobDescription
                 };
@@ -103,6 +106,7 @@ namespace AngularApp1.Server.Controllers
             var timesheet = await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (timesheet == null)
@@ -120,6 +124,7 @@ namespace AngularApp1.Server.Controllers
             return await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .Where(t => t.ResourceId == resourceId)
                 .OrderByDescending(t => t.TsDate)
                 .ToListAsync();
@@ -134,6 +139,7 @@ namespace AngularApp1.Server.Controllers
             return await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .Where(t => t.TsDate >= startDate && t.TsDate <= endDate)
                 .OrderByDescending(t => t.TsDate)
                 .ToListAsync();
@@ -146,6 +152,7 @@ namespace AngularApp1.Server.Controllers
             return await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .Where(t => t.ItemStatusId == statusId)
                 .OrderByDescending(t => t.TsDate)
                 .ToListAsync();
@@ -187,6 +194,7 @@ namespace AngularApp1.Server.Controllers
             var timesheets = await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
+                .Include(t => t.PayPeriod)
                 .Where(t => statusIds.Contains(t.ItemStatusId ?? 0))
                 .OrderByDescending(t => t.TsDate)
                 .ToListAsync();
@@ -218,8 +226,10 @@ namespace AngularApp1.Server.Controllers
                     ResourceId = t.ResourceId,
                     ResourceId1 = t.ResourceId1,
                     ItemStatusId = t.ItemStatusId,
+                    PayPeriodId = t.PayPeriodId,
                     Resource = t.Resource,
                     ResourceId1Navigation = t.ResourceId1Navigation,
+                    PayPeriod = t.PayPeriod,
                     LinkedJobId = job?.JobMainId,
                     LinkedJobDescription = job?.JobDescription
                 };
@@ -598,6 +608,8 @@ namespace AngularApp1.Server.Controllers
         public int? ItemStatusId { get; set; }
         public Erp.Domain.Models.Resource? Resource { get; set; }
         public Erp.Domain.Models.Resource? ResourceId1Navigation { get; set; }
+        public int? PayPeriodId { get; set; }
+        public Erp.Domain.Models.PayPeriod? PayPeriod { get; set; }
         public int? LinkedJobId { get; set; }
         public string? LinkedJobDescription { get; set; }
     }

@@ -42,6 +42,19 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Pay Period</mat-label>
+      <mat-select formControlName="payPeriodId">
+        <mat-option [value]="null">None</mat-option>
+        <mat-option *ngFor="let period of payPeriods" [value]="period.id">
+          <span *ngIf="period.itemType">{{ period.itemType.name }} - </span>
+          {{ period.dateFrom | date:'shortDate' }} - {{ period.dateTo | date:'shortDate' }} 
+          (Pay: {{ period.payDate | date:'shortDate' }})
+          <span *ngIf="period.notes"> - {{ period.notes }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Remarks</mat-label>
       <textarea matInput formControlName="remarks" rows="4"></textarea>
     </mat-form-field>

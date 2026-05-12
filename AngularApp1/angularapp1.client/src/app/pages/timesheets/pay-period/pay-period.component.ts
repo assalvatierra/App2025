@@ -47,9 +47,11 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
   public filterDateFrom?: Date;
   public filterDateTo?: Date;
   public filterItemStatusId?: number;
+  public filterItemTypeId?: number;
 
   // Lookup data
   public statuses: any[] = [];
+  public itemTypes: any[] = [];
   private lastPayPeriodData: any[] = [];
 
   public get tableFields() {
@@ -111,6 +113,7 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
     this.filterDateFrom = undefined;
     this.filterDateTo = undefined;
     this.filterItemStatusId = undefined;
+    this.filterItemTypeId = undefined;
     this.retrieveApiData();
   }
 
@@ -139,6 +142,31 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
         });
       }
     });
+
+    // Load item types
+    this.apiService.getItemTypesByClassName('PayPeriod').subscribe({
+      next: (res: any) => {
+        this.itemTypes = res || [];
+        if (this.lastPayPeriodData.length > 0) {
+          this.initializePayPeriodList(this.lastPayPeriodData);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading item types:', err);
+        // Fallback to all item types if className filter doesn't work
+        this.apiService.getItemTypes().subscribe({
+          next: (res: any) => {
+            this.itemTypes = res || [];
+            if (this.lastPayPeriodData.length > 0) {
+              this.initializePayPeriodList(this.lastPayPeriodData);
+            }
+          },
+          error: (err) => {
+            console.error('Error loading all item types:', err);
+          }
+        });
+      }
+    });
   }
 
   private retrieveApiData() {
@@ -147,7 +175,8 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
       this.filterIsActive,
       this.filterDateFrom,
       this.filterDateTo,
-      this.filterItemStatusId
+      this.filterItemStatusId,
+      this.filterItemTypeId
     ).subscribe({
       next: (res: any) => {
         this.lastPayPeriodData = res || [];
@@ -177,6 +206,8 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
       payDateFormatted: new Date(item.payDate).toLocaleDateString(),
       itemStatusId: item.itemStatusId,
       statusName: this.statuses.find(s => s.id === item.itemStatusId)?.name || '',
+      itemTypeId: item.itemTypeId,
+      typeName: this.itemTypes.find(t => t.id === item.itemTypeId)?.name || '',
       isActive: item.isActive,
       isActiveText: item.isActive ? 'Yes' : 'No',
       notes: item.notes || ''
@@ -190,8 +221,9 @@ export class PayPeriodComponent implements AfterViewInit, OnInit {
       { key: 'dateFromFormatted', label: 'Date From' },
       { key: 'dateToFormatted', label: 'Date To' },
       { key: 'payDateFormatted', label: 'Pay Date' },
-      { key: 'isActiveText', label: 'Active' },
+      { key: 'typeName', label: 'Type' },
       { key: 'statusName', label: 'Status' },
+      { key: 'isActiveText', label: 'Active' },
       { key: 'notes', label: 'Notes' }
     ];
   }

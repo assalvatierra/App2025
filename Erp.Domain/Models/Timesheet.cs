@@ -17,6 +17,10 @@ public partial class Timesheet
 
     public int? ItemStatusId { get; set; }
 
+    public int? PayPeriodId { get; set; }
+
+    public virtual PayPeriod? PayPeriod { get; set; }
+
     public virtual Resource? Resource { get; set; }
 
     public virtual Resource? ResourceId1Navigation { get; set; }

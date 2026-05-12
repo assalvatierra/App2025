@@ -52,6 +52,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
 
   // Lookup data
   public statuses: any[] = [];
+  public itemTypes: any[] = [];
 
   // Linked expenses
   public linkedExpenses: PayExpense[] = [];
@@ -103,6 +104,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
       payDate: [new Date(new Date().setDate(new Date().getDate() + 21)), Validators.required],
       notes: [''],
       itemStatusId: [null],
+      itemTypeId: [null],
       isActive: [true],
       isPrivate: [false],
       isArchived: [false]
@@ -138,6 +140,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
 
   /* Data Methods */
   private loadLookupData(): void {
+    // Load item statuses
     this.apiService.getItemStatusesByClassName('PayPeriod').subscribe({
       next: (res: any) => {
         this.statuses = res || [];
@@ -151,6 +154,25 @@ export class PayPeriodFormComponent implements AfterViewInit {
           },
           error: (err) => {
             console.error('Error loading all statuses:', err);
+          }
+        });
+      }
+    });
+
+    // Load item types
+    this.apiService.getItemTypesByClassName('PayPeriod').subscribe({
+      next: (res: any) => {
+        this.itemTypes = res || [];
+      },
+      error: (err) => {
+        console.error('Error loading item types:', err);
+        // Fallback to all item types if className filter doesn't work
+        this.apiService.getItemTypes().subscribe({
+          next: (res: any) => {
+            this.itemTypes = res || [];
+          },
+          error: (err) => {
+            console.error('Error loading all item types:', err);
           }
         });
       }
@@ -171,7 +193,8 @@ export class PayPeriodFormComponent implements AfterViewInit {
       dateTo: new Date(new Date().setDate(new Date().getDate() + 14)),
       payDate: new Date(new Date().setDate(new Date().getDate() + 21)),
       notes: '',
-      itemStatusId: undefined
+      itemStatusId: undefined,
+      itemTypeId: undefined
     };
   }
 
@@ -198,6 +221,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
       payDate: this.parseDate(data.payDate),
       notes: data.notes,
       itemStatusId: data.itemStatusId,
+      itemTypeId: data.itemTypeId,
       isActive: data.isActive,
       isPrivate: data.isPrivate,
       isArchived: data.isArchived
@@ -215,6 +239,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
     this.currentData.payDate = formValue.payDate;
     this.currentData.notes = formValue.notes;
     this.currentData.itemStatusId = formValue.itemStatusId;
+    this.currentData.itemTypeId = formValue.itemTypeId;
     this.currentData.isActive = formValue.isActive;
     this.currentData.isPrivate = formValue.isPrivate;
     this.currentData.isArchived = formValue.isArchived;
@@ -230,6 +255,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
       payDate: data.payDate ? this.toLocalISOString(data.payDate) : null,
       notes: data.notes || '',
       itemStatusId: data.itemStatusId,
+      itemTypeId: data.itemTypeId,
       isActive: data.isActive !== false,
       isPrivate: data.isPrivate || false,
       isArchived: data.isArchived || false,
@@ -261,6 +287,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
       payDate: data.payDate ? this.toLocalISOString(data.payDate) : null,
       notes: data.notes || '',
       itemStatusId: data.itemStatusId,
+      itemTypeId: data.itemTypeId,
       isActive: data.isActive !== false,
       isPrivate: data.isPrivate || false,
       isArchived: data.isArchived || false,

@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { JobTimesheet, Resource } from '../../../core/models/timesheet.model';
+import { JobTimesheet, Resource, PayPeriod } from '../../../core/models/timesheet.model';
 
 @Component({
   selector: 'app-timesheet-main',
@@ -33,6 +33,7 @@ export class TimesheetMainComponent {
   @Input() resourcesForResourceId: Resource[] = [];
   @Input() resourcesForResourceId1: Resource[] = [];
   @Input() statuses: any[] = [];
+  @Input() payPeriods: PayPeriod[] = [];
   @Input() showAddBtn: boolean = false;
   @Input() featureLoaded: boolean = false;
   @Input() dataloading: boolean = false;

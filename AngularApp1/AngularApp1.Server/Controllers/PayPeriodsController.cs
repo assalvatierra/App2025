@@ -24,14 +24,18 @@ namespace AngularApp1.Server.Controllers
         // GET: api/PayPeriods
         // GET: api/PayPeriods?isActive=true
         // GET: api/PayPeriods?dateFrom=2024-01-01&dateTo=2024-12-31
+        // GET: api/PayPeriods?itemTypeId=1
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PayPeriod>>> GetPayPeriods(
             [FromQuery] bool? isActive = null,
             [FromQuery] DateTime? dateFrom = null,
             [FromQuery] DateTime? dateTo = null,
-            [FromQuery] int? itemStatusId = null)
+            [FromQuery] int? itemStatusId = null,
+            [FromQuery] int? itemTypeId = null)
         {
-            var query = _context.PayPeriods.AsQueryable();
+            var query = _context.PayPeriods
+                .Include(pp => pp.ItemType)
+                .AsQueryable();
 
             if (isActive.HasValue)
             {
@@ -51,6 +55,11 @@ namespace AngularApp1.Server.Controllers
             if (itemStatusId.HasValue)
             {
                 query = query.Where(pp => pp.ItemStatusId == itemStatusId.Value);
+            }
+
+            if (itemTypeId.HasValue)
+            {
+                query = query.Where(pp => pp.ItemTypeId == itemTypeId.Value);
             }
 
             var payPeriods = await query
@@ -121,7 +130,24 @@ namespace AngularApp1.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(payPeriod).State = EntityState.Modified;
+            var existingPayPeriod = await _context.PayPeriods.FindAsync(id);
+            if (existingPayPeriod == null)
+            {
+                return NotFound();
+            }
+
+            // Update properties
+            existingPayPeriod.DateFrom = payPeriod.DateFrom;
+            existingPayPeriod.DateTo = payPeriod.DateTo;
+            existingPayPeriod.PayDate = payPeriod.PayDate;
+            existingPayPeriod.Notes = payPeriod.Notes;
+            existingPayPeriod.ItemStatusId = payPeriod.ItemStatusId;
+            existingPayPeriod.ItemTypeId = payPeriod.ItemTypeId;
+            existingPayPeriod.IsActive = payPeriod.IsActive;
+            existingPayPeriod.IsPrivate = payPeriod.IsPrivate;
+            existingPayPeriod.IsArchived = payPeriod.IsArchived;
+            existingPayPeriod.LastEditBy = payPeriod.LastEditBy;
+            existingPayPeriod.LastEditOn = payPeriod.LastEditOn;
 
             try
             {
@@ -217,7 +243,8 @@ namespace AngularApp1.Server.Controllers
             var timesheets = await _context.Timesheet
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
-                .Where(t => t.TsDate >= payPeriod.DateFrom && t.TsDate <= payPeriod.DateTo)
+                .Include(t => t.PayPeriod)
+                .Where(t => t.PayPeriodId == id)
                 .OrderByDescending(t => t.TsDate)
                 .Select(t => new
                 {
@@ -230,7 +257,8 @@ namespace AngularApp1.Server.Controllers
                     ResourceId1 = t.ResourceId1,
                     ResourceId1Name = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Name : null,
                     ResourceId1Code = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Code : null,
-                    ItemStatusId = t.ItemStatusId
+                    ItemStatusId = t.ItemStatusId,
+                    PayPeriodId = t.PayPeriodId
                 })
                 .ToListAsync();
 
@@ -288,7 +316,18 @@ namespace AngularApp1.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(payAddition).State = EntityState.Modified;
+            var existingPayAddition = await _context.PayAdditions.FindAsync(id);
+            if (existingPayAddition == null)
+            {
+                return NotFound();
+            }
+
+            // Update properties
+            existingPayAddition.PayPeriodId = payAddition.PayPeriodId;
+            existingPayAddition.ResourceId = payAddition.ResourceId;
+            existingPayAddition.Amount = payAddition.Amount;
+            existingPayAddition.Remarks = payAddition.Remarks;
+            existingPayAddition.IsAdd = payAddition.IsAdd;
 
             try
             {

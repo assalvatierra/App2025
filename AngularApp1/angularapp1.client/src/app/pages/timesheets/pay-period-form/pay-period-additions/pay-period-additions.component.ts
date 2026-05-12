@@ -12,6 +12,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PayAddition } from '../../../../core/models/pay-addition.model';
 import { ApiPayPeriodsService } from '../../../../core/services/api-pay-periods.service';
+import { ApiResourcesService } from '../../../../core/services/api-resources.service';
+import { Resource } from '../../../../core/models/timesheet.model';
 
 @Component({
   selector: 'app-pay-period-additions',
@@ -36,23 +38,27 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
   @Input() payPeriodId: number | null = null;
 
   additions: PayAddition[] = [];
+  resources: Resource[] = [];
   additionForm!: FormGroup;
   isEditing: boolean = false;
   editingId: number | null = null;
   showForm: boolean = false;
   loading: boolean = false;
+  resourcesLoading: boolean = false;
 
   displayedColumns: string[] = ['resourceId', 'amount', 'remarks', 'isAdd', 'actions'];
 
   constructor(
     private fb: FormBuilder,
     private apiPayPeriods: ApiPayPeriodsService,
+    private apiResources: ApiResourcesService,
     private snackBar: MatSnackBar
   ) {
     this.initForm();
   }
 
   ngOnInit(): void {
+    this.loadResources();
     this.loadAdditions();
   }
 
@@ -64,8 +70,6 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
 
   private initForm(): void {
     this.additionForm = this.fb.group({
-      id: [null],
-      payPeriodId: [null],
       resourceId: [null],
       amount: [0, [Validators.required, Validators.min(0)]],
       remarks: [''],
@@ -90,12 +94,26 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
     }
   }
 
+  loadResources(): void {
+    this.resourcesLoading = true;
+    this.apiResources.getResources().subscribe({
+      next: (resources: Resource[]) => {
+        this.resources = resources;
+        this.resourcesLoading = false;
+      },
+      error: (error: any) => {
+        console.error('Error loading resources:', error);
+        this.showMessage('Error loading resources');
+        this.resourcesLoading = false;
+      }
+    });
+  }
+
   onAdd(): void {
     this.showForm = true;
     this.isEditing = false;
     this.editingId = null;
     this.additionForm.reset({
-      payPeriodId: this.payPeriodId,
       resourceId: null,
       amount: 0,
       remarks: '',
@@ -129,10 +147,18 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
 
   onSubmit(): void {
     if (this.additionForm.valid) {
-      const addition: PayAddition = this.additionForm.value;
-      addition.payPeriodId = this.payPeriodId || undefined;
+      const formValue = this.additionForm.value;
+
+      const addition: PayAddition = {
+        resourceId: formValue.resourceId,
+        amount: formValue.amount,
+        remarks: formValue.remarks,
+        isAdd: formValue.isAdd,
+        payPeriodId: this.payPeriodId || undefined
+      };
 
       if (this.isEditing && this.editingId) {
+        addition.id = this.editingId;
         this.apiPayPeriods.updatePayAddition(this.editingId, addition).subscribe({
           next: () => {
             this.showMessage('Addition updated successfully');
@@ -173,5 +199,11 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
     });
+  }
+
+  getResourceName(resourceId: number | null | undefined): string {
+    if (!resourceId) return '-';
+    const resource = this.resources.find(r => r.id === resourceId);
+    return resource ? `${resource.name} (${resource.code})` : resourceId.toString();
   }
 }

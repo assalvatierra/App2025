@@ -241,7 +241,7 @@ namespace AngularApp1.Server.Data
             // Configure PayAddition
             modelBuilder.Entity<PayAddition>(entity =>
             {
-                entity.ToTable("PayAddition");
+                entity.ToTable("PayAdditions");
             });
         }
     }

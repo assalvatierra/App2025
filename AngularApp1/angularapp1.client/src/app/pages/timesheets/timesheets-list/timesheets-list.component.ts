@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiTimesheetsService } from '../../../core/services/api-timesheets.service';
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
+import { ApiPayPeriodsService } from '../../../core/services/api-pay-periods.service';
 import { ApiService } from '../../../core/api.service';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
 import { MatCardModule } from '@angular/material/card';
@@ -51,6 +52,7 @@ export class TimesheetsListComponent implements AfterViewInit {
   // Lookup data
   public resources: any[] = [];
   public statuses: any[] = [];
+  public payPeriods: any[] = [];
   private lastTimesheetData: any[] = [];
 
   public get tableFields() {
@@ -60,6 +62,7 @@ export class TimesheetsListComponent implements AfterViewInit {
   constructor(
     private apiTimesheets: ApiTimesheetsService,
     private apiResources: ApiResourcesService,
+    private apiPayPeriods: ApiPayPeriodsService,
     private apiService: ApiService,
     private router: Router
   ) { }
@@ -116,6 +119,19 @@ export class TimesheetsListComponent implements AfterViewInit {
       }
     });
 
+    // Load pay periods
+    this.apiPayPeriods.getPayPeriods().subscribe({
+      next: (res: any) => {
+        this.payPeriods = res || [];
+        if (this.lastTimesheetData.length > 0) {
+          this.initializeTimesheetList(this.lastTimesheetData);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading pay periods:', err);
+      }
+    });
+
     // Load statuses
     this.apiService.getItemStatusesByClassName('Timesheet').subscribe({
       next: (res: any) => {
@@ -167,23 +183,35 @@ export class TimesheetsListComponent implements AfterViewInit {
 
   private initializeTimesheetList(param: any[]) {
     // Map resource names for display and ensure compatibility with EntityListTableItem
-    const mappedData = param.map(item => ({
-      id: item.id,
-      name: item.resource?.name || 'N/A',
-      description: item.remarks || '',
-      remarks: item.remarks || '',
-      code: item.resource?.code || '',
-      sortOrder: item.id.toString(),
-      resourceName: item.resource?.name || 'N/A',
-      approverName: item.resourceId1Navigation?.name || 'N/A',
-      tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
-      itemStatusId: item.itemStatusId,
-      statusName: this.statuses.find(s => s.id === item.itemStatusId)?.name || '',
-      linkedJobId: item.linkedJobId || null,
-      linkedJobInfo: item.linkedJobId
-        ? `#${item.linkedJobId} – ${item.linkedJobDescription || ''}`
-        : ''
-    }));
+    const mappedData = param.map(item => {
+      const payPeriod = this.payPeriods.find(pp => pp.id === item.payPeriodId);
+      const payPeriodInfo = payPeriod
+        ? `${new Date(payPeriod.dateFrom).toLocaleDateString()} - ${new Date(payPeriod.dateTo).toLocaleDateString()}`
+        : 'N/A';
+      const payDate = payPeriod
+        ? new Date(payPeriod.payDate).toLocaleDateString()
+        : 'N/A';
+
+      return {
+        id: item.id,
+        name: item.resource?.name || 'N/A',
+        description: item.remarks || '',
+        remarks: item.remarks || '',
+        code: item.resource?.code || '',
+        sortOrder: item.id.toString(),
+        resourceName: item.resource?.name || 'N/A',
+        approverName: item.resourceId1Navigation?.name || 'N/A',
+        tsDateFormatted: new Date(item.tsDate).toLocaleDateString(),
+        itemStatusId: item.itemStatusId,
+        statusName: this.statuses.find(s => s.id === item.itemStatusId)?.name || '',
+        linkedJobId: item.linkedJobId || null,
+        linkedJobInfo: item.linkedJobId
+          ? `#${item.linkedJobId} – ${item.linkedJobDescription || ''}`
+          : '',
+        payPeriodInfo: payPeriodInfo,
+        payDate: payDate
+      };
+    });
     this.TableList.initialize(mappedData);
   }
 
@@ -193,6 +221,8 @@ export class TimesheetsListComponent implements AfterViewInit {
       { key: 'tsDateFormatted', label: 'Date' },
       { key: 'resourceName', label: 'Resources' },
       { key: 'approverName', label: 'Unit' },
+      { key: 'payPeriodInfo', label: 'Pay Period' },
+      { key: 'payDate', label: 'Pay Date' },
       { key: 'remarks', label: 'Remarks' },
       { key: 'linkedJobInfo', label: 'Linked Job' },
       { key: 'statusName', label: 'Status' }

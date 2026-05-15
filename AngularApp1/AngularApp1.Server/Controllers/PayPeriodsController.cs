@@ -301,10 +301,47 @@ namespace AngularApp1.Server.Controllers
         [HttpPost("Additions")]
         public async Task<ActionResult<PayAddition>> PostPayAddition(PayAddition payAddition)
         {
-            _context.PayAdditions.Add(payAddition);
-            await _context.SaveChangesAsync();
+            try
+            {
+                // Log the incoming data
+                Console.WriteLine($"Received PayAddition: PayPeriodId={payAddition.PayPeriodId}, ResourceId={payAddition.ResourceId}, Amount={payAddition.Amount}, IsAdd={payAddition.IsAdd}");
 
-            return CreatedAtAction("GetPayAddition", new { id = payAddition.Id }, payAddition);
+                // Validate PayPeriodId exists
+                if (payAddition.PayPeriodId.HasValue)
+                {
+                    var payPeriodExists = await _context.PayPeriods.AnyAsync(pp => pp.Id == payAddition.PayPeriodId.Value);
+                    if (!payPeriodExists)
+                    {
+                        return BadRequest(new { message = $"Pay Period with ID {payAddition.PayPeriodId} does not exist." });
+                    }
+                }
+
+                // Validate ResourceId exists if provided
+                if (payAddition.ResourceId.HasValue)
+                {
+                    var resourceExists = await _context.Resource.AnyAsync(r => r.Id == payAddition.ResourceId.Value);
+                    if (!resourceExists)
+                    {
+                        return BadRequest(new { message = $"Resource with ID {payAddition.ResourceId} does not exist." });
+                    }
+                }
+
+                _context.PayAdditions.Add(payAddition);
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine($"Successfully created PayAddition with ID {payAddition.Id}");
+                return CreatedAtAction("GetPayAddition", new { id = payAddition.Id }, payAddition);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating PayAddition: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                return StatusCode(500, new { message = "An error occurred while creating the pay addition.", details = ex.Message, innerException = ex.InnerException?.Message });
+            }
         }
 
         // PUT: api/PayPeriods/Additions/5

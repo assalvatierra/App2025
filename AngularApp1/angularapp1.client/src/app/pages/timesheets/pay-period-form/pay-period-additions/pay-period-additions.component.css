@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .section-title {
@@ -16,6 +17,14 @@
   font-weight: 600;
   color: rgba(0, 0, 0, 0.87);
   margin: 0;
+}
+
+.warning-text {
+  font-size: 13px;
+  color: #f57c00;
+  font-style: italic;
+  margin: 4px 0 0 0;
+  flex-basis: 100%;
 }
 
 /* Form Styles */

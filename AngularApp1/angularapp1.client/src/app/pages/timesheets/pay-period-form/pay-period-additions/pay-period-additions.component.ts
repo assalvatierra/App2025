@@ -58,13 +58,21 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log('PayPeriodAdditionsComponent initialized with payPeriodId:', this.payPeriodId);
     this.loadResources();
-    this.loadAdditions();
+    if (this.payPeriodId) {
+      this.loadAdditions();
+    } else {
+      console.warn('Pay Period ID is not set. Additions cannot be loaded or saved until Pay Period is created.');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['payPeriodId'] && !changes['payPeriodId'].firstChange) {
-      this.loadAdditions();
+      console.log('PayPeriodId changed to:', this.payPeriodId);
+      if (this.payPeriodId) {
+        this.loadAdditions();
+      }
     }
   }
 
@@ -110,6 +118,11 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
   }
 
   onAdd(): void {
+    if (!this.payPeriodId) {
+      this.showMessage('Please save the Pay Period first before adding additions');
+      console.warn('Cannot add addition: Pay Period ID is not set');
+      return;
+    }
     this.showForm = true;
     this.isEditing = false;
     this.editingId = null;
@@ -147,42 +160,65 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
 
   onSubmit(): void {
     if (this.additionForm.valid) {
+      // Validate that payPeriodId exists
+      if (!this.payPeriodId) {
+        this.showMessage('Error: Pay Period ID is required. Please save the pay period first.');
+        console.error('PayPeriodId is null or undefined:', this.payPeriodId);
+        return;
+      }
+
       const formValue = this.additionForm.value;
 
       const addition: PayAddition = {
-        resourceId: formValue.resourceId,
+        resourceId: formValue.resourceId || undefined,
         amount: formValue.amount,
-        remarks: formValue.remarks,
+        remarks: formValue.remarks || '',
         isAdd: formValue.isAdd,
-        payPeriodId: this.payPeriodId || undefined
+        payPeriodId: this.payPeriodId
       };
+
+      console.log('Submitting addition:', addition);
 
       if (this.isEditing && this.editingId) {
         addition.id = this.editingId;
         this.apiPayPeriods.updatePayAddition(this.editingId, addition).subscribe({
-          next: () => {
+          next: (response) => {
+            console.log('Addition updated successfully:', response);
             this.showMessage('Addition updated successfully');
             this.loadAdditions();
             this.onCancel();
           },
           error: (error: any) => {
             console.error('Error updating addition:', error);
-            this.showMessage('Error updating addition');
+            const errorMessage = error.error?.message || error.message || 'Error updating addition';
+            this.showMessage(`Error: ${errorMessage}`);
           }
         });
       } else {
         this.apiPayPeriods.addPayAddition(addition).subscribe({
-          next: () => {
+          next: (response) => {
+            console.log('Addition added successfully:', response);
             this.showMessage('Addition added successfully');
             this.loadAdditions();
             this.onCancel();
           },
           error: (error: any) => {
             console.error('Error adding addition:', error);
-            this.showMessage('Error adding addition');
+            console.error('Error details:', {
+              status: error.status,
+              statusText: error.statusText,
+              message: error.error?.message || error.message,
+              errors: error.error?.errors,
+              fullError: error
+            });
+            const errorMessage = error.error?.message || error.message || 'Error adding addition';
+            this.showMessage(`Error: ${errorMessage}`);
           }
         });
       }
+    } else {
+      console.log('Form is invalid:', this.additionForm.errors);
+      this.showMessage('Please fill in all required fields');
     }
   }
 

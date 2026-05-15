@@ -1,9 +1,10 @@
 <div class="additions-section-wrapper">
   <div class="section-header">
     <h3 class="section-title">Pay Additions</h3>
-    <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!showForm">
+    <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!showForm" [disabled]="!payPeriodId">
       <mat-icon>add</mat-icon> Add Addition
     </button>
+    <p *ngIf="!payPeriodId" class="warning-text">Save the Pay Period first to add additions</p>
   </div>
 
   <!-- Add/Edit Form -->

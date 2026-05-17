@@ -86,7 +86,7 @@
                 {{ isNewRecord ? 'Create Expense' : 'Update Expense' }}
               </button>
               <button mat-raised-button type="button" (click)="onCancel()" [disabled]="dataloading">
-                Cancel
+                Back to List
               </button>
             </div>
 
@@ -95,11 +95,18 @@
       </mat-tab>
 
       <!-- Jobs Tab -->
-      <mat-tab label="Jobs">
+      <mat-tab label="Jobs" *ngIf="selectedItemTypeCode === 'JOBEX'">
         <app-expense-job-list
           [expenseId]="currentData?.id || null"
           [jobs]="jobs">
         </app-expense-job-list>
+      </mat-tab>
+
+      <!-- Salary Expense Tab -->
+      <mat-tab label="Salary Expense" *ngIf="selectedItemTypeCode === 'SALARY'">
+        <app-expense-pay-period-list
+          [expenseId]="currentData?.id || null">
+        </app-expense-pay-period-list>
       </mat-tab>
 
       <!-- Payments Tab -->

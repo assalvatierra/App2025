@@ -13,6 +13,7 @@ import { Expense } from '../../../core/models/expense.model';
 import { ExpenseStatusListComponent } from '../expense-status-list/expense-status-list.component';
 import { ExpenseJobListComponent } from '../expense-job-list/expense-job-list.component';
 import { ExpensePaymentListComponent } from '../expense-payment-list/expense-payment-list.component';
+import { ExpensePayPeriodListComponent } from '../expense-pay-period-list/expense-pay-period-list.component';
 import { ApiService } from '../../../core/api.service';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 
@@ -34,7 +35,8 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
     UiPageTitleComponent,
     ExpenseStatusListComponent,
     ExpenseJobListComponent,
-    ExpensePaymentListComponent
+    ExpensePaymentListComponent,
+    ExpensePayPeriodListComponent
   ]
 })
 export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
@@ -52,6 +54,12 @@ export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {
   public itemStatuses: any[] = [];
   public jobs: any[] = [];
   public itemTypes: any[] = [];
+
+  get selectedItemTypeCode(): string | null {
+    const itemTypeId = this.expenseForm?.get('itemTypeId')?.value;
+    if (!itemTypeId) return null;
+    return this.itemTypes.find(t => t.id === itemTypeId)?.code ?? null;
+  }
 
   constructor(
     private fb: FormBuilder,

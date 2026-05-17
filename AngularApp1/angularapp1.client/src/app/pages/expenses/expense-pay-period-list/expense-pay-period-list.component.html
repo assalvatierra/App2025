@@ -1,0 +1,101 @@
+<div class="pay-period-section">
+  <div class="section-header">
+    <h3>Resource Expenses</h3>
+    <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!showForm && expenseId">
+      <mat-icon>add</mat-icon>
+      Link Pay Period
+    </button>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <mat-card *ngIf="showForm" class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ isEditing ? 'Edit Pay Period Link' : 'Link Pay Period' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="payExpenseForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Pay Period *</mat-label>
+            <mat-select formControlName="payPeriodId" required>
+              <mat-option [value]="null">Select Pay Period</mat-option>
+              <mat-option *ngFor="let pp of payPeriods" [value]="pp.id">
+                {{ pp.dateFrom | date:'shortDate' }} - {{ pp.dateTo | date:'shortDate' }}
+                | Pay: {{ pp.payDate | date:'shortDate' }}
+                <span *ngIf="pp.notes"> | {{ pp.notes }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="payExpenseForm.get('payPeriodId')?.hasError('required')">
+              Pay Period is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="payExpenseForm.invalid">
+            {{ isEditing ? 'Update' : 'Add' }}
+          </button>
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Pay Expenses Table -->
+  <div class="table-container" *ngIf="payExpenses.length > 0">
+    <table mat-table [dataSource]="payExpenses" class="pay-periods-table">
+
+      <!-- Notes Column -->
+      <ng-container matColumnDef="notes">
+        <th mat-header-cell *matHeaderCellDef>Pay Notes</th>
+        <td mat-cell *matCellDef="let pe">{{ getPayPeriodInfo(pe.payPeriodId)?.notes }}</td>
+      </ng-container>
+
+      <!-- Date From Column -->
+      <ng-container matColumnDef="dateFrom">
+        <th mat-header-cell *matHeaderCellDef>Date From</th>
+        <td mat-cell *matCellDef="let pe">
+          {{ getPayPeriodInfo(pe.payPeriodId)?.dateFrom | date:'shortDate' }}
+        </td>
+      </ng-container>
+
+      <!-- Date To Column -->
+      <ng-container matColumnDef="dateTo">
+        <th mat-header-cell *matHeaderCellDef>Date To</th>
+        <td mat-cell *matCellDef="let pe">
+          {{ getPayPeriodInfo(pe.payPeriodId)?.dateTo | date:'shortDate' }}
+        </td>
+      </ng-container>
+
+      <!-- Pay Date Column -->
+      <ng-container matColumnDef="payDate">
+        <th mat-header-cell *matHeaderCellDef>Pay Date</th>
+        <td mat-cell *matCellDef="let pe">
+          {{ getPayPeriodInfo(pe.payPeriodId)?.payDate | date:'shortDate' }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let pe">
+          <button mat-icon-button color="primary" (click)="onEdit(pe)" [disabled]="showForm">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete(pe)" [disabled]="showForm">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="payExpenses.length === 0 && !showForm" class="no-records">
+    <p>No pay periods linked to this expense.</p>
+  </div>
+</div>

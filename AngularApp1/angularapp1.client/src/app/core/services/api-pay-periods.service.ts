@@ -211,7 +211,20 @@ export class ApiPayPeriodsService {
         id: data.resourceId1,
         name: data.resourceId1Name,
         code: data.resourceId1Code
-      } as any : undefined
+      } as any : undefined,
+      timesheetExpenseDetail: data.timesheetExpenseDetail ? {
+        id: data.timesheetExpenseDetail.id,
+        billAmount: data.timesheetExpenseDetail.billAmount,
+        additionalBillAmount: data.timesheetExpenseDetail.additionalBillAmount,
+        resourceRate: data.timesheetExpenseDetail.resourceRate,
+        additionalRate: data.timesheetExpenseDetail.additionalRate,
+        resourceRate1: data.timesheetExpenseDetail.resourceRate1,
+        additionalRate1: data.timesheetExpenseDetail.additionalRate1,
+        regularExpense: data.timesheetExpenseDetail.regularExpense,
+        otherExpense: data.timesheetExpenseDetail.otherExpense,
+        discount: data.timesheetExpenseDetail.discount,
+        amountRemarks: data.timesheetExpenseDetail.amountRemarks
+      } : undefined
     };
   }
 

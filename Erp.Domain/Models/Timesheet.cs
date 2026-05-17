@@ -24,4 +24,6 @@ public partial class Timesheet
     public virtual Resource? Resource { get; set; }
 
     public virtual Resource? ResourceId1Navigation { get; set; }
+
+    public virtual TimesheetExpenseDetail? TimesheetExpenseDetail { get; set; }
 }

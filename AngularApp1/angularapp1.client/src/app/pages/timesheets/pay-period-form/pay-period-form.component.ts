@@ -16,9 +16,11 @@ import { ApiPayPeriodsService } from '../../../core/services/api-pay-periods.ser
 import { ApiService } from '../../../core/api.service';
 import { PayPeriod } from '../../../core/models/pay-period.model';
 import { PayExpense } from '../../../core/models/pay-expense.model';
+import { PayAddition } from '../../../core/models/pay-addition.model';
 import { Timesheet } from '../../../core/models/timesheet.model';
 import { PayPeriodTimesheetComponent } from './pay-period-timesheet/pay-period-timesheet.component';
 import { PayPeriodAdditionsComponent } from './pay-period-additions/pay-period-additions.component';
+import { PayPeriodResourceListComponent } from './pay-period-resource-list/pay-period-resource-list.component';
 
 @Component({
   selector: 'app-pay-period-form',
@@ -39,7 +41,8 @@ import { PayPeriodAdditionsComponent } from './pay-period-additions/pay-period-a
     MatTabsModule,
     MatSnackBarModule,
     PayPeriodTimesheetComponent,
-    PayPeriodAdditionsComponent
+    PayPeriodAdditionsComponent,
+    PayPeriodResourceListComponent
   ]
 })
 export class PayPeriodFormComponent implements AfterViewInit {
@@ -61,6 +64,10 @@ export class PayPeriodFormComponent implements AfterViewInit {
   // Linked timesheets
   public linkedTimesheets: Timesheet[] = [];
   public timesheetsLoading: boolean = false;
+
+  // Linked additions
+  public linkedAdditions: PayAddition[] = [];
+  public additionsLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -89,6 +96,7 @@ export class PayPeriodFormComponent implements AfterViewInit {
       this.retrieveApiData(this.paramId);
       this.loadLinkedExpenses(this.paramId);
       this.loadLinkedTimesheets(this.paramId);
+      this.loadLinkedAdditions(this.paramId);
     } else {
       this.titleInfo = 'Add New Pay Period';
       this.setDefaultData();
@@ -136,6 +144,13 @@ export class PayPeriodFormComponent implements AfterViewInit {
 
   onCancel(): void {
     this.router.navigate(['/timesheets/pay-periods']);
+  }
+
+  onAdditionsChanged(): void {
+    console.log('Additions changed - refreshing data');
+    if (this.paramId !== 0) {
+      this.loadLinkedAdditions(this.paramId);
+    }
   }
 
   /* Data Methods */
@@ -368,6 +383,21 @@ export class PayPeriodFormComponent implements AfterViewInit {
       error: (err) => {
         console.error('Error loading linked timesheets:', err);
         this.timesheetsLoading = false;
+      }
+    });
+  }
+
+  /* Linked Additions Methods */
+  private loadLinkedAdditions(payPeriodId: number): void {
+    this.additionsLoading = true;
+    this.apiPayPeriods.getPayPeriodAdditions(payPeriodId).subscribe({
+      next: (additions: PayAddition[]) => {
+        this.linkedAdditions = additions;
+        this.additionsLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading linked additions:', err);
+        this.additionsLoading = false;
       }
     });
   }

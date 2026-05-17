@@ -158,6 +158,13 @@ namespace AngularApp1.Server.Data
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
+            // Configure Timesheet-TimesheetExpenseDetail relationship (1-to-1, shared PK)
+            modelBuilder.Entity<Timesheet>()
+                .HasOne(t => t.TimesheetExpenseDetail)
+                .WithOne()
+                .HasForeignKey<TimesheetExpenseDetail>(ted => ted.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Map Receivables DbSet to Receivable table (singular)
             modelBuilder.Entity<Receivable>().ToTable("Receivable");
 

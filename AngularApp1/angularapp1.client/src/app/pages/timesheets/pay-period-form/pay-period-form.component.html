@@ -151,7 +151,22 @@
       <mat-tab label="Additions" [disabled]="paramId === 0">
         <div class="tab-content">
           <div *ngIf="paramId !== 0">
-            <app-pay-period-additions [payPeriodId]="paramId"></app-pay-period-additions>
+            <app-pay-period-additions 
+              [payPeriodId]="paramId"
+              (additionsChanged)="onAdditionsChanged()">
+            </app-pay-period-additions>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Resources Tab -->
+      <mat-tab label="Resources" [disabled]="paramId === 0">
+        <div class="tab-content">
+          <div *ngIf="paramId !== 0">
+            <app-pay-period-resource-list 
+              [linkedTimesheets]="linkedTimesheets"
+              [linkedAdditions]="linkedAdditions">
+            </app-pay-period-resource-list>
           </div>
         </div>
       </mat-tab>

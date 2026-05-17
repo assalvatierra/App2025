@@ -1,0 +1,47 @@
+<div class="resources-section-wrapper">
+  <h3 class="section-title">Resource Summary</h3>
+  <div class="resources-section">
+    <table *ngIf="resourceSummaries.length > 0" class="resources-table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Type</th>
+          <th class="numeric-col">Timesheets</th>
+          <th class="numeric-col">Basic</th>
+          <th class="numeric-col">Addons</th>
+          <th class="numeric-col">Deductions</th>
+          <th class="numeric-col">Additions</th>
+          <th class="numeric-col total-col">Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let summary of resourceSummaries">
+          <td>
+            {{ summary.resourceName }}
+            <span *ngIf="summary.resourceCode" class="resource-code">({{ summary.resourceCode }})</span>
+          </td>
+          <td>{{ summary.resourceType }}</td>
+          <td class="numeric-col">{{ summary.totalTimesheets }}</td>
+          <td class="numeric-col">{{ summary.totalRate | number:'1.2-2' }}</td>
+          <td class="numeric-col">{{ summary.totalAdditionalRate | number:'1.2-2' }}</td>
+          <td class="numeric-col deduction-col">
+            {{ summary.deductions > 0 ? (summary.deductions | number:'1.2-2') : '-' }}
+          </td>
+          <td class="numeric-col addition-col">
+            {{ summary.additions > 0 ? (summary.additions | number:'1.2-2') : '-' }}
+          </td>
+          <td class="numeric-col total-col">
+            <strong>{{ summary.total | number:'1.2-2' }}</strong>
+          </td>
+          <td>
+            <button mat-button color="primary" (click)="openDetails(summary)">Pay Details</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="resourceSummaries.length === 0" class="no-resources-text">
+      No resource data available.
+    </p>
+  </div>
+</div>

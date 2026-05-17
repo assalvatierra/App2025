@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -36,6 +36,7 @@ import { Resource } from '../../../../core/models/timesheet.model';
 })
 export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
   @Input() payPeriodId: number | null = null;
+  @Output() additionsChanged = new EventEmitter<void>();
 
   additions: PayAddition[] = [];
   resources: Resource[] = [];
@@ -148,6 +149,7 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
           next: () => {
             this.showMessage('Addition deleted successfully');
             this.loadAdditions();
+            this.additionsChanged.emit();
           },
           error: (error: any) => {
             console.error('Error deleting addition:', error);
@@ -186,6 +188,7 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
             console.log('Addition updated successfully:', response);
             this.showMessage('Addition updated successfully');
             this.loadAdditions();
+            this.additionsChanged.emit();
             this.onCancel();
           },
           error: (error: any) => {
@@ -200,6 +203,7 @@ export class PayPeriodAdditionsComponent implements OnInit, OnChanges {
             console.log('Addition added successfully:', response);
             this.showMessage('Addition added successfully');
             this.loadAdditions();
+            this.additionsChanged.emit();
             this.onCancel();
           },
           error: (error: any) => {

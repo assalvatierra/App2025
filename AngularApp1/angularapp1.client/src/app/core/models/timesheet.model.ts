@@ -12,6 +12,7 @@ export interface Timesheet {
   payPeriod?: PayPeriod;
   linkedJobId?: number;
   linkedJobDescription?: string;
+  timesheetExpenseDetail?: TimesheetExpenseDetail;
 }
 
 export interface JobTimesheet {

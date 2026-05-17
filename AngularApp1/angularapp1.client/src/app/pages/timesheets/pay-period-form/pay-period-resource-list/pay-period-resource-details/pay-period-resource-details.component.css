@@ -1,0 +1,14 @@
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th, .details-table td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+section {
+  margin-bottom: 16px;
+}

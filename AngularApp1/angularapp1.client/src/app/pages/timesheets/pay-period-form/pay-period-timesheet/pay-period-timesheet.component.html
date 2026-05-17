@@ -8,6 +8,11 @@
           <th>Resource</th>
           <th>Resource (Alt)</th>
           <th>Remarks</th>
+          <th>Bill Amount</th>
+          <th>Resource Rate</th>
+          <th>Additional Rate</th>
+          <th>Resource Rate 1</th>
+          <th>Additional Rate 1</th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +33,11 @@
             <span *ngIf="!timesheet.resourceId1Navigation">-</span>
           </td>
           <td>{{ timesheet.remarks || '-' }}</td>
+          <td>{{ timesheet.timesheetExpenseDetail?.billAmount ?? '-' }}</td>
+          <td>{{ timesheet.timesheetExpenseDetail?.resourceRate ?? '-' }}</td>
+          <td>{{ timesheet.timesheetExpenseDetail?.additionalRate ?? '-' }}</td>
+          <td>{{ timesheet.timesheetExpenseDetail?.resourceRate1 ?? '-' }}</td>
+          <td>{{ timesheet.timesheetExpenseDetail?.additionalRate1 ?? '-' }}</td>
         </tr>
       </tbody>
     </table>

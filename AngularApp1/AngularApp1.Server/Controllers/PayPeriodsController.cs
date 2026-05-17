@@ -244,6 +244,7 @@ namespace AngularApp1.Server.Controllers
                 .Include(t => t.Resource)
                 .Include(t => t.ResourceId1Navigation)
                 .Include(t => t.PayPeriod)
+                .Include(t => t.TimesheetExpenseDetail)
                 .Where(t => t.PayPeriodId == id)
                 .OrderByDescending(t => t.TsDate)
                 .Select(t => new
@@ -258,7 +259,21 @@ namespace AngularApp1.Server.Controllers
                     ResourceId1Name = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Name : null,
                     ResourceId1Code = t.ResourceId1Navigation != null ? t.ResourceId1Navigation.Code : null,
                     ItemStatusId = t.ItemStatusId,
-                    PayPeriodId = t.PayPeriodId
+                    PayPeriodId = t.PayPeriodId,
+                    TimesheetExpenseDetail = t.TimesheetExpenseDetail != null ? new
+                    {
+                        Id = t.TimesheetExpenseDetail.Id,
+                        BillAmount = t.TimesheetExpenseDetail.BillAmount,
+                        AdditionalBillAmount = t.TimesheetExpenseDetail.AdditionalBillAmount,
+                        ResourceRate = t.TimesheetExpenseDetail.ResourceRate,
+                        AdditionalRate = t.TimesheetExpenseDetail.AdditionalRate,
+                        ResourceRate1 = t.TimesheetExpenseDetail.ResourceRate1,
+                        AdditionalRate1 = t.TimesheetExpenseDetail.AdditionalRate1,
+                        RegularExpense = t.TimesheetExpenseDetail.RegularExpense,
+                        OtherExpense = t.TimesheetExpenseDetail.OtherExpense,
+                        Discount = t.TimesheetExpenseDetail.Discount,
+                        AmountRemarks = t.TimesheetExpenseDetail.AmountRemarks
+                    } : null
                 })
                 .ToListAsync();
 

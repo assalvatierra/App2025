@@ -147,7 +147,8 @@ export class JobMainComponent implements OnInit {
       { key: 'lastEditOn', label: 'Last Edit On' },
       { key: 'lastEditBy', label: 'Last Edit By' },
       { key: 'itemStatusId', label: 'Status' },
-      { key: 'businessUnitId', label: 'Business Unit' }
+      { key: 'businessUnitId', label: 'Business Unit' },
+      { key: 'progress', label: 'Progress', type: 'progress' }
     ];
   }
 }

@@ -80,10 +80,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntityContactListComponent } from './pages/entity/entity-contact-list/entity-contact-list.component';
 import { ChecklistItemComponent } from './pages/checklist-item/checklist-item.component';
 import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-item-form/checklist-item-form.component';
-import { ChecklistTransactionComponent } from './shared/checklist-transaction/checklist-transaction.component';
-import { ChecklistTransactionFormComponent } from './shared/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
 import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
-import { ChecklistTemplateDialogComponent } from './shared/checklist-transaction/checklist-template-dialog/checklist-template-dialog.component';
+import { ChecklistModule } from './shared/checklist-transaction/checklist.module';
 import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
@@ -131,10 +129,7 @@ import { MatDividerModule } from '@angular/material/divider';
     EntityContactListComponent,
     ChecklistItemComponent,
     ChecklistItemFormComponent,
-    ChecklistTransactionComponent,
-    ChecklistTransactionFormComponent,
-    ChecklistFormComponent,
-    ChecklistTemplateDialogComponent
+    ChecklistFormComponent
   ],
   imports: [
     BrowserModule,
@@ -169,6 +164,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatTooltipModule,
     MatDividerModule,
     SharedModule, 
+    ChecklistModule,
     JobServiceModule,
     JobMainComponent,
     JobMainScheduleComponent,

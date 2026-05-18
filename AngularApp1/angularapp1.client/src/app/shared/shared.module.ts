@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EntityListTableComponent } from './entity-list-table/entity-list-table.component';
 import { ItemPopupMenuComponent } from './entity-list-table/item-popup-menu/item-popup-menu.component';
 import { UiPageTitleComponent } from './ui-page-title/ui-page-title.component';
@@ -35,6 +36,7 @@ import { AdvancedFilterDialogComponent } from './entity-list-table/advanced-filt
     MatInputModule,
     MatDialogModule,
     MatTooltipModule,
+    MatProgressBarModule,
     ItemPopupMenuComponent, // Import the standalone component
     UiPageTitleComponent
   ],

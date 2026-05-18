@@ -16,6 +16,7 @@ import { ReceivableStatusListComponent } from '../receivable-status-list/receiva
 import { ReceivablePaymentListComponent } from '../receivable-payment-list/receivable-payment-list.component';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
 import { ApiService } from '../../../core/api.service';
+import { ChecklistModule } from '../../../shared/checklist-transaction/checklist.module';
 
 @Component({
   selector: 'app-receivable-form',
@@ -36,7 +37,8 @@ import { ApiService } from '../../../core/api.service';
     ReceivableCustomerListComponent,
     ReceivableJobListComponent,
     ReceivableStatusListComponent,
-    ReceivablePaymentListComponent
+    ReceivablePaymentListComponent,
+    ChecklistModule
   ]
 })
 export class ReceivableFormComponent implements OnInit, AfterViewInit, OnChanges {

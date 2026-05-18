@@ -126,6 +126,14 @@
           [itemStatuses]="itemStatuses">
         </app-receivable-status-list>
       </mat-tab>
+
+      <!-- Checklist Tab -->
+      <mat-tab label="Checklist">
+        <app-checklist-transaction
+          [refObject]="'Receivable'"
+          [refId]="currentData?.id || null">
+        </app-checklist-transaction>
+      </mat-tab>
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

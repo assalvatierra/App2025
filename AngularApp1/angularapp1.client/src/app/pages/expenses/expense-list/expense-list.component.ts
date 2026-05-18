@@ -16,6 +16,9 @@ import { SharedModule } from '../../../shared/shared.module';
 import { tableField } from '../../../shared/models/entityListTableField';
 import { Expense } from '../../../core/models/expense.model';
 import { ApiService } from '../../../core/api.service';
+import { ApiChecklistService } from '../../../core/services/api-checklist.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-expense-list',
@@ -59,25 +62,45 @@ export class ExpenseListComponent implements OnInit, AfterViewInit, OnChanges {
   public filterIsActive?: boolean | null = null;
 
   public itemTypes: any[] = [];
+  private progressMap: { [expenseId: number]: number } = {};
 
   public get tableFields() {
     return this.getTableFields();
   }
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private checklistApi: ApiChecklistService) {}
 
   ngOnInit(): void {
     this.loadItemTypes();
   }
 
   ngAfterViewInit(): void {
-    this.initializeList();
+    this.loadProgressThenInitList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['expenses'] || changes['filterEntityId'] || changes['filterIsActive']) && this.TableList) {
-      this.initializeList();
+      this.loadProgressThenInitList();
     }
+  }
+
+  private loadProgressThenInitList(): void {
+    const expenseIds = this.expenses.map(e => e.id ?? 0);
+    if (expenseIds.length === 0) {
+      this.initializeList();
+      return;
+    }
+    const requests = expenseIds.map(id =>
+      this.checklistApi.getTransactions('Expense', id).pipe(catchError(() => of([])))
+    );
+    forkJoin(requests).subscribe(results => {
+      results.forEach((transactions, i) => {
+        const total = transactions.length;
+        const done = transactions.filter((t: any) => t.isDone).length;
+        this.progressMap[expenseIds[i]] = total > 0 ? Math.round((done / total) * 100) : 0;
+      });
+      this.initializeList();
+    });
   }
 
   private loadItemTypes(): void {
@@ -110,7 +133,8 @@ export class ExpenseListComponent implements OnInit, AfterViewInit, OnChanges {
         trxRef: item.trxRef || '',
         isActive: item.isActive ? 'Yes' : 'No',
         createdOn: item.createdOn ? new Date(item.createdOn).toLocaleDateString() : '',
-        remarks: item.remarks || ''
+        remarks: item.remarks || '',
+        progress: this.progressMap[item.id ?? 0] ?? 0
       }));
 
     if (this.TableList) {
@@ -183,7 +207,8 @@ export class ExpenseListComponent implements OnInit, AfterViewInit, OnChanges {
       { key: 'trxRef', label: 'Transaction Ref' },
       { key: 'remarks', label: 'Remarks' },
       { key: 'isActive', label: 'Active' },
-      { key: 'createdOn', label: 'Created On' }
+      { key: 'createdOn', label: 'Created On' },
+      { key: 'progress', label: 'Progress', type: 'progress' }
     ];
   }
 }

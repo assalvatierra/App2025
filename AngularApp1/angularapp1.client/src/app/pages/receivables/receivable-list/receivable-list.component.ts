@@ -16,6 +16,9 @@ import { SharedModule } from '../../../shared/shared.module';
 import { tableField } from '../../../shared/models/entityListTableField';
 import { Receivable } from '../../../core/models/receivable.model';
 import { ApiService } from '../../../core/api.service';
+import { ApiChecklistService } from '../../../core/services/api-checklist.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-receivable-list',
@@ -60,25 +63,45 @@ export class ReceivableListComponent implements OnInit, AfterViewInit, OnChanges
   public filterIsActive?: boolean | null = null;
 
   public itemTypes: any[] = [];
+  private progressMap: { [receivableId: number]: number } = {};
 
   public get tableFields() {
     return this.getTableFields();
   }
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private checklistApi: ApiChecklistService) {}
 
   ngOnInit(): void {
     this.loadItemTypes();
   }
 
   ngAfterViewInit(): void {
-    this.initializeList();
+    this.loadProgressThenInitList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['receivables'] || changes['filterName'] || changes['filterEntityId'] || changes['filterIsActive']) && this.TableList) {
-      this.initializeList();
+      this.loadProgressThenInitList();
     }
+  }
+
+  private loadProgressThenInitList(): void {
+    const ids = this.receivables.map(r => r.id ?? 0);
+    if (ids.length === 0) {
+      this.initializeList();
+      return;
+    }
+    const requests = ids.map(id =>
+      this.checklistApi.getTransactions('Receivable', id).pipe(catchError(() => of([])))
+    );
+    forkJoin(requests).subscribe(results => {
+      results.forEach((transactions, i) => {
+        const total = transactions.length;
+        const done = transactions.filter((t: any) => t.isDone).length;
+        this.progressMap[ids[i]] = total > 0 ? Math.round((done / total) * 100) : 0;
+      });
+      this.initializeList();
+    });
   }
 
   private loadItemTypes(): void {
@@ -111,7 +134,8 @@ export class ReceivableListComponent implements OnInit, AfterViewInit, OnChanges
         itemTypeId: item.itemTypeId,
         itemTypeName: this.getItemTypeName(item.itemTypeId || 0),
         isActive: item.isActive ? 'Yes' : 'No',
-        createdOn: item.createdOn ? new Date(item.createdOn).toLocaleDateString() : ''
+        createdOn: item.createdOn ? new Date(item.createdOn).toLocaleDateString() : '',
+        progress: this.progressMap[item.id ?? 0] ?? 0
       }));
     
     console.log('Mapped data for table:', mappedData);
@@ -191,7 +215,8 @@ export class ReceivableListComponent implements OnInit, AfterViewInit, OnChanges
       { key: 'entityName', label: 'Entity' },
       { key: 'itemTypeName', label: 'Item Type' },
       { key: 'isActive', label: 'Active' },
-      { key: 'createdOn', label: 'Created On' }
+      { key: 'createdOn', label: 'Created On' },
+      { key: 'progress', label: 'Progress', type: 'progress' }
     ];
   }
 }

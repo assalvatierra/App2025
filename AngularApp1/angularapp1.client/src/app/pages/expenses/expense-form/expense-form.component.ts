@@ -16,6 +16,7 @@ import { ExpensePaymentListComponent } from '../expense-payment-list/expense-pay
 import { ExpensePayPeriodListComponent } from '../expense-pay-period-list/expense-pay-period-list.component';
 import { ApiService } from '../../../core/api.service';
 import { ApiJobMainService } from '../../../core/services/api-job-main.service';
+import { ChecklistModule } from '../../../shared/checklist-transaction/checklist.module';
 
 @Component({
   selector: 'app-expense-form',
@@ -36,7 +37,8 @@ import { ApiJobMainService } from '../../../core/services/api-job-main.service';
     ExpenseStatusListComponent,
     ExpenseJobListComponent,
     ExpensePaymentListComponent,
-    ExpensePayPeriodListComponent
+    ExpensePayPeriodListComponent,
+    ChecklistModule
   ]
 })
 export class ExpenseFormComponent implements OnInit, AfterViewInit, OnChanges {

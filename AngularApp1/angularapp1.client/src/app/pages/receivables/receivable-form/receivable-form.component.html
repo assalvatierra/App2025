@@ -131,7 +131,8 @@
       <mat-tab label="Checklist">
         <app-checklist-transaction
           [refObject]="'Receivable'"
-          [refId]="currentData?.id || null">
+          [refId]="currentData?.id || null"
+          [hideReferenceParam]="true">
         </app-checklist-transaction>
       </mat-tab>
     </mat-tab-group>

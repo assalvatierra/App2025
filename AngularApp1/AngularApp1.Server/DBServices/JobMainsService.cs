@@ -5,7 +5,7 @@ using Erp.Domain.Models;
 
 namespace AngularApp1.Server.DBServices
 {
-    public class JobMainsService
+    public class JobMainsService : IJobMainsService
     {
         private readonly JobMainsDbLayer _db;
 

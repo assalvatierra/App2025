@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AngularApp1.Server.Data;
 using AngularApp1.Server.DBServices;
 using AngularApp1.Server.DTOs;
 using Erp.Domain.Models;
@@ -17,12 +16,12 @@ namespace AngularApp1.Server.Controllers
     [ApiController]
     public class JobMainsController : ControllerBase
     {
-        private readonly JobMainsService _service;
+        private readonly IJobMainsService _service;
         private readonly IRabbitMqBasic? _rabbitmq;
 
-        public JobMainsController(ErpDbContext context, IRabbitMqBasic? rabbitmq)
+        public JobMainsController(IJobMainsService service, IRabbitMqBasic? rabbitmq)
         {
-            _service = new JobMainsService(context);
+            _service = service;
             _rabbitmq = rabbitmq;
         }
 

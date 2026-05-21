@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Data;
+using AngularApp1.Server.DBServices;
+using AngularApp1.Server.DTOs;
 using Erp.Domain.Models;
 using AngularApp1.Server.Services.RabbitMQ;
 
@@ -15,12 +17,12 @@ namespace AngularApp1.Server.Controllers
     [ApiController]
     public class JobMainsController : ControllerBase
     {
-        private readonly ErpDbContext _context;
+        private readonly JobMainsService _service;
         private readonly IRabbitMqBasic? _rabbitmq;
 
         public JobMainsController(ErpDbContext context, IRabbitMqBasic? rabbitmq)
         {
-            _context = context;
+            _service = new JobMainsService(context);
             _rabbitmq = rabbitmq;
         }
 
@@ -28,25 +30,31 @@ namespace AngularApp1.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobMain>>> GetJobMain()
         {
-            return await _context.JobMain.ToListAsync();
+            return await _service.GetAllAsync();
+        }
+
+        // GET: api/JobMains/List
+        [HttpGet("List")]
+        public async Task<ActionResult<IEnumerable<JobMainListDto>>> GetJobMainList()
+        {
+            return await _service.GetListAsync();
         }
 
         // GET: api/JobMains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<JobMain>> GetJobMain(int id)
         {
-            var jobMain = await _context.JobMain.FindAsync(id);
+            var jobMain = await _service.GetByIdAsync(id);
 
             if (jobMain == null)
             {
                 return NotFound();
             }
 
-
             return jobMain;
         }
 
-        // PUT: api/JobMains/5
+        // PUT
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutJobMain(int id, JobMain jobMain)
@@ -56,24 +64,19 @@ namespace AngularApp1.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(jobMain).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.UpdateAsync(jobMain);
 
                 //Send Message to RabbitMQ
                 if (_rabbitmq != null)
                 {
                     _rabbitmq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {jobMain.Id} updated." });
                 }
-                //RabbitMqBasic rabbitMq = new RabbitMqBasic();
-                //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
-
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JobMainExists(id))
+                if (!_service.Exists(id))
                 {
                     return NotFound();
                 }
@@ -91,17 +94,13 @@ namespace AngularApp1.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<JobMain>> PostJobMain(JobMain jobMain)
         {
-            _context.JobMain.Add(jobMain);
-            await _context.SaveChangesAsync();
+            await _service.AddAsync(jobMain);
 
             //Send Message to RabbitMQ
             if (_rabbitmq != null)
             {
                 _rabbitmq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {jobMain.Id} created." });
             }
-            //RabbitMqBasic rabbitMq = new RabbitMqBasic();
-            //rabbitMq.Send(new RabbitMqMessageDto { Message = $"JobMain with ID {id} was retrieved." });
-
 
             return CreatedAtAction("GetJobMain", new { id = jobMain.Id }, jobMain);
         }
@@ -110,21 +109,15 @@ namespace AngularApp1.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJobMain(int id)
         {
-            var jobMain = await _context.JobMain.FindAsync(id);
+            var jobMain = await _service.GetByIdAsync(id);
             if (jobMain == null)
             {
                 return NotFound();
             }
 
-            _context.JobMain.Remove(jobMain);
-            await _context.SaveChangesAsync();
+            await _service.DeleteAsync(jobMain);
 
             return NoContent();
-        }
-
-        private bool JobMainExists(int id)
-        {
-            return _context.JobMain.Any(e => e.Id == id);
         }
     }
 }

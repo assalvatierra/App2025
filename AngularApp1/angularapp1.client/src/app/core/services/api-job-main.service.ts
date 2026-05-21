@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,31 +12,7 @@ export class ApiJobMainService {
   constructor(private http: HttpClient) { }
 
   getJobMains(): Observable<any[]> {
-    return forkJoin([
-      this.http.get<any[]>(`${this.url}/api/JobMains`),
-      this.http.get<any[]>(`${this.url}/api/Checklist/transactions?refObject=JOB`)
-    ]).pipe(
-      map(([jobs, transactions]: [any[], any[]]) => {
-        return jobs.map((item: any) => {
-          const jobTrx = transactions.filter((t: any) => t.refId === item.id);
-          const progress = jobTrx.length > 0
-            ? Math.round((jobTrx.filter((t: any) => t.isDone).length / jobTrx.length) * 100)
-            : null;
-          return {
-            id: item.id,
-            jobDate: item.jobDate,
-            description: item.description,
-            createdOn: item.createdOn,
-            createdBy: item.createdBy,
-            lastEditOn: item.lastEditOn,
-            lastEditBy: item.lastEditBy,
-            itemStatusId: item.itemStatusId,
-            businessUnitId: item.businessUnitId,
-            progress: progress
-          };
-        });
-      })
-    );
+    return this.http.get<any[]>(`${this.url}/api/JobMains/List`);
   }
 
   getJobMain(id: number): Observable<any> {

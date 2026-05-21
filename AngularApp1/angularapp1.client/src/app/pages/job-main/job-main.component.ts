@@ -142,12 +142,9 @@ export class JobMainComponent implements OnInit {
       { key: 'id', label: 'ID' },
       { key: 'jobDate', label: 'Job Date' },
       { key: 'description', label: 'Description' },
-      { key: 'createdOn', label: 'Created On' },
-      { key: 'createdBy', label: 'Created By' },
-      { key: 'lastEditOn', label: 'Last Edit On' },
-      { key: 'lastEditBy', label: 'Last Edit By' },
-      { key: 'itemStatusId', label: 'Status' },
-      { key: 'businessUnitId', label: 'Business Unit' },
+      { key: 'businessUnitName', label: 'Business Unit' },
+      { key: 'primaryCustomerName', label: 'Primary Customer' },
+      { key: 'latestStatusName', label: 'Latest Status' },
       { key: 'progress', label: 'Progress', type: 'progress' }
     ];
   }

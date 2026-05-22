@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AngularApp1.Server.DBLayer
 {
-    public class JobMainsDbLayer
+    public class JobMainsDbLayer : IJobMainsDbLayer
     {
         private readonly ErpDbContext _context;
 

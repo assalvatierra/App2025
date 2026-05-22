@@ -1,4 +1,3 @@
-using AngularApp1.Server.Data;
 using AngularApp1.Server.DBLayer;
 using AngularApp1.Server.DTOs;
 using Erp.Domain.Models;
@@ -7,11 +6,11 @@ namespace AngularApp1.Server.DBServices
 {
     public class JobMainsService : IJobMainsService
     {
-        private readonly JobMainsDbLayer _db;
+        private readonly IJobMainsDbLayer _db;
 
-        public JobMainsService(ErpDbContext context)
+        public JobMainsService(IJobMainsDbLayer db)
         {
-            _db = new JobMainsDbLayer(context);
+            _db = db;
         }
 
         public async Task<List<JobMain>> GetAllAsync()

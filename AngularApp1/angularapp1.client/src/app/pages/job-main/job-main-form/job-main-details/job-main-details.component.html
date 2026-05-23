@@ -43,10 +43,9 @@
               <mat-form-field class="full-width">
                 <mat-label>Business Unit</mat-label>
                 <mat-select formControlName="businessUnitId">
-                  <mat-option [value]="1">Default Unit</mat-option>
-                  <mat-option [value]="2">Operations</mat-option>
-                  <mat-option [value]="3">Administration</mat-option>
-                  <mat-option [value]="4">Sales</mat-option>
+                  <mat-option *ngFor="let bu of businessUnitLookupData" [value]="bu.id">
+                    {{ bu.name }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

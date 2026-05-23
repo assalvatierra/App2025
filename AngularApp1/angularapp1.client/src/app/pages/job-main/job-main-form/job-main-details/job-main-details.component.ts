@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiJobMainService } from '../../../../core/services/api-job-main.service';
 import { ApiService } from '../../../../core/api.service';
+import { ApiBusinessUnitService } from '../../../../core/services/api-business-unit.service';
 
 @Component({
   selector: 'app-job-main-details',
@@ -20,6 +21,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
   public ShowAddBtn: boolean = false;
   public TitleInfo: string = 'Job Order Details';
   public itemStatusLookupData: any[] = [];
+  public businessUnitLookupData: any[] = [];
 
   @Output() descriptionChanged = new EventEmitter<string>();
 
@@ -27,6 +29,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
     private fb: FormBuilder,
     private api: ApiJobMainService,
     private apiService: ApiService,
+    private apiBusinessUnitService: ApiBusinessUnitService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -43,6 +46,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
 
     // Load lookup data
     this.getApiItemStatusLookupData();
+    this.getApiBusinessUnitLookupData();
 
     if (this.paramId != 0) {
       this.TitleInfo = 'Edit Job Main Form';
@@ -217,9 +221,21 @@ export class JobMainDetailsComponent implements AfterViewInit {
     });
   }
 
+  private getApiBusinessUnitLookupData(): void {
+    this.apiBusinessUnitService.getList()
+      .subscribe({
+        next: (res: any) => {
+          this.businessUnitLookupData = res || [];
+        },
+        error: (err) => {
+          console.error('API Error (BusinessUnits):', err);
+        }
+      });
+  }
+
   private getApiItemStatusLookupData(): void {
     this.dataloading = true;
-    this.apiService.getItemStatuses()
+    this.apiService.getItemStatusesByClassName('JobOrder')
       .subscribe({
         next: (res: any) => {
           this.itemStatusLookupData = res || [];

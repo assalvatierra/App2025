@@ -440,6 +440,12 @@ td.mat-cell span {
   transition: all 0.2s ease;
 }
 
+/* Expanded view: double the cell width */
+.view-expanded .day-header,
+.view-expanded td.calendar-cell {
+  min-width: 240px;
+}
+
 /* Quick Win #1: Weekend highlighting */
 .day-header.weekend {
   background-color: #f5f5f5;

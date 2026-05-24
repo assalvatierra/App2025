@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Subject, takeUntil, forkJoin } from 'rxjs';
 
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
@@ -31,6 +32,7 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -41,6 +43,7 @@ import {
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatButtonToggleModule,
     UiPageTitleComponent,
     JobCardComponent
   ],
@@ -62,6 +65,9 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
   availableResources: ResourceOption[] = [];
   availableStatuses: StatusOption[] = [];
   
+  // View mode
+  viewMode: 'expanded' | 'compact' = 'expanded';
+
   // Loading states
   isLoading = false;
   isLoadingFilters = false;
@@ -158,7 +164,7 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
         next: ({ resources, jobs }) => {
           // Generate calendar days first
           this.generateCalendarDays(filterOptions.startDate, filterOptions.endDate);
-          
+             
           // If no resource filter is applied, ensure ALL resources are shown
           if (!filterOptions.resourceIds || filterOptions.resourceIds.length === 0) {
             this.calendarData = this.ensureAllResourcesDisplayed(resources);
@@ -233,7 +239,8 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
                 statusName: undefined,
                 statusCode: undefined,
                 quotedAmt: undefined,
-                supplierAmt: undefined
+                supplierAmt: undefined,
+                schedules: service.schedules || []
               };
 
               day.entries = day.entries || [];
@@ -279,6 +286,7 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
           resourceName: resource.name,
           resourceCode: resource.code || '',
           itemTypeId: resource.itemTypeId,
+          itemTypeName: resource.itemTypeName || '',
           sortOrder: resource.sortOrder,
           days: this.calendarDays.map(date => ({
             date: date,
@@ -313,6 +321,21 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
       this.calendarDays.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
+  }
+
+  toggleViewMode(): void {
+    this.viewMode = this.viewMode === 'expanded' ? 'compact' : 'expanded';
+  }
+
+  getResourceIcon(resource: ResourceCalendarDto): string {
+    const typeName = (resource.itemTypeName || '').toLowerCase();
+    if (['driver', 'chauffeur', 'operator', 'pilot'].some(k => typeName.includes(k))) {
+      return 'person';
+    }
+    if (['vehicle', 'car', 'van', 'bus', 'truck', 'transport'].some(k => typeName.includes(k))) {
+      return 'directions_car';
+    }
+    return 'work';
   }
 
   onApplyFilter(): void {
@@ -447,6 +470,26 @@ export class ResourceCalendarComponent implements OnInit, OnDestroy {
 
   getDayOfWeek(date: Date): string {
     return date.toLocaleDateString('en-US', { weekday: 'short' });
+  }
+
+  /**
+   * Format a schedule estimated datetime relative to a cell date.
+   * If the estimated date is the same day as cellDate, show time only.
+   * Otherwise show date + time.
+   */
+  formatScheduleDate(estimated: string | undefined, cellDay: Date): string {
+    if (!estimated) return '';
+    const d = new Date(estimated);
+    if (isNaN(d.getTime())) return estimated;
+    const cell = new Date(cellDay);
+    const sameDay = d.getFullYear() === cell.getFullYear() &&
+                    d.getMonth() === cell.getMonth() &&
+                    d.getDate() === cell.getDate();
+    if (sameDay) {
+      return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }) + ' ' +
+           d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   }
 
   getMonthYear(): string {

@@ -85,6 +85,18 @@
         </button>
       </div>
       <h2 class="month-year">{{ getMonthYear() }}</h2>
+      <div class="view-toggle">
+        <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggle-group" aria-label="Calendar view mode">
+          <mat-button-toggle value="compact" matTooltip="Compact view - icons only">
+            <mat-icon>view_compact</mat-icon>
+            <span class="toggle-label">Compact</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="expanded" matTooltip="Expanded view - full details">
+            <mat-icon>view_agenda</mat-icon>
+            <span class="toggle-label">Expanded</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
     </div>
 
     <!-- Loading Spinner -->
@@ -94,7 +106,7 @@
     </div>
 
     <!-- Calendar Grid -->
-    <div *ngIf="!isLoading && calendarData.length > 0" class="calendar-grid">
+    <div *ngIf="!isLoading && calendarData.length > 0" class="calendar-grid" [class.view-expanded]="viewMode === 'expanded'">
       <!-- Header Row with Dates -->
       <div class="calendar-header">
         <div class="resource-column-header">Resource</div>
@@ -151,29 +163,50 @@
           
           <!-- Card view: show up to 3 entries, with overflow indicator -->
           <ng-container *ngIf="getEntriesForDate(resource, day).length > 0; else emptyCell">
-            <div class="entry-cards">
-              <mat-card *ngFor="let entry of getEntriesForDate(resource, day) | slice:0:3" class="entry-card" (click)="onEntryClick(entry)" [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')">
-                <mat-card-header>
-                <!--  <div mat-card-avatar class="entry-avatar">{{ entry.jobReference ? entry.jobReference.charAt(0) : 'J' }}</div>-->
-                  <mat-card-title class="entry-title">{{ entry.jobReference }}</mat-card-title>
-                  <mat-card-subtitle class="entry-subtitle">{{ entry.customerName || 'N/A' }}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content class="entry-content">
-                  <div class="entry-details">
-                    <div class="entry-time" *ngIf="entry.startTime">{{ formatTime(entry.startTime) }}<span *ngIf="entry.endTime"> - {{ formatTime(entry.endTime) }}</span></div>
-                    <div class="entry-particulars" *ngIf="entry.particulars">{{ entry.particulars }}</div>
-                  </div>
-                </mat-card-content>
-                <mat-card-actions *ngIf="entry.statusName">
-                  <span class="status-badge">{{ entry.statusName }}</span>
-                </mat-card-actions>
-              </mat-card>
-            </div>
 
-            <!-- Overflow indicator -->
-            <div class="overflow-indicator" *ngIf="getEntriesForDate(resource, day).length > 3">
-              +{{ getEntriesForDate(resource, day).length - 3 }} more
-            </div>
+            <!-- Expanded view -->
+            <ng-container *ngIf="viewMode === 'expanded'">
+              <div class="entry-cards" [class.entry-cards--multiple]="getEntriesForDate(resource, day).length > 1">
+                <mat-card *ngFor="let entry of getEntriesForDate(resource, day) | slice:0:3" class="entry-card" (click)="onEntryClick(entry)" [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')">
+                  <mat-card-header>
+                  <!--  <div mat-card-avatar class="entry-avatar">{{ entry.jobReference ? entry.jobReference.charAt(0) : 'J' }}</div>-->
+                    <mat-card-title class="entry-title">{{ entry.jobReference }}</mat-card-title>
+                    <mat-card-subtitle class="entry-subtitle">{{ entry.customerName || 'N/A' }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="entry-content">
+                    <div class="entry-details">
+                      <div class="entry-particulars" *ngIf="entry.particulars">{{ entry.particulars }}</div>
+                      <!-- Job schedules: itemTypeName + estimated datetime -->
+                      <ng-container *ngIf="entry.schedules && entry.schedules.length > 0">
+                        <div class="entry-schedule" *ngFor="let sched of entry.schedules">
+                          <span class="schedule-type" *ngIf="sched.itemTypeName">{{ sched.itemTypeName }} : </span>
+                          <span class="schedule-estimated" *ngIf="sched.estimated">{{ formatScheduleDate(sched.estimated, day) }}</span>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-actions *ngIf="entry.statusName">
+                    <span class="status-badge">{{ entry.statusName }}</span>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <!-- Overflow indicator -->
+              <div class="overflow-indicator" *ngIf="getEntriesForDate(resource, day).length > 3">
+                +{{ getEntriesForDate(resource, day).length - 3 }} more
+              </div>
+            </ng-container>
+
+            <!-- Compact view: icon dot per entry -->
+            <ng-container *ngIf="viewMode === 'compact'">
+              <div class="compact-entries">
+                <mat-icon *ngFor="let entry of getEntriesForDate(resource, day)"
+                          class="compact-entry-icon"
+                          [class.compact-entry-icon--multiple]="getEntriesForDate(resource, day).length > 1"
+                          [matTooltip]="entry.jobReference + ' - ' + (entry.customerName || 'N/A')"
+                          (click)="onEntryClick(entry)">{{ getResourceIcon(resource) }}</mat-icon>
+              </div>
+            </ng-container>
+
           </ng-container>
 
           <!-- Empty cell -->

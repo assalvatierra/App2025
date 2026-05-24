@@ -51,6 +51,7 @@ export class ApiResourceCalendarService {
           resourceName: r.name,
           resourceCode: r.code || '',
           itemTypeId: r.itemTypeId,
+          itemTypeName: r.itemTypeName,
           sortOrder: r.sortOrder,
           days: days.map(d => ({ date: new Date(d), entries: [] }))
         }));
@@ -95,13 +96,14 @@ export class ApiResourceCalendarService {
    * @returns Observable of resource options
    */
   getAvailableResources(): Observable<ResourceOption[]> {
-    // Use Resources Active endpoint which includes itemTypeId and sortOrder
-    return this.http.get<any[]>(`/api/Resources/Active`).pipe(
+    // Use calendar resources endpoint which includes itemTypeName
+    return this.http.get<any[]>(`${this.apiUrl}/resources`).pipe(
       map(data => data.map(d => ({
         id: (d as any).id,
         name: (d as any).name,
         code: (d as any).code,
         itemTypeId: (d as any).itemTypeId,
+        itemTypeName: (d as any).itemTypeName,
         sortOrder: (d as any).sortOrder
       })))
     );

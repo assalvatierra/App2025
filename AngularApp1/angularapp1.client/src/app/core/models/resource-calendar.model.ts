@@ -10,6 +10,7 @@ export interface ResourceCalendarDto {
   days: CalendarDayDto[];
   // New: include item type and sort order to allow UI sorting/grouping
   itemTypeId?: number;
+  itemTypeName?: string;
   sortOrder?: number;
 }
 
@@ -32,6 +33,7 @@ export interface CalendarEntryDto {
   statusCode?: string;
   quotedAmt?: number;
   supplierAmt?: number;
+  schedules?: JobScheduleInfo[];
 }
 
 export interface CalendarFilterOptions {
@@ -47,6 +49,7 @@ export interface ResourceOption {
   code: string;
   // New: include item type id and sort order if provided by API
   itemTypeId?: number;
+  itemTypeName?: string;
   sortOrder?: number;
 }
 
@@ -64,6 +67,15 @@ export interface JobCalendarDto {
   services: JobServiceCalendarDto[];
 }
 
+export interface JobScheduleInfo {
+  id: number;
+  itemTypeId?: number;
+  itemTypeName?: string;
+  estimated?: string;
+  actual?: string;
+  notes?: string;
+}
+
 export interface JobServiceCalendarDto {
   id: number;
   jobMainId: number;
@@ -75,6 +87,7 @@ export interface JobServiceCalendarDto {
   requirements: ServiceRequirementDto[];
   assignedResources: AssignedResourceDto[];
   hasResourcesAssigned: boolean;
+  schedules: JobScheduleInfo[];
 }
 
 export interface AssignedResourceDto {

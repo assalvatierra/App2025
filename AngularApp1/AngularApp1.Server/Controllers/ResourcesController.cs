@@ -125,6 +125,7 @@ namespace AngularApp1.Server.Controllers
                     r.SortOrder,
                     r.ItemTypeId,
                     ItemTypeCode = t != null ? t.Code : null,
+                    ItemTypeName = t != null ? t.Name : null,
                     r.ItemStatusId,
                     r.JsonProperties
                 })
@@ -150,6 +151,10 @@ namespace AngularApp1.Server.Controllers
                     r.Remarks,
                     r.SortOrder,
                     r.ItemTypeId,
+                    ItemTypeName = _context.ItemType
+                        .Where(t => t.Id == r.ItemTypeId)
+                        .Select(t => t.Name)
+                        .FirstOrDefault(),
                     r.ItemStatusId,
                     r.JsonProperties
                 })

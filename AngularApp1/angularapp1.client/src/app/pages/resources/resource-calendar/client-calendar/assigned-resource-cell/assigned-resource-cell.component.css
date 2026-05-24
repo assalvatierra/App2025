@@ -78,14 +78,15 @@
 }
 
 .resource-name {
-  font-weight: 600;
+  font-weight: 400 !important;
+  font-style: normal;
   color: #0d47a1;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .resource-code {
   color: #616161;  /* Changed from #666 for better WCAG AA compliance */
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .resource-type {

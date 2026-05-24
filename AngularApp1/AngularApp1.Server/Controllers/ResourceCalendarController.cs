@@ -145,7 +145,12 @@ namespace AngularApp1.Server.Controllers
                     {
                         id = r.Id,
                         name = r.Name,
-                        code = r.Code
+                        code = r.Code,
+                        itemTypeId = r.ItemTypeId,
+                        itemTypeName = _context.ItemType
+                            .Where(t => t.Id == r.ItemTypeId)
+                            .Select(t => t.Name)
+                            .FirstOrDefault()
                     })
                     .ToListAsync();
 
@@ -249,6 +254,7 @@ namespace AngularApp1.Server.Controllers
                 // Pre-fetch resource allocations for all job services to avoid synchronous queries later
                 var resourceAllocations = await GetJobServiceResourceAllocations(jobServiceIds);
                 var assignedResources = await GetAssignedResources(jobServiceIds);
+                var jobSchedules = await GetJobSchedules(jobServiceIds);
 
                 // Group by job and build result
                 var result = jobServices
@@ -260,7 +266,7 @@ namespace AngularApp1.Server.Controllers
                             JobMainId = g.Key.Id,
                             JobReference = g.Key.Description ?? $"Job #{g.Key.Id}",
                             CustomerName = jobCustomers.ContainsKey(g.Key.Id) ? jobCustomers[g.Key.Id] : null,
-                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes, resourceAllocations, assignedResources)).ToList()
+                            Services = g.Select(js => BuildJobServiceCalendar(js.JobService, serviceItems, serviceRequirements, itemTypes, resourceAllocations, assignedResources, jobSchedules)).ToList()
                         };
                     })
                     .OrderBy(j => j.JobMainId)
@@ -444,6 +450,37 @@ namespace AngularApp1.Server.Controllers
         }
 
         /// <summary>
+        /// Get job schedules for job services, keyed by JobServiceId
+        /// </summary>
+        private async Task<Dictionary<int, List<JobScheduleDto>>> GetJobSchedules(List<int> jobServiceIds)
+        {
+            if (!jobServiceIds.Any())
+                return new Dictionary<int, List<JobScheduleDto>>();
+
+            var schedules = await (from js in _context.JobSchedules
+                                   join it in _context.ItemType on js.ItemTypeId equals it.Id into itJoin
+                                   from it in itJoin.DefaultIfEmpty()
+                                   where js.JobServiceId.HasValue && jobServiceIds.Contains(js.JobServiceId.Value)
+                                   select new
+                                   {
+                                       JobServiceId = js.JobServiceId!.Value,
+                                       Dto = new JobScheduleDto
+                                       {
+                                           Id = js.Id,
+                                           ItemTypeId = js.ItemTypeId,
+                                           ItemTypeName = it != null ? it.Name : null,
+                                           Estimated = js.Estimated,
+                                           Actual = js.Actual,
+                                           Notes = js.Notes
+                                       }
+                                   }).ToListAsync();
+
+            return schedules
+                .GroupBy(s => s.JobServiceId)
+                .ToDictionary(g => g.Key, g => g.Select(x => x.Dto).ToList());
+        }
+
+        /// <summary>
         /// Get resource allocations count for job services
         /// </summary>
         private async Task<Dictionary<int, int>> GetJobServiceResourceAllocations(List<int> jobServiceIds)
@@ -582,7 +619,8 @@ namespace AngularApp1.Server.Controllers
             Dictionary<int, List<JobServiceRequirement>> serviceRequirements,
             Dictionary<int, (string Name, string? Code)> itemTypes,
             Dictionary<int, int> resourceAllocations,
-            Dictionary<int, List<AssignedResourceDto>> assignedResources)
+            Dictionary<int, List<AssignedResourceDto>> assignedResources,
+            Dictionary<int, List<JobScheduleDto>> jobSchedules)
         {
             // Get service item info
             string? serviceItemName = null;
@@ -634,6 +672,11 @@ namespace AngularApp1.Server.Controllers
                 ? assignedResources[jobService.Id]
                 : new List<AssignedResourceDto>();
 
+            // Get schedules for this job service
+            var serviceSchedules = jobSchedules.ContainsKey(jobService.Id)
+                ? jobSchedules[jobService.Id]
+                : new List<JobScheduleDto>();
+
             return new JobServiceCalendarDto
             {
                 Id = jobService.Id,
@@ -645,7 +688,8 @@ namespace AngularApp1.Server.Controllers
                 Particulars = jobService.Particulars,
                 Requirements = requirements,
                 AssignedResources = serviceAssignedResources,
-                HasResourcesAssigned = serviceAssignedResources.Any()
+                HasResourcesAssigned = serviceAssignedResources.Any(),
+                Schedules = serviceSchedules
             };
         }
 

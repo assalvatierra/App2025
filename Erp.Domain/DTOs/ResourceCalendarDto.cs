@@ -80,6 +80,7 @@ namespace Erp.Domain.DTOs
         public List<ServiceRequirementDto> Requirements { get; set; } = new();
         public List<AssignedResourceDto> AssignedResources { get; set; } = new();
         public bool HasResourcesAssigned { get; set; }
+        public List<JobScheduleDto> Schedules { get; set; } = new();
     }
 
     /// <summary>
@@ -105,6 +106,19 @@ namespace Erp.Domain.DTOs
         public string? ItemTypeName { get; set; }
         public string ResourceType { get; set; } = "Other"; // Driver, Vehicle, Other
         public int AllocatedQuantity { get; set; }
+        public string? Notes { get; set; }
+    }
+
+    /// <summary>
+    /// DTO representing a job schedule entry (milestone/checkpoint)
+    /// </summary>
+    public class JobScheduleDto
+    {
+        public int Id { get; set; }
+        public int? ItemTypeId { get; set; }
+        public string? ItemTypeName { get; set; }
+        public DateTime? Estimated { get; set; }
+        public DateTime? Actual { get; set; }
         public string? Notes { get; set; }
     }
 }

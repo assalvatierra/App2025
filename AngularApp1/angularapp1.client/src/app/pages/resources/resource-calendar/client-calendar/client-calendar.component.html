@@ -141,7 +141,8 @@
           <div class="calendar-container" *ngIf="!isLoading && uniqueCustomers.length > 0 && layoutMode === 'calendar'" 
                [class.density-comfortable]="densityMode === 'comfortable'"
                [class.density-compact]="densityMode === 'compact'"
-               [class.density-dense]="densityMode === 'dense'">
+               [class.density-dense]="densityMode === 'dense'"
+               [class.view-expanded]="viewMode === 'expanded'">
       <div class="calendar-grid">
         <table class="calendar-table">
           <thead>

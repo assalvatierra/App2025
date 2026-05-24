@@ -215,7 +215,7 @@
 .resource-row {
   display: flex;
   border-bottom: 1px solid #e0e0e0;
-  min-height: 100px;
+  min-height: 50px;
 }
 
 .resource-row:hover {
@@ -256,7 +256,7 @@
   flex-direction: column;
   gap: 6px;
   background-color: #fff;
-  min-height: 100px;
+  min-height: 50px;
 }
 
 .day-cell.today {
@@ -288,7 +288,7 @@
 .jobs-row {
   display: flex;
   border-bottom: 2px solid #9c27b0;
-  min-height: 120px;
+  min-height: 60px;
   background-color: #f3e5f5;
 }
 
@@ -315,7 +315,7 @@
 
 .job-cell {
   background-color: #fafafa;
-  min-height: 120px;
+  min-height: 60px;
 }
 
 .job-cell.today {
@@ -517,4 +517,84 @@
 
 ::ng-deep .filters-section .mat-mdc-form-field-hint {
   display: none;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.view-toggle-group {
+  height: 36px;
+}
+
+.view-toggle-group .toggle-label {
+  font-size: 0.75rem;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* Expanded view: double column widths */
+.view-expanded .day-header,
+.view-expanded .day-cell {
+  min-width: 300px;
+}
+
+/* Entry card title and subtitle sizing */
+.entry-title {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  color: #1565c0 !important;
+  line-height: 1.2 !important;
+}
+
+.entry-subtitle {
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+}
+
+.schedule-estimated {
+  color: #1565c0;
+}
+
+/* Compact view entries */
+.compact-entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Expanded view: red border when cell has multiple entries */
+.entry-cards--multiple .entry-card {
+  border: 2px solid #e53935 !important;
+}
+
+.compact-entry-icon {
+  font-size: 27px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  color: #3f51b5;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.compact-entry-icon--multiple {
+  color: #e53935;
+}
+
+.compact-entry-icon:hover {
+  background-color: rgba(63, 81, 181, 0.12);
+}
+
+.compact-entry-icon--multiple:hover {
+  background-color: rgba(229, 57, 53, 0.12);
 }

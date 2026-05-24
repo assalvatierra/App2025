@@ -140,11 +140,11 @@ export class JobMainComponent implements OnInit {
   private getTableFields(): tableField[] {
     return [
       { key: 'id', label: 'ID' },
-      { key: 'jobDate', label: 'Job Date' },
+      { key: 'jobDate', label: 'Job Date', type: 'date' },
       { key: 'description', label: 'Description' },
       { key: 'businessUnitName', label: 'Business Unit' },
-      { key: 'primaryCustomerName', label: 'Primary Customer' },
-      { key: 'latestStatusName', label: 'Latest Status' },
+      { key: 'primaryCustomerName', label: 'Customer' },
+      { key: 'latestStatusName', label: 'Status' },
       { key: 'progress', label: 'Progress', type: 'progress' }
     ];
   }

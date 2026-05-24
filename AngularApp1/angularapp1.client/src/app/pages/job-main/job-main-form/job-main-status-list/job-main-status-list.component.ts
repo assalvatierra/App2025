@@ -16,7 +16,7 @@ export class JobMainStatusListComponent implements AfterViewInit {
   public dataloading: boolean = false;
   public jobMainStatuses: any[] = [];
   public itemStatusLookupData: any[] = [];
-  public displayColumns: string[] = ['id', 'statusDate', 'itemStatusId', 'remarks', 'createdBy', 'actions'];
+  public displayColumns: string[] = ['statusDate', 'itemStatusId', 'remarks', 'createdBy'];
 
   private paramId: number = 0;
 

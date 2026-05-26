@@ -1,45 +1,49 @@
 <div class="form-container">
   <ng-container [formGroup]="timesheetForm">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="tsDate" required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="timesheetForm.get('tsDate')?.hasError('required')">
-        Date is required
-      </mat-error>
-    </mat-form-field>
+    <div class="date-status-row">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="tsDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="timesheetForm.get('tsDate')?.hasError('required')">
+          Date is required
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ resourceIdLabel }}</mat-label>
-      <mat-select formControlName="resourceId" required>
-        <mat-option *ngFor="let resource of resourcesForResourceId" [value]="resource.id">
-          {{ resource.name }} ({{ resource.code }})
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="timesheetForm.get('resourceId')?.hasError('required')">
-        {{ resourceIdLabel }} is required
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="status-field">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="itemStatusId">
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ resourceId1Label }}</mat-label>
-      <mat-select formControlName="resourceId1">
-        <mat-option [value]="null">None</mat-option>
-        <mat-option *ngFor="let resource of resourcesForResourceId1" [value]="resource.id">
-          {{ resource.name }} ({{ resource.code }})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="resource-row">
+      <mat-form-field appearance="outline" class="resource-field">
+        <mat-label>{{ resourceIdLabel }}</mat-label>
+        <mat-select formControlName="resourceId" required>
+          <mat-option *ngFor="let resource of resourcesForResourceId" [value]="resource.id">
+            {{ resource.name }} ({{ resource.code }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timesheetForm.get('resourceId')?.hasError('required')">
+          {{ resourceIdLabel }} is required
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="itemStatusId">
-        <mat-option *ngFor="let status of statuses" [value]="status.id">
-          {{ status.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="resource-field">
+        <mat-label>{{ resourceId1Label }}</mat-label>
+        <mat-select formControlName="resourceId1">
+          <mat-option [value]="null">None</mat-option>
+          <mat-option *ngFor="let resource of resourcesForResourceId1" [value]="resource.id">
+            {{ resource.name }} ({{ resource.code }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Pay Period</mat-label>

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -58,6 +58,7 @@ interface TimesheetFeatureSettings {
   ]
 })
 export class TimesheetFormComponent implements AfterViewInit {
+  @ViewChild(TimesheetExpenseDetailsComponent) expenseDetails?: TimesheetExpenseDetailsComponent;
   public timesheetForm!: FormGroup;
   public currentData: Timesheet | null = null;
   public dataloading: boolean = true;
@@ -139,7 +140,11 @@ export class TimesheetFormComponent implements AfterViewInit {
   onSubmit(): void {
     if (this.timesheetForm.valid) {
       this.updateCurrentDataValues();
-      this.updateApiData(this.paramId, this.currentData!);
+      this.updateApiData(this.paramId, this.currentData!, () => {
+        if (this.allowExtendedDetails && this.expenseDetails) {
+          this.expenseDetails.onSave();
+        }
+      });
     } else {
       console.log('Form is invalid');
       this.markFormGroupTouched();
@@ -330,12 +335,13 @@ export class TimesheetFormComponent implements AfterViewInit {
     });
   }
 
-  private updateApiData(id: number, data: Timesheet): void {
+  private updateApiData(id: number, data: Timesheet, onSuccess?: () => void): void {
     this.dataloading = true;
     this.apiTimesheets.updateTimesheet(id, data).subscribe({
       next: () => {
         console.log('Timesheet updated successfully');
         this.dataloading = false;
+        onSuccess?.();
       },
       error: (err) => {
         console.error('API Error:', err);

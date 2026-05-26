@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ApiResourcesService } from '../../../core/services/api-resources.service';
 import { ApiService } from '../../../core/api.service';
 import { UiPageTitleComponent } from '../../../shared/ui-page-title/ui-page-title.component';
@@ -44,6 +45,7 @@ export class ResourcesListComponent implements AfterViewInit {
 
   // Lookup data
   public itemTypes: any[] = [];
+  public itemStatuses: any[] = [];
 
   public get tableFields() {
     return this.getTableFields();
@@ -57,7 +59,6 @@ export class ResourcesListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loadLookupData();
-    this.retrieveApiData();
   }
 
   onAddRecord() {
@@ -96,22 +97,18 @@ export class ResourcesListComponent implements AfterViewInit {
   }
 
   private loadLookupData() {
-    // Load item types
-    this.apiService.getItemTypesByClassName('Resource').subscribe({
-      next: (res: any) => {
-        this.itemTypes = res || [];
+    forkJoin({
+      types: this.apiService.getItemTypesByClassName('Resource'),
+      statuses: this.apiService.getItemStatusesByClassName('Resource')
+    }).subscribe({
+      next: ({ types, statuses }) => {
+        this.itemTypes = types || [];
+        this.itemStatuses = statuses || [];
+        this.retrieveApiData();
       },
       error: (err) => {
-        console.error('Error loading item types:', err);
-        // Fallback to all item types if className filter doesn't work
-        this.apiService.getItemTypes().subscribe({
-          next: (res: any) => {
-            this.itemTypes = res || [];
-          },
-          error: (err) => {
-            console.error('Error loading all item types:', err);
-          }
-        });
+        console.error('Error loading lookup data:', err);
+        this.retrieveApiData();
       }
     });
   }
@@ -146,8 +143,8 @@ export class ResourcesListComponent implements AfterViewInit {
       remarks: item.remarks || '',
       code: item.code || '',
       sortOrder: item.sortOrder?.toString() || '',
-      itemTypeId: item.itemTypeId,
-      itemStatusId: item.itemStatusId
+      itemTypeName: this.itemTypes.find(t => t.id === item.itemTypeId)?.name || item.itemTypeId,
+      itemStatusName: this.itemStatuses.find(s => s.id === item.itemStatusId)?.name || item.itemStatusId
     }));
     this.TableList.initialize(mappedData);
   }
@@ -158,8 +155,8 @@ export class ResourcesListComponent implements AfterViewInit {
       { key: 'code', label: 'Code' },
       { key: 'name', label: 'Name' },
       { key: 'description', label: 'Description' },
-      { key: 'itemTypeId', label: 'Type' },
-      { key: 'itemStatusId', label: 'Status' },
+      { key: 'itemTypeName', label: 'Type' },
+      { key: 'itemStatusName', label: 'Status' },
       { key: 'sortOrder', label: 'Sort Order' }
     ];
   }

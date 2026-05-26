@@ -10,6 +10,30 @@
   width: 100%;
 }
 
+.date-status-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.date-field {
+  flex: 1 1 50%;
+}
+
+.status-field {
+  flex: 1 1 50%;
+}
+
+.resource-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.resource-field {
+  flex: 1 1 50%;
+}
+
 .job-timesheets-section {
   margin-top: 8px;
 }

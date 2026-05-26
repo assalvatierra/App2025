@@ -105,15 +105,15 @@ export class TimesheetExpenseDetailsComponent implements OnChanges {
     const formValue = this.expenseForm.value;
     const detail: TimesheetExpenseDetail = {
       id: this.timesheetId,
-      billAmount: formValue.billAmount !== '' ? formValue.billAmount : undefined,
-      additionalBillAmount: formValue.additionalBillAmount !== '' ? formValue.additionalBillAmount : undefined,
-      resourceRate: formValue.resourceRate !== '' ? formValue.resourceRate : undefined,
-      additionalRate: formValue.additionalRate !== '' ? formValue.additionalRate : undefined,
-      resourceRate1: formValue.resourceRate1 !== '' ? formValue.resourceRate1 : undefined,
-      additionalRate1: formValue.additionalRate1 !== '' ? formValue.additionalRate1 : undefined,
-      regularExpense: formValue.regularExpense !== '' ? formValue.regularExpense : undefined,
-      otherExpense: formValue.otherExpense !== '' ? formValue.otherExpense : undefined,
-      discount: formValue.discount !== '' ? formValue.discount : undefined,
+      billAmount: formValue.billAmount != null ? formValue.billAmount : undefined,
+      additionalBillAmount: formValue.additionalBillAmount != null ? formValue.additionalBillAmount : undefined,
+      resourceRate: formValue.resourceRate != null ? formValue.resourceRate : undefined,
+      additionalRate: formValue.additionalRate != null ? formValue.additionalRate : undefined,
+      resourceRate1: formValue.resourceRate1 != null ? formValue.resourceRate1 : undefined,
+      additionalRate1: formValue.additionalRate1 != null ? formValue.additionalRate1 : undefined,
+      regularExpense: formValue.regularExpense != null ? formValue.regularExpense : undefined,
+      otherExpense: formValue.otherExpense != null ? formValue.otherExpense : undefined,
+      discount: formValue.discount != null ? formValue.discount : undefined,
       amountRemarks: formValue.amountRemarks || undefined
     };
 

@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { ApiJobMainService } from '../../../../core/services/api-job-main.service';
 import { ApiService } from '../../../../core/api.service';
 import { ApiBusinessUnitService } from '../../../../core/services/api-business-unit.service';
@@ -22,6 +24,8 @@ export class JobMainDetailsComponent implements AfterViewInit {
   public TitleInfo: string = 'Job Order Details';
   public itemStatusLookupData: any[] = [];
   public businessUnitLookupData: any[] = [];
+  public pdfUrl: SafeResourceUrl | null = null;
+  public reportLoading: boolean = false;
 
   @Output() descriptionChanged = new EventEmitter<string>();
 
@@ -30,6 +34,8 @@ export class JobMainDetailsComponent implements AfterViewInit {
     private api: ApiJobMainService,
     private apiService: ApiService,
     private apiBusinessUnitService: ApiBusinessUnitService,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -92,6 +98,22 @@ export class JobMainDetailsComponent implements AfterViewInit {
       console.log('Form is invalid');
       this.markFormGroupTouched();
     }
+  }
+
+  onGetReport(): void {
+    this.reportLoading = true;
+    this.pdfUrl = null;
+    this.http.get('/api/Report/GetTestReport', { responseType: 'blob' }).subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.reportLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching report:', err);
+        this.reportLoading = false;
+      }
+    });
   }
 
   onCancel(): void {

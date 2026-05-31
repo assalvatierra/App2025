@@ -48,7 +48,12 @@
 
               </app-job-main-status-list>
             </mat-tab>
-            
+
+            <!-- Payment tab: visible only when a payment SysFeature is enabled (e.g. PAYMONGO) -->
+            <mat-tab *ngIf="showPaymentTab" label="Payment">
+              <app-job-main-payment [jobMainId]="paramId"></app-job-main-payment>
+            </mat-tab>
+
           </mat-tab-group>
         </mat-card-content>
       </mat-card>

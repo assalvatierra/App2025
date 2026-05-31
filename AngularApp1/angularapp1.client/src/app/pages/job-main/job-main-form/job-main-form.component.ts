@@ -1,7 +1,9 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiJobMainService } from '../../../core/services/api-job-main.service';
+import { ApiSysFeaturesService } from '../../../core/services/api-sys-features.service';
+
+// Add more payment provider sysCodes here in the future (e.g. 'STRIPE', 'PAYPAL')
+const PAYMENT_SYS_CODES = ['PAYMONGO'];
 
 @Component({
   selector: 'app-job-main-form',
@@ -13,6 +15,8 @@ export class JobMainFormComponent implements OnInit, AfterViewInit {
   public TitleInfo: string = '';
   public jobDescription: string = '';
   public paramId: number = 0;
+  public showPaymentTab: boolean = false;
+
   private formLabel: string = 'Job Order';
   private formModeLabel_edit: string = 'Edit';
   private formModeLabel_add: string = 'Create';
@@ -20,6 +24,7 @@ export class JobMainFormComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private sysFeaturesService: ApiSysFeaturesService
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +38,8 @@ export class JobMainFormComponent implements OnInit, AfterViewInit {
     this.TitleInfo = ''
       + (this.paramId == 0 ? this.formModeLabel_add : this.formModeLabel_edit)
       + ' ' + this.formLabel;
+
+    this.loadPaymentFeatureFlags();
   }
 
   ngAfterViewInit(): void { }
@@ -43,6 +50,18 @@ export class JobMainFormComponent implements OnInit, AfterViewInit {
 
   onCancel(): void {
     this.router.navigate(['/Jobs']);
+  }
+
+  private loadPaymentFeatureFlags(): void {
+    this.sysFeaturesService.getEnabledSysFeatures().subscribe({
+      next: (features) => {
+        this.showPaymentTab = features.some(f => PAYMENT_SYS_CODES.includes(f.sysCode));
+      },
+      error: (err) => {
+        console.error('Failed to load SysFeatures for payment tab:', err);
+        this.showPaymentTab = false;
+      }
+    });
   }
 }
 

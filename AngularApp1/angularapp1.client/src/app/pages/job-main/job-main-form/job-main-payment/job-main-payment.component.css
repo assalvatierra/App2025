@@ -1,0 +1,67 @@
+.payment-container {
+  padding: 16px;
+}
+
+.payment-section-card {
+  margin-bottom: 16px;
+}
+
+.payment-section-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.amount-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.amount-field {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.currency-field {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.payment-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.section-divider {
+  margin: 12px 0;
+}
+
+.result-fields {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ref-field {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.status-field {
+  width: 140px;
+  flex-shrink: 0;
+}

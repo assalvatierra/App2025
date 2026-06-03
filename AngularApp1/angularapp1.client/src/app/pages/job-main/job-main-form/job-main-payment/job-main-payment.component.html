@@ -5,45 +5,67 @@
     <mat-card-header>
       <mat-card-title>
         <mat-icon>payment</mat-icon>
-        PayMongo Payment
+        {{ editingId ? 'Edit Payment' : 'New Payment' }}
       </mat-card-title>
       <mat-card-subtitle>Enter payment details</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div class="payment-form">
+      <div *ngIf="isLoadingRecords" class="loading-row">
+        <mat-spinner diameter="24"></mat-spinner>
+        <span>Loading...</span>
+      </div>
+      <div class="payment-form" *ngIf="!isLoadingRecords">
 
         <div class="amount-row">
           <mat-form-field appearance="outline" class="amount-field">
             <mat-label>Amount</mat-label>
             <input matInput
                    type="number"
-                   [(ngModel)]="paymongoForm.amount"
+                   [(ngModel)]="amount"
                    placeholder="Enter amount"
                    min="0" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="currency-field">
             <mat-label>Currency</mat-label>
-            <mat-select [(ngModel)]="paymongoForm.currency">
-              <!-- Add more currencies to the component's currencies array in the future -->
+            <mat-select [(ngModel)]="currency">
               <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
             </mat-select>
           </mat-form-field>
+
+          <mat-form-field appearance="outline" class="gateway-field">
+            <mat-label>Gateway</mat-label>
+            <input matInput
+                   [(ngModel)]="gateway"
+                   placeholder="e.g. PayMongo" />
+          </mat-form-field>
         </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Description</mat-label>
-          <input matInput
-                 [(ngModel)]="paymongoForm.description"
-                 placeholder="Enter payment description" />
-        </mat-form-field>
+        <div class="description-row">
+          <mat-form-field appearance="outline" class="description-field">
+            <mat-label>Description</mat-label>
+            <input matInput
+                   [(ngModel)]="description"
+                   placeholder="Enter payment description" />
+          </mat-form-field>
+        </div>
+
+        <div class="payment-actions">
+          <button mat-raised-button color="primary"
+                  (click)="onSave()"
+                  [disabled]="isSaving"
+                  class="description-save-btn">
+            <mat-icon>save</mat-icon>
+            {{ isSaving ? 'Saving...' : (editingId ? 'Update' : 'Save') }}
+          </button>
+        </div>
 
       </div>
     </mat-card-content>
   </mat-card>
 
   <!-- Section 2: Generate Payment Link -->
-  <mat-card class="payment-section-card">
+  <mat-card class="payment-section-card" *ngIf="editingId">
     <mat-card-header>
       <mat-card-title>
         <mat-icon>link</mat-icon>
@@ -54,7 +76,7 @@
     <mat-card-content>
       <div class="payment-form">
 
-        <div class="payment-actions">
+        <div class="payment-actions" *ngIf="!paymentLink">
           <button mat-raised-button color="accent"
                   (click)="onGeneratePaymentLink()"
                   [disabled]="isGeneratingLink">
@@ -62,23 +84,23 @@
             {{ isGeneratingLink ? 'Generating...' : 'Generate Payment Link' }}
           </button>
         </div>
-        <!-- Read-only fields populated after link generation -->
-        <div class="result-fields">
+
+        <div class="result-fields" *ngIf="paymentLink">
           <mat-form-field appearance="outline" class="ref-field">
             <mat-label>PayMongo Reference</mat-label>
-            <input matInput [value]="paymongoReference" readonly placeholder="—" />
+            <input matInput [(ngModel)]="paymongoReference" placeholder="—" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="status-field">
             <mat-label>Status</mat-label>
-            <input matInput [value]="paymongoStatus" readonly placeholder="—" />
+            <input matInput [(ngModel)]="paymongoStatus" placeholder="—" />
             <mat-icon matSuffix>info</mat-icon>
           </mat-form-field>
         </div>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width" *ngIf="paymentLink">
           <mat-label>Payment Link</mat-label>
-          <input matInput [value]="paymentLink" readonly placeholder="—" />
+          <input matInput [(ngModel)]="paymentLink" placeholder="—" />
           <mat-icon matSuffix>link</mat-icon>
         </mat-form-field>
 
@@ -87,7 +109,7 @@
   </mat-card>
 
   <!-- Section 3: Send Payment Request -->
-  <mat-card class="payment-section-card">
+  <mat-card class="payment-section-card" *ngIf="paymentLink">
     <mat-card-header>
       <mat-card-title>
         <mat-icon>forward_to_inbox</mat-icon>
@@ -101,7 +123,7 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Payment Link Receipt Email</mat-label>
           <mat-icon matPrefix>email</mat-icon>
-          <mat-select [(ngModel)]="paymongoForm.receiptEmail"
+          <mat-select [(ngModel)]="receiptEmail"
                       [disabled]="isLoadingEmails"
                       placeholder="{{ isLoadingEmails ? 'Loading contacts...' : 'Select contact email' }}">
             <mat-option *ngFor="let opt of contactEmails" [value]="opt.email">
@@ -116,15 +138,17 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Additional Email Message</mat-label>
           <textarea matInput
-                    [(ngModel)]="paymongoForm.emailMessage"
+                    [(ngModel)]="emailMessage"
                     placeholder="Enter an optional message to include in the payment email"
                     rows="3"></textarea>
         </mat-form-field>
 
         <div class="payment-actions">
-          <button mat-raised-button color="primary" (click)="onSubmitPaymongo()">
+          <button mat-raised-button color="accent"
+                  (click)="onSendPaymentLink()"
+                  [disabled]="isSendingPaymentLink || !receiptEmail">
             <mat-icon>send</mat-icon>
-            Send Payment Request
+            {{ isSendingPaymentLink ? 'Sending...' : 'Send Payment Link' }}
           </button>
         </div>
 

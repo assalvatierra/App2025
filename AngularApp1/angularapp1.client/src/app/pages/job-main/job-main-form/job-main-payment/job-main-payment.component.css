@@ -35,6 +35,26 @@
   flex-shrink: 0;
 }
 
+.gateway-field {
+  width: 220px;
+  flex-shrink: 0;
+}
+
+.description-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.description-field {
+  flex: 1;
+}
+
+.description-save-btn {
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
 .full-width {
   width: 100%;
 }

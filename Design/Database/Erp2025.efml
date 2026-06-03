@@ -1106,6 +1106,26 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="PaymentExternal" entity-set="PaymentExternal" p1:Guid="72fcf0b0-acbb-4d17-8d9d-fa047c2eb1c0">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="978c9426-40e4-4650-8268-6a52754e7e38">
+      <column name="" />
+    </id>
+    <property name="Gateway" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d7ea2945-24be-4e26-8cb1-94f6ba158592">
+      <column name="" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="2e6cb1bb-3ae8-420d-8a7c-50aef579d00c">
+      <column name="" />
+    </property>
+    <property name="Currency" type="String" p1:ValidateRequired="true" p1:Guid="6f5938ca-4279-49a0-8562-13f039a21fb4">
+      <column name="" />
+    </property>
+    <property name="JsonInfo" type="String" p1:ValidateRequired="true" p1:Guid="43334a78-ce43-4607-bbd5-65e5ce47dd81">
+      <column name="" />
+    </property>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="64360f56-1424-440f-ae4b-47a34cdfb751">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1777,6 +1797,14 @@
       </end1>
       <end2 multiplicity="Many" name="PayPeriods" class="ItemType" relation-class="PayPeriod" lazy="False" p1:Guid="0b4d3d8d-c021-4414-89b5-855c40622bae">
         <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="JobMain_PaymentExternal" cardinality="OneToMany" p1:Guid="0878d52c-b85d-4bcf-8b7c-87f4fd4b322c">
+      <end1 multiplicity="One" name="JobMain" class="PaymentExternal" relation-class="JobMain" constrained="True" lazy="False" p1:Guid="cf5c8685-b656-48a4-b573-5b2bef257b62">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PaymentExternals" class="JobMain" relation-class="PaymentExternal" lazy="False" p1:Guid="adfd086e-5bc2-4829-958f-3bde4a1fdb0b">
+        <property name="JobMainId" />
       </end2>
     </association>
   </associations>

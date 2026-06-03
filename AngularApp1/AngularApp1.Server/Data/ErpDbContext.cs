@@ -62,6 +62,7 @@ namespace AngularApp1.Server.Data
         // Payment related DbSets
         public DbSet<Erp.Domain.Models.Payment> Payments { get; set; } = default!;
         public DbSet<Erp.Domain.Models.ReceivablePayment> ReceivablePayments { get; set; } = default!;
+        public DbSet<Erp.Domain.Models.PaymentExternal> PaymentExternals { get; set; } = default!;
 
         // Expense related DbSets
         public DbSet<Erp.Domain.Models.Expense> Expenses { get; set; } = default!;
@@ -182,6 +183,9 @@ namespace AngularApp1.Server.Data
 
             // Map Payments DbSet to Payment table (singular)
             modelBuilder.Entity<Payment>().ToTable("Payment");
+
+            // Map PaymentExternals DbSet to PaymentExternal table (singular)
+            modelBuilder.Entity<PaymentExternal>().ToTable("PaymentExternal");
 
             // map to singular
             modelBuilder.Entity<JobSchedule>().ToTable("JobSchedule");

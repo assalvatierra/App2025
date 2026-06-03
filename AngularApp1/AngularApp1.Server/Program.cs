@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 //using AngularApp1.Server.Services.Plugins;
 //using Microsoft.SemanticKernel;
 using AngularApp1.Server.Services.RabbitMQ;
+using AngularApp1.Server.DBLayer;
+using AngularApp1.Server.DBServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +109,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.AddRabbitMqService();
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularApp1.Server.DBLayer.JobMainsDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
+builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
+builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
 
 
 

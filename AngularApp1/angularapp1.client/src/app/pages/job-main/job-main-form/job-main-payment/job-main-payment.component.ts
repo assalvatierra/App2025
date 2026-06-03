@@ -3,14 +3,17 @@ import { Subject, forkJoin, takeUntil } from 'rxjs';
 import { ApiJobCustomersService, JobCustomerDto } from '../../../../core/services/api-job-customers.service';
 import { ApiEntityContactService } from '../../../../core/services/api-entity-contact.service';
 import { ApiService } from '../../../../core/api.service';
+import { ApiPaymentExternalService } from '../../../../core/services/api-payment-external.service';
+import { PaymentExternal } from '../../../../core/models/payment-external.model';
 
 // Add more currencies here in the future
 const SUPPORTED_CURRENCIES = ['PHP'];
 
-export interface PaymongoPaymentRequest {
-  amount: number;
+export interface PaymongoJsonInfo {
   description: string;
-  currency: string;
+  paymongoReference: string;
+  paymongoStatus: string;
+  paymentLink: string;
   receiptEmail: string;
   emailMessage: string;
 }
@@ -31,33 +34,38 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
   currencies: string[] = SUPPORTED_CURRENCIES;
   isGeneratingLink: boolean = false;
+  isSaving: boolean = false;
+  isSendingPaymentLink: boolean = false;
   contactEmails: ContactEmailOption[] = [];
   isLoadingEmails: boolean = false;
 
-  // Read-only fields populated after link generation
+  isLoadingRecords: boolean = false;
+  editingId: number | null = null;
+
+  // Form fields
+  amount: number = 0;
+  currency: string = 'PHP';
+  gateway: string = 'Paymongo';
+  description: string = '';
   paymongoReference: string = '';
   paymongoStatus: string = '';
   paymentLink: string = '';
-
-  paymongoForm: PaymongoPaymentRequest = {
-    amount: 0,
-    description: '',
-    currency: 'PHP',
-    receiptEmail: '',
-    emailMessage: ''
-  };
+  receiptEmail: string = '';
+  emailMessage: string = '';
 
   private destroy$ = new Subject<void>();
 
   constructor(
     private apiJobCustomers: ApiJobCustomersService,
     private apiEntityContact: ApiEntityContactService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private apiPaymentExternal: ApiPaymentExternalService
   ) {}
 
   ngOnInit(): void {
     if (this.jobMainId && this.jobMainId !== 0) {
       this.loadContactEmails();
+      this.loadPaymentExternals();
     }
   }
 
@@ -66,11 +74,123 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private loadPaymentExternals(): void {
+    this.isLoadingRecords = true;
+    this.apiPaymentExternal.getPaymentExternalsByJobMain(this.jobMainId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (records) => {
+          this.isLoadingRecords = false;
+          if (records && records.length > 0) {
+            this.populateForm(records[0]);
+          }
+        },
+        error: () => { this.isLoadingRecords = false; }
+      });
+  }
+
+  private populateForm(record: PaymentExternal): void {
+    this.editingId = record.id ?? null;
+    this.amount = record.amount;
+    this.currency = record.currency;
+    this.gateway = record.gateway ?? 'Paymongo';
+
+    const info = this.parseJsonInfo(record.jsonInfo);
+    this.description = info.description;
+    this.paymongoReference = info.paymongoReference;
+    this.paymongoStatus = info.paymongoStatus;
+    this.paymentLink = info.paymentLink;
+    this.receiptEmail = info.receiptEmail;
+    this.emailMessage = info.emailMessage;
+  }
+
+  onSave(): void {
+    this.isSaving = true;
+
+    const jsonInfo: PaymongoJsonInfo = {
+      description: this.description,
+      paymongoReference: this.paymongoReference,
+      paymongoStatus: this.paymongoStatus,
+      paymentLink: this.paymentLink,
+      receiptEmail: this.receiptEmail,
+      emailMessage: this.emailMessage
+    };
+
+    const record: PaymentExternal = {
+      id: this.editingId ?? undefined,
+      gateway: this.gateway,
+      amount: this.amount,
+      currency: this.currency,
+      jsonInfo: JSON.stringify(jsonInfo),
+      jobMainId: this.jobMainId
+    };
+
+    if (this.editingId) {
+      this.apiPaymentExternal.updatePaymentExternal(this.editingId, record)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => { this.isSaving = false; this.loadPaymentExternals(); },
+          error: () => { this.isSaving = false; }
+        });
+    } else {
+      this.apiPaymentExternal.addPaymentExternal(record)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (created) => {
+            this.editingId = created.id ?? null;
+            this.isSaving = false;
+            this.loadPaymentExternals();
+          },
+          error: () => { this.isSaving = false; }
+        });
+    }
+  }
+
+  onGeneratePaymentLink(): void {
+    this.isGeneratingLink = true;
+    this.paymongoReference = '';
+    this.paymongoStatus = '';
+    this.paymentLink = '';
+
+    //call api service generatePaymentUrl
+    this.apiPaymentExternal.generatePaymentUrl(this.editingId ?? 0)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (paymentExternal) => {
+          const info = this.parseJsonInfo(paymentExternal.jsonInfo);
+          this.paymongoReference = info.paymongoReference;
+          this.paymongoStatus = info.paymongoStatus;
+          this.paymentLink = info.paymentLink;
+          this.isGeneratingLink = false;
+        },
+        error: () => {
+          this.isGeneratingLink = false;
+        }
+      });
+   
+  }
+
+  onSendPaymentLink(): void {
+    if (!this.receiptEmail || !this.paymentLink) return;
+    this.isSendingPaymentLink = true;
+
+    // TODO: call API to send payment link email
+    console.log('Sending payment link to:', this.receiptEmail);
+    this.isSendingPaymentLink = false;
+  }
+
+  private parseJsonInfo(jsonInfo: string): PaymongoJsonInfo {
+    try {
+      return JSON.parse(jsonInfo) as PaymongoJsonInfo;
+    } catch {
+      return { description: '', paymongoReference: '', paymongoStatus: '', paymentLink: '', receiptEmail: '', emailMessage: '' };
+    }
+  }
+
   private loadContactEmails(): void {
     this.isLoadingEmails = true;
     const emails: ContactEmailOption[] = [];
 
-    // Load job customers then their entity contacts, mirroring the contacts tab logic
     this.apiJobCustomers.getJobCustomersByJobMain(this.jobMainId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -142,26 +262,5 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
           this.isLoadingEmails = false;
         }
       });
-  }
-
-  onSubmitPaymongo(): void {
-    console.log('PayMongo payment request:', this.paymongoForm);
-    // TODO: wire up to PayMongo API service
-  }
-
-  onGeneratePaymentLink(): void {
-    this.isGeneratingLink = true;
-    this.paymongoReference = '';
-    this.paymongoStatus = '';
-    this.paymentLink = '';
-    console.log('Generating PayMongo payment link:', this.paymongoForm);
-    // TODO: wire up to PayMongo payment link API
-    // Simulated response until API is connected
-    setTimeout(() => {
-      this.paymongoReference = 'link_placeholder_ref';
-      this.paymongoStatus = 'pending';
-      this.paymentLink = 'https://pm.link/placeholder';
-      this.isGeneratingLink = false;
-    }, 500);
   }
 }

@@ -36,6 +36,10 @@ export class ApiPaymentExternalService {
     return this.http.delete<void>(`${this.baseUrl}/api/PaymentExternal/${id}`);
   }
 
+  sendPaymentLink(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/api/PaymentExternal/sendPaymentLink/${id}`, {});
+  }
+
   generatePaymentUrl(paymentExternalId: number): Observable<PaymentExternal> {
     return this.http.get<PaymentExternal>(`${this.baseUrl}/api/PaymentExternal/generatePaymentUrl/${paymentExternalId}`);
   }

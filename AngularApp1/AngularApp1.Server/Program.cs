@@ -111,7 +111,7 @@ builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularA
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
 builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
-
+builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp1.Server.Services.EmailService>();
 
 
 var app = builder.Build();

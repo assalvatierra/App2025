@@ -27,7 +27,7 @@
           [routerLink]="getSubItemRoute(subItem)" 
           [queryParams]="subItem.queryParams"
           [class.indented]="!collapsed()"
-          routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
+          routerLinkActive="selected-menu-item" [routerLinkActiveOptions]="{exact: true}" #rla="routerLinkActive" [activated]="rla.isActive">
           <mat-icon matListItemIcon>{{subItem.icon}}</mat-icon>
           
           @if(!collapsed()){

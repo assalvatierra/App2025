@@ -29,6 +29,21 @@ namespace AngularApp1.Server.Controllers
             return await _service.GetByJobMainIdAsync(jobMainId);
         }
 
+
+        // Send the payment link to the customer
+        [HttpPost("sendPaymentLink/{id}")]
+        public async Task<IActionResult> SendPaymentLink(int id)
+        {
+            var result = await _service.SendPaymentLinkByEmailAsync(id);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         // GET: api/PaymentExternal/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PaymentExternal>> GetPaymentExternal(int id)

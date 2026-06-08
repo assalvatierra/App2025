@@ -11,5 +11,7 @@ namespace AngularApp1.Server.DBServices
         Task<bool> UpdateAsync(int id, PaymentExternal paymentExternal);
         Task<bool> DeleteAsync(int id);
         Task<PaymentExternal> GeneratePaymentUrlAsync(int id);
+        Task<bool> SendPaymentLinkByEmailAsync(int id);
+        Task<PaymongoJsonInfo> GetPaymongoPaymentLinkByIdAsync(string paymentLinkId);
     }
 }

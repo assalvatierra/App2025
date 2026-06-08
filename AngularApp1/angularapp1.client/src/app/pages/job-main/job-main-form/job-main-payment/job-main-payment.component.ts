@@ -174,9 +174,22 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     if (!this.receiptEmail || !this.paymentLink) return;
     this.isSendingPaymentLink = true;
 
-    // TODO: call API to send payment link email
-    console.log('Sending payment link to:', this.receiptEmail);
-    this.isSendingPaymentLink = false;
+    if (!this.editingId) {
+      this.isSendingPaymentLink = false;
+      return;
+    }
+
+    this.apiPaymentExternal.sendPaymentLink(this.editingId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isSendingPaymentLink = false;
+          this.loadPaymentExternals();
+        },
+        error: () => {
+          this.isSendingPaymentLink = false;
+        }
+      });
   }
 
   private parseJsonInfo(jsonInfo: string): PaymongoJsonInfo {

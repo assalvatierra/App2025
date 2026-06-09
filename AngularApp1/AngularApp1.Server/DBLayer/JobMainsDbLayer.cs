@@ -53,6 +53,12 @@ namespace AngularApp1.Server.DBLayer
             return await _context.JobMain.FindAsync(id);
         }
 
+        public async Task<JobMain?> GetByRecordGuidAsync(string recordGuid)
+        {
+            return await _context.JobMain
+                .FirstOrDefaultAsync(j => j.RecordGuid == recordGuid);
+        }
+
         public async Task UpdateAsync(JobMain jobMain)
         {
             _context.Entry(jobMain).State = EntityState.Modified;

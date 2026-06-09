@@ -84,6 +84,7 @@ import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.co
 import { ChecklistModule } from './shared/checklist-transaction/checklist.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { JobMainPaymentComponent } from './pages/job-main/job-main-form/job-main-payment/job-main-payment.component';
+import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-form/client-job-main-form.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import { JobMainPaymentComponent } from './pages/job-main/job-main-form/job-main
     ChecklistItemComponent,
     ChecklistItemFormComponent,
     ChecklistFormComponent,
-    JobMainPaymentComponent
+    JobMainPaymentComponent,
+    ClientJobMainFormComponent
   ],
   imports: [
     BrowserModule,

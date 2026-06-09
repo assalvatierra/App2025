@@ -10,6 +10,7 @@ namespace AngularApp1.Server.DBLayer
         Task<List<ItemStatus>> GetItemStatusesByIdsAsync(List<int> statusIds);
         Task<List<ChecklistTransaction>> GetChecklistTransactionsByJobIdsAsync(List<int> jobIds);
         Task<JobMain?> GetByIdAsync(int id);
+        Task<JobMain?> GetByRecordGuidAsync(string recordGuid);
         Task UpdateAsync(JobMain jobMain);
         Task<JobMain> AddAsync(JobMain jobMain);
         Task DeleteAsync(JobMain jobMain);

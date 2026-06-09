@@ -120,6 +120,17 @@ export class JobMainDetailsComponent implements AfterViewInit {
     this.router.navigate(['/Jobs']);
   }
 
+  onClientView(): void {
+    const guid = this.currentData?.recordGuid;
+    if (guid) {
+      this.router.navigate(['/client/job', guid]);
+    }
+  }
+
+  onSendUrl(): void {
+    console.log('not yet implemented');
+  }
+
   /* API calls */
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;

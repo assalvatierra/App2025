@@ -94,6 +94,16 @@
       <mat-icon>assessment</mat-icon>
       {{ reportLoading ? 'Loading...' : 'Report' }}
     </button>
+
+    <button mat-raised-button color="primary" (click)="onClientView()" [disabled]="dataloading">
+      <mat-icon>visibility</mat-icon>
+      Client View
+    </button>
+
+    <button mat-raised-button (click)="onSendUrl()" [disabled]="dataloading">
+      <mat-icon>send</mat-icon>
+      Send Url
+    </button>
   </mat-card-actions>
 
   <div *ngIf="pdfUrl" style="margin-top: 16px; padding: 0 16px 16px;">

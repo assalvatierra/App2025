@@ -43,6 +43,9 @@
       <property name="isActive" type="Boolean" p1:ValidateRequired="true" p1:Guid="634b8bf9-99dd-405b-a3ad-783c3cac9ed2">
         <column name="" />
       </property>
+      <property name="RecordGuid" type="Guid" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="78408708-a2eb-4f2b-a1f9-8557b39e0c6a">
+        <column name="" />
+      </property>
     </component>
     <component class="EntityInfo" p1:Guid="c36d9125-dc92-4864-8680-7073fe79d351">
       <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="b68a24f0-f17c-4713-94ba-578a3a1ed3e6">
@@ -88,6 +91,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="TypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="bffe62ef-358f-40da-80c9-990ba78defb5">
       <column name="" not-null="False" />
@@ -117,6 +121,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="c3353277-5a39-4375-85ee-48b1c5aa9254">
       <column name="" not-null="False" />
@@ -155,6 +160,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="ServiceItemId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4f18e6a6-de61-4943-94fa-fbad63b82c36">
       <column name="" not-null="False" />
@@ -188,6 +194,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="24477e1b-637b-492f-a72a-61c7bee45167">
       <column name="" not-null="False" />
@@ -277,6 +284,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="EntityTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="f46bb474-99f0-422e-bf87-451b5d8aef95">
       <column name="" not-null="False" />
@@ -602,6 +610,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="071b1ca4-73f4-4298-a277-348fa436467c">
       <column name="" />
@@ -634,6 +643,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="76c366ae-8a55-4ba8-adf6-6b052a300ffd">
       <column name="" />
@@ -706,6 +716,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="420b79b9-00a1-447f-9c1c-b3f02e9567ca">
       <column name="" />
@@ -891,6 +902,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
   </class>
   <class name="JobServiceResource" entity-set="JobServiceResource" p1:Guid="0304fba1-b842-4bd9-991f-125029f937bc">
@@ -988,6 +1000,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="Notes" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e0b3c183-0680-49a0-8b38-420a99e6ec14">
       <column name="" />
@@ -1020,6 +1033,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="ValidFrom" type="DateTime" p1:ValidateRequired="true" p1:Guid="4b5723a9-6184-470c-934f-2cbdade7ff0d">
       <column name="" />
@@ -1055,6 +1069,7 @@
       <property name="isArchived" />
       <property name="isPrivate" />
       <property name="isActive" />
+      <property name="RecordGuid" />
     </component>
     <property name="DateFrom" type="DateTime" p1:ValidateRequired="true" p1:Guid="e53d9067-fc27-4c41-b3da-45309dfbd92c">
       <column name="" />

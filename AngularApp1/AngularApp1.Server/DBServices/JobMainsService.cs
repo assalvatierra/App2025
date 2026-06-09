@@ -72,6 +72,11 @@ namespace AngularApp1.Server.DBServices
             return await _db.GetByIdAsync(id);
         }
 
+        public async Task<JobMain?> GetByRecordGuidAsync(string recordGuid)
+        {
+            return await _db.GetByRecordGuidAsync(recordGuid);
+        }
+
         public async Task UpdateAsync(JobMain jobMain)
         {
             await _db.UpdateAsync(jobMain);

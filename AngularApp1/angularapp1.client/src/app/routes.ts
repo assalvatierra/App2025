@@ -45,6 +45,7 @@ import { ChecklistItemFormComponent } from './pages/checklist-item/checklist-ite
 import { ChecklistTransactionComponent } from './shared/checklist-transaction/checklist-transaction.component';
 import { ChecklistTransactionFormComponent } from './shared/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
 import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
+import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-form/client-job-main-form.component';
 
 
 const routeConfig: Routes = [
@@ -66,6 +67,11 @@ const routeConfig: Routes = [
     {
       path: 'jobs/form/:id',
       component: JobMainFormComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'client/job/:recordId',
+      component: ClientJobMainFormComponent,
       canActivate: [AuthGuard]
     },
     {

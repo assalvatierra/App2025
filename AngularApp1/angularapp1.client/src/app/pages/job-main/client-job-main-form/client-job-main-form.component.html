@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Job Order</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div *ngIf="dataloading" class="loading-section">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-section">
+      <p class="error-text">{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="jobOrder && !dataloading">
+      <mat-card class="form-card">
+        <mat-card-content>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Job Date</mat-label>
+                <input matInput [value]="jobOrder.jobDate | date:'yyyy-MM-dd'" readonly>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Record GUID</mat-label>
+                <input matInput [value]="jobOrder.recordGuid" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput rows="3" [value]="jobOrder.description" readonly></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Item Status</mat-label>
+                <input matInput [value]="jobOrder.itemStatus?.name || jobOrder.itemStatusId" readonly>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Business Unit</mat-label>
+                <input matInput [value]="jobOrder.businessUnit?.name || jobOrder.businessUnitId" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Created By</mat-label>
+                <input matInput [value]="jobOrder.createdBy" readonly>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Last Edit By</mat-label>
+                <input matInput [value]="jobOrder.lastEditBy" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!jobOrder && !dataloading && !errorMessage" class="empty-section">
+      <p>No job order data available.</p>
+    </div>
+
+  </mat-card-content>
+</mat-card>

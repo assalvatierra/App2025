@@ -32,6 +32,7 @@ public partial class JobMain
     public virtual BusinessUnit? BusinessUnit { get; set; }
 
     public virtual ItemStatus? ItemStatus { get; set; }
+    public string? RecordGuid { get; set; }
 
     public virtual ICollection<JobContact> JobContacts { get; set; } = new List<JobContact>();
 

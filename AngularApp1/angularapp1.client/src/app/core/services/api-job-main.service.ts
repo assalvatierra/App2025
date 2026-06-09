@@ -26,7 +26,8 @@ export class ApiJobMainService {
         lastEditOn: item.lastEditOn,
         lastEditBy: item.lastEditBy,
         itemStatusId: item.itemStatusId,
-        businessUnitId: item.businessUnitId
+        businessUnitId: item.businessUnitId,
+        recordGuid: item.recordGuid
       }))
     );
   }
@@ -57,7 +58,8 @@ export class ApiJobMainService {
       lastEditOn: data.lastEditOn,
       lastEditBy: data.lastEditBy,
       itemStatusId: data.itemStatusId,
-      businessUnitId: data.businessUnitId
+      businessUnitId: data.businessUnitId,
+      recordGuid: data.recordGuid
     };
     return this.http.put<any>(`${this.url}/api/JobMains/${id}`, payload);
   }

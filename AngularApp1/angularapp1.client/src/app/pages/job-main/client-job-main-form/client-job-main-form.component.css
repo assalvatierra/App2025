@@ -1,0 +1,38 @@
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 4px;
+  gap: 16px;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+}
+
+.form-card {
+  margin: 0;
+}
+
+.loading-section {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.error-section {
+  padding: 16px;
+}
+
+.error-text {
+  color: #f44336;
+}
+
+.empty-section {
+  padding: 16px;
+  color: #757575;
+}

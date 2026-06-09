@@ -46,224 +46,239 @@ import { ChecklistTransactionComponent } from './shared/checklist-transaction/ch
 import { ChecklistTransactionFormComponent } from './shared/checklist-transaction/checklist-transaction-form/checklist-transaction-form.component';
 import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.component';
 import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-form/client-job-main-form.component';
-
+import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
+import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
 
 const routeConfig: Routes = [
 
-    {
+  // ─── Public layout (no auth, no sidenav) ───────────────────────────────────
+  {
+    path: '',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: 'client/job/:recordId',
+        component: ClientJobMainFormComponent
+      }
+    ]
+  },
+
+  // ─── Main layout (toolbar + sidenav shell) ─────────────────────────────────
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: ''
-    },
-    {
-      path: 'agents/form/:id',
-      component: AgentChatComponent
-    },
-    {
-      path: 'Jobs',
-      component: JobMainComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'jobs/form/:id',
-      component: JobMainFormComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'client/job/:recordId',
-      component: ClientJobMainFormComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'Entities',
-      component: EntityComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'entities/form/:id',
-      component: EntityFormPageComponent
-    },
-    {
-      path: 'businessunits',
-      component: BusinessUnitComponent
-    },
-    {
-      path: 'businessunits/form/:id',
-      component: BusinessUnitFormComponent
-    },
-    {
+      },
+      {
+        path: 'agents/form/:id',
+        component: AgentChatComponent
+      },
+      {
+        path: 'Jobs',
+        component: JobMainComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'jobs/form/:id',
+        component: JobMainFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'Entities',
+        component: EntityComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'entities/form/:id',
+        component: EntityFormPageComponent
+      },
+      {
+        path: 'businessunits',
+        component: BusinessUnitComponent
+      },
+      {
+        path: 'businessunits/form/:id',
+        component: BusinessUnitFormComponent
+      },
+      {
         path: 'references',
         component: CountriesComponent
-    },
-    {
-      path: 'references/countries',
-      component: CountriesComponent
-    },
-    {
+      },
+      {
+        path: 'references/countries',
+        component: CountriesComponent
+      },
+      {
         path: 'references/countries/form/:id',
         component: CountryFormComponent
-    },
-    {
-      path: 'references/cities',
-      component: CitiesComponent
-    },
-    {
-      path: 'references/cities/form/:id',
-      component: CityFormComponent
-    },
-    {
-      path: 'login',
-      component: LoginComponent
-    },
-    {
-      path: 'contacts',
-      component: ContactsComponent
-    },
-    {
-      path: 'contacts/form/:id',
-      component: ContactsFormComponent
-    },
-    {
-      path: 'references/itemtypes',
-      component: ItemTypesComponent
-    },
-    {
-      path: 'references/itemtypes/form/:id',
-      component: ItemTypesFormComponent
-    },
-    {
-      path: 'references/itemstatus',
-      component: ItemStatusComponent
-    },
-    {
-      path: 'references/itemstatus/form/:id',
-      component: ItemStatusFormComponent
-    },
-    {
-      path: 'references/serviceitems',
-      component: ServiceItemsComponent
-    },
-    {
-      path: 'references/serviceitems/form/:id',
-      component: ServiceItemsFormComponent
-    },
-    {
-      path: 'references/checklist-item',
-      component: ChecklistItemComponent
-    },
-    {
-      path: 'references/checklist-item/form/:id',
-      component: ChecklistItemFormComponent
-    },
-    {
-      path: 'agents',
-      component: AgentsComponent
-    },
-    {
-      path: 'agents/add/form/:id',
-      component: AgentFormComponent
-    },
-    {
-      path: 'job-service',
-      component: JobServiceComponent
-    },
-    {
-      path: 'job-service/form/:id',
-      component: JobServiceFormComponent,
-      canActivate: [AuthGuard]
-    },
-    // Timesheet routes
-    {
-      path: 'timesheets',
-      component: TimesheetsListComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'timesheets/form/:id',
-      component: TimesheetFormComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'timesheets/approval',
-      component: TimesheetApprovalComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'timesheets/pay-periods',
-      component: PayPeriodComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'timesheets/pay-periods/form/:id',
-      component: PayPeriodFormComponent,
-      canActivate: [AuthGuard]
-    },
-    // Resource routes
-    {
-      path: 'resources',
-      component: ResourcesListComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'resources/form/:id',
-      component: ResourceFormComponent,
-      canActivate: [AuthGuard]
-    },
-    // Resource Calendar routes
-    {
-      path: 'resource-calendar',
-      component: ResourceCalendarComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'client-calendar',
-      component: ClientCalendarComponent,
-      canActivate: [AuthGuard]
-    },
-    // Receivables routes
-    {
-      path: 'receivables',
-      component: ReceivablesComponent,
-      canActivate: [AuthGuard]
-    },
-    // Payments routes
-    {
-      path: 'payments',
-      component: PaymentsComponent,
-      canActivate: [AuthGuard]
-    },
-    // Expenses routes
-    {
-      path: 'expenses',
-      component: ExpensesComponent,
-      canActivate: [AuthGuard]
-    },
-    // Checklist routes
-    {
-      path: 'checklist-items',
-      component: ChecklistItemComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'checklist-items/form/:id',
-      component: ChecklistItemFormComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'references/checklist-transactions',
-      component: ChecklistTransactionComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'references/checklist-transactions/form/:id',
-      component: ChecklistTransactionFormComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'references/checklist-form',
-      component: ChecklistFormComponent,
-      canActivate: [AuthGuard]
-    }
+      },
+      {
+        path: 'references/cities',
+        component: CitiesComponent
+      },
+      {
+        path: 'references/cities/form/:id',
+        component: CityFormComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent
+      },
+      {
+        path: 'contacts/form/:id',
+        component: ContactsFormComponent
+      },
+      {
+        path: 'references/itemtypes',
+        component: ItemTypesComponent
+      },
+      {
+        path: 'references/itemtypes/form/:id',
+        component: ItemTypesFormComponent
+      },
+      {
+        path: 'references/itemstatus',
+        component: ItemStatusComponent
+      },
+      {
+        path: 'references/itemstatus/form/:id',
+        component: ItemStatusFormComponent
+      },
+      {
+        path: 'references/serviceitems',
+        component: ServiceItemsComponent
+      },
+      {
+        path: 'references/serviceitems/form/:id',
+        component: ServiceItemsFormComponent
+      },
+      {
+        path: 'references/checklist-item',
+        component: ChecklistItemComponent
+      },
+      {
+        path: 'references/checklist-item/form/:id',
+        component: ChecklistItemFormComponent
+      },
+      {
+        path: 'agents',
+        component: AgentsComponent
+      },
+      {
+        path: 'agents/add/form/:id',
+        component: AgentFormComponent
+      },
+      {
+        path: 'job-service',
+        component: JobServiceComponent
+      },
+      {
+        path: 'job-service/form/:id',
+        component: JobServiceFormComponent,
+        canActivate: [AuthGuard]
+      },
+      // Timesheet routes
+      {
+        path: 'timesheets',
+        component: TimesheetsListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'timesheets/form/:id',
+        component: TimesheetFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'timesheets/approval',
+        component: TimesheetApprovalComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'timesheets/pay-periods',
+        component: PayPeriodComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'timesheets/pay-periods/form/:id',
+        component: PayPeriodFormComponent,
+        canActivate: [AuthGuard]
+      },
+      // Resource routes
+      {
+        path: 'resources',
+        component: ResourcesListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'resources/form/:id',
+        component: ResourceFormComponent,
+        canActivate: [AuthGuard]
+      },
+      // Resource Calendar routes
+      {
+        path: 'resource-calendar',
+        component: ResourceCalendarComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'client-calendar',
+        component: ClientCalendarComponent,
+        canActivate: [AuthGuard]
+      },
+      // Receivables routes
+      {
+        path: 'receivables',
+        component: ReceivablesComponent,
+        canActivate: [AuthGuard]
+      },
+      // Payments routes
+      {
+        path: 'payments',
+        component: PaymentsComponent,
+        canActivate: [AuthGuard]
+      },
+      // Expenses routes
+      {
+        path: 'expenses',
+        component: ExpensesComponent,
+        canActivate: [AuthGuard]
+      },
+      // Checklist routes
+      {
+        path: 'checklist-items',
+        component: ChecklistItemComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'checklist-items/form/:id',
+        component: ChecklistItemFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'references/checklist-transactions',
+        component: ChecklistTransactionComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'references/checklist-transactions/form/:id',
+        component: ChecklistTransactionFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'references/checklist-form',
+        component: ChecklistFormComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
+  }
 
 ];
 

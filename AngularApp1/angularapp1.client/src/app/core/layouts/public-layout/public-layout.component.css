@@ -1,0 +1,24 @@
+.public-header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 54px;
+  background-color: #3f51b5;
+  color: #ffffff;
+  box-shadow: 2px 3px 3px rgb(128, 128, 128);
+  position: relative;
+  z-index: 5;
+}
+
+.public-brand {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.public-content {
+  padding: 24px;
+  min-height: calc(100vh - 54px);
+  background-color: rgb(240, 240, 240);
+  text-align: left;
+}

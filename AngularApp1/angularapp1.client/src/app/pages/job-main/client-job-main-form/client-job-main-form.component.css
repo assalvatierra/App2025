@@ -18,6 +18,33 @@
   margin: 0;
 }
 
+.form-card-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.form-fields {
+  flex: 1;
+  min-width: 0;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.payment-btn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 28px;
+  height: auto;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
 .loading-section {
   display: flex;
   justify-content: center;
@@ -35,4 +62,53 @@
 .empty-section {
   padding: 16px;
   color: #757575;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  display: block;
+  font-size: 12px;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.field-value {
+  margin: 0;
+  font-size: 14px;
+  color: #212121;
+}
+
+.section-card {
+  margin-top: 16px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #424242;
+  margin: 0 0 12px 0;
+}
+
+.section-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.section-table th {
+  text-align: left;
+  padding: 6px 12px 6px 0;
+  font-weight: 600;
+  color: #616161;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section-table td {
+  padding: 8px 12px 8px 0;
+  color: #212121;
+  border-bottom: 1px solid #f5f5f5;
+  vertical-align: top;
 }

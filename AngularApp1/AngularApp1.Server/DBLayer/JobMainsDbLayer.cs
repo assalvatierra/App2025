@@ -56,6 +56,7 @@ namespace AngularApp1.Server.DBLayer
         public async Task<JobMain?> GetByRecordGuidAsync(string recordGuid)
         {
             return await _context.JobMain
+                .Include(j => j.ItemStatus)
                 .FirstOrDefaultAsync(j => j.RecordGuid == recordGuid);
         }
 

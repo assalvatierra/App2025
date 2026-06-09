@@ -16,63 +16,130 @@
     <div *ngIf="jobOrder && !dataloading">
       <mat-card class="form-card">
         <mat-card-content>
+          <div class="form-card-inner">
 
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Job Date</mat-label>
-                <input matInput [value]="jobOrder.jobDate | date:'yyyy-MM-dd'" readonly>
-              </mat-form-field>
+            <div class="form-fields">
+              <div class="field-group">
+                <span class="field-label">Job Date</span>
+                <p class="field-value">{{ jobOrder.jobDate | date:'yyyy-MM-dd' }}</p>
+              </div>
+
+              <div class="field-group">
+                <span class="field-label">Description</span>
+                <p class="field-value">{{ jobOrder.description }}</p>
+              </div>
+
+              <div class="field-group">
+                <span class="field-label">Status</span>
+                <p class="field-value">{{ jobOrder.itemStatus?.name }}</p>
+              </div>
             </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Record GUID</mat-label>
-                <input matInput [value]="jobOrder.recordGuid" readonly>
-              </mat-form-field>
+
+            <div class="form-actions">
+              <button mat-raised-button color="primary" class="payment-btn">
+                Proceed to Payment
+              </button>
             </div>
+
           </div>
-
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Description</mat-label>
-                <textarea matInput rows="3" [value]="jobOrder.description" readonly></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Item Status</mat-label>
-                <input matInput [value]="jobOrder.itemStatus?.name || jobOrder.itemStatusId" readonly>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Business Unit</mat-label>
-                <input matInput [value]="jobOrder.businessUnit?.name || jobOrder.businessUnitId" readonly>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Created By</mat-label>
-                <input matInput [value]="jobOrder.createdBy" readonly>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Last Edit By</mat-label>
-                <input matInput [value]="jobOrder.lastEditBy" readonly>
-              </mat-form-field>
-            </div>
-          </div>
-
         </mat-card-content>
       </mat-card>
+
+      <div *ngIf="sectionsLoading" class="loading-section">
+        <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
+      </div>
+
+      <div *ngIf="!sectionsLoading">
+
+        <!-- Customers -->
+        <mat-card class="section-card">
+          <mat-card-content>
+            <h3 class="section-title">Customers</h3>
+            <div *ngIf="customers.length === 0" class="empty-section">
+              <p>No customers linked to this job.</p>
+            </div>
+            <table *ngIf="customers.length > 0" class="section-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Contact No.</th>
+                  <th>Email</th>
+                  <th>Primary</th>
+                  <th>Bill To</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of customers">
+                  <td>{{ c.customerName }}</td>
+                  <td>{{ c.customerContactNo1 }}</td>
+                  <td>{{ c.customerEmail1 }}</td>
+                  <td>{{ c.isPrimary ? 'Yes' : '' }}</td>
+                  <td>{{ c.isBillTo ? 'Yes' : '' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Services -->
+        <mat-card class="section-card">
+          <mat-card-content>
+            <h3 class="section-title">Services</h3>
+            <div *ngIf="services.length === 0" class="empty-section">
+              <p>No services linked to this job.</p>
+            </div>
+            <table *ngIf="services.length > 0" class="section-table">
+              <thead>
+                <tr>
+                  <th>Particulars</th>
+                  <th>Date Start</th>
+                  <th>Date End</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of services">
+                  <td>{{ s.particulars }}</td>
+                  <td>{{ s.dateStart | date:'yyyy-MM-dd' }}</td>
+                  <td>{{ s.dateEnd | date:'yyyy-MM-dd' }}</td>
+                  <td>{{ s.itemStatus?.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Schedules -->
+        <mat-card class="section-card">
+          <mat-card-content>
+            <h3 class="section-title">Schedules</h3>
+            <div *ngIf="schedules.length === 0" class="empty-section">
+              <p>No schedules linked to this job.</p>
+            </div>
+            <table *ngIf="schedules.length > 0" class="section-table">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Estimated</th>
+                  <th>Actual</th>
+                  <th>Leadtime</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sc of schedules">
+                  <td>{{ getServiceParticulars(sc.jobServiceId) }}</td>
+                  <td>{{ sc.estimated | date:'yyyy-MM-dd HH:mm' }}</td>
+                  <td>{{ sc.actual | date:'yyyy-MM-dd HH:mm' }}</td>
+                  <td>{{ sc.leadtime }}</td>
+                  <td>{{ sc.notes }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
     </div>
 
     <div *ngIf="!jobOrder && !dataloading && !errorMessage" class="empty-section">

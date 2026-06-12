@@ -36,8 +36,16 @@
             </div>
 
             <div class="form-actions">
-              <button mat-raised-button color="primary" class="payment-btn">
-                Proceed to Payment
+              <button mat-raised-button 
+                      color="primary" 
+                      class="payment-btn"
+                      (click)="onProceedToPayment()"
+                      [disabled]="processingPayment || dataloading">
+                <mat-icon *ngIf="processingPayment">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </mat-icon>
+                <span *ngIf="!processingPayment">Proceed to Payment</span>
+                <span *ngIf="processingPayment">Processing...</span>
               </button>
             </div>
 

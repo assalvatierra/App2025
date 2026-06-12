@@ -1,0 +1,51 @@
+<div class="success-container">
+  <mat-card class="success-card">
+    <mat-card-header>
+      <div class="header-content">
+        <mat-icon class="success-icon">check_circle</mat-icon>
+        <mat-card-title>Payment Successful!</mat-card-title>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="success-message">
+        Thank you for your payment. Your transaction has been completed successfully.
+      </p>
+
+      <div class="transaction-details" *ngIf="sessionId || transactionId || amount">
+        <h3>Transaction Details</h3>
+
+        <div class="detail-row" *ngIf="transactionId">
+          <span class="detail-label">Transaction ID:</span>
+          <span class="detail-value">{{ transactionId }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="sessionId">
+          <span class="detail-label">Session ID:</span>
+          <span class="detail-value">{{ sessionId }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="amount">
+          <span class="detail-label">Amount:</span>
+          <span class="detail-value">{{ amount }} {{ currency }}</span>
+        </div>
+      </div>
+
+      <div class="info-message">
+        <mat-icon>info</mat-icon>
+        <p>A confirmation email has been sent to your registered email address.</p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="goToOrders()">
+        <mat-icon>receipt</mat-icon>
+        View Orders
+      </button>
+      <button mat-raised-button (click)="goToHome()">
+        <mat-icon>home</mat-icon>
+        Go to Home
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

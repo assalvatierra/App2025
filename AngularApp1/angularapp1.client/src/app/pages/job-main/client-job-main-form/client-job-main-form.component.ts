@@ -5,6 +5,7 @@ import { ApiJobOrderService } from '../../../core/services/client/api-job-order.
 import { ApiJobCustomersService, JobCustomerDto } from '../../../core/services/api-job-customers.service';
 import { ApiJobServiceService, JobService } from '../../../core/services/api-job-service.service';
 import { ApiJobScheduleService, JobSchedule } from '../../../core/services/api-job-schedule.service';
+import { ApiPaymentGatewayService } from '../../../core/services/client/api-payment-gateway.service';
 
 @Component({
   selector: 'app-client-job-main-form',
@@ -24,12 +25,14 @@ export class ClientJobMainFormComponent implements OnInit, OnChanges {
   public customers: JobCustomerDto[] = [];
   public services: JobService[] = [];
   public schedules: JobSchedule[] = [];
+  public processingPayment: boolean = false;
 
   constructor(
     private apiJobOrderService: ApiJobOrderService,
     private apiJobCustomersService: ApiJobCustomersService,
     private apiJobServiceService: ApiJobServiceService,
     private apiJobScheduleService: ApiJobScheduleService,
+    private apiPaymentGatewayService: ApiPaymentGatewayService,
     private route: ActivatedRoute
   ) { }
 
@@ -87,6 +90,26 @@ export class ClientJobMainFormComponent implements OnInit, OnChanges {
       error: (err) => {
         console.error('Failed to load related data:', err);
         this.sectionsLoading = false;
+      }
+    });
+  }
+
+  onProceedToPayment(): void {
+    this.processingPayment = true;
+    this.apiPaymentGatewayService.createCheckoutSession().subscribe({
+      next: (response) => {
+        this.processingPayment = false;
+        // Redirect the user to the Stripe checkout URL
+        if (response && response.url) {
+          window.location.href = response.url;
+        } else {
+          this.errorMessage = 'Failed to get payment URL. Please try again.';
+        }
+      },
+      error: (err) => {
+        console.error('Failed to create checkout session:', err);
+        this.processingPayment = false;
+        this.errorMessage = 'Failed to process payment. Please try again.';
       }
     });
   }

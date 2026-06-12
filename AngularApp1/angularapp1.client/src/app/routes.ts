@@ -48,17 +48,28 @@ import { ChecklistFormComponent } from './pages/checklist-form/checklist-form.co
 import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-form/client-job-main-form.component';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
+import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/payment-success.component';
 
 const routeConfig: Routes = [
 
   // ─── Public layout (no auth, no sidenav) ───────────────────────────────────
   {
-    path: '',
+    path: 'client',
     component: PublicLayoutComponent,
     children: [
       {
-        path: 'client/job/:recordId',
+        path: 'job/:recordId',
         component: ClientJobMainFormComponent
+      }
+    ]
+  },
+  {
+    path: 'payment',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: 'success',
+        component: PaymentSuccessComponent
       }
     ]
   },

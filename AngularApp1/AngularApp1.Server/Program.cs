@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using AngularApp1.Server.Services.RabbitMQ;
 using AngularApp1.Server.DBLayer;
 using AngularApp1.Server.DBServices;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +108,8 @@ builder.Services.AddSwaggerGen(options =>
 
 // ADD Application Services
 builder.AddRabbitMqService();
+builder.Services.AddSingleton(new StripeClient("secretkey"));
+
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularApp1.Server.DBLayer.JobMainsDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();

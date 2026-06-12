@@ -87,6 +87,7 @@ import { JobMainPaymentComponent } from './pages/job-main/job-main-form/job-main
 import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-form/client-job-main-form.component';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
+import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/payment-success.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { PublicLayoutComponent } from './core/layouts/public-layout/public-layou
     JobMainPaymentComponent,
     ClientJobMainFormComponent,
     MainLayoutComponent,
-    PublicLayoutComponent
+    PublicLayoutComponent,
+    PaymentSuccessComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\angularapp1.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\core\services\client\" />
     <Folder Include="src\app\pages\resources\resource-calendar\client-calendar\calendar-cell\" />
   </ItemGroup>
   <ProjectExtensions>

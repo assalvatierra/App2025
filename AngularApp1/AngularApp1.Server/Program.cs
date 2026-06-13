@@ -112,6 +112,8 @@ builder.Services.AddSingleton(new StripeClient("secretkey"));
 
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularApp1.Server.DBLayer.JobMainsDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
+builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServicesDbLayer, AngularApp1.Server.DBLayer.JobServicesDbLayer>();
+builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServicesService, AngularApp1.Server.DBServices.JobServicesService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
 builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
 builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp1.Server.Services.EmailService>();

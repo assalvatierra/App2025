@@ -131,6 +131,7 @@ namespace AngularApp1.Server.DBServices
             PaymongoJsonInfo mongoinfo = await GeneratePaymongoPaymentLinkAsync(paymentExternal);
             paymentExternal.JsonInfo = JsonSerializer.Serialize(mongoinfo,
                 new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            paymentExternal.ExternalId = mongoinfo.PaymongoId;
             await _db.UpdateAsync(paymentExternal);
             await _db.SaveChangesAsync();
 

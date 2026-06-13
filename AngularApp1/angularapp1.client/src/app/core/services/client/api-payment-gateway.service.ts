@@ -20,8 +20,9 @@ export class ApiPaymentGatewayService {
    * Creates a Stripe checkout session for payment processing
    * @returns Observable with the checkout session response containing URL and session ID
    */
-  createCheckoutSession(): Observable<CheckoutSessionResponse> {
-    return this.http.post<CheckoutSessionResponse>(`${this.url}/api/PaymentGateway`, {});
+  createCheckoutSession(recordGuid: any): Observable<CheckoutSessionResponse> {
+    debugger;
+    return this.http.post<CheckoutSessionResponse>(`${this.url}/api/PaymentGateway/CreateCheckoutSession?recordGuid=${recordGuid}`, {});
   }
 }
 

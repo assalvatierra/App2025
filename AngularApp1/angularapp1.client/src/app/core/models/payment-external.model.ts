@@ -5,4 +5,5 @@ export interface PaymentExternal {
   currency: string;
   jsonInfo: string;
   jobMainId?: number;
+  ExternalId?: string;
 }

@@ -1140,6 +1140,9 @@
     <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="64360f56-1424-440f-ae4b-47a34cdfb751">
       <column name="" not-null="False" />
     </property>
+    <property name="ExternalId" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b1ba7389-54fb-43ad-8ed2-5b5862ffd395">
+      <column name="" />
+    </property>
   </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">

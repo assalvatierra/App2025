@@ -122,7 +122,8 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       amount: this.amount,
       currency: this.currency,
       jsonInfo: JSON.stringify(jsonInfo),
-      jobMainId: this.jobMainId
+      jobMainId: this.jobMainId,
+      ExternalId: this.paymongoReference
     };
 
     if (this.editingId) {

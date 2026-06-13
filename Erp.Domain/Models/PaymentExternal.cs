@@ -16,4 +16,5 @@ public partial class PaymentExternal
     public string JsonInfo { get; set; } = null!;
 
     public int? JobMainId { get; set; }
+    public string ExternalId { get; set; } = null!;
 }

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AngularApp1.Server.Data;
+using AngularApp1.Server.DBServices;
 using Erp.Domain.Models;
 
 namespace AngularApp1.Server.Controllers
@@ -14,18 +13,18 @@ namespace AngularApp1.Server.Controllers
     [ApiController]
     public class JobServicesController : ControllerBase
     {
-        private readonly ErpDbContext _context;
+        private readonly IJobServicesService _service;
 
-        public JobServicesController(ErpDbContext context)
+        public JobServicesController(IJobServicesService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/JobServices
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobService>>> GetJobService()
         {
-            return await _context.JobService.ToListAsync();
+            return Ok(await _service.GetAllAsync());
         }
 
         // GET: api/JobServices/byJob/5
@@ -33,24 +32,15 @@ namespace AngularApp1.Server.Controllers
         [HttpGet("byJob/{JobId}")]
         public async Task<ActionResult<IEnumerable<JobService>>> GetJobServiceByJobId(int JobId)
         {
-            var jobService = await _context.JobService
-                .Where(js => js.JobMainId == JobId)
-                .Include(js => js.ServiceItem)
-                .Include(js => js.ItemStatus)
-                .ToListAsync();
-            
-            // Return empty list instead of NotFound for consistency
-            return jobService;
+            var jobService = await _service.GetByJobIdAsync(JobId);
+            return Ok(jobService);
         }
 
         // GET: api/JobServices/5
         [HttpGet("{id}")]
         public async Task<ActionResult<JobService>> GetJobService(int id)
         {
-            var jobService = await _context.JobService
-                .Include(js => js.ServiceItem)
-                .Include(js => js.ItemStatus)
-                .FirstOrDefaultAsync(js => js.Id == id);
+            var jobService = await _service.GetByIdAsync(id);
 
             if (jobService == null)
             {
@@ -70,22 +60,17 @@ namespace AngularApp1.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(jobService).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.UpdateAsync(id, jobService);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ArgumentException)
             {
-                if (!JobServiceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
             }
 
             return NoContent();
@@ -96,31 +81,24 @@ namespace AngularApp1.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<JobService>> PostJobService(JobService jobService)
         {
-            _context.JobService.Add(jobService);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetJobService", new { id = jobService.Id }, jobService);
+            var createdJobService = await _service.AddAsync(jobService);
+            return CreatedAtAction("GetJobService", new { id = createdJobService.Id }, createdJobService);
         }
 
         // DELETE: api/JobServices/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJobService(int id)
         {
-            var jobService = await _context.JobService.FindAsync(id);
-            if (jobService == null)
+            try
+            {
+                await _service.DeleteAsync(id);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
 
-            _context.JobService.Remove(jobService);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool JobServiceExists(int id)
-        {
-            return _context.JobService.Any(e => e.Id == id);
         }
     }
 }

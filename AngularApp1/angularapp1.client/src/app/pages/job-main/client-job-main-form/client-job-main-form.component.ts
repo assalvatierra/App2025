@@ -96,7 +96,7 @@ export class ClientJobMainFormComponent implements OnInit, OnChanges {
 
   onProceedToPayment(): void {
     this.processingPayment = true;
-    this.apiPaymentGatewayService.createCheckoutSession().subscribe({
+    this.apiPaymentGatewayService.createCheckoutSession(this.recordGuid).subscribe({
       next: (response) => {
         this.processingPayment = false;
         // Redirect the user to the Stripe checkout URL

@@ -1,9 +1,11 @@
+﻿using AngularApp1.Server.DBServices;
 using Erp.Domain.Models;
 
-namespace AngularApp1.Server.DBServices
+namespace AngularApp1.Server.Services.PaymentGateway
 {
     public interface IPaymentExternalService
     {
+        Task<List<String>> GetFeatures();
         Task<List<PaymentExternal>> GetAllAsync();
         Task<PaymentExternal?> GetByIdAsync(int id);
         Task<List<PaymentExternal>> GetByJobMainIdAsync(int jobMainId);
@@ -12,7 +14,6 @@ namespace AngularApp1.Server.DBServices
         Task<bool> DeleteAsync(int id);
         Task<PaymentExternal> GeneratePaymentUrlAsync(int id);
         Task<bool> SendPaymentLinkByEmailAsync(int id);
-        Task<PaymongoJsonInfo> GetPaymongoPaymentLinkByIdAsync(string paymentLinkId);
         Task<bool> SendCheckoutPageAsync(int id, PaymentExternal paymentExternal);
     }
 }

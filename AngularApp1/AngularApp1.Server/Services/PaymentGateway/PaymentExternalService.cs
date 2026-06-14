@@ -1,24 +1,13 @@
+﻿using AngularApp1.Server.DBLayer;
+using AngularApp1.Server.DBServices;
+using Erp.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using AngularApp1.Server.DBLayer;
-using AngularApp1.Server.Services;
-using Erp.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace AngularApp1.Server.DBServices
+namespace AngularApp1.Server.Services.PaymentGateway
 {
-    public class PaymongoJsonInfo
-    {
-        public string Description { get; set; } = string.Empty;
-        public string PaymongoReference { get; set; } = string.Empty;
-        public string PaymongoStatus { get; set; } = string.Empty;
-        public string PaymentLink { get; set; } = string.Empty;
-        public string ReceiptEmail { get; set; } = string.Empty;
-        public string EmailMessage { get; set; } = string.Empty;
-        public string PaymongoId { get; set; } = string.Empty;
-    }
-
     public class PaymentExternalService : IPaymentExternalService
     {
         private readonly IPaymentExternalDbLayer _db;
@@ -28,9 +17,9 @@ namespace AngularApp1.Server.DBServices
         private IEmailService _emailService;
 
         public PaymentExternalService(
-            IPaymentExternalDbLayer db, 
+            IPaymentExternalDbLayer db,
             IJobMainsService jobMainsService,
-            IHttpClientFactory httpClientFactory, 
+            IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
             IEmailService emailService
             )
@@ -40,6 +29,11 @@ namespace AngularApp1.Server.DBServices
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _emailService = emailService;
+        }
+
+        public Task<List<String>> GetFeatures()
+        {
+            return Task.FromResult(new List<string> { "PaymentLink","CheckoutPage" });
         }
 
         public async Task<List<PaymentExternal>> GetAllAsync()
@@ -61,12 +55,12 @@ namespace AngularApp1.Server.DBServices
                 if (string.IsNullOrEmpty(payment.JsonInfo))
                     continue;
 
-                var jsonInfo = JsonSerializer.Deserialize<PaymongoJsonInfo>(
+                var jsonInfo = JsonSerializer.Deserialize<PaymentExternalJsonInfo>(
                     payment.JsonInfo,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
-                if (jsonInfo == null || string.IsNullOrEmpty(jsonInfo.PaymongoReference))
+                if (jsonInfo == null || string.IsNullOrEmpty(jsonInfo.ExternalReference))
                     continue;
 
                 // use GetPaymongoPaymentLinkByIdAsync to get the latest status by reference number, since the payment link ID may not be the same as the reference number stored in JsonInfo
@@ -132,7 +126,7 @@ namespace AngularApp1.Server.DBServices
             }
 
             // GeneratePaymongoPaymentLinkAsync updates paymentExternal.JsonInfo internally
-            PaymongoJsonInfo mongoinfo = await GeneratePaymongoPaymentLinkAsync(paymentExternal);
+            PaymentExternalJsonInfo mongoinfo = await GeneratePaymongoPaymentLinkAsync(paymentExternal);
             paymentExternal.JsonInfo = JsonSerializer.Serialize(mongoinfo,
                 new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             paymentExternal.ExternalId = mongoinfo.PaymongoId;
@@ -159,7 +153,7 @@ namespace AngularApp1.Server.DBServices
 
                 if (!string.IsNullOrEmpty(paymentExternal.JsonInfo))
                 {
-                    var jsonInfo = JsonSerializer.Deserialize<PaymongoJsonInfo>(
+                    var jsonInfo = JsonSerializer.Deserialize<PaymentExternalJsonInfo>(
                         paymentExternal.JsonInfo,
                         new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                     );
@@ -181,7 +175,7 @@ namespace AngularApp1.Server.DBServices
 
             if (!string.IsNullOrEmpty(paymentExternal.JsonInfo))
             {
-                var jsonInfo = JsonSerializer.Deserialize<PaymongoJsonInfo>(
+                var jsonInfo = JsonSerializer.Deserialize<PaymentExternalJsonInfo>(
                     paymentExternal.JsonInfo,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
@@ -196,13 +190,13 @@ namespace AngularApp1.Server.DBServices
                 customerEmail,
                 Array.Empty<string>(),
                 Array.Empty<string>(),
-                "Realbreeze Travel & Tours - Payment Link", 
+                "Realbreeze Travel & Tours - Payment Link",
                 $"For the services requested\n<br>" +
                 $"Total Due: {paymentExternal.Amount} {paymentExternal.Currency}\n<br>" +
                 $"{emailMessage}\n<br>" +
                 $"Please use the following link to make your payment: \n<br>" +
                 $"<a href=\"{paymentLink}\">{paymentLink}</a>"
-                
+
                 );
 
             return true;
@@ -237,7 +231,7 @@ namespace AngularApp1.Server.DBServices
             var expiryDateTime = string.Empty;
 
             var recordguid = string.Empty;
-            if(paymentExternal.JobMainId != 0)
+            if (paymentExternal.JobMainId != 0)
             {
                 existingPayment.JobMainId = paymentExternal.JobMainId;
                 _jobMainsService.GetByIdAsync((int)existingPayment.JobMainId)
@@ -248,16 +242,16 @@ namespace AngularApp1.Server.DBServices
                         {
                             recordguid = jobMain.RecordGuid.ToString();
                         }
-                    }).Wait();            
+                    }).Wait();
             }
 
             string sDomain = _configuration["AppSettings:Domain"] ?? "https://localhost:51099"; ;
-            checkoutLink =sDomain + $"/client/job/{recordguid}";
+            checkoutLink = sDomain + $"/client/job/{recordguid}";
             // Save the updated record
 
             if (!string.IsNullOrEmpty(existingPayment.JsonInfo))
             {
-                var jsonInfo = JsonSerializer.Deserialize<PaymongoJsonInfo>(
+                var jsonInfo = JsonSerializer.Deserialize<PaymentExternalJsonInfo>(
                     existingPayment.JsonInfo,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
@@ -362,7 +356,7 @@ namespace AngularApp1.Server.DBServices
             }
         }
 
-        public async Task<PaymongoJsonInfo?> GetPaymongoPaymentLinkByIdAsync(string paymentLinkId)
+        public async Task<PaymentExternalJsonInfo?> GetPaymongoPaymentLinkByIdAsync(string paymentLinkId)
         {
             try
             {
@@ -395,17 +389,17 @@ namespace AngularApp1.Server.DBServices
                 var checkoutUrl = attributes.GetProperty("url").GetString() ?? string.Empty;
                 var referenceNumber = attributes.GetProperty("reference_number").GetString() ?? string.Empty;
                 var status = attributes.GetProperty("status").GetString() ?? string.Empty;
-               
-                var linkinfo = new PaymongoJsonInfo
+
+                var linkinfo = new PaymentExternalJsonInfo
                 {
                     PaymentLink = checkoutUrl,
-                    PaymongoReference = referenceNumber,
+                    ExternalReference = referenceNumber,
                     PaymongoStatus = status,
                     PaymongoId = paymentLinkId
                 };
-               
 
-               return linkinfo;
+
+                return linkinfo;
             }
             catch (Exception ex)
             {
@@ -415,7 +409,7 @@ namespace AngularApp1.Server.DBServices
         }
 
         //TO-DO: move this to a separate PaymongoService class if we add more Paymongo-related methods in the future
-        private async Task<PaymongoJsonInfo> GeneratePaymongoPaymentLinkAsync(PaymentExternal paymentExternal)
+        private async Task<PaymentExternalJsonInfo> GeneratePaymongoPaymentLinkAsync(PaymentExternal paymentExternal)
         {
             var secretKey = _configuration["Paymongo:SecretKey"] ?? string.Empty;
             var encodedKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(secretKey + ":"));
@@ -423,10 +417,10 @@ namespace AngularApp1.Server.DBServices
             // Paymongo amounts are in centavos (smallest currency unit)
             var amountInCentavos = (int)(paymentExternal.Amount * 100);
 
-            var existingInfo = new PaymongoJsonInfo();
+            var existingInfo = new PaymentExternalJsonInfo();
             if (!string.IsNullOrEmpty(paymentExternal.JsonInfo))
             {
-                existingInfo = JsonSerializer.Deserialize<PaymongoJsonInfo>(
+                existingInfo = JsonSerializer.Deserialize<PaymentExternalJsonInfo>(
                     paymentExternal.JsonInfo,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 ) ?? existingInfo;
@@ -466,7 +460,7 @@ namespace AngularApp1.Server.DBServices
             var status = attributes.GetProperty("status").GetString() ?? string.Empty;
             var referenceId = doc.RootElement.GetProperty("data").GetProperty("id").GetString() ?? string.Empty;
             // Update existingInfo with Paymongo response fields
-            existingInfo.PaymongoReference = referenceNumber;
+            existingInfo.ExternalReference = referenceNumber;
             existingInfo.PaymongoStatus = status;
             existingInfo.PaymentLink = checkoutUrl;
             existingInfo.PaymongoId = referenceId;

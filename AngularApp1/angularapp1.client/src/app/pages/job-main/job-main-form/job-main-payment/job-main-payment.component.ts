@@ -11,11 +11,14 @@ const SUPPORTED_CURRENCIES = ['PHP'];
 
 export interface PaymongoJsonInfo {
   description: string;
-  paymongoReference: string;
+  externalReference: string;
   paymongoStatus: string;
   paymentLink: string;
   receiptEmail: string;
   emailMessage: string;
+  checkoutExpiryHours?: string;
+  checkoutPasskey?: string;
+  expiryDateTime?: string;
 }
 
 export interface ContactEmailOption {
@@ -36,22 +39,29 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
   isGeneratingLink: boolean = false;
   isSaving: boolean = false;
   isSendingPaymentLink: boolean = false;
+  isUpdatingCheckout: boolean = false;
   contactEmails: ContactEmailOption[] = [];
   isLoadingEmails: boolean = false;
 
   isLoadingRecords: boolean = false;
   editingId: number | null = null;
 
+  // Feature flags from payment gateway
+  supportedFeatures: string[] = [];
+  isLoadingFeatures: boolean = false;
+
   // Form fields
   amount: number = 0;
   currency: string = 'PHP';
   gateway: string = 'Paymongo';
   description: string = '';
-  paymongoReference: string = '';
+  externalReference: string = ''; 
   paymongoStatus: string = '';
   paymentLink: string = '';
   receiptEmail: string = '';
   emailMessage: string = '';
+  checkoutExpiryHours: string = '2';
+  checkoutPasskey: string = '';
 
   private destroy$ = new Subject<void>();
 
@@ -64,6 +74,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.jobMainId && this.jobMainId !== 0) {
+      this.loadFeatures();
       this.loadContactEmails();
       this.loadPaymentExternals();
     }
@@ -72,6 +83,27 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private loadFeatures(): void {
+    this.isLoadingFeatures = true;
+    debugger;
+    this.apiPaymentExternal.GetFeatures()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (features) => {
+          this.supportedFeatures = features as string[];
+          this.isLoadingFeatures = false;
+        },
+        error: () => {
+          this.supportedFeatures = [];
+          this.isLoadingFeatures = false;
+        }
+      });
+  }
+
+  hasFeature(featureName: string): boolean {
+    return this.supportedFeatures.includes(featureName);
   }
 
   private loadPaymentExternals(): void {
@@ -97,11 +129,13 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
     const info = this.parseJsonInfo(record.jsonInfo);
     this.description = info.description;
-    this.paymongoReference = info.paymongoReference;
+    this.externalReference = info.externalReference;
     this.paymongoStatus = info.paymongoStatus;
     this.paymentLink = info.paymentLink;
     this.receiptEmail = info.receiptEmail;
     this.emailMessage = info.emailMessage;
+    this.checkoutExpiryHours = info.checkoutExpiryHours ?? '2';
+    this.checkoutPasskey = info.checkoutPasskey ?? '';
   }
 
   onSave(): void {
@@ -109,11 +143,13 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
     const jsonInfo: PaymongoJsonInfo = {
       description: this.description,
-      paymongoReference: this.paymongoReference,
+      externalReference: this.externalReference,
       paymongoStatus: this.paymongoStatus,
       paymentLink: this.paymentLink,
       receiptEmail: this.receiptEmail,
-      emailMessage: this.emailMessage
+      emailMessage: this.emailMessage,
+      checkoutExpiryHours: this.checkoutExpiryHours,
+      checkoutPasskey: this.checkoutPasskey
     };
 
     const record: PaymentExternal = {
@@ -123,7 +159,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       currency: this.currency,
       jsonInfo: JSON.stringify(jsonInfo),
       jobMainId: this.jobMainId,
-      ExternalId: this.paymongoReference
+      ExternalId: this.externalReference
     };
 
     if (this.editingId) {
@@ -149,7 +185,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
   onGeneratePaymentLink(): void {
     this.isGeneratingLink = true;
-    this.paymongoReference = '';
+    this.externalReference = '';
     this.paymongoStatus = '';
     this.paymentLink = '';
 
@@ -159,7 +195,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (paymentExternal) => {
           const info = this.parseJsonInfo(paymentExternal.jsonInfo);
-          this.paymongoReference = info.paymongoReference;
+          this.externalReference = info.externalReference;
           this.paymongoStatus = info.paymongoStatus;
           this.paymentLink = info.paymentLink;
           this.isGeneratingLink = false;
@@ -169,6 +205,56 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
         }
       });
    
+  }
+
+
+  onSendCheckoutPage(): void {
+    if (!this.receiptEmail || !this.paymentLink) return;
+    this.isSendingPaymentLink = true;
+
+    if (!this.editingId) {
+      this.isSendingPaymentLink = false;
+      return;
+    }
+
+    // Compute expiry date and time
+    const expiryHours = parseInt(this.checkoutExpiryHours, 10) || 0;
+    const currentDateTime = new Date();
+    const expiryDateTime = new Date(currentDateTime.getTime() + expiryHours * 60 * 60 * 1000);
+
+    const jsonInfo: PaymongoJsonInfo = {
+      description: this.description,
+      externalReference: this.externalReference,
+      paymongoStatus: this.paymongoStatus,
+      paymentLink: this.paymentLink,
+      receiptEmail: this.receiptEmail,
+      emailMessage: this.emailMessage,
+      checkoutExpiryHours: this.checkoutExpiryHours,
+      checkoutPasskey: this.checkoutPasskey,
+      expiryDateTime: expiryDateTime.toISOString()
+    };
+
+    const record: PaymentExternal = {
+      id: this.editingId,
+      gateway: this.gateway,
+      amount: this.amount,
+      currency: this.currency,
+      jsonInfo: JSON.stringify(jsonInfo),
+      jobMainId: this.jobMainId,
+      ExternalId: this.externalReference
+    };
+
+    this.apiPaymentExternal.sendCheckoutPage(this.editingId, record)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isSendingPaymentLink = false;
+          this.loadPaymentExternals();
+        },
+        error: () => {
+          this.isSendingPaymentLink = false;
+        }
+      });
   }
 
   onSendPaymentLink(): void {
@@ -197,8 +283,46 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     try {
       return JSON.parse(jsonInfo) as PaymongoJsonInfo;
     } catch {
-      return { description: '', paymongoReference: '', paymongoStatus: '', paymentLink: '', receiptEmail: '', emailMessage: '' };
+      return { description: '', externalReference: '', paymongoStatus: '', paymentLink: '', receiptEmail: '', emailMessage: '', checkoutExpiryHours: '2', checkoutPasskey: '' };
     }
+  }
+
+  onUpdateCheckoutOptions(): void {
+    if (!this.editingId) return;
+    this.isUpdatingCheckout = true;
+
+    const jsonInfo: PaymongoJsonInfo = {
+      description: this.description,
+      externalReference: this.externalReference,
+      paymongoStatus: this.paymongoStatus,
+      paymentLink: this.paymentLink,
+      receiptEmail: this.receiptEmail,
+      emailMessage: this.emailMessage,
+      checkoutExpiryHours: this.checkoutExpiryHours,
+      checkoutPasskey: this.checkoutPasskey
+    };
+
+    const record: PaymentExternal = {
+      id: this.editingId,
+      gateway: this.gateway,
+      amount: this.amount,
+      currency: this.currency,
+      jsonInfo: JSON.stringify(jsonInfo),
+      jobMainId: this.jobMainId,
+      ExternalId: this.externalReference
+    };
+
+    this.apiPaymentExternal.updatePaymentExternal(this.editingId, record)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isUpdatingCheckout = false;
+          this.loadPaymentExternals();
+        },
+        error: () => {
+          this.isUpdatingCheckout = false;
+        }
+      });
   }
 
   private loadContactEmails(): void {

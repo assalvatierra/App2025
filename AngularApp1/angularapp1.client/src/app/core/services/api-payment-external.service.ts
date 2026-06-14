@@ -12,6 +12,10 @@ export class ApiPaymentExternalService {
 
   constructor(private http: HttpClient) { }
 
+  GetFeatures(): Observable<String[]> {
+    return this.http.get<String[]>(`${this.baseUrl}/api/PaymentExternal/GetFeatures`);
+  }
+
   getPaymentExternals(): Observable<PaymentExternal[]> {
     return this.http.get<PaymentExternal[]>(`${this.baseUrl}/api/PaymentExternal`);
   }
@@ -42,5 +46,9 @@ export class ApiPaymentExternalService {
 
   generatePaymentUrl(paymentExternalId: number): Observable<PaymentExternal> {
     return this.http.get<PaymentExternal>(`${this.baseUrl}/api/PaymentExternal/generatePaymentUrl/${paymentExternalId}`);
+  }
+
+  sendCheckoutPage(id: number, paymentExternal: PaymentExternal): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/api/PaymentExternal/sendCheckoutPage/${id}`, paymentExternal);
   }
 }

@@ -1,4 +1,4 @@
-﻿using AngularApp1.Server.DBServices;
+﻿using AngularApp1.Server.Services.PaymentGateway;
 using Erp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +29,12 @@ namespace AngularApp1.Server.Controllers
             return await _service.GetByJobMainIdAsync(jobMainId);
         }
 
+        // GET: api/PaymentExternal/GetFeatures
+        [HttpGet("GetFeatures")]
+        public async Task<ActionResult<List<string>>> GetFeatures()
+        {
+            return await _service.GetFeatures();
+        }
 
         // Send the payment link to the customer
         [HttpPost("sendPaymentLink/{id}")]
@@ -104,6 +110,20 @@ namespace AngularApp1.Server.Controllers
                 return NotFound();
             }
            return Ok(paymentExternal);
+        }
+
+        // Send checkout page with expiry datetime to customer
+        [HttpPost("sendCheckoutPage/{id}")]
+        public async Task<IActionResult> SendCheckoutPage(int id, PaymentExternal paymentExternal)
+        {
+            var result = await _service.SendCheckoutPageAsync(id, paymentExternal);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

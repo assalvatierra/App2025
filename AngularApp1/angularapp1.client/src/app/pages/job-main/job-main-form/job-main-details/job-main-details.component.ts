@@ -127,10 +127,6 @@ export class JobMainDetailsComponent implements AfterViewInit {
     }
   }
 
-  onSendUrl(): void {
-    console.log('not yet implemented');
-  }
-
   /* API calls */
   private retrieveApiData(paramId: number): void {
     this.dataloading = true;

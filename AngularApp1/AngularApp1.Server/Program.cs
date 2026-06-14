@@ -13,7 +13,7 @@ using Microsoft.OpenApi.Models;
 //using Microsoft.SemanticKernel;
 using AngularApp1.Server.Services.RabbitMQ;
 using AngularApp1.Server.DBLayer;
-using AngularApp1.Server.DBServices;
+using AngularApp1.Server.Services.PaymentGateway;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,7 +115,8 @@ builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, Angul
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServicesDbLayer, AngularApp1.Server.DBLayer.JobServicesDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServicesService, AngularApp1.Server.DBServices.JobServicesService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
-builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
+//builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
+builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServicePaymongo>();
 builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp1.Server.Services.EmailService>();
 
 

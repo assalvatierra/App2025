@@ -85,3 +85,20 @@
   width: 140px;
   flex-shrink: 0;
 }
+
+.tabs-content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+mat-tab-group {
+  margin-top: -16px;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.tab-content {
+  padding: 24px 0;
+}

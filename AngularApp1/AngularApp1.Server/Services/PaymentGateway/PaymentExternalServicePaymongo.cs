@@ -33,7 +33,8 @@ namespace AngularApp1.Server.Services.PaymentGateway
 
         public Task<List<String>> GetFeatures()
         {
-            return Task.FromResult(new List<string> { "PaymentLink" });
+            //return Task.FromResult(new List<string> { "PaymentLink"});
+            return Task.FromResult(new List<string> { "PaymentLink", "CheckoutPage" });
         }
 
         public async Task<List<PaymentExternal>> GetAllAsync()

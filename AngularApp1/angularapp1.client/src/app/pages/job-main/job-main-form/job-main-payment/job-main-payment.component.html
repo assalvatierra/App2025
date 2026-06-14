@@ -155,7 +155,7 @@
 
 
   <!-- Section 4: Send Payment Request -->
-  <mat-card class="payment-section-card" *ngIf="paymentLink">
+  <mat-card class="payment-section-card">
     <mat-card-header>
       <mat-card-title>
         <mat-icon>forward_to_inbox</mat-icon>
@@ -168,7 +168,7 @@
         <div class="payment-actions">
           <button mat-raised-button color="accent"
                   (click)="onSendCheckoutPage()"
-                  [disabled]="isSendingPaymentLink || !receiptEmail"
+                  [disabled]="!receiptEmail"
                   *ngIf="hasFeature('CheckoutPage')">
             <mat-icon>send</mat-icon>
             {{ isSendingPaymentLink ? 'Sending...' : 'Send Checkout Page' }}
@@ -176,7 +176,7 @@
           <button mat-raised-button color="accent"
                   (click)="onSendPaymentLink()"
                   [disabled]="isSendingPaymentLink || !receiptEmail"
-                  *ngIf="hasFeature('PaymentLink')">
+                  *ngIf="hasFeature('PaymentLink') && paymentLink">
             <mat-icon>send</mat-icon>
             {{ isSendingPaymentLink ? 'Sending...' : 'Send Payment Link' }}
           </button>

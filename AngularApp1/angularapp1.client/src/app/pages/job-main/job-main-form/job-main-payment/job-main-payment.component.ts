@@ -12,6 +12,7 @@ const SUPPORTED_CURRENCIES = ['PHP'];
 export interface PaymongoJsonInfo {
   description: string;
   externalReference: string;
+  paymongoId: string;
   paymongoStatus: string;
   paymentLink: string;
   receiptEmail: string;
@@ -23,7 +24,7 @@ export interface PaymongoJsonInfo {
 
 export interface ContactEmailOption {
   email: string;
-  label: string; // e.g. "John Doe (Customer: ABC Corp)"
+  label: string; 
 }
 
 @Component({
@@ -62,6 +63,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
   emailMessage: string = '';
   checkoutExpiryHours: string = '2';
   checkoutPasskey: string = '';
+  externalId: string = '';
 
   private destroy$ = new Subject<void>();
 
@@ -87,7 +89,6 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
   private loadFeatures(): void {
     this.isLoadingFeatures = true;
-    debugger;
     this.apiPaymentExternal.GetFeatures()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -126,6 +127,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.amount = record.amount;
     this.currency = record.currency;
     this.gateway = record.gateway ?? 'Paymongo';
+    this.externalId = record.externalId ?? '';
 
     const info = this.parseJsonInfo(record.jsonInfo);
     this.description = info.description;
@@ -149,7 +151,8 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       receiptEmail: this.receiptEmail,
       emailMessage: this.emailMessage,
       checkoutExpiryHours: this.checkoutExpiryHours,
-      checkoutPasskey: this.checkoutPasskey
+      checkoutPasskey: this.checkoutPasskey,
+      paymongoId: this.externalId
     };
 
     const record: PaymentExternal = {
@@ -159,7 +162,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       currency: this.currency,
       jsonInfo: JSON.stringify(jsonInfo),
       jobMainId: this.jobMainId,
-      ExternalId: this.externalReference
+      externalId: this.externalId
     };
 
     if (this.editingId) {
@@ -188,6 +191,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.externalReference = '';
     this.paymongoStatus = '';
     this.paymentLink = '';
+    this.externalId = '';
 
     //call api service generatePaymentUrl
     this.apiPaymentExternal.generatePaymentUrl(this.editingId ?? 0)
@@ -198,6 +202,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
           this.externalReference = info.externalReference;
           this.paymongoStatus = info.paymongoStatus;
           this.paymentLink = info.paymentLink;
+          this.externalId = info.paymongoId;
           this.isGeneratingLink = false;
         },
         error: () => {
@@ -231,7 +236,8 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       emailMessage: this.emailMessage,
       checkoutExpiryHours: this.checkoutExpiryHours,
       checkoutPasskey: this.checkoutPasskey,
-      expiryDateTime: expiryDateTime.toISOString()
+      expiryDateTime: expiryDateTime.toISOString(),
+      paymongoId: this.externalId
     };
 
     const record: PaymentExternal = {
@@ -241,7 +247,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       currency: this.currency,
       jsonInfo: JSON.stringify(jsonInfo),
       jobMainId: this.jobMainId,
-      ExternalId: this.externalReference
+      externalId: this.externalReference
     };
 
     this.apiPaymentExternal.sendCheckoutPage(this.editingId, record)
@@ -265,6 +271,8 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       this.isSendingPaymentLink = false;
       return;
     }
+    
+    // this.onSave();
 
     this.apiPaymentExternal.sendPaymentLink(this.editingId)
       .pipe(takeUntil(this.destroy$))
@@ -283,7 +291,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     try {
       return JSON.parse(jsonInfo) as PaymongoJsonInfo;
     } catch {
-      return { description: '', externalReference: '', paymongoStatus: '', paymentLink: '', receiptEmail: '', emailMessage: '', checkoutExpiryHours: '2', checkoutPasskey: '' };
+      return { description: '', externalReference: '', paymongoStatus: '', paymentLink: '', receiptEmail: '', emailMessage: '', checkoutExpiryHours: '2', checkoutPasskey: '', paymongoId: '' };
     }
   }
 
@@ -299,7 +307,8 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       receiptEmail: this.receiptEmail,
       emailMessage: this.emailMessage,
       checkoutExpiryHours: this.checkoutExpiryHours,
-      checkoutPasskey: this.checkoutPasskey
+      checkoutPasskey: this.checkoutPasskey,
+      paymongoId: this.externalId
     };
 
     const record: PaymentExternal = {
@@ -309,7 +318,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
       currency: this.currency,
       jsonInfo: JSON.stringify(jsonInfo),
       jobMainId: this.jobMainId,
-      ExternalId: this.externalReference
+      externalId: this.externalId
     };
 
     this.apiPaymentExternal.updatePaymentExternal(this.editingId, record)

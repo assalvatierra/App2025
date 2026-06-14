@@ -216,10 +216,10 @@ namespace AngularApp1.Server.Services.PaymentGateway
                 existingPayment.JsonInfo = paymentExternal.JsonInfo;
             }
 
-            if (paymentExternal.ExternalId != null)
-            {
-                existingPayment.ExternalId = paymentExternal.ExternalId;
-            }
+            //if (paymentExternal.ExternalId != null)
+            //{
+            //    existingPayment.ExternalId = paymentExternal.ExternalId;
+            //}
 
             await _db.UpdateAsync(existingPayment);
             await _db.SaveChangesAsync();

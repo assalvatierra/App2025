@@ -5,6 +5,7 @@ namespace AngularApp1.Server.Services.PaymentGateway
 {
     public interface IPaymentExternalService
     {
+        Task <string> GetPlatformName();
         Task<List<String>> GetFeatures();
         Task<List<PaymentExternal>> GetAllAsync();
         Task<PaymentExternal?> GetByIdAsync(int id);

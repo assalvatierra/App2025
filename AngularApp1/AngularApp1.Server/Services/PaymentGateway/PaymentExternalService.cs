@@ -31,6 +31,11 @@ namespace AngularApp1.Server.Services.PaymentGateway
             _emailService = emailService;
         }
 
+        public Task<string> GetPlatformName()
+        {
+            return Task.FromResult("Generic");
+        }
+
         public Task<List<String>> GetFeatures()
         {
             return Task.FromResult(new List<string> { "PaymentLink","CheckoutPage" });

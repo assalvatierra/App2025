@@ -106,7 +106,7 @@
   </mat-card>
 
   <!-- Section 2: Generate Payment Link -->
-  <mat-card class="payment-section-card" *ngIf="editingId">
+  <mat-card class="payment-section-card" *ngIf="editingId && hasFeature('PaymentLink')">
     <mat-card-header>
       <mat-card-title>
         <mat-icon>link</mat-icon>
@@ -126,7 +126,7 @@
           </button>
         </div>
         <!-- Read-only fields populated after link generation -->
-        <div class="result-fields" *ngIf="paymentLink">
+        <div class="result-fields" *ngIf="paymentLink && hasFeature('PaymentLink')">
           <mat-form-field appearance="outline" class="ref-field">
             <mat-label>Payment Reference</mat-label>
             <input matInput [(ngModel)]="externalReference" readonly placeholder="—" />

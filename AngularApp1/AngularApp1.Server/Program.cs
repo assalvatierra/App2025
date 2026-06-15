@@ -108,7 +108,7 @@ builder.Services.AddSwaggerGen(options =>
 
 // ADD Application Services
 builder.AddRabbitMqService();
-builder.Services.AddSingleton(new StripeClient("secretkey"));
+builder.Services.AddSingleton(new StripeClient("secret"));
 
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularApp1.Server.DBLayer.JobMainsDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
@@ -116,7 +116,8 @@ builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServicesDbLayer, Angul
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServicesService, AngularApp1.Server.DBServices.JobServicesService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
 //builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
-builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServicePaymongo>();
+builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServiceStripe>();
+//builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServicePaymongo>();
 builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp1.Server.Services.EmailService>();
 
 

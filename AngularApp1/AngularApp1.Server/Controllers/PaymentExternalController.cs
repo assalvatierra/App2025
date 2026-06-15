@@ -29,6 +29,13 @@ namespace AngularApp1.Server.Controllers
             return await _service.GetByJobMainIdAsync(jobMainId);
         }
 
+        // GET: api/PaymentExternal/GetPlatformName
+        [HttpGet("GetPlatformName")]
+        public async Task<ActionResult<string>> GetPlatformName()
+        {
+            return Ok(await _service.GetPlatformName());
+        }
+
         // GET: api/PaymentExternal/GetFeatures
         [HttpGet("GetFeatures")]
         public async Task<ActionResult<List<string>>> GetFeatures()

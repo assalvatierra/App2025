@@ -12,8 +12,12 @@ export class ApiPaymentExternalService {
 
   constructor(private http: HttpClient) { }
 
-  GetFeatures(): Observable<String[]> {
-    return this.http.get<String[]>(`${this.baseUrl}/api/PaymentExternal/GetFeatures`);
+  GetPlatformName(): Observable<string> {
+    return this.http.get(`${this.baseUrl}/api/PaymentExternal/GetPlatformName`, { responseType: 'text' });
+  }
+
+  GetFeatures(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/api/PaymentExternal/GetFeatures`);
   }
 
   getPaymentExternals(): Observable<PaymentExternal[]> {

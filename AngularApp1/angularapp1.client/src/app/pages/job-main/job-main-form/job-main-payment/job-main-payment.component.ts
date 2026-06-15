@@ -54,7 +54,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
   // Form fields
   amount: number = 0;
   currency: string = 'PHP';
-  gateway: string = 'Paymongo';
+  gateway: string = '';
   description: string = '';
   externalReference: string = ''; 
   paymongoStatus: string = '';
@@ -87,13 +87,28 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+
+  private GetPlatformName(): void {
+    this.apiPaymentExternal.GetPlatformName()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (platformName) => {
+          console.log('Platform name received:', platformName);
+          this.gateway = platformName;
+        },
+        error: (error) => {
+          console.error('Error getting platform name:', error);
+          this.gateway = '';
+        }
+      });
+  }
   private loadFeatures(): void {
     this.isLoadingFeatures = true;
     this.apiPaymentExternal.GetFeatures()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (features) => {
-          this.supportedFeatures = features as string[];
+          this.supportedFeatures = features;
           this.isLoadingFeatures = false;
         },
         error: () => {
@@ -117,6 +132,9 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
           if (records && records.length > 0) {
             this.populateForm(records[0]);
           }
+          else {
+            this.GetPlatformName();
+          }
         },
         error: () => { this.isLoadingRecords = false; }
       });
@@ -126,7 +144,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.editingId = record.id ?? null;
     this.amount = record.amount;
     this.currency = record.currency;
-    this.gateway = record.gateway ?? 'Paymongo';
+    this.gateway = record.gateway ?? '';
     this.externalId = record.externalId ?? '';
 
     const info = this.parseJsonInfo(record.jsonInfo);
@@ -138,6 +156,10 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
     this.emailMessage = info.emailMessage;
     this.checkoutExpiryHours = info.checkoutExpiryHours ?? '2';
     this.checkoutPasskey = info.checkoutPasskey ?? '';
+
+    if (this.gateway === '') {
+      this.GetPlatformName();
+    }
   }
 
   onSave(): void {

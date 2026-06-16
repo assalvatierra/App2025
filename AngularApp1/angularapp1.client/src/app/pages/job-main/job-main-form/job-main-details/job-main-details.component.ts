@@ -26,6 +26,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
   public businessUnitLookupData: any[] = [];
   public pdfUrl: SafeResourceUrl | null = null;
   public reportLoading: boolean = false;
+  public jobTypes: any[] = [];
 
   @Output() descriptionChanged = new EventEmitter<string>();
 
@@ -53,6 +54,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
     // Load lookup data
     this.getApiItemStatusLookupData();
     this.getApiBusinessUnitLookupData();
+    this.getApiJobTypesLookupData();
 
     if (this.paramId != 0) {
       this.TitleInfo = 'Edit Job Main Form';
@@ -72,6 +74,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
     this.jobMainForm = this.fb.group({
       jobDate: ['', Validators.required],
       description: ['', Validators.required],
+      jobTypeId: [null],
       itemStatusId: [1],
       businessUnitId: [1],
       createdBy: [''],
@@ -193,6 +196,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
 
       this.currentData.jobDate = this.jobMainForm.get('jobDate')?.value;
       this.currentData.description = this.jobMainForm.get('description')?.value;
+      this.currentData.jobTypeId = this.jobMainForm.get('jobTypeId')?.value;
       this.currentData.itemStatusId = this.jobMainForm.get('itemStatusId')?.value;
       this.currentData.businessUnitId = this.jobMainForm.get('businessUnitId')?.value;
 
@@ -235,6 +239,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
       this.jobMainForm.patchValue({
         jobDate: jobDate,
         description: data.description || '',
+        jobTypeId: data.jobTypeId || null,
         itemStatusId: data.itemStatusId || 1,
         businessUnitId: data.businessUnitId || 1,
         createdBy: data.createdBy || 'System',
@@ -274,6 +279,18 @@ export class JobMainDetailsComponent implements AfterViewInit {
         },
         complete: () => {
           this.dataloading = false;
+        }
+      });
+  }
+
+  private getApiJobTypesLookupData(): void {
+    this.apiService.getItemTypesByClassName('JobMain')
+      .subscribe({
+        next: (res: any) => {
+          this.jobTypes = res || [];
+        },
+        error: (err) => {
+          console.error('API Error (JobTypes):', err);
         }
       });
   }

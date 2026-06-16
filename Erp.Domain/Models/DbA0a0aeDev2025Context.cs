@@ -11,18 +11,13 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<PaymentExternal> PaymentExternals { get; set; }
+    public virtual DbSet<JobMainType> JobMainTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PaymentExternal>(entity =>
+        modelBuilder.Entity<JobMainType>(entity =>
         {
-            entity.ToTable("PaymentExternal");
-
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.Currency).HasMaxLength(4000);
-            entity.Property(e => e.Gateway).HasMaxLength(4000);
-            entity.Property(e => e.JsonInfo).HasMaxLength(4000);
+            entity.ToTable("JobMainType");
         });
 
         OnModelCreatingPartial(modelBuilder);

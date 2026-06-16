@@ -42,3 +42,14 @@ mat-form-field {
     gap: 0;
   }
 }
+
+mat-chip-listbox {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+mat-chip-listbox mat-chip-option {
+  margin: 0;
+}

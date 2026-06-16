@@ -1144,6 +1144,17 @@
       <column name="" />
     </property>
   </class>
+  <class name="JobMainType" entity-set="JobMainType" p1:Guid="dcf54c78-b06c-4070-84b7-8c9c8a72eab0">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="4c628c46-cd76-41b4-a382-7e57acc49c1f">
+      <column name="" />
+    </id>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="1dc062fc-3617-4fc0-b0ae-01771e88eb64">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="52c55c2b-7671-4cea-80b9-137eec233b76">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1823,6 +1834,22 @@
       </end1>
       <end2 multiplicity="Many" name="PaymentExternals" class="JobMain" relation-class="PaymentExternal" lazy="False" p1:Guid="adfd086e-5bc2-4829-958f-3bde4a1fdb0b">
         <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobMainType" cardinality="OneToMany" p1:Guid="3623999e-fc03-4981-a202-25f79528c131">
+      <end1 multiplicity="One" name="JobMain" class="JobMainType" relation-class="JobMain" constrained="True" lazy="False" p1:Guid="599a13d8-620a-4a2a-8bcc-b694aef57cc7">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobMainTypes" class="JobMain" relation-class="JobMainType" lazy="False" p1:Guid="76da43a3-1364-4d17-9225-eaad27bd49ac">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="ItemType_JobMainType" cardinality="OneToMany" p1:Guid="93088c76-bed5-44aa-b59e-0fe4e6d6008d">
+      <end1 multiplicity="One" name="ItemType" class="JobMainType" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="6956a8c4-cd19-4507-b041-ef1336fd831d">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobMainTypes" class="ItemType" relation-class="JobMainType" lazy="False" p1:Guid="2408ed96-0b2a-4c52-9111-f189fb3c2734">
+        <property name="ItemTypeId" />
       </end2>
     </association>
   </associations>

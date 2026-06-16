@@ -25,6 +25,11 @@
   align-items: flex-start;
 }
 
+.checkout-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
 .amount-field {
   width: 160px;
   flex-shrink: 0;

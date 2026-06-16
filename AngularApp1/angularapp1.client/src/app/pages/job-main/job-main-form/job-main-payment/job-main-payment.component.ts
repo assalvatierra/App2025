@@ -7,7 +7,7 @@ import { ApiPaymentExternalService } from '../../../../core/services/api-payment
 import { PaymentExternal } from '../../../../core/models/payment-external.model';
 
 // Add more currencies here in the future
-const SUPPORTED_CURRENCIES = ['PHP'];
+const SUPPORTED_CURRENCIES = ['USD','PHP'];
 
 export interface PaymongoJsonInfo {
   description: string;
@@ -236,7 +236,7 @@ export class JobMainPaymentComponent implements OnInit, OnDestroy {
 
 
   onSendCheckoutPage(): void {
-    if (!this.receiptEmail || !this.paymentLink) return;
+    if (!this.receiptEmail) return;
     this.isSendingPaymentLink = true;
 
     if (!this.editingId) {

@@ -73,23 +73,25 @@
                       rows="3"></textarea>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Checkout Expiry Hours</mat-label>
-            <mat-select [(ngModel)]="checkoutExpiryHours">
-              <mat-option value="1">1 hr</mat-option>
-              <mat-option value="2">2 hrs (default)</mat-option>
-              <mat-option value="4">4 hrs</mat-option>
-              <mat-option value="8">8 hrs</mat-option>
-              <mat-option value="24">24 hrs</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="checkout-row">
+            <mat-form-field appearance="outline" class="amount-field">
+              <mat-label>Checkout Expiry Hours</mat-label>
+              <mat-select [(ngModel)]="checkoutExpiryHours">
+                <mat-option value="1">1 hr</mat-option>
+                <mat-option value="2">2 hrs (default)</mat-option>
+                <mat-option value="4">4 hrs</mat-option>
+                <mat-option value="8">8 hrs</mat-option>
+                <mat-option value="24">24 hrs</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Checkout Passkey</mat-label>
-            <input matInput
-                   [(ngModel)]="checkoutPasskey"
-                   placeholder="Enter checkout passkey" />
-          </mat-form-field>
+            <mat-form-field appearance="outline" class="passkey-field">
+              <mat-label>Checkout Passkey</mat-label>
+              <input matInput
+                     [(ngModel)]="checkoutPasskey"
+                     placeholder="Enter checkout passkey" />
+            </mat-form-field>
+          </div>
 
           <div class="payment-actions">
             <button mat-raised-button color="primary"

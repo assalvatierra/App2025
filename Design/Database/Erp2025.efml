@@ -129,6 +129,9 @@
     <property name="BusinessUnitId" type="Int32" p1:ValidateRequired="true" p1:Guid="d176452e-909c-44f5-aa7a-129259f82c34">
       <column name="" not-null="False" />
     </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="ef52aec6-87b8-4298-bf52-39424fa40912">
+      <column name="" not-null="False" />
+    </property>
   </class>
   <class name="JobService" entity-set="JobService" p1:Guid="b2fecd9e-aad3-4a83-95cb-767f51b7bb30">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="5f7bb83f-f5c0-4e92-aea1-6752696024b1">
@@ -1849,6 +1852,14 @@
         <property name="Id" />
       </end1>
       <end2 multiplicity="Many" name="JobMainTypes" class="ItemType" relation-class="JobMainType" lazy="False" p1:Guid="2408ed96-0b2a-4c52-9111-f189fb3c2734">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemType_JobMain" cardinality="OneToMany" p1:Guid="1e2c3afa-30c4-43be-af20-7ff5449a3623">
+      <end1 multiplicity="One" name="ItemType" class="JobMain" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="bae55824-78be-418f-ad2b-3b702d4584e0">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobMains" class="ItemType" relation-class="JobMain" lazy="False" p1:Guid="8d24bb9d-bd82-431f-aef8-44997d1e4a63">
         <property name="ItemTypeId" />
       </end2>
     </association>

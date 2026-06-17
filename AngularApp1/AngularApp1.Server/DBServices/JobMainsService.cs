@@ -58,10 +58,12 @@ namespace AngularApp1.Server.DBServices
                     LastEditBy = job.LastEditBy,
                     LastEditOn = job.LastEditOn,
                     ItemStatusId = job.ItemStatusId,
+                    ItemTypeId = job.ItemTypeId,
                     BusinessUnitId = job.BusinessUnitId,
                     BusinessUnitName = job.BusinessUnit?.Name ?? string.Empty,
                     PrimaryCustomerName = primaryCustomerName,
                     LatestStatusName = latestStatusName,
+                    ItemTypeName = job.ItemType?.Name ?? string.Empty,
                     Progress = progress
                 };
             }).ToList();

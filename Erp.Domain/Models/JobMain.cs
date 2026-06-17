@@ -28,12 +28,13 @@ public partial class JobMain
     public int? ItemStatusId { get; set; }
 
     public int? BusinessUnitId { get; set; }
+    public int? ItemTypeId { get; set; }
 
     public virtual BusinessUnit? BusinessUnit { get; set; }
 
     public virtual ItemStatus? ItemStatus { get; set; }
     public string? RecordGuid { get; set; }
-
+    public virtual ItemType? ItemType { get; set; }
     public virtual ICollection<JobContact> JobContacts { get; set; } = new List<JobContact>();
 
     public virtual ICollection<JobCustomer> JobCustomers { get; set; } = new List<JobCustomer>();

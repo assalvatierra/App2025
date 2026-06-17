@@ -74,6 +74,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
     this.jobMainForm = this.fb.group({
       jobDate: ['', Validators.required],
       description: ['', Validators.required],
+      itemTypeId: [null],
       jobTypeId: [null],
       itemStatusId: [1],
       businessUnitId: [1],
@@ -197,6 +198,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
       this.currentData.jobDate = this.jobMainForm.get('jobDate')?.value;
       this.currentData.description = this.jobMainForm.get('description')?.value;
       this.currentData.jobTypeId = this.jobMainForm.get('jobTypeId')?.value;
+      this.currentData.itemTypeId = this.jobMainForm.get('itemTypeId')?.value;
       this.currentData.itemStatusId = this.jobMainForm.get('itemStatusId')?.value;
       this.currentData.businessUnitId = this.jobMainForm.get('businessUnitId')?.value;
 
@@ -239,6 +241,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
       this.jobMainForm.patchValue({
         jobDate: jobDate,
         description: data.description || '',
+        itemTypeId: data.itemTypeId || null,
         jobTypeId: data.jobTypeId || null,
         itemStatusId: data.itemStatusId || 1,
         businessUnitId: data.businessUnitId || 1,

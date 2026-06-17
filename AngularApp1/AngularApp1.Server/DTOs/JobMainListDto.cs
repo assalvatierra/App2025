@@ -10,10 +10,12 @@ namespace AngularApp1.Server.DTOs
         public string LastEditBy { get; set; } = string.Empty;
         public DateTime LastEditOn { get; set; }
         public int? ItemStatusId { get; set; }
+        public int? ItemTypeId { get; set; }
         public int? BusinessUnitId { get; set; }
         public string BusinessUnitName { get; set; } = string.Empty;
         public string PrimaryCustomerName { get; set; } = string.Empty;
         public string LatestStatusName { get; set; } = string.Empty;
+        public string ItemTypeName { get; set; } = string.Empty;
         public int? Progress { get; set; }
     }
 }

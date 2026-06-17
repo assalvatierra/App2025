@@ -137,6 +137,7 @@ export class JobMainDetailsComponent implements AfterViewInit {
     this.api.getJobMain(paramId)
       .subscribe({
         next: (res: any) => {
+          debugger;
           this.initializeData(res);
           this.setFormData(this.currentData);
         },

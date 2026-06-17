@@ -71,7 +71,8 @@ namespace AngularApp1.Server.DBServices
 
         public async Task<JobMain?> GetByIdAsync(int id)
         {
-            return await _db.GetByIdAsync(id);
+            var item = await _db.GetByIdAsync(id);
+            return item;
         }
 
         public async Task<JobMain?> GetByRecordGuidAsync(string recordGuid)
@@ -86,6 +87,10 @@ namespace AngularApp1.Server.DBServices
 
         public async Task<JobMain> AddAsync(JobMain jobMain)
         {
+            if(string.IsNullOrEmpty(jobMain.RecordGuid))
+            {
+                jobMain.RecordGuid = Guid.NewGuid().ToString();
+            }
             return await _db.AddAsync(jobMain);
         }
 

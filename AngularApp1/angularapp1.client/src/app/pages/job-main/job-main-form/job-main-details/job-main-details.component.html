@@ -27,8 +27,18 @@
               </mat-form-field>
             </div>
           </div>
-
           <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Item Type</mat-label>
+              <mat-select formControlName="itemTypeId">
+                <mat-option *ngFor="let it of jobTypes" [value]="it.id">
+                  {{ it.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="row">
             <div class="col">
               <div class="full-width">
                 <label class="mat-body-2">Job Type</label>
@@ -39,7 +49,7 @@
                 </mat-chip-listbox>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="row">
             <div class="col">

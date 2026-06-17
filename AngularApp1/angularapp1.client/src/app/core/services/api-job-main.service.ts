@@ -27,7 +27,8 @@ export class ApiJobMainService {
         lastEditBy: item.lastEditBy,
         itemStatusId: item.itemStatusId,
         businessUnitId: item.businessUnitId,
-        recordGuid: item.recordGuid
+        recordGuid: item.recordGuid,
+        itemTypeId: item.itemTypeId
       }))
     );
   }
@@ -43,7 +44,8 @@ export class ApiJobMainService {
       lastEditOn: data.lastEditOn,
       lastEditBy: data.lastEditBy,
       itemStatusId: data.itemStatusId,
-      businessUnitId: data.businessUnitId
+      businessUnitId: data.businessUnitId,
+      itemTypeId: data.itemTypeId
     };
     return this.http.post<any>(`${this.url}/api/JobMains`, payload);
   }
@@ -59,7 +61,8 @@ export class ApiJobMainService {
       lastEditBy: data.lastEditBy,
       itemStatusId: data.itemStatusId,
       businessUnitId: data.businessUnitId,
-      recordGuid: data.recordGuid
+      recordGuid: data.recordGuid,
+      itemTypeId: data.itemTypeId
     };
     return this.http.put<any>(`${this.url}/api/JobMains/${id}`, payload);
   }

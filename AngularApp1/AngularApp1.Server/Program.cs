@@ -1,23 +1,27 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using AngularApp1.Server.Data;
-//using System.IdentityModel.Tokens.Jwt;
-//using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.AspNetCore.Authentication.BearerToken;
-using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
-using Microsoft.OpenApi.Models;
+using AngularApp1.Server.Data;
+using AngularApp1.Server.DBLayer;
+using AngularApp1.Server.Services.PaymentGateway;
 //using AngularApp1.Server.Services.Plugins;
 //using Microsoft.SemanticKernel;
 using AngularApp1.Server.Services.RabbitMQ;
-using AngularApp1.Server.DBLayer;
-using AngularApp1.Server.Services.PaymentGateway;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Web;
+//using System.IdentityModel.Tokens.Jwt;
+//using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Stripe;
+//using Microsoft.AspNetCore.Authentication.BearerToken;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//// Add Microsoft Entra ID JWT validation services
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 // Add Identity and Authentication services to the container.
 builder.Services.AddDbContext<ErpIdentityContext>(options =>
@@ -142,7 +146,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

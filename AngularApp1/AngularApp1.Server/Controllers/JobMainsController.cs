@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AngularApp1.Server.DBServices;
+using AngularApp1.Server.DTOs;
+using AngularApp1.Server.Services.RabbitMQ;
+using Erp.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AngularApp1.Server.DBServices;
-using AngularApp1.Server.DTOs;
-using Erp.Domain.Models;
-using AngularApp1.Server.Services.RabbitMQ;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AngularApp1.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class JobMainsController : ControllerBase
     {
         private readonly IJobMainsService _service;
@@ -34,6 +36,7 @@ namespace AngularApp1.Server.Controllers
 
         // GET: api/JobMains/List
         [HttpGet("List")]
+        [AllowAnonymous] // TODO: Remove after MSAL is configured in Angular
         public async Task<ActionResult<IEnumerable<JobMainListDto>>> GetJobMainList()
         {
             return await _service.GetListAsync();

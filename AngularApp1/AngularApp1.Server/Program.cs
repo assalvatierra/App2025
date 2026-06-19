@@ -6,6 +6,9 @@ using AngularApp1.Server.Data;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 //using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+
 using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
 using Microsoft.OpenApi.Models;
@@ -24,25 +27,71 @@ builder.Services.AddDbContext<ErpIdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
 builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
 
-builder.Services.AddAuthentication(
-    options =>
+//builder.Services.AddAuthentication(
+//    options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//}
+//).AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = "ABC",
+//        ValidAudience = "ALL",
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
+//    };
+//});
+
+// Configure SSO Authentication for SPA with JWT Bearer
+builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}
-).AddJwtBearer(options =>
+})
+.AddJwtBearer(options =>
 {
+    var oidcConfig = builder.Configuration.GetSection("Authentication:OIDC");
+
+    options.Authority = oidcConfig["Authority"];
+    options.Audience = oidcConfig["ClientId"];
+    options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = "ABC",
-        ValidAudience = "ALL",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
+        ValidIssuer = oidcConfig["Authority"],
+        ValidAudience = oidcConfig["ClientId"]
+    };
+
+    // For debugging token validation issues
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"JWT Authentication failed: {context.Exception.Message}");
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("JWT Token validated successfully");
+            return Task.CompletedTask;
+        },
+        OnChallenge = context =>
+        {
+            Console.WriteLine($"JWT Challenge: {context.Error}, {context.ErrorDescription}");
+            return Task.CompletedTask;
+        }
     };
 });
+
 
 builder.Services.AddHttpClient();
 
@@ -65,7 +114,8 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .WithExposedHeaders("Authorization");
 
     });
 });
@@ -141,8 +191,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

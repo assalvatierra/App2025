@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 //import { JwtHelperService } from '@auth0/angular-jwt';
+import { MsalService } from '@azure/msal-angular';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,10 @@ export class AuthService {
 
   //private jwtHelper = new JwtHelperService();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private msalService: MsalService
+  ) { }
 
   login(user: { username: string, password: string }) {
     return this.http.post(`${this.authApiUrl}/User/Login`, user);
@@ -29,6 +34,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem('auth-token');
     localStorage.removeItem(this.msalAuthFlagKey);
+    this.msalService.logoutRedirect();
+
   }
 
   getToken() {

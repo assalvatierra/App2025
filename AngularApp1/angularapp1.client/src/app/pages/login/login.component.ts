@@ -17,7 +17,7 @@ export class LoginComponent  implements OnInit  {
   password = 'Admin123!';
   private readonly authTokenKey = 'auth-token';
   private readonly entraRedirectRequest: RedirectRequest = {
-    scopes: ['user.read'],
+    scopes: ['API.Access','user.read'],
     redirectStartPage: '/Entities'
   };
 
@@ -37,6 +37,7 @@ export class LoginComponent  implements OnInit  {
         })
       )
       .subscribe((result) => {
+        debugger;
         if (result?.account) {
           this.msalService.instance.setActiveAccount(result.account);
           this.storeMsalToken(result.accessToken);
@@ -97,7 +98,7 @@ export class LoginComponent  implements OnInit  {
   }
 
   Entralogin() {
-    this.msalService.loginRedirect(this.entraRedirectRequest).subscribe({
+    this.msalService.loginRedirect().subscribe({
       error: (error) => {
         console.error('MSAL login redirect failed:', error);
       }
@@ -105,6 +106,7 @@ export class LoginComponent  implements OnInit  {
   }
 
   logout(){
+    this.msalService.logoutRedirect();
     this.authService.logout();
     this.router.navigate(['/login']);
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -88,6 +88,18 @@ import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-for
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
 import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/payment-success.component';
+
+// Import MSAL dependencies
+import { PublicClientApplication, InteractionType } from '@azure/msal-browser';
+import { 
+  MsalModule, 
+  MsalInterceptor, 
+  MsalGuard, 
+  MsalRedirectComponent 
+} from '@azure/msal-angular';
+import { environment } from '../environments/environment';
+
+
 
 @NgModule({
   declarations: [
@@ -178,9 +190,40 @@ import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/
     JobServiceModule,
     JobMainComponent,
     JobMainScheduleComponent,
-    JobScheduleDialogComponent
+    JobScheduleDialogComponent,
+    // Configure MSAL Module
+    MsalModule.forRoot(
+      new PublicClientApplication({
+        auth: {
+          clientId: environment.entraConfig.clientId,
+          authority: environment.entraConfig.authority,
+          redirectUri: environment.entraConfig.redirectUri,
+        },
+        cache: {
+          cacheLocation: 'localStorage',
+        }
+      }),
+      {
+        interactionType: InteractionType.Redirect, // Login strategy for Guard
+        authRequest: { scopes: ['user.read'] }
+      },
+      {
+        interactionType: InteractionType.Redirect, // Interceptor strategy
+        protectedResourceMap: new Map([
+          [environment.apiConfig.uri, environment.apiConfig.scopes] // Attach token to these URLs
+        ])
+      }
+    )
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor, // Automatically injects Bearer token into HTTP requests
+      multi: true
+    },
+    MsalGuard // Ready to be used in app-routing.module.ts to protect routes
+  ],
+  bootstrap: [AppComponent, MsalRedirectComponent] // Added MsalRedirectComponent to handle redirect responses
 })
 export class AppModule { }

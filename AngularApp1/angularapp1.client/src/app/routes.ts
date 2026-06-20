@@ -52,6 +52,12 @@ import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/
 
 const routeConfig: Routes = [
 
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
+
   // ─── Public layout (no auth, no sidenav) ───────────────────────────────────
   {
     path: 'client',
@@ -73,17 +79,23 @@ const routeConfig: Routes = [
       }
     ]
   },
+  {
+    path: 'login',
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: LoginComponent
+      }
+    ]
+  },
 
   // ─── Main layout (toolbar + sidenav shell) ─────────────────────────────────
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: ''
-      },
       {
         path: 'agents/form/:id',
         component: AgentChatComponent
@@ -134,10 +146,6 @@ const routeConfig: Routes = [
       {
         path: 'references/cities/form/:id',
         component: CityFormComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
       },
       {
         path: 'contacts',
@@ -289,6 +297,10 @@ const routeConfig: Routes = [
         canActivate: [AuthGuard]
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 
 ];

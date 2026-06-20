@@ -10,14 +10,16 @@ import { tap, catchError } from 'rxjs/operators';
 
 export class AuthService {
 
-  private BASE_URL = 'http://localhost:5157';
+  private readonly authApiUrl = '/api';
+  private readonly BASE_URL = 'http://localhost:5157';
+  private readonly msalAuthFlagKey = 'msal-authenticated';
 
   //private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) { }
 
   login(user: { username: string, password: string }) {
-    return this.http.post(`${this.BASE_URL}/api/User/Login`, user);
+    return this.http.post(`${this.authApiUrl}/User/Login`, user);
   }
 
   register(user: { username: string, password: string }) {
@@ -26,6 +28,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem(this.msalAuthFlagKey);
   }
 
   getToken() {
@@ -33,7 +36,16 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    return this.getToken() !== null;
+    return this.getToken() !== null || localStorage.getItem(this.msalAuthFlagKey) === 'true';
+  }
+
+  setMsalAuthenticated(value: boolean): void {
+    if (value) {
+      localStorage.setItem(this.msalAuthFlagKey, 'true');
+      return;
+    }
+
+    localStorage.removeItem(this.msalAuthFlagKey);
   }
 
   isLoggedIn() {

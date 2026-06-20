@@ -19,34 +19,34 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//// Add Microsoft Entra ID JWT validation services
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+// Add Microsoft Entra ID JWT validation services
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-// Add Identity and Authentication services to the container.
-builder.Services.AddDbContext<ErpIdentityContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
-builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
+//// Add Identity and Authentication services to the container.
+//builder.Services.AddDbContext<ErpIdentityContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
+//builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
 
-builder.Services.AddAuthentication(
-    options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}
-).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "ABC",
-        ValidAudience = "ALL",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
-    };
-});
+//builder.Services.AddAuthentication(
+//    options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//}
+//).AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = "ABC",
+//        ValidAudience = "ALL",
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
+//    };
+//});
 
 builder.Services.AddHttpClient();
 

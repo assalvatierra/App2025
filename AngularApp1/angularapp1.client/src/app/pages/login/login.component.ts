@@ -15,7 +15,6 @@ import { AuthService } from '../../core/auth.service';
 export class LoginComponent  implements OnInit  {
   username = 'admin@gmail.com';
   password = 'Admin123!';
-  private readonly authTokenKey = 'auth-token';
   // private readonly entraRedirectRequest: RedirectRequest = {
   //   scopes: ['API.Access','user.read'],
   //   redirectStartPage: '/Entities'
@@ -88,7 +87,7 @@ export class LoginComponent  implements OnInit  {
     this.authService.login({ username: this.username, password: this.password })
       .subscribe({
         next: (response: any) => {
-          localStorage.setItem(this.authTokenKey, response.token);
+          this.authService.storeAuthToken(response?.token ?? response);
           this.router.navigate(['/Entities']);
         },
         error: (err: any) => {

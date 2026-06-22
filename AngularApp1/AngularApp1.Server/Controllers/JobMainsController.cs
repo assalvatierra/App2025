@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AngularApp1.Server.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class JobMainsController : ControllerBase

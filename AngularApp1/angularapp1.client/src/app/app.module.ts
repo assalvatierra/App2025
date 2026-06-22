@@ -205,7 +205,7 @@ import { environment } from '../environments/environment';
       }),
       {
         interactionType: InteractionType.Redirect, // Login strategy for Guard
-        authRequest: { scopes: ['user.read'] }
+        authRequest: { scopes: environment.apiConfig.scopes }
       },
       {
         interactionType: InteractionType.Redirect, // Interceptor strategy

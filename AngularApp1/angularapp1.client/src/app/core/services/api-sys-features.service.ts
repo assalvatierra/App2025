@@ -113,6 +113,14 @@ export class ApiSysFeaturesService {
   }
 
   /**
+   * Get the current authentication type from server configuration
+   * @returns Observable of authentication type string (e.g., "Bearer" or "EntraID")
+   */
+  getAuthenticationType(): Observable<string> {
+    return this.http.get(`${this.baseUrl}/api/SysFeatures/GetAuthenticationType`, { responseType: 'text' });
+  }
+
+  /**
    * Add a new system feature
    * @param sysFeature SysFeature object
    * @returns Observable of created SysFeature

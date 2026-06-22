@@ -5,7 +5,7 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form (ngSubmit)="onSubmit()">
+      <form *ngIf="isBearerEnabled" (ngSubmit)="onSubmit()">
         <mat-form-field class="full-width">
           <mat-label>Username</mat-label>
           <input matInput type="text" [(ngModel)]="username" name="Username" />
@@ -16,7 +16,7 @@
         </mat-form-field>
         <button mat-flat-button type="submit">Login</button>
       </form>
-      <div>
+      <div *ngIf="isEntraIdEnabled">
         <button mat-flat-button (click)="Entralogin()">Sign In (SSO)</button>
       </div>
     </mat-card-content>

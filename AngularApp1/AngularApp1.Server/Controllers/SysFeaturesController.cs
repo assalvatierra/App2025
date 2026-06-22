@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularApp1.Server.Data;
 using Erp.Domain.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace AngularApp1.Server.Controllers
 {
@@ -15,10 +16,12 @@ namespace AngularApp1.Server.Controllers
     public class SysFeaturesController : ControllerBase
     {
         private readonly ErpDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public SysFeaturesController(ErpDbContext context)
+        public SysFeaturesController(ErpDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/SysFeatures
@@ -81,6 +84,20 @@ namespace AngularApp1.Server.Controllers
             return await _context.SysFeature
                 .Where(sf => sf.IsEnabled && sf.Expiry > DateTime.Now)
                 .ToListAsync();
+        }
+
+        // GET: api/SysFeatures/GetAuthenticationType
+        [HttpGet("GetAuthenticationType")]
+        public ActionResult<string> GetAuthenticationType()
+        {
+            var authenticationType = _configuration["Authentication"];
+
+            if (string.IsNullOrEmpty(authenticationType))
+            {
+                return NotFound("Authentication configuration not found");
+            }
+
+            return Ok(authenticationType);
         }
 
         // PUT: api/SysFeatures/5

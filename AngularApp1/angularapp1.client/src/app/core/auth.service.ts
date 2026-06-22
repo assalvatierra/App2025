@@ -46,11 +46,16 @@ export class AuthService {
     });
   }
 
-  logout() {  
-    localStorage.removeItem(this.authTokenKey);
-    localStorage.removeItem(this.msalAuthFlagKey);
-    this.msalService.logoutRedirect();
+  EntraLogout() {
+    if(localStorage.getItem(this.msalAuthFlagKey) === 'true'){
+    this.setMsalAuthenticated(false);
+      this.msalService.logoutRedirect();
+    } 
+  }
 
+  logout() {
+    this.EntraLogout();   
+    localStorage.removeItem(this.authTokenKey);
   }
 
   isAuthenticated(): boolean {

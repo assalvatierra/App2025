@@ -104,7 +104,7 @@ export class LoginComponent  implements OnInit  {
       .subscribe({
         next: (response: any) => {
           this.authService.storeAuthToken(response?.token ?? response);
-          this.router.navigate(['/Entities']);
+          this.router.navigate(['']);
         },
         error: (err: any) => {
           console.error(err);

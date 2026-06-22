@@ -49,13 +49,14 @@ import { ClientJobMainFormComponent } from './pages/job-main/client-job-main-for
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
 import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/payment-success.component';
+import { MainComponentComponent } from './pages/main-component/main-component.component';
 
 const routeConfig: Routes = [
 
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login'
+    redirectTo: 'main'
   },
 
   // ─── Public layout (no auth, no sidenav) ───────────────────────────────────
@@ -294,6 +295,11 @@ const routeConfig: Routes = [
       {
         path: 'references/checklist-form',
         component: ChecklistFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'main',
+        component: MainComponentComponent,
         canActivate: [AuthGuard]
       }
     ]

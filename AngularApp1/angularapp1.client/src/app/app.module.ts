@@ -66,6 +66,7 @@ import { JobMainDetailsComponent } from './pages/job-main/job-main-form/job-main
 import { JobMainServicesComponent } from './pages/job-main/job-main-form/job-main-services/job-main-services.component';
 import { JobMainServiceDialogComponent } from './pages/job-main/job-main-form/job-main-services/job-main-service-dialog/job-main-service-dialog.component';
 import { JobServiceBudgetComponent } from './pages/job-main/job-main-form/job-service-budget/job-service-budget.component';
+import { JobServiceBudgetDialogComponent } from './pages/job-main/job-main-form/job-service-budget/job-service-budget-dialog/job-service-budget-dialog.component';
 import { JobMainCustomerComponent } from './pages/job-main/job-main-form/job-main-customer/job-main-customer.component';
 import { JobMainContactsComponent } from './pages/job-main/job-main-form/job-main-contacts/job-main-contacts.component';
 import { JobCustomerDetailsComponent } from './pages/job-main/job-main-form/job-main-customer/job-customer-details/job-customer-details.component';
@@ -142,6 +143,7 @@ import { environment } from '../environments/environment';
     JobMainServicesComponent,
     JobMainServiceDialogComponent,
     JobServiceBudgetComponent,
+    JobServiceBudgetDialogComponent,
     JobMainCustomerComponent,
   JobMainContactsComponent,
     JobMainStatusListComponent,

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 import { MatDialog } from '@angular/material/dialog';
 import { ApiJobServiceBudgetService } from '../../../../core/services/api-job-service-budget.service';
 import { JobServiceBudget } from '../../../../core/models/job-service-budget.model';
+import { JobServiceBudgetDialogComponent } from './job-service-budget-dialog/job-service-budget-dialog.component';
 
 @Component({
   selector: 'app-job-service-budget',
@@ -39,7 +40,6 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
       this.totalBudget = 0;
       return;
     }
-    debugger;
     this.dataloading = true;
     this.apiService.getJobServiceBudgetsByJobId(this.jobMainId).subscribe({
       next: (data) => {
@@ -62,13 +62,11 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
   }
 
   onAddRecord(): void {
-    console.log('Add budget clicked');
-    // TODO: Implement add budget dialog
+    this.openAddDialog();
   }
 
   onEdit(budget: JobServiceBudget): void {
-    console.log('Edit budget:', budget);
-    // TODO: Implement edit budget dialog
+    this.openEditDialog(budget);
   }
 
   onDelete(budget: JobServiceBudget): void {
@@ -84,5 +82,39 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  private openAddDialog(): void {
+    const dialogRef = this.dialog.open(JobServiceBudgetDialogComponent, {
+      width: '700px',
+      data: {
+        budgetId: 0,
+        jobMainId: this.jobMainId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Budget added, reloading list');
+        this.loadBudgets();
+      }
+    });
+  }
+
+  private openEditDialog(budget: JobServiceBudget): void {
+    const dialogRef = this.dialog.open(JobServiceBudgetDialogComponent, {
+      width: '700px',
+      data: {
+        budgetId: budget.id,
+        jobMainId: this.jobMainId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Budget updated, reloading list');
+        this.loadBudgets();
+      }
+    });
   }
 }

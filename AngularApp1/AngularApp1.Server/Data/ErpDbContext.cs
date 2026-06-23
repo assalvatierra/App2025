@@ -256,6 +256,14 @@ namespace AngularApp1.Server.Data
             {
                 entity.ToTable("PayAdditions");
             });
+
+            // configure JobServiceBudget
+            modelBuilder.Entity<JobServiceBudget>(entity =>
+            {
+                entity.ToTable("JobServiceBudget");
+            });
+
+
         }
     }
 }

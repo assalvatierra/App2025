@@ -1,0 +1,109 @@
+.form-group {
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  line-height: 1.2;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.12rem rgba(0, 123, 255, 0.12);
+}
+
+textarea.form-control {
+  min-height: 60px;
+}
+
+.btn {
+  margin-right: 0.5rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 78%;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 0.5rem;
+  }
+
+  .card {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.form-card {
+  margin-bottom: 0.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.row .col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row:has(.col:only-child) {
+  grid-template-columns: 1fr;
+}
+
+mat-card {
+  margin: 0.5rem;
+  max-width: 700px;
+}
+
+mat-card-actions {
+  padding: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+mat-form-field {
+  margin-bottom: 8px;
+}

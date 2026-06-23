@@ -1,48 +1,65 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using AngularApp1.Server.Data;
-//using System.IdentityModel.Tokens.Jwt;
-//using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.AspNetCore.Authentication.BearerToken;
-using System.Text;
 using AngularApp1.Server.Areas.Identity.Data;
-using Microsoft.OpenApi.Models;
+using AngularApp1.Server.Data;
+using AngularApp1.Server.DBLayer;
+using AngularApp1.Server.Services.PaymentGateway;
 //using AngularApp1.Server.Services.Plugins;
 //using Microsoft.SemanticKernel;
 using AngularApp1.Server.Services.RabbitMQ;
-using AngularApp1.Server.DBLayer;
-using AngularApp1.Server.Services.PaymentGateway;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Web;
+//using System.IdentityModel.Tokens.Jwt;
+//using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Stripe;
+//using Microsoft.AspNetCore.Authentication.BearerToken;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Read Authentication configuration
+var authenticationType = builder.Configuration.GetValue<string>("Authentication");
 
-// Add Identity and Authentication services to the container.
-builder.Services.AddDbContext<ErpIdentityContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
-builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
-
-builder.Services.AddAuthentication(
-    options =>
+// Configure authentication based on appsettings.json value
+if (authenticationType == "EntraID")
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    // Add Microsoft Entra ID JWT validation services
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 }
-).AddJwtBearer(options =>
+else if (authenticationType == "Bearer")
 {
-    options.TokenValidationParameters = new TokenValidationParameters
+    // Add Identity and Authentication services to the container.
+    builder.Services.AddDbContext<ErpIdentityContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ErpIdentityConnection") ?? throw new InvalidOperationException("Connection string 'ErpIdentityConnection' not found.")));
+    builder.Services.AddDefaultIdentity<ErpIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ErpIdentityContext>();
+
+    builder.Services.AddAuthentication(
+        options =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "ABC",
-        ValidAudience = "ALL",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
-    };
-});
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }
+    ).AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "ABC",
+            ValidAudience = "ALL",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456-123456-123456-123456-123456"))
+        };
+    });
+}
+else
+{
+    throw new InvalidOperationException($"Invalid Authentication type '{authenticationType}'. Must be 'Bearer' or 'EntraID'.");
+}
 
 builder.Services.AddHttpClient();
 
@@ -142,7 +159,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

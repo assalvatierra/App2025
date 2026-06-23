@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AngularApp1.Server.DBServices;
+using AngularApp1.Server.DTOs;
+using AngularApp1.Server.Services.RabbitMQ;
+using Erp.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AngularApp1.Server.DBServices;
-using AngularApp1.Server.DTOs;
-using Erp.Domain.Models;
-using AngularApp1.Server.Services.RabbitMQ;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AngularApp1.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class JobMainsController : ControllerBase

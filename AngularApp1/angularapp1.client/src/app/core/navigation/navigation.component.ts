@@ -66,10 +66,16 @@ export class NavigationComponent implements OnInit {
 
   private allMenuItems: MenuItem[] = [
     { 
+      name: 'Main',
+      label: 'Main', 
+      icon: 'home', 
+      route: '' 
+    },
+    {
       name: 'Jobs Orders',
-      label: 'Jobs Orders', 
-      icon: 'dashboard', 
-      route: 'Jobs' 
+      label: 'Jobs Orders',
+      icon: 'dashboard',
+      route: 'Jobs'
     },
     { 
       name: 'Receivables',

@@ -1158,6 +1158,39 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="JobServiceBudget" entity-set="JobServiceBudget" p1:Guid="5aaf22fa-5ded-4572-ba85-780563a7348f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="bdec22ee-9fa0-4064-bce3-e3bf34e15de4">
+      <column name="" />
+    </id>
+    <component name="RecordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="a5974b32-3140-4b60-bdcf-3c4f5dfe1c8e">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+      <property name="RecordGuid" />
+    </component>
+    <property name="JobMainId" type="Int32" p1:ValidateRequired="true" p1:Guid="1e61c6d6-ea7e-4eef-9937-d9701a49dcea">
+      <column name="" not-null="False" />
+    </property>
+    <property name="JobServiceId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9bfa609b-52bb-4d41-9329-c67bde5cc5d3">
+      <column name="" not-null="False" />
+    </property>
+    <property name="Amount" type="Decimal" p1:ValidateRequired="true" p1:Guid="5063bc8d-924c-4711-b9e5-efaf276a2a45">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c49b2029-ae54-4077-885d-deffbab8a6fa">
+      <column name="" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="a1c684c8-74a5-4666-aa87-229dfce115c4">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="16603101-7829-487b-9602-5304a3cecfd4">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1861,6 +1894,38 @@
       </end1>
       <end2 multiplicity="Many" name="JobMains" class="ItemType" relation-class="JobMain" lazy="False" p1:Guid="8d24bb9d-bd82-431f-aef8-44997d1e4a63">
         <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemType_JobBudget" cardinality="OneToMany" p1:Guid="8b9f9a9d-a230-4d61-a173-1ba74287c1ca">
+      <end1 multiplicity="One" name="ItemType" class="JobServiceBudget" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="587d4bb4-c012-4293-9d53-a9548b89e93b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobBudgets" class="ItemType" relation-class="JobServiceBudget" lazy="False" p1:Guid="ad487175-fbb9-4296-8e50-5591b3703b1c">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_JobBudget" cardinality="OneToMany" p1:Guid="0bdc9dc2-4fab-4951-86da-5829dbc8b5b7">
+      <end1 multiplicity="One" name="ItemStatus" class="JobServiceBudget" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="76153866-26d9-467a-82cc-b9b3a924fc37">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobBudgets" class="ItemStatus" relation-class="JobServiceBudget" lazy="False" p1:Guid="977618b9-369b-4ad6-bcf5-80fffd3f1b1e">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="JobMain_JobserviceBudget" cardinality="OneToMany" p1:Guid="3aa34c33-11d9-4a0d-ae69-ee555239902f">
+      <end1 multiplicity="One" name="JobMain" class="JobServiceBudget" relation-class="JobMain" constrained="True" lazy="False" p1:Guid="44b58842-b462-43eb-818d-b127294778d2">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobserviceBudgets" class="JobMain" relation-class="JobServiceBudget" lazy="False" p1:Guid="f35b799d-99de-4a23-a6fc-9948c51bdc65">
+        <property name="JobMainId" />
+      </end2>
+    </association>
+    <association name="JobService_JobserviceBudget" cardinality="OneToMany" p1:Guid="4032e057-cbd8-413b-a09b-92963c32b164">
+      <end1 multiplicity="ZeroOrOne" name="JobService" class="JobServiceBudget" relation-class="JobService" constrained="True" lazy="False" p1:Guid="019eba15-fb32-4cf0-b1bb-58d5208af385">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="JobserviceBudgets" class="JobService" relation-class="JobServiceBudget" lazy="False" p1:Guid="95cba44a-c872-4f7d-ae8c-7281e9345172">
+        <property name="JobServiceId" />
       </end2>
     </association>
   </associations>

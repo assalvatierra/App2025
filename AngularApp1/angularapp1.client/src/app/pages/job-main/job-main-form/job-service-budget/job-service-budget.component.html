@@ -1,0 +1,88 @@
+<div class="job-service-budget-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Job Service Budget</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="budget-actions">
+        <button mat-raised-button color="primary" (click)="onAddRecord()">
+          <mat-icon>add</mat-icon>
+          Add Budget Item
+        </button>
+      </div>
+
+      <div *ngIf="dataloading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!dataloading && budgets.length === 0" class="no-data-message">
+        <p>No budget items for this job. Click "Add Budget Item" to create one.</p>
+      </div>
+
+      <div *ngIf="!dataloading && budgets.length > 0" class="budget-table">
+        <table mat-table [dataSource]="budgets" class="full-width">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+
+          <!-- Job Service ID Column -->
+          <ng-container matColumnDef="jobServiceId">
+            <th mat-header-cell *matHeaderCellDef>Service ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.jobServiceId || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Amount Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element">{{ element.amount | currency }}</td>
+          </ng-container>
+
+          <!-- Remarks Column -->
+          <ng-container matColumnDef="remarks">
+            <th mat-header-cell *matHeaderCellDef>Remarks</th>
+            <td mat-cell *matCellDef="let element">{{ element.remarks || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Item Type Column -->
+          <ng-container matColumnDef="itemTypeId">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let element">{{ element.itemTypeId || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="itemStatusId">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">{{ element.itemStatusId || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="onEdit(element)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDelete(element)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+
+        <div class="budget-summary">
+          <mat-card class="summary-card">
+            <mat-card-content>
+              <strong>Total Budget: {{ totalBudget | currency }}</strong>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

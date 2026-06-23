@@ -11,13 +11,21 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<JobMainType> JobMainTypes { get; set; }
+    public virtual DbSet<JobServiceBudget> JobServiceBudgets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<JobMainType>(entity =>
+        modelBuilder.Entity<JobServiceBudget>(entity =>
         {
-            entity.ToTable("JobMainType");
+            entity.ToTable("JobServiceBudget");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.CreatedBy).HasMaxLength(4000);
+            entity.Property(e => e.IsActive).HasColumnName("isActive");
+            entity.Property(e => e.IsArchived).HasColumnName("isArchived");
+            entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
+            entity.Property(e => e.LastEditBy).HasMaxLength(4000);
+            entity.Property(e => e.Remarks).HasMaxLength(4000);
         });
 
         OnModelCreatingPartial(modelBuilder);

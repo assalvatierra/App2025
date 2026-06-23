@@ -7,6 +7,7 @@ import { tap, catchError,switchMap } from 'rxjs/operators';
 import { MsalService } from '@azure/msal-angular';
 import { AccountInfo, RedirectRequest, SilentRequest } from '@azure/msal-browser';
 import { environment } from '../../environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Injectable({
@@ -75,6 +76,11 @@ export class AuthService {
       return null;
     }
 
+    if(this.isTokenExpired(token)){
+      localStorage.removeItem(this.authTokenKey);
+      return null;
+    }
+    
     return token;
   }
 
@@ -87,6 +93,17 @@ export class AuthService {
     localStorage.removeItem(this.msalAuthFlagKey);
   }
 
+ isTokenExpired(token: string): boolean {
+  if (!token) return true;
+
+  const decoded: any = jwtDecode(token);
+  const exp = decoded.exp;
+
+  if (!exp) return true;
+
+  const now = Math.floor(Date.now() / 1000);
+  return exp < now;
+}
 
 
 

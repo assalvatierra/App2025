@@ -26,6 +26,7 @@
     "@azure/msal-angular": "^5.2.8",
     "@azure/msal-browser": "^5.14.0",
     "jest-editor-support": "*",
+    "jwt-decode": "^4.0.0",
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

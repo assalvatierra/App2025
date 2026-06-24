@@ -21,6 +21,8 @@ namespace AngularApp1.Server.DBLayer
         public async Task<List<JobServiceBudget>> GetByJobMainIdAsync(int jobMainId)
         {
             return await _context.JobServiceBudgets
+                .Include(jsb => jsb.ItemStatus)
+                .Include(jsb => jsb.ItemType)
                 .Where(b => b.JobMainId == jobMainId)
                 .ToListAsync();
         }

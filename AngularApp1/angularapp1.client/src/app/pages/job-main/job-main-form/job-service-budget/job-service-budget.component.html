@@ -47,15 +47,15 @@
           </ng-container>
 
           <!-- Item Type Column -->
-          <ng-container matColumnDef="itemTypeId">
+          <ng-container matColumnDef="itemTypeName">
             <th mat-header-cell *matHeaderCellDef>Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.itemTypeId || 'N/A' }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.itemTypeName || 'N/A' }}</td>
           </ng-container>
 
           <!-- Status Column -->
-          <ng-container matColumnDef="itemStatusId">
+          <ng-container matColumnDef="itemStatusName">
             <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.itemStatusId || 'N/A' }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.itemStatusName || 'N/A' }}</td>
           </ng-container>
 
           <!-- Actions Column -->

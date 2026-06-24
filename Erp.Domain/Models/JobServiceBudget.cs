@@ -34,4 +34,7 @@ public partial class JobServiceBudget
     public int? ItemTypeId { get; set; }
 
     public int? ItemStatusId { get; set; }
+    public virtual ItemStatus? ItemStatus { get; set; }
+    public virtual ItemType? ItemType { get; set; }
+
 }

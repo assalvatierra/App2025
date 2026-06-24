@@ -14,4 +14,6 @@ export interface JobServiceBudget {
   remarks?: string;
   itemTypeId?: number;
   itemStatusId?: number;
+  itemStatusName?: string;
+  itemTypeName?: string;
 }

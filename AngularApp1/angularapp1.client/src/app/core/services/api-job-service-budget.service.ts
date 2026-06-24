@@ -39,7 +39,7 @@ export class ApiJobServiceBudgetService {
    * Get budgets by job main ID
    */
   getJobServiceBudgetsByJobId(jobMainId: number): Observable<JobServiceBudget[]> {
-    return this.http.get<JobServiceBudget[]>(`${this.apiUrl}/ByJob/${jobMainId}`,
+    return this.http.get<JobServiceBudget[]>(`${this.apiUrl}/ByJobIdWithBudgetForecast/${jobMainId}`,
       this.getAuthOptions());
   }
 

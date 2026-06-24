@@ -1,4 +1,5 @@
 using AngularApp1.Server.DBServices;
+using AngularApp1.Server.DTOs;
 using AngularApp1.Server.Services.RabbitMQ;
 using Erp.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,13 @@ namespace AngularApp1.Server.Controllers
         public async Task<ActionResult<IEnumerable<JobServiceBudget>>> GetJobServiceBudgetsByJob(int jobMainId)
         {
             return await _service.GetByJobMainIdAsync(jobMainId);
+        }
+
+        // GET: api/JobServiceBudget/ByJob/5
+        [HttpGet("ByJobIdWithBudgetForecast/{jobMainId}")]
+        public async Task<ActionResult<IEnumerable<JobServiceBudgetListDto>>> ByJobIdWithBudgetForecast(int jobMainId)
+        {
+            return await _service.GetByJobMainIdWithBudgetForecastAsync(jobMainId);
         }
 
         // GET: api/JobServiceBudget/5

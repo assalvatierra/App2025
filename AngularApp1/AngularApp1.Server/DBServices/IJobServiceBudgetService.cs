@@ -1,4 +1,5 @@
 using Erp.Domain.Models;
+using AngularApp1.Server.DTOs;
 
 namespace AngularApp1.Server.DBServices
 {
@@ -6,6 +7,7 @@ namespace AngularApp1.Server.DBServices
     {
         Task<List<JobServiceBudget>> GetAllAsync();
         Task<List<JobServiceBudget>> GetByJobMainIdAsync(int jobMainId);
+        Task<List<JobServiceBudgetListDto>> GetByJobMainIdWithBudgetForecastAsync(int jobMainId);
         Task<JobServiceBudget?> GetByIdAsync(int id);
         Task<JobServiceBudget?> GetByRecordGuidAsync(Guid recordGuid);
         Task UpdateAsync(JobServiceBudget jobServiceBudget);

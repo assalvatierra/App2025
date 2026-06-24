@@ -1,4 +1,5 @@
 using AngularApp1.Server.DBLayer;
+using AngularApp1.Server.DTOs;
 using Erp.Domain.Models;
 
 namespace AngularApp1.Server.DBServices
@@ -22,6 +23,29 @@ namespace AngularApp1.Server.DBServices
             return await _db.GetByJobMainIdAsync(jobMainId);
         }
 
+        public async Task<List<JobServiceBudgetListDto>> GetByJobMainIdWithBudgetForecastAsync(int jobMainId)
+        {
+            var jobServiceBudgets = await _db.GetByJobMainIdAsync(jobMainId);
+
+
+            // Map the JobServiceBudget entities to JobServiceBudgetListDto
+            var jobServiceBudgetListDtos = jobServiceBudgets.Select(jsb => new JobServiceBudgetListDto
+            {
+                Id = jsb.Id,
+                Amount = jsb.Amount,
+                JobMainId = jsb.JobMainId,
+                JobServiceId = jsb.JobServiceId,
+                Remarks = jsb.Remarks,
+                ItemStatusId = jsb.ItemStatusId,
+                ItemTypeId = jsb.ItemTypeId,
+                // Add other properties as needed
+
+                ItemStatusName = jsb.ItemStatus?.Name ?? string.Empty,
+                ItemTypeName = jsb.ItemType?.Name ?? string.Empty
+            }).ToList();
+
+            return jobServiceBudgetListDtos;
+        }
         public async Task<JobServiceBudget?> GetByIdAsync(int id)
         {
             return await _db.GetByIdAsync(id);

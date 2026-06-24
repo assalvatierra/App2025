@@ -131,13 +131,14 @@ builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobMainsDbLayer, AngularA
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobMainsService, AngularApp1.Server.DBServices.JobMainsService>();
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServicesDbLayer, AngularApp1.Server.DBLayer.JobServicesDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServicesService, AngularApp1.Server.DBServices.JobServicesService>();
-builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServiceBudgetDbLayer, AngularApp1.Server.DBLayer.JobServiceBudgetDbLayer>();
-builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServiceBudgetService, AngularApp1.Server.DBServices.JobServiceBudgetService>();
 builder.Services.AddScoped<IPaymentExternalDbLayer, PaymentExternalDbLayer>();
 //builder.Services.AddScoped<IPaymentExternalService, PaymentExternalService>();
 builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServiceStripe>();
 //builder.Services.AddScoped<IPaymentExternalService, PaymentExternalServicePaymongo>();
 builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp1.Server.Services.EmailService>();
+
+builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServiceBudgetDbLayer, AngularApp1.Server.DBLayer.JobServiceBudgetDbLayer>();
+builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServiceBudgetService, AngularApp1.Server.DBServices.JobServiceBudgetService>();
 
 
 var app = builder.Build();

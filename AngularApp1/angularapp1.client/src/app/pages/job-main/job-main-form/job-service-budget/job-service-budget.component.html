@@ -28,10 +28,10 @@
             <td mat-cell *matCellDef="let element">{{ element.id }}</td>
           </ng-container>
 
-          <!-- Job Service ID Column -->
-          <ng-container matColumnDef="jobServiceId">
-            <th mat-header-cell *matHeaderCellDef>Service ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.jobServiceId || 'N/A' }}</td>
+          <!-- Job Service Name Column -->
+          <ng-container matColumnDef="jobServiceName">
+            <th mat-header-cell *matHeaderCellDef>Service Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.jobServiceName || 'N/A' }}</td>
           </ng-container>
 
           <!-- Amount Column -->

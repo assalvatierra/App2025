@@ -1191,6 +1191,17 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="ResourceBudgetTypes" entity-set="ResourceBudgetTypes" p1:Guid="5bd9838c-6bcc-4443-aa30-d064dd8d1669">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="f421c53b-ee9a-49f4-95af-ed89d50d68e8">
+      <column name="" />
+    </id>
+    <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="167cd5fc-f242-4a0d-b64d-7d8b43012e52">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="7879f943-28e5-4956-a9ad-68714cd545ae">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1926,6 +1937,22 @@
       </end1>
       <end2 multiplicity="Many" name="JobserviceBudgets" class="JobService" relation-class="JobServiceBudget" lazy="False" p1:Guid="95cba44a-c872-4f7d-ae8c-7281e9345172">
         <property name="JobServiceId" />
+      </end2>
+    </association>
+    <association name="Resource_ResourceBudgetTypes" cardinality="OneToMany" p1:Guid="5a3e53c0-9c2a-4bdc-9ce8-b702dd8f7640">
+      <end1 multiplicity="One" name="Resource" class="ResourceBudgetTypes" relation-class="Resource" constrained="True" lazy="False" p1:Guid="42ed01f9-b9e1-4600-aabe-877fe8711878">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceBudgetTypes" class="Resource" relation-class="ResourceBudgetTypes" lazy="False" p1:Guid="3e9affd6-38a2-46f2-adf5-c77678b4127a">
+        <property name="ResourceId" />
+      </end2>
+    </association>
+    <association name="ItemType_ResourceBudgetTypes" cardinality="OneToMany" p1:Guid="5ab9436d-0b1c-4a2f-a393-d5fd8db45dc3">
+      <end1 multiplicity="One" name="ItemType" class="ResourceBudgetTypes" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="a0324558-9507-43d0-bb39-3c11e0d3c5c1">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceBudgetTypes" class="ItemType" relation-class="ResourceBudgetTypes" lazy="False" p1:Guid="2a77d2b5-8d04-4d5c-bed8-ef4ec696ce3a">
+        <property name="ItemTypeId" />
       </end2>
     </association>
   </associations>

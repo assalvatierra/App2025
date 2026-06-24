@@ -15,7 +15,7 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
 
   public dataloading: boolean = false;
   public budgets: JobServiceBudget[] = [];
-  public displayColumns: string[] = ['id', 'jobServiceId', 'amount', 'remarks', 'itemTypeName', 'itemStatusName', 'actions'];
+  public displayColumns: string[] = ['id', 'jobServiceName', 'amount', 'remarks', 'itemTypeName', 'itemStatusName', 'actions'];
   public totalBudget: number = 0;
 
   constructor(

@@ -10,6 +10,7 @@ export interface JobServiceBudget {
   recordGuid?: string;
   jobMainId?: number;
   jobServiceId?: number;
+  jobServiceName?: string;
   amount: number;
   remarks?: string;
   itemTypeId?: number;

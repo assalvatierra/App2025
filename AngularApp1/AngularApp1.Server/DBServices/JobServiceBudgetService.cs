@@ -7,10 +7,15 @@ namespace AngularApp1.Server.DBServices
     public class JobServiceBudgetService : IJobServiceBudgetService
     {
         private readonly IJobServiceBudgetDbLayer _db;
+        private readonly IJobServicesDbLayer _dbJobService;
 
-        public JobServiceBudgetService(IJobServiceBudgetDbLayer db)
+        public JobServiceBudgetService(
+            IJobServiceBudgetDbLayer db,
+            IJobServicesDbLayer dbJobService
+            )
         {
             _db = db;
+            _dbJobService = dbJobService;
         }
 
         public async Task<List<JobServiceBudget>> GetAllAsync()
@@ -26,7 +31,7 @@ namespace AngularApp1.Server.DBServices
         public async Task<List<JobServiceBudgetListDto>> GetByJobMainIdWithBudgetForecastAsync(int jobMainId)
         {
             var jobServiceBudgets = await _db.GetByJobMainIdAsync(jobMainId);
-
+            var jobServices = await _dbJobService.GetByJobIdAsync(jobMainId);
 
             // Map the JobServiceBudget entities to JobServiceBudgetListDto
             var jobServiceBudgetListDtos = jobServiceBudgets.Select(jsb => new JobServiceBudgetListDto
@@ -40,6 +45,8 @@ namespace AngularApp1.Server.DBServices
                 ItemTypeId = jsb.ItemTypeId,
                 // Add other properties as needed
 
+                JobServiceName = 
+                    jobServices.FirstOrDefault(js => js.Id == jsb.JobServiceId)?.Particulars ?? string.Empty, 
                 ItemStatusName = jsb.ItemStatus?.Name ?? string.Empty,
                 ItemTypeName = jsb.ItemType?.Name ?? string.Empty
             }).ToList();

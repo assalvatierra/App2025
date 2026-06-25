@@ -33,7 +33,7 @@ export class ResourceRateComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() resourceId?: number;
 
   public resourceRates: ResourceRate[] = [];
-  public displayedColumns: string[] = ['validFrom', 'validTo', 'daily', 'hourly', 'monthly', 'percent', 'otRate', 'isActive', 'actions'];
+  public displayedColumns: string[] = ['validFrom', 'validTo', 'daily', 'hourly', 'monthly', 'percent', 'otRate', 'itemPrice', 'isActive', 'actions'];
   public loading: boolean = false;
   public dataSource: MatTableDataSource<ResourceRate> = new MatTableDataSource();
 

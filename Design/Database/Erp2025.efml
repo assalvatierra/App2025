@@ -1059,6 +1059,9 @@
     <property name="OtRate" type="Decimal" p1:ValidateRequired="true" p1:Guid="47d95653-b836-41fa-9164-fc845ba372e0">
       <column name="" />
     </property>
+    <property name="ItemPrice" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ed971d41-c2e4-4438-ba30-c846f50ca7f2">
+      <column name="" />
+    </property>
   </class>
   <class name="PayPeriod" entity-set="PayPeriod" p1:Guid="0ac9b7a8-d2f9-4716-9d20-59b00559b902">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="b7eddc3c-ffc4-425a-8ef7-fe6822aeb903">

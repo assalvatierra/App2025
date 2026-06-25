@@ -36,4 +36,6 @@ public partial class ResourceRate
     public decimal Percent { get; set; }
 
     public decimal OtRate { get; set; }
+
+    public decimal ItemPrice { get; set; }
 }

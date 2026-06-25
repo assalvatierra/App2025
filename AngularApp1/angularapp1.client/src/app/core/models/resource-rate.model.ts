@@ -15,4 +15,5 @@ export interface ResourceRate {
   hourly: number;
   percent: number;
   otRate: number;
+  itemPrice: number;
 }

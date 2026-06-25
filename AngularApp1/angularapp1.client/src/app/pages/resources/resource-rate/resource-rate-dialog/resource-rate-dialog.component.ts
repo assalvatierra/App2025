@@ -102,6 +102,7 @@ export class ResourceRateDialogComponent implements OnInit {
         monthly: this.data.resourceRate.monthly,
         percent: this.data.resourceRate.percent,
         otRate: this.data.resourceRate.otRate,
+        itemPrice: this.data.resourceRate.itemPrice,
         isActive: this.data.resourceRate.isActive,
         isPrivate: this.data.resourceRate.isPrivate,
         isArchived: this.data.resourceRate.isArchived
@@ -132,6 +133,7 @@ export class ResourceRateDialogComponent implements OnInit {
       monthly: [0, [Validators.required, Validators.min(0)]],
       percent: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       otRate: [0, [Validators.required, Validators.min(0)]],
+      itemPrice: [0, [Validators.required, Validators.min(0)]],
       isActive: [true],
       isPrivate: [false],
       isArchived: [false]
@@ -157,6 +159,7 @@ export class ResourceRateDialogComponent implements OnInit {
       monthly: formValue.monthly || 0,
       percent: formValue.percent || 0,
       otRate: formValue.otRate || 0,
+      itemPrice: formValue.itemPrice || 0,
       isActive: formValue.isActive !== false,
       isPrivate: formValue.isPrivate || false,
       isArchived: formValue.isArchived || false,

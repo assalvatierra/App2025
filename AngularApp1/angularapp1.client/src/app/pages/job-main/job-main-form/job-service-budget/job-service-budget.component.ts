@@ -15,8 +15,10 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
 
   public dataloading: boolean = false;
   public budgets: JobServiceBudget[] = [];
-  public displayColumns: string[] = ['id', 'jobServiceName', 'amount', 'remarks', 'itemTypeName', 'itemStatusName', 'actions'];
+  public displayColumns: string[] = ['id', 'jobServiceName', 'amount', 'forecastAmount', 'actualAmount', 'remarks', 'itemTypeName', 'itemStatusName', 'actions'];
   public totalBudget: number = 0;
+  public totalForecast: number = 0;
+  public totalActual: number = 0;
 
   constructor(
     private apiService: ApiJobServiceBudgetService,
@@ -60,6 +62,8 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
 
   calculateTotalBudget(): void {
     this.totalBudget = this.budgets.reduce((sum, budget) => sum + (budget.amount || 0), 0);
+    this.totalForecast = this.budgets.reduce((sum, budget) => sum + (budget.forecastAmount || 0), 0);
+    this.totalActual = this.budgets.reduce((sum, budget) => sum + (budget.actualAmount || 0), 0);
   }
 
   onAddRecord(): void {

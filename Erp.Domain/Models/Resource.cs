@@ -26,4 +26,6 @@ public partial class Resource
     public virtual ICollection<Timesheet> TimesheetResourceId1Navigations { get; set; } = new List<Timesheet>();
 
     public virtual ICollection<Timesheet> TimesheetResources { get; set; } = new List<Timesheet>();
+    public virtual ICollection<ResourceRate> ResourceRates { get; set; } = new List<ResourceRate>();
+    public virtual ItemType ItemType { get; set; } = new ItemType();
 }

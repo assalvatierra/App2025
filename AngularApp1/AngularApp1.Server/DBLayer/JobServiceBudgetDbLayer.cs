@@ -1,11 +1,13 @@
 using AngularApp1.Server.Data;
 using Erp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AngularApp1.Server.DBLayer
 {
     public class JobServiceBudgetDbLayer : IJobServiceBudgetDbLayer
     {
+        private readonly string configname = "JobBudget";
         private readonly ErpDbContext _context;
 
         public JobServiceBudgetDbLayer(ErpDbContext context)
@@ -13,6 +15,12 @@ namespace AngularApp1.Server.DBLayer
             _context = context;
         }
 
+        public async Task<List<SysFeature>> GetBudgetConfigAsync()
+        {
+            return await _context.SysFeature
+                .Where(sf => sf.Name.Contains(configname))
+                .ToListAsync();
+        }
         public async Task<List<JobServiceBudget>> GetAllAsync()
         {
             return await _context.JobServiceBudgets.ToListAsync();
@@ -24,6 +32,24 @@ namespace AngularApp1.Server.DBLayer
                 .Include(jsb => jsb.ItemStatus)
                 .Include(jsb => jsb.ItemType)
                 .Where(b => b.JobMainId == jobMainId)
+                .ToListAsync();
+        }
+
+        public async Task<List<JobServiceResource>> GetAssignedResourcesByJobMainIdAsync(int jobMainId)
+        {
+            return await _context.JobServiceResource
+                .Include(jsr => jsr.Resource)
+                    .ThenInclude(jsrr=>jsrr.ResourceRates)
+                .Include(jsr => jsr.Resource)
+                    .ThenInclude(jsri => jsri.ItemType)
+                .Include(js => js.JobService)                
+                .Where(r => r.JobService.JobMainId == jobMainId)
+                .ToListAsync();
+        }
+        public async Task<List<ResourceRate>> GetResourceRatesByResourceIdAsync(int resourceId)
+        {
+            return await _context.ResourceRates
+                .Where(rr => rr.ResourceId == resourceId)
                 .ToListAsync();
         }
 

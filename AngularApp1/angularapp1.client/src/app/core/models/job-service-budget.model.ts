@@ -12,6 +12,8 @@ export interface JobServiceBudget {
   jobServiceId?: number;
   jobServiceName?: string;
   amount: number;
+  forecastAmount?: number;
+  actualAmount?: number;
   remarks?: string;
   itemTypeId?: number;
   itemStatusId?: number;

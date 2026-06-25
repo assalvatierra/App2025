@@ -4,6 +4,7 @@ namespace AngularApp1.Server.DBLayer
 {
     public interface IJobServiceBudgetDbLayer
     {
+        Task<List<SysFeature>> GetBudgetConfigAsync();
         Task<List<JobServiceBudget>> GetAllAsync();
         Task<List<JobServiceBudget>> GetByJobMainIdAsync(int jobMainId);
         Task<JobServiceBudget?> GetByIdAsync(int id);
@@ -12,5 +13,9 @@ namespace AngularApp1.Server.DBLayer
         Task<JobServiceBudget> AddAsync(JobServiceBudget jobServiceBudget);
         Task DeleteAsync(JobServiceBudget jobServiceBudget);
         bool Exists(int id);
+
+        Task<List<JobServiceResource>> GetAssignedResourcesByJobMainIdAsync(int jobMainId);
+        Task<List<ResourceRate>> GetResourceRatesByResourceIdAsync(int resourceId);
+
     }
 }

@@ -45,7 +45,6 @@ export class JobServiceBudgetComponent implements OnInit, OnChanges {
     this.dataloading = true;
     this.apiService.getJobServiceBudgetsByJobId(this.jobMainId).subscribe({
       next: (data) => {
-        debugger;
         this.budgets = data;
         this.calculateTotalBudget();
         this.dataloading = false;

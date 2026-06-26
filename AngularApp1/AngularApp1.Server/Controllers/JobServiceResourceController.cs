@@ -135,6 +135,7 @@ namespace AngularApp1.Server.Controllers
                     jsr.Id,
                     jsr.JobServiceId,
                     jsr.ResourceId,
+                    jsr.ResourceQty,
                     JobService = jsr.JobService != null ? new
                     {
                         jsr.JobService.Id,

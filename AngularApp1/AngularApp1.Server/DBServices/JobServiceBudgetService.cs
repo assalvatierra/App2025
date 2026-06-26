@@ -120,21 +120,23 @@ namespace AngularApp1.Server.DBServices
                 }
                 else if (measurement == "Units")
                 {
-                    int units = 1;
-                    forecastamount +=
-                        item.Resource
+                    int units = 0;
+                    if (item.ResourceQty != null)
+                        units = (int)item.ResourceQty;
+
+                    decimal unitPrice = 0;
+                    if (item.Resource.ResourceRates.FirstOrDefault()?.ItemPrice != null)
+                    {
+                        unitPrice = item.Resource
                             .ResourceRates
                             .FirstOrDefault()
-                            ?.ItemPrice ?? 0 * units;
+                            ?.ItemPrice ?? 0;
+                    }
+
+                    forecastamount += unitPrice * units;
                 }
             }
-            //var dailyRate = item.Resource
-            //        .ResourceRates
-            //        .FirstOrDefault()
-            //        ?.Daily ?? 0;
-            //    int qty = (item.JobService.DateEnd.Value.Date - item.JobService.DateStart.Value.Date).Days + 1;
-            //    forecastamount += dailyRate * qty;
-            //}
+            
             return forecastamount;
         }
         public async Task<JobServiceBudget?> GetByIdAsync(int id)

@@ -169,7 +169,6 @@ export class JobMainServicesComponent implements AfterViewInit {
     this.apiService.getJobsServiceByJobId(this.paramId)
       .subscribe({
         next: (res: any) => {
-          debugger;
           console.log('Job services retrieved:', res);
           this.jobServices = res;
           // Set loading to false before loading counts so table appears immediately

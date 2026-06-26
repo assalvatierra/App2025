@@ -48,7 +48,7 @@ export class JobServiceResourcesDialogComponent implements OnInit {
   showForm: boolean = false;
   isEditMode: boolean = false;
   editingResourceId: number | null = null;
-  displayedColumns: string[] = ['resourceName', 'resourceCode', 'description', 'actions'];
+  displayedColumns: string[] = ['resourceName', 'resourceCode', 'description','resourceQty', 'actions'];
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +58,8 @@ export class JobServiceResourcesDialogComponent implements OnInit {
     private apiResourcesService: ApiResourcesService
   ) {
     this.resourceForm = this.fb.group({
-      resourceId: [null, Validators.required]
+      resourceId: [null, Validators.required],
+      resourceQty: [1, [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -83,7 +84,6 @@ export class JobServiceResourcesDialogComponent implements OnInit {
     this.loading = true;
     this.apiJobServiceResourceService.getByJobService(this.data.jobServiceId).subscribe({
       next: (resources) => {
-        debugger;
         this.jobServiceResources = resources;
         this.loading = false;
       },
@@ -105,9 +105,10 @@ export class JobServiceResourcesDialogComponent implements OnInit {
       const jobServiceResource: JobServiceResource = {
         id: 0,
         jobServiceId: this.data.jobServiceId,
-        resourceId: this.resourceForm.value.resourceId
+        resourceId: this.resourceForm.value.resourceId,
+        resourceQty: this.resourceForm.value.resourceQty
       };
-
+debugger;
       this.apiJobServiceResourceService.addJobServiceResource(jobServiceResource).subscribe({
         next: () => {
           this.loadJobServiceResources();
@@ -171,7 +172,8 @@ export class JobServiceResourcesDialogComponent implements OnInit {
     this.isEditMode = false;
     this.editingResourceId = null;
     this.resourceForm.reset({
-      resourceId: null
+      resourceId: null,
+      resourceQty: 1
     });
   }
 }

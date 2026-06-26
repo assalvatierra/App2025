@@ -83,6 +83,7 @@ export class JobServiceResourcesDialogComponent implements OnInit {
     this.loading = true;
     this.apiJobServiceResourceService.getByJobService(this.data.jobServiceId).subscribe({
       next: (resources) => {
+        debugger;
         this.jobServiceResources = resources;
         this.loading = false;
       },

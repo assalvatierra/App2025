@@ -6,6 +6,7 @@ namespace Erp.Domain.Models;
 public partial class JobServiceResource
 {
     public int Id { get; set; }
+    public int? ResourceQty { get; set; }
 
     public int? JobServiceId { get; set; }
 

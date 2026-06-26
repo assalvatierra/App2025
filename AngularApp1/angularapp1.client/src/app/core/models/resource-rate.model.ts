@@ -16,4 +16,6 @@ export interface ResourceRate {
   percent: number;
   otRate: number;
   itemPrice: number;
+  itemStatusId?: number;
+  budgetTypeId?: number;
 }

@@ -918,6 +918,9 @@
     <property name="ResourceId" type="Int32" p1:ValidateRequired="true" p1:Guid="ded35a57-6b48-471c-930b-ece950f95b50">
       <column name="" not-null="False" />
     </property>
+    <property name="ResourceQty" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ab6ca2bd-2337-4d54-9a07-9d866734cbec">
+      <column name="" />
+    </property>
   </class>
   <class name="ResourceEntity" entity-set="ResourceEntity" p1:Guid="597654fe-ec50-4e29-adf1-3ada793e8ec0">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="3eee98d1-0d08-4ca1-9eea-d5d7e2f97ab4">
@@ -1061,6 +1064,12 @@
     </property>
     <property name="ItemPrice" type="Decimal" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ed971d41-c2e4-4438-ba30-c846f50ca7f2">
       <column name="" />
+    </property>
+    <property name="BudgetTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="5228a0db-7368-467d-a183-e474f4d3ee71">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="2d274939-baaa-4a83-83ed-69b5e0644e95">
+      <column name="" not-null="False" />
     </property>
   </class>
   <class name="PayPeriod" entity-set="PayPeriod" p1:Guid="0ac9b7a8-d2f9-4716-9d20-59b00559b902">
@@ -1956,6 +1965,22 @@
       </end1>
       <end2 multiplicity="Many" name="ResourceBudgetTypes" class="ItemType" relation-class="ResourceBudgetTypes" lazy="False" p1:Guid="2a77d2b5-8d04-4d5c-bed8-ef4ec696ce3a">
         <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemType_ResourceRate" cardinality="OneToMany" p1:Guid="0cde4cb8-89a6-4048-bf56-4e13ee403d94">
+      <end1 multiplicity="One" name="ItemType" class="ResourceRate" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="fbea92d1-8a43-4a8e-b724-22fbfbb2c59c">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceRates" class="ItemType" relation-class="ResourceRate" lazy="False" p1:Guid="8f0b8c0c-4adc-4dc3-9c24-24bb847af873">
+        <property name="BudgetTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_ResourceRate" cardinality="OneToMany" p1:Guid="ad9e6e8d-0aad-4b35-b88e-50c04dbbf551">
+      <end1 multiplicity="One" name="ItemStatus" class="ResourceRate" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="1f763454-bd57-4b10-928b-4dfb07326dc5">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="ResourceRates" class="ItemStatus" relation-class="ResourceRate" lazy="False" p1:Guid="6f04ffef-ff3c-4b45-ada4-a329413344e4">
+        <property name="ItemStatusId" />
       </end2>
     </association>
   </associations>

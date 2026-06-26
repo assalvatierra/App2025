@@ -38,4 +38,8 @@ public partial class ResourceRate
     public decimal OtRate { get; set; }
 
     public decimal ItemPrice { get; set; }
+    public int ItemStatusId { get; set; }
+    public int BudgetTypeId { get; set; }
+    //public virtual ItemStatus ItemStatus { get; set; } = null!;
+    //public virtual ItemType BudgetType { get; set; } = null!;
 }

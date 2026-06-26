@@ -100,21 +100,41 @@ namespace AngularApp1.Server.DBServices
 
             if (string.IsNullOrEmpty(budgetCategoryName)) return 0;
 
-            var itemBudgetCategories = budgetCategories.Where(bc => bc.BudgetCategory == budgetCategoryName).FirstOrDefault();
-            if(itemBudgetCategories == null || itemBudgetCategories.ResourceTypeNames == null) return 0;
+            var itemBudgetCategory = budgetCategories.Where(bc => bc.BudgetCategory == budgetCategoryName).FirstOrDefault();
+            if(itemBudgetCategory == null || itemBudgetCategory.ResourceTypeNames == null) return 0;
 
-            List<string> resourceTypes = itemBudgetCategories.ResourceTypeNames;
+            List<string> resourceTypes = itemBudgetCategory.ResourceTypeNames;
+            string measurement = itemBudgetCategory.Measurement;
             var assigned = assignedResources.Where(r => resourceTypes.Contains(r.Resource.ItemType.Name)).ToList();
 
             foreach (var item in assigned)
             {
-                var dailyRate = item.Resource
-                    .ResourceRates
-                    .FirstOrDefault()
-                    ?.Daily ?? 0;
-                int qty = (item.JobService.DateEnd.Value.Date - item.JobService.DateStart.Value.Date).Days + 1;
-                forecastamount += dailyRate * qty;
+                if (measurement == "Days")
+                {
+                    int days = (item.JobService.DateEnd.Value.Date - item.JobService.DateStart.Value.Date).Days + 1;
+                    forecastamount += 
+                        item.Resource
+                            .ResourceRates
+                            .FirstOrDefault()
+                            ?.Daily ?? 0 * days;
+                }
+                else if (measurement == "Units")
+                {
+                    int units = 1;
+                    forecastamount +=
+                        item.Resource
+                            .ResourceRates
+                            .FirstOrDefault()
+                            ?.ItemPrice ?? 0 * units;
+                }
             }
+            //var dailyRate = item.Resource
+            //        .ResourceRates
+            //        .FirstOrDefault()
+            //        ?.Daily ?? 0;
+            //    int qty = (item.JobService.DateEnd.Value.Date - item.JobService.DateStart.Value.Date).Days + 1;
+            //    forecastamount += dailyRate * qty;
+            //}
             return forecastamount;
         }
         public async Task<JobServiceBudget?> GetByIdAsync(int id)

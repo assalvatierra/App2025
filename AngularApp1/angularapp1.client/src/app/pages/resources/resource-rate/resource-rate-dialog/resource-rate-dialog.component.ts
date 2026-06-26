@@ -13,6 +13,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiResourceRatesService } from '../../../../core/services/api-resource-rates.service';
 import { ResourceRate } from '../../../../core/models/resource-rate.model';
+import { ApiService } from '../../../../core/api.service';
 
 export interface ResourceRateDialogData {
   resourceId: number;
@@ -80,18 +81,23 @@ export class ResourceRateDialogComponent implements OnInit {
   public isEdit: boolean = false;
   public loading: boolean = false;
   public data!: ResourceRateDialogData;
+  public itemStatuses: any[] = [];
+  public budgetTypes: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private apiResourceRatesService: ApiResourceRatesService,
     private dialogRef: MatDialogRef<ResourceRateDialogComponent>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private apiService: ApiService
   ) {
     this.data = inject(MAT_DIALOG_DATA);
     this.initializeForm();
   }
 
   ngOnInit(): void {
+    this.loadItemStatuses();
+    this.loadBudgetTypes();
     this.isEdit = !!this.data.resourceRate;
     if (this.isEdit && this.data.resourceRate) {
       this.rateForm.patchValue({
@@ -105,7 +111,9 @@ export class ResourceRateDialogComponent implements OnInit {
         itemPrice: this.data.resourceRate.itemPrice,
         isActive: this.data.resourceRate.isActive,
         isPrivate: this.data.resourceRate.isPrivate,
-        isArchived: this.data.resourceRate.isArchived
+        isArchived: this.data.resourceRate.isArchived,
+        itemStatusId: this.data.resourceRate.itemStatusId,
+        budgetTypeId: this.data.resourceRate.budgetTypeId
       });
     }
   }
@@ -136,7 +144,31 @@ export class ResourceRateDialogComponent implements OnInit {
       itemPrice: [0, [Validators.required, Validators.min(0)]],
       isActive: [true],
       isPrivate: [false],
-      isArchived: [false]
+      isArchived: [false],
+      itemStatusId: [null],
+      budgetTypeId: [null]
+    });
+  }
+
+  private loadItemStatuses(): void {
+    this.apiService.getItemStatusesByClassName('ResourceRate').subscribe({
+      next: (statuses: any[]) => {
+        this.itemStatuses = statuses;
+      },
+      error: (err: any) => {
+        console.error('Error loading item statuses:', err);
+      }
+    });
+  }
+
+  private loadBudgetTypes(): void {
+    this.apiService.getItemTypesByClassName('JobBudget').subscribe({
+      next: (types: any[]) => {
+        this.budgetTypes = types;
+      },
+      error: (err: any) => {
+        console.error('Error loading budget types:', err);
+      }
     });
   }
 
@@ -163,6 +195,8 @@ export class ResourceRateDialogComponent implements OnInit {
       isActive: formValue.isActive !== false,
       isPrivate: formValue.isPrivate || false,
       isArchived: formValue.isArchived || false,
+      itemStatusId: formValue.itemStatusId || null,
+      budgetTypeId: formValue.budgetTypeId || null,
       createdBy: this.data.resourceRate?.createdBy || 'system',
       createdOn: this.data.resourceRate?.createdOn ? new Date(this.data.resourceRate.createdOn).toISOString() : new Date().toISOString(),
       lastEditBy: 'system',

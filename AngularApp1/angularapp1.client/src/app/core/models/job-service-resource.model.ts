@@ -2,6 +2,7 @@ export interface JobServiceResource {
   id: number;
   jobServiceId?: number;
   resourceId?: number;
+  resourceQty?: number;
   jobService?: JobServiceDetail;
   resource?: ResourceDetail;
 }

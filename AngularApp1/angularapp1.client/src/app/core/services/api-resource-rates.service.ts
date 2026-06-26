@@ -118,7 +118,6 @@ export class ApiResourceRatesService {
    * @returns Mapped ResourceRate object
    */
   private mapResourceRate(data: any): ResourceRate {
-    debugger;
     return {
       id: data.id,
       resourceId: data.resourceId,
@@ -136,7 +135,9 @@ export class ApiResourceRatesService {
       hourly: data.hourly,
       percent: data.percent,
       otRate: data.otRate,
-      itemPrice: data.itemPrice
+      itemPrice: data.itemPrice,
+      itemStatusId: data.itemStatusId,
+      budgetTypeId: data.budgetTypeId
     };
   }
 }

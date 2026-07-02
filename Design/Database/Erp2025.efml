@@ -1214,6 +1214,62 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="PortalItem" entity-set="PortalItem" p1:Guid="15192a04-7560-4554-9c17-afebb63787a9">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="6e186a10-19da-4256-b575-8cca08e8dc88">
+      <column name="" />
+    </id>
+    <component name="recordInfo" class="RecordInfo" p1:ValidateRequired="false" p1:Guid="a55e3be2-7f68-43aa-aa22-70cae32305b7">
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastEditBy" />
+      <property name="LastEditOn" />
+      <property name="isArchived" />
+      <property name="isPrivate" />
+      <property name="isActive" />
+      <property name="RecordGuid" />
+    </component>
+    <component name="entityInfo" class="EntityInfo" p1:ValidateRequired="false" p1:Guid="1c70f98d-384e-4afd-b9c6-0dec8f1f8a58">
+      <property name="Name" />
+      <property name="Description" />
+      <property name="Remarks" />
+      <property name="Code" />
+      <property name="SortOrder" />
+    </component>
+    <property name="jsonData" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5bb27225-0f65-494e-beab-dd9df1bbb847">
+      <column name="" />
+    </property>
+    <property name="ItemTypeId" type="Int32" p1:ValidateRequired="true" p1:Guid="197e58a2-8883-4f5b-9cdf-8ec213cbfba4">
+      <column name="" not-null="False" />
+    </property>
+    <property name="ItemStatusId" type="Int32" p1:ValidateRequired="true" p1:Guid="d8dee244-30de-4575-8006-56ca55abad04">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="PortalItemSpec" entity-set="PortalItemSpec" p1:Guid="076ddfb3-09a9-43a1-844d-2c8f3fd9f9ae">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="6d2e87ab-0bf1-4d52-b182-6ccc67350bbb">
+      <column name="" />
+    </id>
+    <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="db6111fd-bf61-4689-a3b5-b9532492987b">
+      <column name="" not-null="False" />
+    </property>
+    <property name="jsonData" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6d66d1a0-2257-4e73-8643-ef603749e7c2">
+      <column name="" />
+    </property>
+    <property name="order" type="Int32" p1:ValidateRequired="true" p1:Guid="b38b6cda-1dad-4300-ab4a-8193dcd6172d">
+      <column name="" />
+    </property>
+    <property name="Remarks" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7c8d5305-fbba-4733-81f3-53e5ee171761">
+      <column name="" />
+    </property>
+  </class>
+  <class name="PortalReservation" entity-set="PortalReservation" p1:Guid="8c370615-ea50-46f0-8499-44a5c2b3cfcd">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="fae6116c-1c9d-4925-8b19-fc3ccd98f2c5">
+      <column name="" />
+    </id>
+    <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="99549627-d505-4eb6-aece-20d1728c95e2">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -1981,6 +2037,38 @@
       </end1>
       <end2 multiplicity="Many" name="ResourceRates" class="ItemStatus" relation-class="ResourceRate" lazy="False" p1:Guid="6f04ffef-ff3c-4b45-ada4-a329413344e4">
         <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="ItemType_PortalItem" cardinality="OneToMany" p1:Guid="f368f018-66ce-4ba3-a462-d5f30a09de74">
+      <end1 multiplicity="One" name="ItemType" class="PortalItem" relation-class="ItemType" constrained="True" lazy="False" p1:Guid="630c2896-e892-4515-887b-7478fc3885b8">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItems" class="ItemType" relation-class="PortalItem" lazy="False" p1:Guid="3b72a9e7-7563-4bc9-9e8f-a8743490e794">
+        <property name="ItemTypeId" />
+      </end2>
+    </association>
+    <association name="ItemStatus_PortalItem" cardinality="OneToMany" p1:Guid="c2e78029-5198-49ee-a897-3b347010330a">
+      <end1 multiplicity="One" name="ItemStatus" class="PortalItem" relation-class="ItemStatus" constrained="True" lazy="False" p1:Guid="16af23e8-c60a-41e8-92df-5effbf94c87b">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItems" class="ItemStatus" relation-class="PortalItem" lazy="False" p1:Guid="78b2ad1f-6b4b-4bb4-9a99-0ec5505065dc">
+        <property name="ItemStatusId" />
+      </end2>
+    </association>
+    <association name="PortalItem_PortalItemSpecs" cardinality="OneToMany" p1:Guid="5d058fcd-4258-413f-8360-02e22a23dc74">
+      <end1 multiplicity="One" name="PortalItem" class="PortalItemSpec" relation-class="PortalItem" constrained="True" lazy="False" p1:Guid="95832114-c864-4fab-889e-1c8a96a11b00">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItemSpecs" class="PortalItem" relation-class="PortalItemSpec" lazy="False" p1:Guid="c67e7a48-c4bc-46e2-9ad2-80de68e7cdc4">
+        <property name="PortalItemId" />
+      </end2>
+    </association>
+    <association name="PortalItem_PortalReservation" cardinality="OneToMany" p1:Guid="371641e9-20f7-40eb-9c2a-5694aba913c1">
+      <end1 multiplicity="One" name="PortalItem" class="PortalReservation" relation-class="PortalItem" constrained="True" lazy="False" p1:Guid="4eeb64c7-5970-4940-bbef-42346eab3782">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalReservations" class="PortalItem" relation-class="PortalReservation" lazy="False" p1:Guid="ad94828c-f577-4adb-bc4e-f70e6a474a25">
+        <property name="PortalItemId" />
       </end2>
     </association>
   </associations>

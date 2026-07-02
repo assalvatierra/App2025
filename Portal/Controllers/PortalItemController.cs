@@ -26,6 +26,7 @@ namespace Portal.Controllers
         }
 
         // GET: api/PortalItem/searchItems?searchTerm=example
+        [AllowAnonymous]
         [HttpGet("searchItems")]
         public async Task<ActionResult<IEnumerable<PortalItem>>> SearchItems([FromQuery] string? searchTerm)
         {

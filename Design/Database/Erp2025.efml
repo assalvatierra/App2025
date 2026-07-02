@@ -1269,6 +1269,21 @@
     <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="99549627-d505-4eb6-aece-20d1728c95e2">
       <column name="" not-null="False" />
     </property>
+    <property name="CustomerName" type="String" p1:ValidateRequired="true" p1:Guid="f01232a7-a3b9-4337-92cc-29995a25dbe8">
+      <column name="" />
+    </property>
+    <property name="ContactNo" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a5f030b7-d29f-40e1-868e-0bcdc9f52f67">
+      <column name="" />
+    </property>
+    <property name="ContactEmail" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="22d24403-4602-41bf-940f-e1e391853f72">
+      <column name="" />
+    </property>
+    <property name="DateReceived" type="DateTime" p1:ValidateRequired="true" p1:Guid="38348560-0ae7-4d52-b4f7-5b674ae3bf14">
+      <column name="" />
+    </property>
+    <property name="jsonData" type="String" p1:ValidateRequired="true" p1:Guid="044ccfff-e347-4e3b-b6b1-3e71df573b19">
+      <column name="" />
+    </property>
   </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">

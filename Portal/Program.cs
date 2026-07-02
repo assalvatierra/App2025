@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Portal.Data;
+using Portal.DBLayer;
+using Portal.DBServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Register 3-layer architecture dependencies
+builder.Services.AddScoped<IPortalItemDbLayer, PortalItemDbLayer>();
+builder.Services.AddScoped<IPortalItemService, PortalItemService>();
+builder.Services.AddScoped<IPortalItemSpecDbLayer, PortalItemSpecDbLayer>();
+builder.Services.AddScoped<IPortalItemSpecService, PortalItemSpecService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

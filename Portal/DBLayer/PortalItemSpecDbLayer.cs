@@ -2,6 +2,7 @@ using Erp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Portal.Data;
 using Portal.Models;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace Portal.DBLayer
 {
@@ -24,9 +25,22 @@ namespace Portal.DBLayer
         }
         public async Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search)
         {
-            return await _context.PortalItemSpec
-                .Select(i=>i.Id)
-                .ToListAsync();
+            var query = _context.PortalItemSpec
+                .FromSqlRaw(@"
+                    SELECT pis.*
+                    FROM PortalItemSpec pis
+                    WHERE (TRY_CAST(JSON_VALUE(JsonData, '$.passenger_capacity') AS INT) >= {0} OR {0}=0)
+                    AND (TRY_CAST(JSON_VALUE(JsonData, '$.luggage_capacity') AS INT) >= {1} OR {1}=0)
+                    AND (UPPER(JSON_VALUE(JsonData, '$.transmission')) = UPPER({2}) OR UPPER({2})='ANY')
+                    ",
+                search.passenger_capacity, 
+                search.luggage_capacity, 
+                search.transmission)
+                .AsQueryable();
+   
+            var itemIds = await query.Select(s => (int)s.PortalItemId).Distinct().ToListAsync();
+
+            return itemIds;
         }
 
         public async Task<List<PortalItemSpec>> GetByPortalItemIdAsync(int portalItemId)

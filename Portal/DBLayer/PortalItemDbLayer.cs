@@ -26,9 +26,18 @@ namespace Portal.DBLayer
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 query = query.Where(p => 
-                    p.Name.Contains(searchTerm) || 
-                    (p.Description != null && p.Description.Contains(searchTerm)) ||
-                    (p.Code != null && p.Code.Contains(searchTerm)));
+                        (p.IsActive && !p.IsArchived) &&
+                        (
+                            (p.Name.Contains(searchTerm)) || 
+                            (p.Description != null && p.Description.Contains(searchTerm)) ||
+                            (p.Code != null && p.Code.Contains(searchTerm))
+                         )
+                    );
+            }
+
+            if (itemIds != null && itemIds.Count > 0)
+            {
+                query = query.Where(p => itemIds.Contains(p.Id));
             }
 
             return await query

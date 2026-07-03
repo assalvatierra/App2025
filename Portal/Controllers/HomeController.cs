@@ -20,10 +20,10 @@ namespace Portal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchItems(string? searchTerm)
+        public async Task<IActionResult> SearchItems([FromQuery] SearchDto search)
         {
-            var results = await _portalItemService.SearchItemsAsync(searchTerm ?? string.Empty);
-            ViewBag.SearchTerm = searchTerm;
+            var results = await _portalItemService.SearchItemsAsync(search);
+            ViewBag.SearchTerm = search.searchTerm;
             return View("SearchResult", results);
         }
 

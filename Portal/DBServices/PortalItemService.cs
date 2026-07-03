@@ -1,15 +1,18 @@
 using Erp.Domain.Models;
 using Portal.DBLayer;
+using Portal.Models;
 
 namespace Portal.DBServices
 {
     public class PortalItemService : IPortalItemService
     {
         private readonly IPortalItemDbLayer _db;
+        private readonly IPortalItemSpecDbLayer _dbItemSpecs;
 
-        public PortalItemService(IPortalItemDbLayer db)
+        public PortalItemService(IPortalItemDbLayer db, IPortalItemSpecDbLayer db2 )
         {
             _db = db;
+            _dbItemSpecs = db2;
         }
 
         public async Task<List<PortalItem>> GetAllAsync()
@@ -17,9 +20,10 @@ namespace Portal.DBServices
             return await _db.GetAllAsync();
         }
 
-        public async Task<List<PortalItem>> SearchItemsAsync(string searchTerm)
+        public async Task<List<PortalItem>> SearchItemsAsync(SearchDto search)
         {
-            return await _db.SearchItemsAsync(searchTerm);
+            List<int> itemIds = await _dbItemSpecs.GetItemIdsBySpecsCriteriaAsync(search);
+            return await _db.SearchItemsAsync(search.searchTerm, itemIds);
         }
 
         public async Task<PortalItem?> GetByIdAsync(int id)

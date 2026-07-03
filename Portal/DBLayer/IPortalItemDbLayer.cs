@@ -5,7 +5,7 @@ namespace Portal.DBLayer
     public interface IPortalItemDbLayer
     {
         Task<List<PortalItem>> GetAllAsync();
-        Task<List<PortalItem>> SearchItemsAsync(string searchTerm);
+        Task<List<PortalItem>> SearchItemsAsync(string searchTerm, List<int> itemIds);
         Task<PortalItem?> GetByIdAsync(int id);
         Task UpdateAsync(PortalItem portalItem);
         Task<PortalItem> AddAsync(PortalItem portalItem);

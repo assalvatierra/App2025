@@ -26,12 +26,13 @@ namespace Portal.Controllers
         }
 
         // GET: api/PortalItem/searchItems?searchTerm=example
-        [AllowAnonymous]
-        [HttpGet("searchItems")]
-        public async Task<ActionResult<IEnumerable<PortalItem>>> SearchItems([FromQuery] string? searchTerm)
-        {
-            return await _service.SearchItemsAsync(searchTerm ?? string.Empty);
-        }
+        //[AllowAnonymous]
+        //[HttpGet("searchItems")]
+        //public async Task<ActionResult<IEnumerable<PortalItem>>> SearchItems([FromQuery] string? searchTerm)
+        //{
+        //    var search = new SearchDto { searchTerm = searchTerm };
+        //    return await _service.SearchItemsAsync(search);
+        //}
 
         // GET: api/PortalItem/5
         [HttpGet("{id}")]

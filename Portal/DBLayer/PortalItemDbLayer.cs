@@ -18,7 +18,7 @@ namespace Portal.DBLayer
             return await _context.PortalItem.ToListAsync();
         }
 
-        public async Task<List<PortalItem>> SearchItemsAsync(string searchTerm)
+        public async Task<List<PortalItem>> SearchItemsAsync(string searchTerm, List<int> itemIds)
         {
             var query = _context.PortalItem
                 .Where(p => !p.IsArchived && p.IsActive);

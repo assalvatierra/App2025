@@ -1,6 +1,7 @@
 using Erp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Portal.Data;
+using Portal.Models;
 
 namespace Portal.DBLayer
 {
@@ -19,6 +20,12 @@ namespace Portal.DBLayer
                 .Include(s => s.PortalItem)
                 .OrderBy(s => s.PortalItemId)
                 .ThenBy(s => s.Order)
+                .ToListAsync();
+        }
+        public async Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search)
+        {
+            return await _context.PortalItemSpec
+                .Select(i=>i.Id)
                 .ToListAsync();
         }
 

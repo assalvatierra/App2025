@@ -20,6 +20,8 @@ builder.Services.AddScoped<IPortalItemDbLayer, PortalItemDbLayer>();
 builder.Services.AddScoped<IPortalItemService, PortalItemService>();
 builder.Services.AddScoped<IPortalItemSpecDbLayer, PortalItemSpecDbLayer>();
 builder.Services.AddScoped<IPortalItemSpecService, PortalItemSpecService>();
+builder.Services.AddScoped<IPortalReservationDbLayer, PortalReservationDbLayer>();
+builder.Services.AddScoped<IPortalReservationService, PortalReservationService>();
 
 builder.Services.AddControllersWithViews();
 

@@ -8,5 +8,6 @@ namespace Portal.Data
     {
         public DbSet<PortalItem> PortalItem { get; set; } = default!;
         public DbSet<PortalItemSpec> PortalItemSpec { get; set; } = default!;
+        public DbSet<PortalReservation> PortalReservation { get; set; } = default!;
     }
 }

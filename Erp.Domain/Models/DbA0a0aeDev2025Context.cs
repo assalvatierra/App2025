@@ -11,43 +11,22 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<PortalItem> PortalItems { get; set; }
-
-    public virtual DbSet<PortalItemSpec> PortalItemSpecs { get; set; }
+    public virtual DbSet<PortalReservation> PortalReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PortalItem>(entity =>
+        modelBuilder.Entity<PortalReservation>(entity =>
         {
-            entity.ToTable("PortalItem");
+            entity.ToTable("PortalReservation");
 
-            entity.Property(e => e.Code).HasMaxLength(4000);
-            entity.Property(e => e.CreatedBy).HasMaxLength(4000);
-            entity.Property(e => e.Description).HasMaxLength(4000);
-            entity.Property(e => e.IsActive).HasColumnName("isActive");
-            entity.Property(e => e.IsArchived).HasColumnName("isArchived");
-            entity.Property(e => e.IsPrivate).HasColumnName("isPrivate");
+            entity.Property(e => e.ContactEmail).HasMaxLength(4000);
+            entity.Property(e => e.ContactNo).HasMaxLength(4000);
+            entity.Property(e => e.CustomerName).HasMaxLength(4000);
             entity.Property(e => e.JsonData)
                 .HasMaxLength(4000)
                 .HasColumnName("jsonData");
-            entity.Property(e => e.LastEditBy).HasMaxLength(4000);
-            entity.Property(e => e.Name).HasMaxLength(4000);
-            entity.Property(e => e.Remarks).HasMaxLength(4000);
-        });
-
-        modelBuilder.Entity<PortalItemSpec>(entity =>
-        {
-            entity.ToTable("PortalItemSpec");
-
-            entity.Property(e => e.JsonData)
-                .HasMaxLength(4000)
-                .HasColumnName("jsonData");
-            entity.Property(e => e.Order).HasColumnName("order");
-            entity.Property(e => e.Remarks).HasMaxLength(4000);
-
-            entity.HasOne(d => d.PortalItem).WithMany(p => p.PortalItemSpecs)
-                .HasForeignKey(d => d.PortalItemId)
-                .HasConstraintName("FK_PortalItemSpec_PortalItem_0");
+            entity.Property(e => e.Status).HasMaxLength(100);
+            entity.Property(e => e.TransactionType).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

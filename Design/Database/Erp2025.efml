@@ -1266,6 +1266,9 @@
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="fae6116c-1c9d-4925-8b19-fc3ccd98f2c5">
       <column name="" />
     </id>
+    <property name="TransactionType" type="String" p1:ValidateRequired="true" p1:Guid="fb4e10bb-761e-45a0-9115-6dfa95c492c0">
+      <column name="" />
+    </property>
     <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="99549627-d505-4eb6-aece-20d1728c95e2">
       <column name="" not-null="False" />
     </property>
@@ -1282,6 +1285,9 @@
       <column name="" />
     </property>
     <property name="jsonData" type="String" p1:ValidateRequired="true" p1:Guid="044ccfff-e347-4e3b-b6b1-3e71df573b19">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="b92046d6-1da6-41a8-94ff-b6140c000766">
       <column name="" />
     </property>
   </class>

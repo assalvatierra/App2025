@@ -1,0 +1,65 @@
+@model Erp.Domain.Models.PortalReservation
+
+@{
+    ViewData["Title"] = "Reservation Form";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header reservation-bg text-white">
+                    <h2 class="reservation-white-text-bg">Reservation Form</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ReservationForm" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <input type="hidden" asp-for="PortalItemId" />
+                        <input type="hidden" asp-for="TransactionType" />
+                        <input type="hidden" asp-for="Status" />
+                        <input type="hidden" asp-for="JsonData" />
+
+                        <div class="mb-3">
+                            <label asp-for="CustomerName" class="form-label">Customer Name</label>
+                            <input asp-for="CustomerName" class="form-control" placeholder="Enter your full name" />
+                            <span asp-validation-for="CustomerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ContactNo" class="form-label">Contact Number</label>
+                            <input asp-for="ContactNo" class="form-control" placeholder="Enter your contact number" />
+                            <span asp-validation-for="ContactNo" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ContactEmail" class="form-label">Email Address</label>
+                            <input asp-for="ContactEmail" type="email" class="form-control" placeholder="Enter your email address" />
+                            <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                        </div>
+
+                        @if (Model.PortalItemId.HasValue)
+                        {
+                            <div class="alert alert-info" role="alert">
+                                <strong>Item ID:</strong> @Model.PortalItemId
+                            </div>
+                        }
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Submit Reservation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

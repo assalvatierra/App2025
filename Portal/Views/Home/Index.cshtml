@@ -66,38 +66,55 @@
     <p class="section-intro">Select from our wide range of reliable vehicles tailored to fit your specific travel needs and budget constraints.</p>
 
     <div class="fleet-grid">
-        <!-- Category 1 -->
-        <article class="fleet-card">
-            <img src="images/suv-rental.jpg" alt="Mid-size SUV rental car available for family trips" loading="lazy">
-            <h3>SUV Rentals</h3>
-            <p>Spacious, secure all-wheel-drive vehicles perfect for family road trips and rugged terrain adventures.</p>
-            <a href="/fleet/suv-rentals" class="fleet-link">Browse SUV Rentals</a>
-        </article>
+        @if (ViewBag.Categories != null)
+        {
+            foreach (var category in ViewBag.Categories)
+            {
+                <article class="fleet-card">
+                    <img src="@category.ImageUrl" alt="@category.Title rental car available" loading="lazy">
+                    <h3>@category.Title</h3>
+                    <p>@(category.Description ?? "Explore our selection of quality vehicles in this category.")</p>
+                    <a href="@category.PageUrl" class="fleet-link">Browse @category.Title</a>
+                </article>
+            }
+        }
+        else
+        {
+            <!-- Fallback categories if data is unavailable -->
+            <!-- Category 1 -->
+            <article class="fleet-card">
+                <img src="images/suv-rental.jpg" alt="Mid-size SUV rental car available for family trips" loading="lazy">
+                <h3>SUV Rentals</h3>
+                <p>Spacious, secure all-wheel-drive vehicles perfect for family road trips and rugged terrain adventures.</p>
+                <a href="/fleet/suv-rentals" class="fleet-link">Browse SUV Rentals</a>
+            </article>
 
-        <!-- Category 2 -->
-        <article class="fleet-card">
-            <img src="images/luxury-rental.jpg" alt="Premium luxury rental car for corporate travel" loading="lazy">
-            <h3>Luxury &amp; Exotic Cars</h3>
-            <p>Premium sports cars and elite sedans configured for business travel, corporate accounts, or special events.</p>
-            <a href="/fleet/luxury-cars" class="fleet-link">View Luxury Fleet</a>
-        </article>
+            <!-- Category 2 -->
+            <article class="fleet-card">
+                <img src="images/luxury-rental.jpg" alt="Premium luxury rental car for corporate travel" loading="lazy">
+                <h3>Luxury &amp; Exotic Cars</h3>
+                <p>Premium sports cars and elite sedans configured for business travel, corporate accounts, or special events.</p>
+                <a href="/fleet/luxury-cars" class="fleet-link">View Luxury Fleet</a>
+            </article>
 
-        <!-- Category 3 -->
-        <article class="fleet-card">
-            <img src="images/economy-rental.jpg" alt="Fuel-efficient economy rental car for city driving" loading="lazy">
-            <h3>Economy Car Rentals</h3>
-            <p>Compact, highly fuel-efficient cars ideal for solo commuters, budget travelers, and tight city parking.</p>
-            <a href="/fleet/economy-cars" class="fleet-link">Rent Economy Cars</a>
-        </article>
+            <!-- Category 3 -->
+            <article class="fleet-card">
+                <img src="images/economy-rental.jpg" alt="Fuel-efficient economy rental car for city driving" loading="lazy">
+                <h3>Economy Car Rentals</h3>
+                <p>Compact, highly fuel-efficient cars ideal for solo commuters, budget travelers, and tight city parking.</p>
+                <a href="/fleet/economy-cars" class="fleet-link">Rent Economy Cars</a>
+            </article>
 
-        <!-- Category 4 -->
-        <article class="fleet-card">
-            <img src="images/van-rental.jpg" alt="Multi-passenger transit van rental for group transit" loading="lazy">
-            <h3>Passenger Van Rentals</h3>
-            <p>Multi-seat transit vans built for large group outings, extended families, and team excursions.</p>
-            <a href="/fleet/passenger-vans" class="fleet-link">Explore Van Rentals</a>
-        </article>
+            <!-- Category 4 -->
+            <article class="fleet-card">
+                <img src="images/van-rental.jpg" alt="Multi-passenger transit van rental for group transit" loading="lazy">
+                <h3>Passenger Van Rentals</h3>
+                <p>Multi-seat transit vans built for large group outings, extended families, and team excursions.</p>
+                <a href="/fleet/passenger-vans" class="fleet-link">Explore Van Rentals</a>
+            </article>
+        }
     </div>
+
 </section>
 
 <!-- ==========================================

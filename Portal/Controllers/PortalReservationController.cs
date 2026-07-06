@@ -48,9 +48,22 @@ namespace Portal.Controllers
 
                 await _service.AddAsync(reservation);
                 TempData["SuccessMessage"] = "Reservation submitted successfully!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Success", new { id = reservation.Id });
             }
             return View(reservation);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Success(int id)
+        {
+            var reservations = await _service.GetByIdAsync(id);
+            if (reservations == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Message = "Reservation submitted successfully!";
+            return View(reservations);
         }
 
         // API ENDPOINTS

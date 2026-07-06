@@ -22,6 +22,8 @@ builder.Services.AddScoped<IPortalItemSpecDbLayer, PortalItemSpecDbLayer>();
 builder.Services.AddScoped<IPortalItemSpecService, PortalItemSpecService>();
 builder.Services.AddScoped<IPortalReservationDbLayer, PortalReservationDbLayer>();
 builder.Services.AddScoped<IPortalReservationService, PortalReservationService>();
+builder.Services.AddScoped<IPortalCategoryDbLayer, PortalCategoryDbLayer>();
+builder.Services.AddScoped<IPortalCategoryServices, PortalCategoryServices>();
 
 builder.Services.AddControllersWithViews();
 

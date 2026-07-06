@@ -1291,6 +1291,31 @@
       <column name="" />
     </property>
   </class>
+  <class name="PortalCategory" entity-set="PortalCategory" p1:Guid="0d24d06a-687a-4343-bd9e-7f0dd1b5373c">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ccc084bb-bab7-4709-9f01-658bc7707baf">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="813a2a81-9212-4d8b-bed7-1f856c30574a">
+      <column name="" />
+    </property>
+    <property name="jsonData" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="2ec96934-07a7-4e9c-b32b-3c5c0b90b44f">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="6394de77-608c-4203-b716-eb07acc18eb2">
+      <column name="" />
+    </property>
+  </class>
+  <class name="PortalItemCategory" entity-set="PortalItemCategory" p1:Guid="45412796-1d6c-40f5-82ee-c9c48999312f">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="82863827-7d7f-4142-b0a2-83f9a7ae8036">
+      <column name="" not-null="False" />
+    </id>
+    <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="d14d037a-4ea6-471e-86a3-2a8cc6da754e">
+      <column name="" not-null="False" />
+    </property>
+    <property name="PortalCategoryId" type="Int32" p1:ValidateRequired="true" p1:Guid="ee12dfd5-a53b-4a91-a633-0517c4f2e7d1">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -2090,6 +2115,22 @@
       </end1>
       <end2 multiplicity="Many" name="PortalReservations" class="PortalItem" relation-class="PortalReservation" lazy="False" p1:Guid="ad94828c-f577-4adb-bc4e-f70e6a474a25">
         <property name="PortalItemId" />
+      </end2>
+    </association>
+    <association name="PortalItem_PortalItemCategory" cardinality="OneToMany" p1:Guid="84fa7f06-e4d7-403e-8e14-c6017ae7ae83">
+      <end1 multiplicity="One" name="PortalItem" class="PortalItemCategory" relation-class="PortalItem" constrained="True" lazy="False" p1:Guid="61828c82-ff03-481d-b2e7-a0a04c64641c">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItemCategories" class="PortalItem" relation-class="PortalItemCategory" generate="False" lazy="False" p1:Guid="4655954a-2990-4a6b-b4f8-886958c81844">
+        <property name="PortalItemId" />
+      </end2>
+    </association>
+    <association name="PortalCategory_PortalItemCategory" cardinality="OneToMany" p1:Guid="b62a3885-4d44-41d3-a59f-154a21fe7316">
+      <end1 multiplicity="One" name="PortalCategory" class="PortalItemCategory" relation-class="PortalCategory" constrained="True" lazy="False" p1:Guid="cae8bf91-949d-4372-b8ba-e3ddf7238fdc">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItemCategories" class="PortalCategory" relation-class="PortalItemCategory" lazy="False" p1:Guid="9b454631-bdcd-499c-b127-ecc19a107b21">
+        <property name="PortalCategoryId" />
       </end2>
     </association>
   </associations>

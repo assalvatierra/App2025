@@ -11,22 +11,30 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<PortalReservation> PortalReservations { get; set; }
+    public virtual DbSet<PortalCategory> PortalCategories { get; set; }
+
+    public virtual DbSet<PortalItemCategory> PortalItemCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PortalReservation>(entity =>
+        modelBuilder.Entity<PortalCategory>(entity =>
         {
-            entity.ToTable("PortalReservation");
+            entity.ToTable("PortalCategory");
 
-            entity.Property(e => e.ContactEmail).HasMaxLength(4000);
-            entity.Property(e => e.ContactNo).HasMaxLength(4000);
-            entity.Property(e => e.CustomerName).HasMaxLength(4000);
             entity.Property(e => e.JsonData)
                 .HasMaxLength(4000)
                 .HasColumnName("jsonData");
-            entity.Property(e => e.Status).HasMaxLength(100);
-            entity.Property(e => e.TransactionType).HasMaxLength(100);
+            entity.Property(e => e.Name).HasMaxLength(4000);
+            entity.Property(e => e.Status).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<PortalItemCategory>(entity =>
+        {
+            entity.ToTable("PortalItemCategory");
+
+            entity.HasOne(d => d.PortalCategory).WithMany(p => p.PortalItemCategories)
+                .HasForeignKey(d => d.PortalCategoryId)
+                .HasConstraintName("FK_PortalItemCategory_PortalCategory_1");
         });
 
         OnModelCreatingPartial(modelBuilder);

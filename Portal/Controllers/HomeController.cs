@@ -8,14 +8,19 @@ namespace Portal.Controllers
     public class HomeController : Controller
     {
         private readonly IPortalItemService _portalItemService;
+        private readonly IPortalCategoryServices _portalCategoryService;
 
-        public HomeController(IPortalItemService portalItemService)
+        public HomeController(IPortalItemService portalItemService, IPortalCategoryServices portalCategoryService)
         {
             _portalItemService = portalItemService;
+            _portalCategoryService = portalCategoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var categories = await _portalCategoryService.GetAllByStatusAsync("Active");
+            ViewBag.Categories = categories;
+
             return View();
         }
 

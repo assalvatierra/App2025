@@ -66,16 +66,18 @@
     <p class="section-intro">Select from our wide range of reliable vehicles tailored to fit your specific travel needs and budget constraints.</p>
 
     <div class="fleet-grid">
-        @if (ViewBag.Categories != null)
+        @if (ViewBag.ProductCategories != null)
         {
-            foreach (var category in ViewBag.Categories)
+            foreach (var category in ViewBag.ProductCategories)
             {
-                <article class="fleet-card">
+                <div class="fleet-card">
+                    <article class="fleet-card">
                     <img src="@category.ImageUrl" alt="@category.Title rental car available" loading="lazy">
                     <h3>@category.Title</h3>
                     <p>@(category.Description ?? "Explore our selection of quality vehicles in this category.")</p>
                     <a href="@category.PageUrl" class="fleet-link">Browse @category.Title</a>
-                </article>
+                    </article>
+                </div>
             }
         }
         else
@@ -121,30 +123,50 @@
      SECTION 3: FEATURED RENTAL LOCATIONS
      ========================================== -->
 <section class="seo-locations-section" aria-labelledby="locations-heading">
-    <h2 id="locations-heading">Popular Car Rental Locations &amp; Airport Hubs</h2>
+    <h2 id="locations-heading">Car Rental Services</h2>
     <p class="section-intro">Pick up your vehicle at any of our highly rated local airport stations or convenient downtown branch offices.</p>
 
     <div class="locations-list">
-        <div class="location-item">
-            <h3>Los Angeles (LAX)</h3>
-            <p>Convenient airport terminal pickup options with 24/7 vehicle drop-off availability.</p>
-            <a href="/locations/los-angeles-lax" class="location-link">Rent a Car at LAX Airport</a>
-        </div>
-        <div class="location-item">
-            <h3>Miami Downtown</h3>
-            <p>Centrally located downtown service desk adjacent to top coastal luxury resorts and hotels.</p>
-            <a href="/locations/miami-downtown" class="location-link">Rent a Car in Downtown Miami</a>
-        </div>
-        <div class="location-item">
-            <h3>Chicago O'Hare (ORD)</h3>
-            <p>Fast-track rental services providing direct access to premium multi-passenger transit fleets.</p>
-            <a href="/locations/chicago-ohare-ord" class="location-link">Rent a Car at O'Hare Airport</a>
-        </div>
-        <div class="location-item">
-            <h3>New York City</h3>
-            <p>Flexible short-term and monthly leasing arrangements available right across metro Manhattan hubs.</p>
-            <a href="/locations/new-york-city" class="location-link">Rent a Car in New York City</a>
-        </div>
+        @if (ViewBag.ServiceCategories != null)
+        {
+            foreach (var service in ViewBag.ServiceCategories)
+            {
+                <div class="location-item">
+                    <img src="@service.ImageUrl"
+                         alt="@service.Title rental car available"
+                         loading="lazy"
+                         width="230"
+                         height="150">
+                    <h3>@service.Title</h3>
+                    <p>@(service.Description ?? "Convenient service location for all your rental needs.")</p>
+                    <a href="@service.PageUrl" class="location-link">@service.Title Services</a>
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Fallback locations if data is unavailable -->
+            <div class="location-item">
+                <h3>Los Angeles (LAX)</h3>
+                <p>Convenient airport terminal pickup options with 24/7 vehicle drop-off availability.</p>
+                <a href="/locations/los-angeles-lax" class="location-link">Rent a Car at LAX Airport</a>
+            </div>
+            <div class="location-item">
+                <h3>Miami Downtown</h3>
+                <p>Centrally located downtown service desk adjacent to top coastal luxury resorts and hotels.</p>
+                <a href="/locations/miami-downtown" class="location-link">Rent a Car in Downtown Miami</a>
+            </div>
+            <div class="location-item">
+                <h3>Chicago O'Hare (ORD)</h3>
+                <p>Fast-track rental services providing direct access to premium multi-passenger transit fleets.</p>
+                <a href="/locations/chicago-ohare-ord" class="location-link">Rent a Car at O'Hare Airport</a>
+            </div>
+            <div class="location-item">
+                <h3>New York City</h3>
+                <p>Flexible short-term and monthly leasing arrangements available right across metro Manhattan hubs.</p>
+                <a href="/locations/new-york-city" class="location-link">Rent a Car in New York City</a>
+            </div>
+        }
     </div>
     <div class="all-locations-btn-container">
         <a href="/locations" class="btn-secondary">View All Rental Locations</a>

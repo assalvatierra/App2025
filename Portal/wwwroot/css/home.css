@@ -190,6 +190,7 @@ section {
 .seo-locations-section {
     background-color: var(--light-bg);
     max-width: 100%;
+    text-align: center;
 }
 
     .seo-locations-section .locations-list {

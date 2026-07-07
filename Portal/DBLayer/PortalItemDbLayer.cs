@@ -45,6 +45,36 @@ namespace Portal.DBLayer
                 .ThenBy(p => p.Name)
                 .ToListAsync();
         }
+        public async Task<List<PortalItem>> GetItemsByCategoryAsync(string category, string? type)
+        {
+            var query = _context.PortalItem
+                .Include(p => p.PortalItemCategories)
+                .ThenInclude(pic => pic.PortalCategory)
+                .Where(p =>!p.IsArchived && p.IsActive)
+                .AsQueryable();
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(c => c.PortalItemCategories.Any(pic => pic.PortalCategory != null && pic.PortalCategory.Name == category));
+            }
+            if (!string.IsNullOrEmpty(type))
+            {
+                query = query.Where(c => c.PortalItemCategories.Any(pic => pic.PortalCategory != null && pic.PortalCategory.CategoryType == type));
+            }
+
+
+            //if (!string.IsNullOrWhiteSpace(category))
+            //{
+            //    query = query.Where(p => p.PortalItemCategories.Any(pic => 
+            //    pic.PortalCategory.Name.Trim().ToUpper() == category.Trim().ToUpper()
+            //    && (
+            //        pic.PortalCategory.CategoryType.Trim().ToUpper() == type.Trim().ToUpper()
+            //        || string.IsNullOrWhiteSpace(type)
+            //        )
+            //    ));
+            //}
+
+            return await query.ToListAsync();
+        }
 
         public async Task<PortalItem?> GetByIdAsync(int id)
         {

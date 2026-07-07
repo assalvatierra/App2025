@@ -26,6 +26,11 @@ namespace Portal.DBServices
             return await _db.SearchItemsAsync(search.searchTerm, itemIds);
         }
 
+        public async Task<List<PortalItem>> GetItemsByCategory(string category, string? type)
+        {
+            return await _db.GetItemsByCategoryAsync(category, type);
+        }
+
         public async Task<PortalItem?> GetByIdAsync(int id)
         {
             return await _db.GetByIdAsync(id);

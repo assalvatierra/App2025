@@ -12,6 +12,8 @@ public partial class PortalCategory
     public string? JsonData { get; set; }
 
     public string? Status { get; set; }
+    public int? OrderSeq { get; set; }
+    public string? CategoryType { get; set; }
 
     public virtual ICollection<PortalItemCategory> PortalItemCategories { get; set; } = new List<PortalItemCategory>();
 }

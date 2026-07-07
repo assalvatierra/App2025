@@ -1304,6 +1304,12 @@
     <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="6394de77-608c-4203-b716-eb07acc18eb2">
       <column name="" />
     </property>
+    <property name="OrderSeq" type="Int32" p1:ValidateRequired="true" p1:Guid="a4afed13-f8f9-4bea-b4a4-fa19dacdfefe">
+      <column name="" />
+    </property>
+    <property name="CategoryType" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="fa59024d-e452-487b-a06c-595dbbe155f0">
+      <column name="" />
+    </property>
   </class>
   <class name="PortalItemCategory" entity-set="PortalItemCategory" p1:Guid="45412796-1d6c-40f5-82ee-c9c48999312f">
     <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="82863827-7d7f-4142-b0a2-83f9a7ae8036">
@@ -1313,6 +1319,34 @@
       <column name="" not-null="False" />
     </property>
     <property name="PortalCategoryId" type="Int32" p1:ValidateRequired="true" p1:Guid="ee12dfd5-a53b-4a91-a633-0517c4f2e7d1">
+      <column name="" not-null="False" />
+    </property>
+  </class>
+  <class name="PortalContent" entity-set="PortalContent" p1:Guid="6de0fd1c-9abf-4ee5-b7fb-1034e1df526d">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="e5bae555-4af0-4a5b-b4bb-e332ff4f6137">
+      <column name="" />
+    </id>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="5b4ed166-c989-4105-8e87-067257d1a28e">
+      <column name="" />
+    </property>
+    <property name="jsonData" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d20abcd4-f7db-4980-89f5-c5264f37d749">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="c30373b5-6d13-43dc-b117-e664d806db03">
+      <column name="" />
+    </property>
+    <property name="OrderSeq" type="Int32" p1:ValidateRequired="true" p1:Guid="4a414a58-dd49-4e20-9f0a-d98297d64c7e">
+      <column name="" />
+    </property>
+  </class>
+  <class name="PortalContentCategory" entity-set="PortalContentCategory" p1:Guid="84a56fd3-dc01-469d-9522-69eeb49c8639">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="b8e6a2bb-8968-40c3-9a28-bfb74b332bd2">
+      <column name="" />
+    </id>
+    <property name="PortalCategoryId" type="Int32" p1:ValidateRequired="true" p1:Guid="b1b6a16d-cacf-41bb-a4cb-c04f6d5b0b64">
+      <column name="" not-null="False" />
+    </property>
+    <property name="PortalContentId" type="Int32" p1:ValidateRequired="true" p1:Guid="2b0df63e-99f7-45ef-831d-8c905377d405">
       <column name="" not-null="False" />
     </property>
   </class>
@@ -2131,6 +2165,22 @@
       </end1>
       <end2 multiplicity="Many" name="PortalItemCategories" class="PortalCategory" relation-class="PortalItemCategory" lazy="False" p1:Guid="9b454631-bdcd-499c-b127-ecc19a107b21">
         <property name="PortalCategoryId" />
+      </end2>
+    </association>
+    <association name="PortalCategory_PortalContentCategory" cardinality="OneToMany" p1:Guid="2abed166-e5d1-4f49-a187-124418201339">
+      <end1 multiplicity="One" name="PortalCategory" class="PortalContentCategory" relation-class="PortalCategory" constrained="True" lazy="False" p1:Guid="eeed6f07-a6e8-4901-bd39-25d629636e3e">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalContentCategories" class="PortalCategory" relation-class="PortalContentCategory" lazy="False" p1:Guid="d4687705-952f-417f-b70a-16a1e415ded2">
+        <property name="PortalCategoryId" />
+      </end2>
+    </association>
+    <association name="PortalContent_PortalContentCategory" cardinality="OneToMany" p1:Guid="ae3e1a13-cb00-4bf5-a74c-4e762b3fba7f">
+      <end1 multiplicity="One" name="PortalContent" class="PortalContentCategory" relation-class="PortalContent" constrained="True" lazy="False" p1:Guid="57f238de-7d7d-48f4-978d-de993213915c">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalContentCategories" class="PortalContent" relation-class="PortalContentCategory" lazy="False" p1:Guid="f42181e5-3bfb-4f98-9e3a-edc75c14a9f8">
+        <property name="PortalContentId" />
       </end2>
     </association>
   </associations>

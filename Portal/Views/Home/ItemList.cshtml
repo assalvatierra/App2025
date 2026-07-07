@@ -8,17 +8,17 @@
 <div class="container my-5">
     <div class="row">
         <div class="col-md-12">
-            <h1 class="mb-4">Search Results</h1>
+            <h1 class="mb-4">@ViewBag.PageTitle</h1>
 
-            @if (!string.IsNullOrWhiteSpace(searchTerm))
+            @if (!string.IsNullOrWhiteSpace(ViewBag.PageMessage as string))
             {
-                <p class="lead">Search results for: <strong>@searchTerm</strong></p>
+                <p class="lead">@ViewBag.PageMessage</p>
             }
 
             <!-- Back to Search Button -->
             <div class="mb-3">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back to Search
+                    <i class="bi bi-arrow-left"></i> Back to Home
                 </a>
             </div>
 

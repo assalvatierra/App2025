@@ -8,6 +8,7 @@
         public int passenger_capacity { get; set; }
         public int luggage_capacity { get; set; }
         public string? transmission { get; set; }
+        public string? category { get; set; }
 
     }
 }

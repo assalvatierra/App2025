@@ -25,9 +25,6 @@ namespace Portal.DBServices
         public async Task<List<ItemCategoryDTO>> GetAllByStatusAsync(string? status)
         {
             var categories = await _dbLayer.GetAllByStatusAsync(status);
-
-
-
             return categories.Select(c =>
             {
                 JObject jObject = JsonSerializer.Deserialize<JObject>(c.JsonData ?? "{}") ?? new JObject();

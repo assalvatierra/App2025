@@ -38,6 +38,6 @@ public partial class PortalItem
     public int? ItemTypeId { get; set; }
 
     public int? ItemStatusId { get; set; }
-
     public virtual ICollection<PortalItemSpec> PortalItemSpecs { get; set; } = new List<PortalItemSpec>();
+    public virtual ICollection<PortalItemCategory> PortalItemCategories { get; set; } = new List<PortalItemCategory>();
 }

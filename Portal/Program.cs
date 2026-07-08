@@ -27,6 +27,15 @@ builder.Services.AddScoped<IPortalCategoryServices, PortalCategoryServices>();
 builder.Services.AddScoped<IPortalContentDbLayer, PortalContentDbLayer>();
 builder.Services.AddScoped<IPortalContentService, PortalContentService>();
 
+// Add session support
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -45,6 +54,9 @@ else
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+// Enable session middleware
+app.UseSession();
 
 app.UseAuthorization();
 

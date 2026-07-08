@@ -47,6 +47,11 @@ namespace Portal.DBServices
 
         }
 
+        public async Task<List<ItemDto>> GetByIdListAsync(List<int> IdList)
+        {
+            var items = await _db.GetByIdListAsync(IdList);
+            return items.Select(item => item.MapToDto()).ToList();
+        }
         public async Task<PortalItem?> GetByIdAsync(int id)
         {
             return await _db.GetByIdAsync(id);

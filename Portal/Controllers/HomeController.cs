@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Portal.DBServices;
 using Portal.Models;
+using Portal.Helpers;
 using System.Diagnostics;
 
 namespace Portal.Controllers
@@ -46,6 +47,11 @@ namespace Portal.Controllers
             ViewBag.SearchTerm = search.searchTerm;
             ViewBag.PageTitle = "Car Rental Search Results";
             ViewBag.PageMessage = $"Search results for: {search.searchTerm}";
+
+            // Pass compare list to view
+            var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+            ViewBag.CompareList = compareList;
+
             return View("ItemList", results);
         }
 
@@ -56,7 +62,116 @@ namespace Portal.Controllers
             ViewBag.Category = category;
             ViewBag.PageTitle = "Car Rental Items by Category";
             ViewBag.PageMessage = $"Items in category: {category}";
+
+            // Pass compare list to view
+            var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+            ViewBag.CompareList = compareList;
+
             return View("ItemList", results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ItemsToCompare()
+        {
+            var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+            var results = await _portalItemService.GetByIdListAsync(compareList);
+            ViewBag.Category = "Comparison";
+            ViewBag.PageTitle = "Car Rental Items for Comparison";
+            ViewBag.PageMessage = "Items selected for comparison";
+            ViewBag.CompareList = compareList;
+            return View("ItemList", results);
+        }
+        [HttpPost]
+        public IActionResult AddToCompare(int itemId)
+        {
+            try
+            {
+                // Initialize or get the comparison list from session
+                var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+
+                // Check if item already exists in the list
+                if (compareList.Contains(itemId))
+                {
+                    return Json(new { success = false, message = "Item is already in the comparison list" });
+                }
+
+                // Add item to the list
+                compareList.Add(itemId);
+
+                // Save back to session
+                HttpContext.Session.SetObject("CompareList", compareList);
+
+                return Json(new { 
+                    success = true, 
+                    message = "Item added to comparison list successfully",
+                    count = compareList.Count
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetCompareCount()
+        {
+            var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+            return Json(new { count = compareList.Count });
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromCompare(int itemId)
+        {
+            try
+            {
+                // Get the comparison list from session
+                var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+
+                // Check if item exists in the list
+                if (!compareList.Contains(itemId))
+                {
+                    return Json(new { success = false, message = "Item is not in the comparison list" });
+                }
+
+                // Remove item from the list
+                compareList.Remove(itemId);
+
+                // Save back to session
+                HttpContext.Session.SetObject("CompareList", compareList);
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Item removed from comparison list successfully",
+                    count = compareList.Count
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ClearCompareList()
+        {
+            try
+            {
+                // Clear the comparison list from session
+                HttpContext.Session.SetObject("CompareList", new List<int>());
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Comparison list cleared successfully",
+                    count = 0
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
         }
 
         public IActionResult Privacy()

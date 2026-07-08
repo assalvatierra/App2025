@@ -29,3 +29,27 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Compare Toast Styling */
+#compareToast {
+    min-width: 350px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+#compareToast .toast-body {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#compareToast .btn-light {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.15s ease-in-out;
+}
+
+#compareToast .btn-light:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}

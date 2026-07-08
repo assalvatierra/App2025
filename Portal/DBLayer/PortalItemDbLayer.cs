@@ -78,6 +78,11 @@ namespace Portal.DBLayer
             return await query.ToListAsync();
         }
 
+        public async Task<List<PortalItem>> GetByIdListAsync(List<int> IdList)
+        {
+            return await _context.PortalItem.Where(p => IdList.Contains(p.Id)).ToListAsync();
+        }
+
         public async Task<PortalItem?> GetByIdAsync(int id)
         {
             return await _context.PortalItem.FindAsync(id);

@@ -20,15 +20,31 @@ namespace Portal.DBServices
             return await _db.GetAllAsync();
         }
 
-        public async Task<List<PortalItem>> SearchItemsAsync(SearchDto search)
+        public async Task<List<ItemDto>> SearchItemsAsync(SearchDto search)
         {
-            List<int> itemIds = await _dbItemSpecs.GetItemIdsBySpecsCriteriaAsync(search);
-            return await _db.SearchItemsAsync(search.searchTerm, itemIds);
+            var specs = await _dbItemSpecs.GetItemISpecsCriteriaAsync(search);
+            var itemIds = specs.Select(s => (int)s.PortalItemId).Distinct().ToList();
+            //return itemIds;
+            //List<int> itemIds = await _dbItemSpecs.GetItemIdsBySpecsCriteriaAsync(search);
+            var items = await _db.SearchItemsAsync(search.searchTerm, itemIds);
+            return items.Select(item => 
+            { 
+                var dto = item.MapToDto();
+                //dto.PortalItem.PortalItemSpecs = specs.Where(s => s.PortalItemId == item.Id).ToList();
+                return dto;
+            }).ToList();
         }
 
-        public async Task<List<PortalItem>> GetItemsByCategory(string category, string? type)
+        public async Task<List<ItemDto>> GetItemsByCategory(string category, string? type)
         {
-            return await _db.GetItemsByCategoryAsync(category, type);
+            var items = await _db.GetItemsByCategoryAsync(category, type);
+
+            return items.Select( item =>
+            {
+                ItemDto dto = item.MapToDto();
+                return dto;
+            }).ToList();
+
         }
 
         public async Task<PortalItem?> GetByIdAsync(int id)

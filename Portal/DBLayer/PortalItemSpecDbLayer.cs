@@ -23,7 +23,7 @@ namespace Portal.DBLayer
                 .ThenBy(s => s.Order)
                 .ToListAsync();
         }
-        public async Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search)
+        public async Task<List<PortalItemSpec>> GetItemISpecsCriteriaAsync(SearchDto search)
         {
             var query = _context.PortalItemSpec
                 .FromSqlRaw(@"
@@ -38,9 +38,10 @@ namespace Portal.DBLayer
                 search.transmission)
                 .AsQueryable();
    
-            var itemIds = await query.Select(s => (int)s.PortalItemId).Distinct().ToListAsync();
+            //var itemIds = await query.Select(s => (int)s.PortalItemId).Distinct().ToListAsync();
+            //return itemIds;
 
-            return itemIds;
+            return query.ToList();
         }
 
         public async Task<List<PortalItemSpec>> GetByPortalItemIdAsync(int portalItemId)

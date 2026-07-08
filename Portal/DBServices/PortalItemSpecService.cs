@@ -17,10 +17,10 @@ namespace Portal.DBServices
         {
             return await _db.GetAllAsync();
         }
-        public async Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search)
-        {
-            return await _db.GetItemIdsBySpecsCriteriaAsync(search);
-        }
+        //public async Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search)
+        //{
+        //    return await _db.GetItemIdsBySpecsCriteriaAsync(search);
+        //}
         public async Task<List<PortalItemSpec>> GetByPortalItemIdAsync(int portalItemId)
         {
             return await _db.GetByPortalItemIdAsync(portalItemId);

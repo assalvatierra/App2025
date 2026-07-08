@@ -6,7 +6,7 @@ namespace Portal.DBLayer
     public interface IPortalItemSpecDbLayer
     {
         Task<List<PortalItemSpec>> GetAllAsync();
-        Task<List<int>> GetItemIdsBySpecsCriteriaAsync(SearchDto search);
+        Task<List<PortalItemSpec>> GetItemISpecsCriteriaAsync(SearchDto search);
 
         Task<List<PortalItemSpec>> GetByPortalItemIdAsync(int portalItemId);
         Task<PortalItemSpec?> GetByIdAsync(int id);

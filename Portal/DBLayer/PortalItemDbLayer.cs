@@ -21,6 +21,7 @@ namespace Portal.DBLayer
         public async Task<List<PortalItem>> SearchItemsAsync(string searchTerm, List<int> itemIds)
         {
             var query = _context.PortalItem
+                .Include(itemspecs => itemspecs.PortalItemSpecs)
                 .Where(p => !p.IsArchived && p.IsActive);
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -50,6 +51,7 @@ namespace Portal.DBLayer
             var query = _context.PortalItem
                 .Include(p => p.PortalItemCategories)
                 .ThenInclude(pic => pic.PortalCategory)
+                .Include(p => p.PortalItemSpecs)
                 .Where(p =>!p.IsArchived && p.IsActive)
                 .AsQueryable();
             if (!string.IsNullOrEmpty(category))

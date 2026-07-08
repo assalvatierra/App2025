@@ -6,8 +6,8 @@ namespace Portal.DBServices
     public interface IPortalItemService
     {
         Task<List<PortalItem>> GetAllAsync();
-        Task<List<PortalItem>> SearchItemsAsync(SearchDto search);
-        Task<List<PortalItem>> GetItemsByCategory(string category, string? type);
+        Task<List<ItemDto>> SearchItemsAsync(SearchDto search);
+        Task<List<ItemDto>> GetItemsByCategory(string category, string? type);
         Task<PortalItem?> GetByIdAsync(int id);
         Task UpdateAsync(PortalItem portalItem);
         Task<PortalItem> AddAsync(PortalItem portalItem);

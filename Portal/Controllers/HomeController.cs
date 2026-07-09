@@ -108,6 +108,8 @@ namespace Portal.Controllers
             ViewBag.PageTitle = "Car Rental Items for Comparison";
             ViewBag.PageMessage = "Items selected for comparison";
             ViewBag.CompareList = compareList;
+            ViewBag.cardMode = "List";
+
             return View("ItemList", results);
         }
         [HttpPost]

@@ -24,6 +24,8 @@ namespace Portal.Controllers
         [HttpGet]
         public async Task<IActionResult> ReservationForm(int? itemId)
         {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
             var reservation = new PortalReservation
             {
                 PortalItemId = itemId,
@@ -46,6 +48,13 @@ namespace Portal.Controllers
                 {
                     viewModel.Item = portalItem.MapToDto();
                 }
+            }
+
+            // Store the return URL for cancellation
+            // Check if returnUrl is not coming from PortalReservationController
+            if (!string.IsNullOrEmpty(returnUrl) && !returnUrl.Contains("/PortalReservation/"))
+            {
+                HttpContext.Session.SetString("reservationReturnUrl", returnUrl);
             }
 
             return View(viewModel);
@@ -96,6 +105,30 @@ namespace Portal.Controllers
 
             ViewBag.Message = "Reservation submitted successfully!";
             return View(reservations);
+        }
+
+        // GET: PortalReservation/CancelReservationForm
+        [HttpGet]
+        public IActionResult CancelReservationForm(string? returnUrl)
+        {
+            // Try to get returnUrl from session if not provided
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = HttpContext.Session.GetString("reservationReturnUrl");
+            }
+
+            // Check if the return URL is valid and local to prevent open redirect attacks
+            if (!string.IsNullOrEmpty(returnUrl) 
+                //&& Url.IsLocalUrl(returnUrl)
+                )
+            {
+                // Clear the session after using it
+                HttpContext.Session.Remove("reservationReturnUrl");
+                return Redirect(returnUrl);
+            }
+
+            // Default fallback to home page if no valid return URL
+            return RedirectToAction("Index", "Home");
         }
 
         // API ENDPOINTS

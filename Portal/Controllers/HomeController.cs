@@ -51,6 +51,7 @@ namespace Portal.Controllers
             // Pass compare list to view
             var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
             ViewBag.CompareList = compareList;
+            ViewBag.cardMode = "List";
 
             return View("ItemList", results);
         }
@@ -66,9 +67,37 @@ namespace Portal.Controllers
             // Pass compare list to view
             var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
             ViewBag.CompareList = compareList;
+            ViewBag.cardMode = "List";
 
             return View("ItemList", results);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> OurProducts()
+        {
+            var results = await _portalItemService.GetItemsByCategory("", "Product");
+            //ViewBag.Category = "List";
+            ViewBag.PageTitle = "Car Rental Fleet";
+            //ViewBag.PageMessage = $"Items in category: Product";
+
+            // Pass compare list to view
+            var compareList = HttpContext.Session.GetObject<List<int>>("CompareList") ?? new List<int>();
+            ViewBag.CompareList = compareList;
+            ViewBag.cardMode = "List";
+
+            return View("ItemList", results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BrowseProducts()
+        {
+            var results = await _portalItemService.GetItemsByCategory("", "Product");
+            ViewBag.PageTitle = "Browse Car Rental Fleet";
+            ViewBag.cardMode = "Browse";
+
+            return View("ItemList", results);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> ItemsToCompare()

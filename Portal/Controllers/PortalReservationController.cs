@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portal.DBServices;
+using Portal.Models;
+using Portal.ViewModels;
 
 namespace Portal.Controllers
 {
@@ -10,15 +12,17 @@ namespace Portal.Controllers
     public class PortalReservationController : Controller
     {
         private readonly IPortalReservationService _service;
+        private readonly IPortalItemService _portalItemService;
 
-        public PortalReservationController(IPortalReservationService service)
+        public PortalReservationController(IPortalReservationService service, IPortalItemService portalItemService)
         {
             _service = service;
+            _portalItemService = portalItemService;
         }
 
         // GET: PortalReservation/ReservationForm
         [HttpGet]
-        public IActionResult ReservationForm(int? itemId)
+        public async Task<IActionResult> ReservationForm(int? itemId)
         {
             var reservation = new PortalReservation
             {
@@ -28,14 +32,31 @@ namespace Portal.Controllers
                 TransactionType = "Reservation",
                 JsonData = "{}"
             };
-            return View(reservation);
+
+            var viewModel = new ReservationFormViewModel
+            {
+                Reservation = reservation
+            };
+
+            // Fetch the portal item if itemId is provided
+            if (itemId.HasValue)
+            {
+                var portalItem = await _portalItemService.GetByIdAsync(itemId.Value);
+                if (portalItem != null)
+                {
+                    viewModel.Item = portalItem.MapToDto();
+                }
+            }
+
+            return View(viewModel);
         }
 
         // POST: PortalReservation/ReservationForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ReservationForm(PortalReservation reservation)
+        public async Task<IActionResult> ReservationForm(ReservationFormViewModel viewModel)
         {
+            var reservation = viewModel.Reservation;
             reservation.DateReceived = DateTime.Now;
             reservation.Status = "Pending";
 
@@ -50,7 +71,18 @@ namespace Portal.Controllers
                 TempData["SuccessMessage"] = "Reservation submitted successfully!";
                 return RedirectToAction("Success", new { id = reservation.Id });
             }
-            return View(reservation);
+
+            // Reload the item on validation failure
+            if (reservation.PortalItemId.HasValue)
+            {
+                var portalItem = await _portalItemService.GetByIdAsync(reservation.PortalItemId.Value);
+                if (portalItem != null)
+                {
+                    viewModel.Item = portalItem.MapToDto();
+                }
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]

@@ -1,4 +1,4 @@
-@model Erp.Domain.Models.PortalReservation
+@model Portal.ViewModels.ReservationFormViewModel
 
 @{
     ViewData["Title"] = "Reservation Form";
@@ -7,6 +7,17 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @* Display Item Card if available *@
+            @if (Model.Item != null)
+            {
+                <div class="mb-4">
+                    <h4 class="mb-3">Selected Item</h4>
+                    <div class="row row-cols-1 g-4">
+                        @await Html.PartialAsync("_ItemCard", (Model.Item, new List<int>(), showActions: false))
+                    </div>
+                </div>
+            }
+
             <div class="card shadow">
                 <div class="card-header reservation-bg text-white">
                     <h2 class="reservation-white-text-bg">Reservation Form</h2>
@@ -15,35 +26,28 @@
                     <form asp-action="ReservationForm" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        <input type="hidden" asp-for="PortalItemId" />
-                        <input type="hidden" asp-for="TransactionType" />
-                        <input type="hidden" asp-for="Status" />
-                        <input type="hidden" asp-for="JsonData" />
+                        <input type="hidden" asp-for="Reservation.PortalItemId" />
+                        <input type="hidden" asp-for="Reservation.TransactionType" />
+                        <input type="hidden" asp-for="Reservation.Status" />
+                        <input type="hidden" asp-for="Reservation.JsonData" />
 
                         <div class="mb-3">
-                            <label asp-for="CustomerName" class="form-label">Customer Name</label>
-                            <input asp-for="CustomerName" class="form-control" placeholder="Enter your full name" />
-                            <span asp-validation-for="CustomerName" class="text-danger"></span>
+                            <label asp-for="Reservation.CustomerName" class="form-label">Customer Name</label>
+                            <input asp-for="Reservation.CustomerName" class="form-control" placeholder="Enter your full name" />
+                            <span asp-validation-for="Reservation.CustomerName" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="ContactNo" class="form-label">Contact Number</label>
-                            <input asp-for="ContactNo" class="form-control" placeholder="Enter your contact number" />
-                            <span asp-validation-for="ContactNo" class="text-danger"></span>
+                            <label asp-for="Reservation.ContactNo" class="form-label">Contact Number</label>
+                            <input asp-for="Reservation.ContactNo" class="form-control" placeholder="Enter your contact number" />
+                            <span asp-validation-for="Reservation.ContactNo" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="ContactEmail" class="form-label">Email Address</label>
-                            <input asp-for="ContactEmail" type="email" class="form-control" placeholder="Enter your email address" />
-                            <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                            <label asp-for="Reservation.ContactEmail" class="form-label">Email Address</label>
+                            <input asp-for="Reservation.ContactEmail" type="email" class="form-control" placeholder="Enter your email address" />
+                            <span asp-validation-for="Reservation.ContactEmail" class="text-danger"></span>
                         </div>
-
-                        @if (Model.PortalItemId.HasValue)
-                        {
-                            <div class="alert alert-info" role="alert">
-                                <strong>Item ID:</strong> @Model.PortalItemId
-                            </div>
-                        }
 
                         <div class="d-flex justify-content-between mt-4">
                             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">

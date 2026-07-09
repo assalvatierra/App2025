@@ -85,7 +85,9 @@ namespace Portal.DBLayer
 
         public async Task<PortalItem?> GetByIdAsync(int id)
         {
-            return await _context.PortalItem.FindAsync(id);
+            return await _context.PortalItem
+                .Include(pi=>pi.PortalItemSpecs)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task UpdateAsync(PortalItem portalItem)

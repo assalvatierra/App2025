@@ -98,6 +98,14 @@ namespace Portal.Controllers
             return View("ItemList", results);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> OurServices()
+        {
+            ViewBag.PageTitle = "Car Rental Services";
+            var results = await _portalContentService.GetContentsByCategoryAsync("Services", null);
+
+            return View("ContentList", results);
+        }
 
         [HttpGet]
         public async Task<IActionResult> ItemsToCompare()

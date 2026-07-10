@@ -30,14 +30,11 @@ namespace Portal.Controllers
             ViewBag.ProductCategories = categories
                 .Where(c => c.PortalCategory.CategoryType == "Product");
 
-            // Fetch the categories for the "Service" type
-            //var ServiceCategories = categories
-            //    .Where(c => c.PortalCategory.CategoryType == "Service");
             ViewBag.ServiceCategories = await _portalContentService.GetContentsByCategoryAsync("Services", null);
+            ViewBag.WhyUs = await _portalContentService.GetContentsByCategoryAsync("WhyUs", null);
+            ViewBag.Faq = await _portalContentService.GetContentsByCategoryAsync("Faq", null);
 
-
-
-                return View();
+            return View();
         }
 
         [HttpGet]
@@ -105,6 +102,24 @@ namespace Portal.Controllers
             var results = await _portalContentService.GetContentsByCategoryAsync("Services", null);
 
             return View("ContentList", results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Articles()
+        {
+            ViewBag.PageTitle = "Car Rental Articles";
+            var results = await _portalContentService.GetContentsByCategoryAsync("Articles", null);
+
+            return View("ContentList", results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FaqList()
+        {
+            ViewBag.PageTitle = "Car Rental FAQs";
+            var results = await _portalContentService.GetContentsByCategoryAsync("Faq", null);
+
+            return View("FaqList", results);
         }
 
         [HttpGet]

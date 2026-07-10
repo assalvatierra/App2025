@@ -171,32 +171,55 @@
         }
     </div>
     <div class="all-locations-btn-container">
-        <a href="/locations" class="btn-secondary">View All Rental Services</a>
+        <a href="/Home/OurServices" class="btn-secondary">View All Rental Services</a>
     </div>
 </section>
 
 <!-- ==========================================
-     SECTION 4: VALUE PROP & HOW IT WORKS
+     SECTION 4: WhyUs (VALUE PROP & HOW IT WORKS)
      ========================================== -->
 <section class="seo-value-section" aria-labelledby="value-heading">
     <h2 id="value-heading">Why Choose Us For Your Next Road Trip?</h2>
 
     <div class="value-grid">
-        <div class="value-prop-item">
-            <span class="icon">🏷️</span>
-            <h3>No Hidden Booking Fees</h3>
-            <p>We provide absolute transparency with up-front pricing tiers. The baseline reservation price you see online is exactly what you pay at the collection counter.</p>
-        </div>
-        <div class="value-prop-item">
-            <span class="icon">🛣️</span>
-            <h3>Unlimited Mileage Options</h3>
-            <p>Drive without boundaries. Select from our wide range of fleet categories outfitted with full unlimited mileage plans for long-distance regional travel.</p>
-        </div>
-        <div class="value-prop-item">
-            <span class="icon">🛠️</span>
-            <h3>24/7 Roadside Assistance</h3>
-            <p>Every single reservation comes backed by comprehensive mechanical protection and on-call roadside towing support to keep your journey moving safely.</p>
-        </div>
+        @if (ViewBag.WhyUs != null)
+        {
+            foreach (var whyus in ViewBag.WhyUs)
+            {
+                <div class="value-prop-item">
+                    @if (!string.IsNullOrEmpty(whyus.ImageUrl))
+                    {
+                        <img src="@whyus.ImageUrl" 
+                             alt="@whyus.Title" 
+                             loading="lazy"
+                             width="60"
+                             height="60"
+                             class="value-icon">
+                    }
+                    <h3>@whyus.Title</h3>
+                    <p>@(whyus.Description ?? "Discover the benefits of choosing our car rental services.")</p>
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Fallback content if data is unavailable -->
+            <div class="value-prop-item">
+                <span class="icon">🏷️</span>
+                <h3>No Hidden Booking Fees</h3>
+                <p>We provide absolute transparency with up-front pricing tiers. The baseline reservation price you see online is exactly what you pay at the collection counter.</p>
+            </div>
+            <div class="value-prop-item">
+                <span class="icon">🛣️</span>
+                <h3>Unlimited Mileage Options</h3>
+                <p>Drive without boundaries. Select from our wide range of fleet categories outfitted with full unlimited mileage plans for long-distance regional travel.</p>
+            </div>
+            <div class="value-prop-item">
+                <span class="icon">🛠️</span>
+                <h3>24/7 Roadside Assistance</h3>
+                <p>Every single reservation comes backed by comprehensive mechanical protection and on-call roadside towing support to keep your journey moving safely.</p>
+            </div>
+        }
     </div>
 </section>
 
@@ -230,6 +253,19 @@
 
     <!-- Use structured semantic details tag for excellent mobile user-experience and clean layout -->
     <div class="faq-accordion-wrapper">
+        @if (ViewBag.Faq != null)
+        {
+            foreach (var faq in ViewBag.Faq)
+            {
+                <details class="faq-item">
+                    <summary><strong>@faq.Title</strong></summary>
+                    <div class="faq-answer">
+                        <p>@faq.Description</p>
+                    </div>
+                </details>
+            }
+        }
+        <!--
         <details class="faq-item">
             <summary><strong>What do I need to rent a car?</strong></summary>
             <div class="faq-answer">
@@ -250,5 +286,10 @@
                 <p>Yes, most reservations can be modified or cancelled up to 48 hours before your scheduled pickup time without penalty. Premium or specialty vehicle bookings may have different cancellation policies.</p>
             </div>
         </details>
+        -->
     </div>
+    <div class="all-locations-btn-container">
+        <a href="/Home/FaqList" class="btn-secondary">View All Rental FAQs</a>
+    </div>
+
 </section>

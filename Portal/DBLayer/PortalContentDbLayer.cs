@@ -20,6 +20,7 @@ namespace Portal.DBLayer
             var query = _context.PortalContent
                 .Include(p => p.PortalContentCategories)
                 .ThenInclude(pcc => pcc.PortalCategory)
+                .Where(c=>c.Status=="Active")
                 .AsQueryable();
             if (!string.IsNullOrEmpty(category))
             {

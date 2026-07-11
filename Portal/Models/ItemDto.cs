@@ -10,6 +10,7 @@ namespace Portal.Models
         public string? Title { get; set; } = null;
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
+        public string? ImageAlt { get; set; }
         public string? PageUrl { get; set; }
 
     }
@@ -26,6 +27,7 @@ namespace Portal.Models
                 Title = jObject.Title,
                 Description = jObject.Description,
                 ImageUrl = jObject.ImageUrl,
+                ImageAlt = jObject.ImageAlt,
                 PageUrl = jObject.PageUrl
             };
 

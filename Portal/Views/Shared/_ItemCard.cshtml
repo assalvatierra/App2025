@@ -11,7 +11,7 @@
 <div class="col">
     <div class="card h-100 shadow-sm">
         <div class="card-body">
-            <img src="@item.ImageUrl" alt="@item.PortalItem.Name rental car available" loading="lazy" height="165">
+            <img src="@item.ImageUrl" alt="@(item.ImageAlt ?? $"{item.PortalItem.Name} rental car available")" loading="lazy" height="165">
 
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <h5 class="card-title mb-0">@item.Title</h5>

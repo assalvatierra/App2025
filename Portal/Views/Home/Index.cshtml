@@ -60,8 +60,12 @@
                 <div class="form-group">
                     <label> </label>
                     <div style="display: flex; gap: 10px;">
-                        <a href="@Url.Action("ReservationForm", "PortalReservation", new { itemId = 0, transactionType = "Booking" })" class="btn-search" style="flex: 1; text-align: center;">Book Now</a>
-                        <a href="@Url.Action("ReservationForm", "PortalReservation", new { itemId = 0, transactionType = "Quote" })" class="btn-search" style="flex: 1; text-align: center;">Request Quote</a>
+                        <a href="@Url.Action("ReservationForm", "PortalReservation", new { itemId = 0, transactionType = "Booking" })" class="btn btn-outline-primary" style="flex: 1; text-align: center;">
+                            <i class="bi bi-calendar-check"></i> Book Now
+                        </a>
+                        <a href="@Url.Action("ReservationForm", "PortalReservation", new { itemId = 0, transactionType = "Quote" })" class="btn btn-outline-primary" style="flex: 1; text-align: center;">
+                            <i class="bi bi-clipboard-check"></i> Request Quote
+                        </a>
                     </div>
                 </div>
             </div>

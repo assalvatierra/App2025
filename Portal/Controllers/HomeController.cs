@@ -86,11 +86,12 @@ namespace Portal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BrowseProducts()
+        public async Task<IActionResult> BrowseProducts(string? transactionType)
         {
             var results = await _portalItemService.GetItemsByCategory("", "Product");
             ViewBag.PageTitle = "Browse Car Rental Fleet";
             ViewBag.cardMode = "Browse";
+            ViewBag.TransactionType = transactionType ?? "Reservation";
 
             return View("ItemList", results);
         }

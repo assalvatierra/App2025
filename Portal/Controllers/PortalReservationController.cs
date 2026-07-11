@@ -22,7 +22,7 @@ namespace Portal.Controllers
 
         // GET: PortalReservation/ReservationForm
         [HttpGet]
-        public async Task<IActionResult> ReservationForm(int? itemId)
+        public async Task<IActionResult> ReservationForm(int? itemId, string? transactionType)
         {
             string returnUrl = Request.Headers["Referer"].ToString();
 
@@ -31,7 +31,7 @@ namespace Portal.Controllers
                 PortalItemId = itemId,
                 DateReceived = DateTime.Now,
                 Status = "Pending",
-                TransactionType = "Reservation",
+                TransactionType = transactionType ?? "Reservation",
                 JsonData = "{}"
             };
 
@@ -57,6 +57,7 @@ namespace Portal.Controllers
                 HttpContext.Session.SetString("reservationReturnUrl", returnUrl);
             }
 
+            ViewBag.transactionType = transactionType ?? "Reservation";
             return View(viewModel);
         }
 
@@ -78,6 +79,7 @@ namespace Portal.Controllers
 
                 await _service.AddAsync(reservation);
                 TempData["SuccessMessage"] = "Reservation submitted successfully!";
+                TempData["TransactionType"] = reservation.TransactionType;
                 return RedirectToAction("Success", new { id = reservation.Id });
             }
 

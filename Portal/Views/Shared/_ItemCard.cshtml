@@ -1,10 +1,11 @@
-@model (Portal.Models.ItemDto item, List<int> compareList, bool showActions, string cardMode)
+@model (Portal.Models.ItemDto item, List<int> compareList, bool showActions, string cardMode, string transactionType)
 
 @{
     var item = Model.item;
     var compareList = Model.compareList ?? new List<int>();
     var showActions = Model.showActions;
     var cardMode = Model.cardMode;
+    var transactionType = Model.transactionType ?? "Reservation";
 }
 
 <div class="col">
@@ -34,6 +35,7 @@
                     <a asp-controller="PortalReservation" 
                        asp-action="ReservationForm" 
                        asp-route-itemId="@item.PortalItem.Id"
+                       asp-route-transactionType="@transactionType"
                        class="btn btn-sm btn-primary">
                         <i class="bi bi-calendar-check"></i> Reserve
                     </a>
@@ -62,6 +64,7 @@
                     <a asp-controller="PortalReservation"
                        asp-action="ReservationForm"
                        asp-route-itemId="@item.PortalItem.Id"
+                       asp-route-transactionType="@transactionType"
                        class="btn btn-sm btn-primary">
                         <i class="bi bi-calendar-check"></i> Select
                     </a>

@@ -20,9 +20,12 @@ namespace Portal.DBLayer
 
         public async Task<List<PortalItem>> SearchItemsAsync(string searchTerm, List<int> itemIds)
         {
-            var query = _context.PortalItem
+            var query = _context.PortalItem                    
                 .Include(itemspecs => itemspecs.PortalItemSpecs)
-                .Include(portalItemPrices => portalItemPrices.PortalItemPrices)
+                .Include(portalItemPrices => portalItemPrices.PortalItemPrices
+                    .Where(p => p.Status == "Active")
+                    .OrderByDescending(p => p.ValidFrom)
+                )
                 .Where(p => !p.IsArchived && p.IsActive);
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -53,7 +56,10 @@ namespace Portal.DBLayer
                 .Include(p => p.PortalItemCategories)
                 .ThenInclude(pic => pic.PortalCategory)
                 .Include(p => p.PortalItemSpecs)
-                .Include(portalItemPrices => portalItemPrices.PortalItemPrices)
+                .Include(portalItemPrices => portalItemPrices.PortalItemPrices
+                    .Where(p => p.Status == "Active")
+                    .OrderByDescending(p => p.ValidFrom)
+                )
                 .Where(p =>!p.IsArchived && p.IsActive)
                 .AsQueryable();
             if (!string.IsNullOrEmpty(category))
@@ -89,6 +95,10 @@ namespace Portal.DBLayer
         {
             return await _context.PortalItem
                 .Include(pi=>pi.PortalItemSpecs)
+                .Include(portalItemPrices => portalItemPrices.PortalItemPrices
+                    .Where(p => p.Status == "Active")
+                    .OrderByDescending(p => p.ValidFrom)
+                )
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 

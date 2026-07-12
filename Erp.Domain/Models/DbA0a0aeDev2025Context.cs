@@ -11,30 +11,21 @@ public partial class DbA0a0aeDev2025Context : DbContext
     {
     }
 
-    public virtual DbSet<PortalContent> PortalContents { get; set; }
-
-    public virtual DbSet<PortalContentCategory> PortalContentCategories { get; set; }
+    public virtual DbSet<PortalItemPrice> PortalItemPrices { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PortalContent>(entity =>
+        modelBuilder.Entity<PortalItemPrice>(entity =>
         {
-            entity.ToTable("PortalContent");
+            entity.ToTable("PortalItemPrice");
 
+            entity.Property(e => e.BaseCurrency).HasMaxLength(5);
+            entity.Property(e => e.BasePrice).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.BaseUnit).HasMaxLength(20);
             entity.Property(e => e.JsonData)
                 .HasMaxLength(4000)
                 .HasColumnName("jsonData");
-            entity.Property(e => e.Name).HasMaxLength(4000);
-            entity.Property(e => e.Status).HasMaxLength(4000);
-        });
-
-        modelBuilder.Entity<PortalContentCategory>(entity =>
-        {
-            entity.ToTable("PortalContentCategory");
-
-            entity.HasOne(d => d.PortalContent).WithMany(p => p.PortalContentCategories)
-                .HasForeignKey(d => d.PortalContentId)
-                .HasConstraintName("FK_PortalContentCategory_PortalContent_1");
+            entity.Property(e => e.Status).HasMaxLength(20);
         });
 
         OnModelCreatingPartial(modelBuilder);

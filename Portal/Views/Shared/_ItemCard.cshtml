@@ -25,7 +25,7 @@
 
         <!-- Section: Specifications -->
         @await Html.PartialAsync("_ItemSpecifications_CarRental", item.PortalItem.PortalItemSpecs)
-
+        @await Html.PartialAsync("_ItemPrice", item.PortalItem.PortalItemPrices.FirstOrDefault())
         @if (showActions)
         {
             <!-- Section: Footer -->

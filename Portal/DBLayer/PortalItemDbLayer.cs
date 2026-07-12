@@ -22,6 +22,7 @@ namespace Portal.DBLayer
         {
             var query = _context.PortalItem
                 .Include(itemspecs => itemspecs.PortalItemSpecs)
+                .Include(portalItemPrices => portalItemPrices.PortalItemPrices)
                 .Where(p => !p.IsArchived && p.IsActive);
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -52,6 +53,7 @@ namespace Portal.DBLayer
                 .Include(p => p.PortalItemCategories)
                 .ThenInclude(pic => pic.PortalCategory)
                 .Include(p => p.PortalItemSpecs)
+                .Include(portalItemPrices => portalItemPrices.PortalItemPrices)
                 .Where(p =>!p.IsArchived && p.IsActive)
                 .AsQueryable();
             if (!string.IsNullOrEmpty(category))

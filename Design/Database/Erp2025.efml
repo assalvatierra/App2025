@@ -1350,6 +1350,35 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="PortalItemPrice" entity-set="PortalItemPrice" p1:Guid="ceff53a6-9be2-4e4b-b1ba-867296e40c6b">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ffb9ab04-b28f-49d3-9de3-c5b33f7ed0ce">
+      <column name="" />
+    </id>
+    <property name="PortalItemId" type="Int32" p1:ValidateRequired="true" p1:Guid="f55793a0-8101-423b-97cf-09931bae0c41">
+      <column name="" not-null="False" />
+    </property>
+    <property name="BasePrice" type="Decimal" p1:ValidateRequired="true" p1:Guid="66ffbe8f-a52e-4863-8c63-67d72288edbc">
+      <column name="" />
+    </property>
+    <property name="BaseCurrency" type="String" p1:ValidateRequired="true" p1:Guid="e6655c5d-59a9-4dda-9595-f8b37891b7bf">
+      <column name="" />
+    </property>
+    <property name="BaseUnit" type="String" p1:ValidateRequired="true" p1:Guid="c201fde7-931d-44fe-bb7e-ff32e590aa7d">
+      <column name="" />
+    </property>
+    <property name="jsonData" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e9013efe-5974-4fdf-b7bd-f4d3b7c14744">
+      <column name="" />
+    </property>
+    <property name="ValidFrom" type="DateTime" p1:ValidateRequired="true" p1:Guid="a2b998ca-aeee-4a3b-b453-55bbf91af6a8">
+      <column name="" />
+    </property>
+    <property name="ValidTo" type="DateTime" p1:ValidateRequired="true" p1:Guid="5cc93be7-9cbd-485f-b658-07f4587423d2">
+      <column name="" />
+    </property>
+    <property name="Status" type="String" p1:ValidateRequired="true" p1:Guid="9c52960b-19ce-4dea-8fa7-e265f0c62eb5">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -2181,6 +2210,14 @@
       </end1>
       <end2 multiplicity="Many" name="PortalContentCategories" class="PortalContent" relation-class="PortalContentCategory" lazy="False" p1:Guid="f42181e5-3bfb-4f98-9e3a-edc75c14a9f8">
         <property name="PortalContentId" />
+      </end2>
+    </association>
+    <association name="PortalItem_PortalItemPrice" cardinality="OneToMany" p1:Guid="6650aa0f-2c7a-4ea4-8b4e-f17c72a5b73b">
+      <end1 multiplicity="One" name="PortalItem" class="PortalItemPrice" relation-class="PortalItem" constrained="True" lazy="False" p1:Guid="f62cbef8-f0dd-433a-9498-0045977d0f6a">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalItemPrices" class="PortalItem" relation-class="PortalItemPrice" lazy="False" p1:Guid="c2e632e3-8376-4cd1-8d76-793575879b63">
+        <property name="PortalItemId" />
       </end2>
     </association>
   </associations>

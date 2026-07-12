@@ -1,6 +1,7 @@
 ﻿using Erp.Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Portal.Data
 {
@@ -13,6 +14,6 @@ namespace Portal.Data
         public DbSet<PortalItemCategory> PortalItemCategory { get; set; } = default!;
         public DbSet<PortalContent> PortalContent { get; set; } = default!;
         public DbSet<PortalContentCategory> PortalContentCategory { get; set; } = default!;
-
+        public DbSet<PortalItemPrice> PortalItemPrice { get; set; } = default!;
     }
 }

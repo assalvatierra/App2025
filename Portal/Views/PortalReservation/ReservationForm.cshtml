@@ -37,7 +37,7 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <form asp-action="ReservationForm" method="post">
+                    <form id="reservationForm" asp-action="ReservationForm" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <input type="hidden" asp-for="Reservation.PortalItemId" />
@@ -62,6 +62,8 @@
                             <input asp-for="Reservation.ContactEmail" type="email" class="form-control" placeholder="Enter your email address" />
                             <span asp-validation-for="Reservation.ContactEmail" class="text-danger"></span>
                         </div>
+
+                        @await Html.PartialAsync("_ReservationAdditionalDetails", Model)
 
                         <div class="d-flex justify-content-between mt-4">
                             <a href="@Url.Action("CancelReservationForm", "PortalReservation")" class="btn btn-secondary">

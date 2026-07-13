@@ -72,6 +72,7 @@ namespace Portal.Controllers
 
             if (ModelState.IsValid)
             {
+                // JsonData is already populated by JavaScript in the view
                 if (string.IsNullOrEmpty(reservation.JsonData))
                 {
                     reservation.JsonData = "{}";

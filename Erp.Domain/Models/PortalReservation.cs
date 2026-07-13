@@ -22,4 +22,5 @@ public partial class PortalReservation
     public string JsonData { get; set; } = null!;
 
     public string Status { get; set; } = null!;
+
 }

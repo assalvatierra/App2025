@@ -14,17 +14,22 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <label asp-for="ReservationAdditionalInfo.PickupLocation" class="form-label">Pickup Location</label>
-            <input asp-for="ReservationAdditionalInfo.PickupLocation" class="form-control" placeholder="Enter pickup location" />
+            <select asp-for="ReservationAdditionalInfo.PickupLocation" class="form-select">
+                <option value="">-- Select Pickup Location --</option>
+                <option value="Airport">Airport</option>
+                <option value="Hotel">Hotel</option>
+                <option value="Within downtown area">Within downtown area</option>
+                <option value="Others (Outside Downtown/Outside the City)">Others (Outside Downtown/Outside the City)</option>
+            </select>
             <span asp-validation-for="ReservationAdditionalInfo.PickupLocation" class="text-danger"></span>
         </div>
 
         <div class="col-md-6 mb-3">
-            <label asp-for="ReservationAdditionalInfo.NumberOfDays" class="form-label">Number of Days</label>
-            <input asp-for="ReservationAdditionalInfo.NumberOfDays" type="number" min="1" class="form-control" placeholder="Enter number of days" id="numberOfDays" />
-            <span asp-validation-for="ReservationAdditionalInfo.NumberOfDays" class="text-danger"></span>
+            <label asp-for="ReservationAdditionalInfo.PickupInfo" class="form-label">Pickup Info</label>
+            <input asp-for="ReservationAdditionalInfo.PickupInfo" class="form-control" placeholder="Enter pickup info" />
+            <span asp-validation-for="ReservationAdditionalInfo.PickupInfo" class="text-danger"></span>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-6 mb-3">
             <label asp-for="ReservationAdditionalInfo.PickupDate" class="form-label">Pickup Date</label>
@@ -38,6 +43,43 @@
             <span asp-validation-for="ReservationAdditionalInfo.PickupTime" class="text-danger"></span>
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="ReservationAdditionalInfo.DestinationArea" class="form-label">Destination</label>
+            <select asp-for="ReservationAdditionalInfo.DestinationArea" class="form-select">
+                <option value="">-- Select Destination Area --</option>
+                <option value="Downtown">Downtown</option>
+                <option value="Davao Country Side">Davao Country Side</option>
+                <option value="Davao Marilog and Buda">Davao Marilog and Buda</option>
+                <option value="Out of Town">Out of Town</option>
+            </select>
+            <span asp-validation-for="ReservationAdditionalInfo.DestinationArea" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ReservationAdditionalInfo.DestinationInfo" class="form-label">Destination Info</label>
+            <input asp-for="ReservationAdditionalInfo.DestinationInfo" class="form-control" placeholder="Enter destination info" />
+            <span asp-validation-for="ReservationAdditionalInfo.DestinationInfo" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="ReservationAdditionalInfo.NumberOfDays" class="form-label">Number of Days</label>
+            <input asp-for="ReservationAdditionalInfo.NumberOfDays" type="number" min="1" class="form-control" placeholder="Enter number of days" id="numberOfDays" />
+            <span asp-validation-for="ReservationAdditionalInfo.NumberOfDays" class="text-danger"></span>
+        </div>
+
+@*         <div class="col-md-6 mb-3">
+            <label asp-for="ReservationAdditionalInfo.DestinationInfo" class="form-label">Destination Info</label>
+            <input asp-for="ReservationAdditionalInfo.DestinationInfo" class="form-control" placeholder="Enter destination info" />
+            <span asp-validation-for="ReservationAdditionalInfo.DestinationInfo" class="text-danger"></span>
+        </div>
+ *@    
+    </div>
+
 
     @if (Model.Item?.PortalItem != null && basePrice > 0)
     {
@@ -95,8 +137,11 @@
             form.addEventListener('submit', function(e) {
                 // Get the additional details field values
                 const pickupLocationInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.PickupLocation)');
+                const pickupInfoInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.PickupInfo)');
                 const pickupDateInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.PickupDate)');
                 const pickupTimeInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.PickupTime)');
+                const destinationAreaInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.DestinationArea)');
+                const destinationInfoInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.DestinationInfo)');
                 // const numberOfDaysInput = document.getElementById('@Html.IdFor(m => m.ReservationAdditionalInfo.NumberOfDays)');
                 const numberOfDaysInput = document.getElementById('numberOfDays');
                 const jsonDataInput = document.getElementById('@Html.IdFor(m => m.Reservation.JsonData)');
@@ -104,8 +149,11 @@
                 // Create JSON object with the additional details
                 const additionalDetails = {
                     PickupLocation: pickupLocationInput?.value || null,
+                    PickupInfo: pickupInfoInput?.value || null,
                     PickupDate: pickupDateInput?.value || null,
                     PickupTime: pickupTimeInput?.value || null,
+                    DestinationArea: destinationAreaInput?.value || null,
+                    DestinationInfo: destinationInfoInput?.value || null,
                     NumberOfDays: numberOfDaysInput?.value ? parseInt(numberOfDaysInput.value) : null
                 };
 

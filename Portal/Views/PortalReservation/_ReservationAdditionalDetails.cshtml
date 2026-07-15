@@ -5,7 +5,8 @@
     var hasPrices = Model.Item?.PortalItem?.PortalItemPrices?.Any() ?? false;
     var dayPrice = Model.Item?.PortalItem?.PortalItemPrices?.FirstOrDefault(p => p.BaseUnit == "Day");
     var basePrice = dayPrice?.BasePrice ?? 0;
-    var baseCurrency = dayPrice?.BaseCurrency ?? "PHP";
+    var baseCurrency = (dayPrice?.BaseCurrency ?? "PHP").Trim().Replace("\t", "");
+
 }
 
 <div class="mb-4">
@@ -96,41 +97,44 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            (function() {
-                const basePrice = @basePrice;
-                const currency = '@Html.Raw(baseCurrency)';
-                const numberOfDaysInput = document.getElementById('numberOfDays');
-                const estimatedCostDisplay = document.getElementById('estimatedCost');
-
-                function calculateEstimatedCost() {
-                    const numberOfDays = parseInt(numberOfDaysInput.value) || 0;
-                    const totalCost = basePrice * numberOfDays;
-
-                    if (estimatedCostDisplay) {
-                        const formattedCost = totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        estimatedCostDisplay.textContent = currency + ' ' + formattedCost;
-                    }
-                }
-
-                if (numberOfDaysInput) {
-                    numberOfDaysInput.addEventListener('input', calculateEstimatedCost);
-                    numberOfDaysInput.addEventListener('change', calculateEstimatedCost);
-
-                    // Calculate on page load if there's already a value
-                    if (numberOfDaysInput.value) {
-                        calculateEstimatedCost();
-                    }
-                }
-            })();
-        </script>
     }
 </div>
 
 <script>
-    // Serialize reservation additional details to JSON on form submission
+   
     (function() {
+
+        const basePrice = @basePrice;
+        const currency = '@Html.Raw(baseCurrency)';
+        const numberOfDaysInput = document.getElementById('numberOfDays');
+        const estimatedCostDisplay = document.getElementById('estimatedCost');
+        let totalCost = 0.00;
+
+        // Function to calculate and display the estimated cost
+        function calculateEstimatedCost() {
+            const numberOfDays = parseInt(numberOfDaysInput.value) || 0;
+            totalCost = basePrice * numberOfDays;
+
+            if (estimatedCostDisplay) {
+                const formattedCost = totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                estimatedCostDisplay.textContent = currency + ' ' + formattedCost;
+            }
+        }
+
+        // Add event listeners to recalculate the estimated cost when the number of days changes
+        if (numberOfDaysInput) {
+            numberOfDaysInput.addEventListener('input', calculateEstimatedCost);
+            numberOfDaysInput.addEventListener('change', calculateEstimatedCost);
+
+            // Calculate on page load if there's already a value
+            if (numberOfDaysInput.value) {
+                calculateEstimatedCost();
+            }
+        }
+
+
+    // Serialize reservation additional details to JSON on form submission
+        // Get the form element
         const form = document.getElementById('reservationForm');
 
         if (form) {
@@ -146,6 +150,11 @@
                 const numberOfDaysInput = document.getElementById('numberOfDays');
                 const jsonDataInput = document.getElementById('@Html.IdFor(m => m.Reservation.JsonData)');
                 
+                // Calculate the estimated cost based on the number of days and base price
+                const numberOfDays = parseInt(numberOfDaysInput.value) || 0;
+                // const totalCost = basePrice * numberOfDays;
+
+
                 // Create JSON object with the additional details
                 const additionalDetails = {
                     PickupLocation: pickupLocationInput?.value || null,
@@ -154,7 +163,10 @@
                     PickupTime: pickupTimeInput?.value || null,
                     DestinationArea: destinationAreaInput?.value || null,
                     DestinationInfo: destinationInfoInput?.value || null,
-                    NumberOfDays: numberOfDaysInput?.value ? parseInt(numberOfDaysInput.value) : null
+                    NumberOfDays: numberOfDaysInput?.value ? parseInt(numberOfDaysInput.value) : null,
+                    CalculatedCost: totalCost,
+                    BaseRate: basePrice,
+                    BaseCurrency: currency
                 };
 
                 // Serialize to JSON and set the hidden field value

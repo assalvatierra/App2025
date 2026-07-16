@@ -18,6 +18,13 @@ namespace Portal.DBLayer
             return await _context.PortalReservation.ToListAsync();
         }
 
+        public async Task<List<PortalReservation>> GetByStatusAsync(string status)
+        {
+            return await _context.PortalReservation
+                .Where(r => r.Status == status)
+                .ToListAsync();
+        }
+
         public async Task<PortalReservation?> GetByIdAsync(int id)
         {
             return await _context.PortalReservation.FindAsync(id);

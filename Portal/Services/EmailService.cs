@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 
-namespace AngularApp1.Server.Services
+namespace Portal.Services
 {
     public class EmailService: IEmailService
     {
@@ -16,7 +16,7 @@ namespace AngularApp1.Server.Services
         {
             // email settings
             // https://myaccount.google.com/apppasswords
-           
+
             var fromAddress = _configuration["EmailSettings:FromAddress"];
             var displayName = _configuration["EmailSettings:FromName"];
             var username = _configuration["EmailSettings:UserName"];

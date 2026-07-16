@@ -17,6 +17,11 @@ namespace Portal.DBServices
             return await _db.GetAllAsync();
         }
 
+        public async Task<List<PortalReservation>> GetByStatusAsync(string status)
+        {
+            return await _db.GetByStatusAsync(status);
+        }
+
         public async Task<PortalReservation?> GetByIdAsync(int id)
         {
             return await _db.GetByIdAsync(id);

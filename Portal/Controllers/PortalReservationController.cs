@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portal.DBServices;
+using Portal.Services;
 using Portal.Models;
 using Portal.ViewModels;
 
@@ -13,11 +14,15 @@ namespace Portal.Controllers
     {
         private readonly IPortalReservationService _service;
         private readonly IPortalItemService _portalItemService;
+        private readonly IReservationService _reservationService;
 
-        public PortalReservationController(IPortalReservationService service, IPortalItemService portalItemService)
+        public PortalReservationController(IPortalReservationService service, 
+            IPortalItemService portalItemService,
+            IReservationService reservationService)
         {
             _service = service;
             _portalItemService = portalItemService;
+            _reservationService = reservationService;
         }
 
         // GET: PortalReservation/ReservationForm
@@ -212,5 +217,13 @@ namespace Portal.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ProcessPendingReservations()
+        {
+            _reservationService.ProcessPendingReservations();
+            return NoContent();
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Portal.Data;
 using Portal.DBLayer;
 using Portal.DBServices;
+using Portal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IPortalCategoryDbLayer, PortalCategoryDbLayer>();
 builder.Services.AddScoped<IPortalCategoryServices, PortalCategoryServices>();
 builder.Services.AddScoped<IPortalContentDbLayer, PortalContentDbLayer>();
 builder.Services.AddScoped<IPortalContentService, PortalContentService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 
 // Add session support
 builder.Services.AddDistributedMemoryCache();

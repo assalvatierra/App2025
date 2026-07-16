@@ -22,6 +22,7 @@ namespace Portal.Services
                 this.SendInternalReservationNotification(reservation);
 
                 // Update reservation status to "Processed"
+
                 //reservation.Status = "Processed";
                 //_reservationDbService.UpdateReservation(reservation);
             }

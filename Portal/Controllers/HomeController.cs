@@ -33,6 +33,7 @@ namespace Portal.Controllers
             ViewBag.ServiceCategories = await _portalContentService.GetContentsByCategoryAsync("Services", null);
             ViewBag.WhyUs = await _portalContentService.GetContentsByCategoryAsync("WhyUs", null);
             ViewBag.Faq = await _portalContentService.GetContentsByCategoryAsync("Faq", null);
+            ViewBag.FeaturedArticles = await _portalContentService.GetContentsByCategoryAsync("FeaturedBlog", null);
 
             return View();
         }
@@ -110,6 +111,15 @@ namespace Portal.Controllers
         {
             ViewBag.PageTitle = "Car Rental Articles";
             var results = await _portalContentService.GetContentsByCategoryAsync("Articles", null);
+
+            return View("ContentList", results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FeaturedBlog()
+        {
+            ViewBag.PageTitle = "Car Rental Featured";
+            var results = await _portalContentService.GetContentsByCategoryAsync("FeaturedBlog", "");
 
             return View("ContentList", results);
         }

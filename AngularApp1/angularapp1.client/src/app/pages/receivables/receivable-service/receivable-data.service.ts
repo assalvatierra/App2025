@@ -5,16 +5,17 @@ import { ApiReceivablesService } from '../../../core/services/api-receivables.se
 import { ApiEntityService } from '../../../core/services/api-entity.service';
 import { Receivable, ReceivableCustomer, JobReceivable, ReceivableStatus } from '../../../core/models/receivable.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReceivableDataService {
-  
+
 private receivablesSubject = new BehaviorSubject<Receivable[]>([]);
 private entitiesSubject = new BehaviorSubject<any[]>([]);
 private loadingSubject = new BehaviorSubject<boolean>(true);
-private baseUrl = 'http://localhost:5157';
+private baseUrl = environment.apiConfig.uri;
 
 public receivables$ = this.receivablesSubject.asObservable();
 public entities$ = this.entitiesSubject.asObservable();

@@ -3,13 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Resource } from '../models/timesheet.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiResourcesService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

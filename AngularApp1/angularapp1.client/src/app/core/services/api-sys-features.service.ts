@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface SysFeature {
   id: number;
@@ -18,7 +19,7 @@ export interface SysFeature {
 })
 export class ApiSysFeaturesService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

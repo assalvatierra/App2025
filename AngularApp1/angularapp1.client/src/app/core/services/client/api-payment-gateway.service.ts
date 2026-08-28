@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface CheckoutSessionResponse {
   url: string;
@@ -12,7 +13,7 @@ export interface CheckoutSessionResponse {
 })
 export class ApiPaymentGatewayService {
 
-  private url = 'http://localhost:5157';
+  private url = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface JobCustomerDto {
   // JobCustomer Properties
@@ -41,7 +42,7 @@ export interface JobCustomerDto {
 })
 export class ApiJobCustomersService {
 
-  private url = 'http://localhost:5157';
+  private url = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

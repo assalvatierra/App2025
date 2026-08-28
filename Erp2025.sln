@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11919.86 stable
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Domain", "Erp.Domain\Erp.Domain.csproj", "{2D7F18E3-D8FA-4FBE-A49B-12D4DA490159}"
 EndProject
@@ -20,8 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AngularApp1", "AngularApp1", "{3765EEE6-6D33-DAC4-937B-4E35FCA6E2CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularApp1.Server.Tests", "AngularApp1\AngularApp1.Server.Tests\AngularApp1.Server.Tests.csproj", "{5A8E2DED-511F-4200-93F7-23C963A4207C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{861A7931-26D1-4F08-BC92-35896FA6C938}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,18 +125,6 @@ Global
 		{5A8E2DED-511F-4200-93F7-23C963A4207C}.Release|x64.Build.0 = Release|Any CPU
 		{5A8E2DED-511F-4200-93F7-23C963A4207C}.Release|x86.ActiveCfg = Release|Any CPU
 		{5A8E2DED-511F-4200-93F7-23C963A4207C}.Release|x86.Build.0 = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|x64.Build.0 = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Debug|x86.Build.0 = Debug|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|Any CPU.Build.0 = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|x64.ActiveCfg = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|x64.Build.0 = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|x86.ActiveCfg = Release|Any CPU
-		{861A7931-26D1-4F08-BC92-35896FA6C938}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

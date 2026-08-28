@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResourceEntity } from '../models/resource-entity.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiResourceEntityService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface JobService {
   id: number;
@@ -31,7 +32,7 @@ export interface JobService {
 })
 export class ApiJobServiceService {
   //private apiUrl = '/api/jobservices'; // Adjust based on your API endpoint
-  private apiUrl = 'http://localhost:5157/api/jobservices';
+  private apiUrl = environment.apiConfig.uri + '/api/jobservices';
 
   constructor(private http: HttpClient) { }
 

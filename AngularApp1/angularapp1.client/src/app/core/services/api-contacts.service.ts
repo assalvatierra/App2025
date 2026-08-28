@@ -3,13 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Contact } from '../models/contact.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiContactsService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface JobSchedule {
   id: number;
@@ -16,7 +17,7 @@ export interface JobSchedule {
 @Injectable({ providedIn: 'root' })
 export class ApiJobScheduleService {
   //private url = '/api/JobSchedule';
-  private url = 'http://localhost:5157/api/JobSchedule';
+  private url = environment.apiConfig.uri + '/api/JobSchedule';
 
   constructor(private http: HttpClient) {}
 

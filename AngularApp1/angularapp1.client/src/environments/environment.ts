@@ -7,6 +7,6 @@ export const environment = {
   },
   apiConfig: {
     scopes: ['api://YOUR_BACKEND_API_CLIENT_ID/API.Access'],
-    uri: 'http://localhost:5000/api'
+    uri: 'http://localhost:5157'
   }
 };

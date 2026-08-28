@@ -3,13 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Receivable } from '../models/receivable.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiReceivablesService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

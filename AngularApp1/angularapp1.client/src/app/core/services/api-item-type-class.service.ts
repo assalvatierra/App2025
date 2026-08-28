@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ItemTypeClass {
   id: number;
@@ -15,7 +16,7 @@ export interface ItemTypeClass {
   providedIn: 'root'
 })
 export class ApiItemTypeClassService {
-  private apiUrl = 'http://localhost:5157/api/itemtypeclass';
+  private apiUrl = environment.apiConfig.uri + '/api/itemtypeclass';
 
   constructor(private http: HttpClient) { }
 

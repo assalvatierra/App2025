@@ -6,13 +6,14 @@ import { PayPeriod } from '../models/pay-period.model';
 import { PayExpense } from '../models/pay-expense.model';
 import { Timesheet } from '../models/timesheet.model';
 import { PayAddition } from '../models/pay-addition.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiPayPeriodsService {
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

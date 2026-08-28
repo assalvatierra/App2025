@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface ReceivablePaymentLink {
   id?: number;
@@ -58,7 +59,7 @@ export class ReceivablePaymentListComponent implements OnInit, OnChanges {
 
   displayedColumns: string[] = ['payment', 'amount', 'trxDate', 'remarks', 'actions'];
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(
     private fb: FormBuilder,

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface JobServiceRequirement {
   id: number;
@@ -14,7 +15,7 @@ export interface JobServiceRequirement {
   providedIn: 'root'
 })
 export class ApiJobServiceRequirementService {
-  private apiUrl = 'http://localhost:5157/api/JobServiceRequirements';
+  private apiUrl = environment.apiConfig.uri + '/api/JobServiceRequirements';
 
   constructor(private http: HttpClient) { }
 

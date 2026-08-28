@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Expense, ExpenseStatus, ExpensePayment, JobExpense } from '../models/expense.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiExpensesService {
 
-  // Use relative URL to leverage Angular proxy configuration
-  private baseUrl = '';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ItemStatusClass {
   id: number;
@@ -15,7 +16,7 @@ export interface ItemStatusClass {
   providedIn: 'root'
 })
 export class ApiItemStatusClassService {
-  private apiUrl = 'http://localhost:5157/api/itemstatusclass';
+  private apiUrl = environment.apiConfig.uri + '/api/itemstatusclass';
 
   constructor(private http: HttpClient) { }
 

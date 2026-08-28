@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JobServiceResource } from '../models/job-service-resource.model';
+import { environment } from '../../../environments/environment';
 
 export type { JobServiceResource };
 
@@ -10,7 +11,7 @@ export type { JobServiceResource };
 })
 export class ApiJobServiceResourceService {
 
-  private baseUrl = '/api';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(private http: HttpClient) { }
 

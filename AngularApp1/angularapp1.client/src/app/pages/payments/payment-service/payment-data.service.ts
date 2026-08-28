@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { ApiPaymentsService } from '../../../core/services/api-payments.service';
 import { Payment, ReceivablePaymentLink, ExpensePaymentLink } from '../../../core/models/payment.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class PaymentDataService {
   public payments$ = this.paymentsSubject.asObservable();
   public loading$ = this.loadingSubject.asObservable();
 
-  private baseUrl = 'http://localhost:5157';
+  private baseUrl = environment.apiConfig.uri;
 
   constructor(
     private apiPayments: ApiPaymentsService,

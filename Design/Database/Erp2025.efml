@@ -1402,6 +1402,32 @@
       <column name="" />
     </property>
   </class>
+  <class name="PortalReservationVerification" entity-set="PortalReservationVerification" p1:Guid="b076da5b-e7c2-4f08-8505-5281e9c02bf8">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="d17c9c49-4e08-42ee-aa66-154e8780c64d">
+      <column name="" />
+    </id>
+    <property name="VerificationType" type="String" p1:ValidateRequired="true" p1:Guid="3595938b-2c4e-48c7-851e-4da652e13851">
+      <column name="" />
+    </property>
+    <property name="VerificationData" type="String" p1:ValidateRequired="true" p1:Guid="67753f2b-19d7-4089-8a18-f4a71381a105">
+      <column name="" />
+    </property>
+    <property name="ExpiresAt" type="DateTime" p1:ValidateRequired="true" p1:Guid="de983821-b094-494c-aaf2-40158d4dcb28">
+      <column name="" />
+    </property>
+    <property name="AttemptCount" type="Int32" p1:ValidateRequired="true" p1:Guid="9da2603a-5e66-4322-b686-af6b96ad5f30">
+      <column name="" />
+    </property>
+    <property name="CreatedAt" type="DateTime" p1:ValidateRequired="true" p1:Guid="4fb53c5f-2c1b-440c-83fe-231a25d557e9">
+      <column name="" />
+    </property>
+    <property name="IsVerified" type="Boolean" p1:ValidateRequired="true" p1:Guid="9948d970-88f7-4356-ae8a-b42b63f3c893">
+      <column name="" />
+    </property>
+    <property name="PortalReservationId" type="Int32" p1:ValidateRequired="true" p1:Guid="6a9cc956-43b9-425b-8eef-8fb696c5cafe">
+      <column name="" not-null="False" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">
@@ -2241,6 +2267,14 @@
       </end1>
       <end2 multiplicity="Many" name="PortalItemPrices" class="PortalItem" relation-class="PortalItemPrice" lazy="False" p1:Guid="c2e632e3-8376-4cd1-8d76-793575879b63">
         <property name="PortalItemId" />
+      </end2>
+    </association>
+    <association name="PortalReservation_PortalReservationVerification" cardinality="OneToMany" p1:Guid="4e6fa5d1-4852-4908-bf4e-bc324e652359">
+      <end1 multiplicity="One" name="PortalReservation" class="PortalReservationVerification" relation-class="PortalReservation" constrained="True" lazy="False" p1:Guid="7949fbd7-0e98-4330-acc3-c6f85c2b694e">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="PortalReservationVerifications" class="PortalReservation" relation-class="PortalReservationVerification" lazy="False" p1:Guid="3ad500a8-8900-4524-a100-3757619f79f0">
+        <property name="PortalReservationId" />
       </end2>
     </association>
   </associations>

@@ -18,7 +18,7 @@ export class AuthService {
 
   private readonly authTokenKey = 'auth-token';
   private readonly authApiUrl = '/api';
-  private readonly BASE_URL = 'http://localhost:5157';
+  private readonly BASE_URL = environment.apiConfig.uri;
   private readonly msalAuthFlagKey = 'msal-authenticated';
   private readonly entraRedirectRequest: RedirectRequest = {
     scopes: ['api://384786e9-f7b8-4634-a95c-9239daf8d57a/API.Access'],

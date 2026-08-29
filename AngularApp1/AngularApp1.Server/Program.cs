@@ -150,6 +150,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseDefaultFiles();
+app.UseStaticFiles();
 app.MapStaticAssets();
 
 app.UseCors("Default");

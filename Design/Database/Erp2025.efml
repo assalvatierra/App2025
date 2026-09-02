@@ -1428,6 +1428,23 @@
       <column name="" not-null="False" />
     </property>
   </class>
+  <class name="PortalContentData" entity-set="PortalContentData" p1:Guid="be40e306-4a12-4e16-8d1b-315852f06a6b">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="cbe5a6cf-0980-437e-b73d-5009e024a280">
+      <column name="" />
+    </id>
+    <property name="DataType" type="String" p1:ValidateRequired="true" p1:Guid="f3bc6aaf-0a21-4e63-a4a2-c422dde480d6">
+      <column name="" />
+    </property>
+    <property name="DataValue" type="String" p1:ValidateRequired="true" p1:Guid="27585e7e-6a57-41a6-94de-732d2080bc9e">
+      <column name="" />
+    </property>
+    <property name="Name" type="String" p1:ValidateRequired="true" p1:Guid="becd23e3-0403-4bdf-a413-80083ccc3ccd">
+      <column name="" />
+    </property>
+    <property name="Seodata" type="String" p1:ValidateRequired="true" p1:Guid="363b5948-6f57-4212-a17a-ccccc12ec7a4">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="JobMain_JobServices" cardinality="OneToMany" p1:Guid="ba11efc3-44ce-485f-bc83-112f9c6877e5">
       <end1 multiplicity="One" name="JobMain" class="JobService" relation-class="JobMain" generate="False" constrained="True" lazy="False" p1:Guid="db7b539a-38b2-4afe-9218-ccedb9a6deb9">

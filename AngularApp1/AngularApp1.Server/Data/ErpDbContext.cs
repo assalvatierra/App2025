@@ -81,6 +81,9 @@ namespace AngularApp1.Server.Data
         public DbSet<Erp.Domain.Models.PayPeriod> PayPeriods { get; set; } = default!;
         public DbSet<Erp.Domain.Models.PayAddition> PayAdditions { get; set; } = default!;
 
+        // Portal Reservation DbSet
+        public DbSet<Erp.Domain.Models.PortalReservation> PortalReservation { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -140,6 +140,8 @@ builder.Services.AddScoped<AngularApp1.Server.Services.IEmailService, AngularApp
 builder.Services.AddScoped<AngularApp1.Server.DBLayer.IJobServiceBudgetDbLayer, AngularApp1.Server.DBLayer.JobServiceBudgetDbLayer>();
 builder.Services.AddScoped<AngularApp1.Server.DBServices.IJobServiceBudgetService, AngularApp1.Server.DBServices.JobServiceBudgetService>();
 
+builder.Services.AddScoped<AngularApp1.Server.DBLayer.IPortalReservationsDbLayer, AngularApp1.Server.DBLayer.PortalReservationsDbLayer>();
+builder.Services.AddScoped<AngularApp1.Server.DBServices.IPortalReservationsService, AngularApp1.Server.DBServices.PortalReservationsService>();
 
 var app = builder.Build();
 

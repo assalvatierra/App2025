@@ -21,6 +21,14 @@ export class PortalReservationFormComponent implements AfterViewInit {
   public showAddBtn: boolean = false;
   public titleInfo: string;
 
+  // Status filter options
+  public statusOptions: string[] = ['New', 'Pending', 'Discarded', 'NoUnit', 'InProgress'];
+
+  // Message properties
+  public updateMessage: string = '';
+  public showUpdateMessage: boolean = false;
+  public isUpdateSuccess: boolean = false;
+
   constructor(
     private api: ApiPortalReservationsService,
     private router: Router,
@@ -76,7 +84,7 @@ export class PortalReservationFormComponent implements AfterViewInit {
   onSubmit(): void {
     this.updateCurrentDataValues();
     this.updateApiData(this.paramId, this.currentData);
-    this.router.navigate(['/portal-reservations']);
+    //this.router.navigate(['/portal-reservations']);
   }
 
   onAdd(): void {
@@ -112,9 +120,11 @@ export class PortalReservationFormComponent implements AfterViewInit {
       .subscribe({
         next: (res: any) => {
           console.log('API Response:', res);
+          this.showSuccessMessage('Reservation Updated');
         },
         error: (err: any) => {
           console.error('API Error:', err);
+          this.showErrorMessage('Update failed');
         },
         complete: () => {
           this.dataloading = false;
@@ -142,6 +152,7 @@ export class PortalReservationFormComponent implements AfterViewInit {
   private initializeData(param: PortalReservationDto): void {
     this.currentData = param;
     this.populateForm(param);
+    this.disableAllFieldsExceptStatus();
   }
 
   private populateForm(data: PortalReservationDto): void {
@@ -172,25 +183,28 @@ export class PortalReservationFormComponent implements AfterViewInit {
   }
 
   private updateCurrentDataValues(): void {
-    this.currentData.transactionType = this.dataForm.get('transactionType')?.value;
-    this.currentData.portalItemId = this.dataForm.get('portalItemId')?.value;
-    this.currentData.customerName = this.dataForm.get('customerName')?.value;
-    this.currentData.contactNo = this.dataForm.get('contactNo')?.value;
-    this.currentData.contactEmail = this.dataForm.get('contactEmail')?.value;
-    this.currentData.dateReceived = this.dataForm.get('dateReceived')?.value;
-    this.currentData.status = this.dataForm.get('status')?.value;
+    // Use getRawValue() to get values from both enabled and disabled form controls
+    const formValues = this.dataForm.getRawValue();
+
+    this.currentData.transactionType = formValues.transactionType;
+    this.currentData.portalItemId = formValues.portalItemId;
+    this.currentData.customerName = formValues.customerName;
+    this.currentData.contactNo = formValues.contactNo;
+    this.currentData.contactEmail = formValues.contactEmail;
+    this.currentData.dateReceived = formValues.dateReceived;
+    this.currentData.status = formValues.status;
 
     const reservationData: PortalReservationData = {
-      pickupLocation: this.dataForm.get('pickupLocation')?.value,
-      pickupInfo: this.dataForm.get('pickupInfo')?.value,
-      pickupDate: this.dataForm.get('pickupDate')?.value,
-      pickupTime: this.dataForm.get('pickupTime')?.value,
-      destinationArea: this.dataForm.get('destinationArea')?.value,
-      destinationInfo: this.dataForm.get('destinationInfo')?.value,
-      numberOfDays: this.dataForm.get('numberOfDays')?.value,
-      calculatedCost: this.dataForm.get('calculatedCost')?.value,
-      baseRate: this.dataForm.get('baseRate')?.value,
-      baseCurrency: this.dataForm.get('baseCurrency')?.value
+      pickupLocation: formValues.pickupLocation,
+      pickupInfo: formValues.pickupInfo,
+      pickupDate: formValues.pickupDate,
+      pickupTime: formValues.pickupTime,
+      destinationArea: formValues.destinationArea,
+      destinationInfo: formValues.destinationInfo,
+      numberOfDays: formValues.numberOfDays,
+      calculatedCost: formValues.calculatedCost,
+      baseRate: formValues.baseRate,
+      baseCurrency: formValues.baseCurrency
     };
 
     this.currentData.reservationData = reservationData;
@@ -204,5 +218,38 @@ export class PortalReservationFormComponent implements AfterViewInit {
       status: 'Pending',
       reservationData: {}
     };
+  }
+
+  private disableAllFieldsExceptStatus(): void {
+    const fieldsToDisable = [
+      'transactionType', 'portalItemId', 'customerName', 'contactNo', 'contactEmail',
+      'dateReceived', 'pickupLocation', 'pickupInfo', 'pickupDate', 'pickupTime',
+      'destinationArea', 'destinationInfo', 'numberOfDays', 'calculatedCost',
+      'baseRate', 'baseCurrency'
+    ];
+
+    fieldsToDisable.forEach(field => {
+      this.dataForm.get(field)?.disable();
+    });
+  }
+
+  private showSuccessMessage(message: string): void {
+    this.updateMessage = message;
+    this.isUpdateSuccess = true;
+    this.showUpdateMessage = true;
+    this.autoHideMessage();
+  }
+
+  private showErrorMessage(message: string): void {
+    this.updateMessage = message;
+    this.isUpdateSuccess = false;
+    this.showUpdateMessage = true;
+    this.autoHideMessage();
+  }
+
+  private autoHideMessage(): void {
+    setTimeout(() => {
+      this.showUpdateMessage = false;
+    }, 3000); // Hide message after 3 seconds
   }
 }

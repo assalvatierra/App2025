@@ -53,15 +53,20 @@ namespace AngularApp1.Server.Controllers
         // PUT: api/PortalReservations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPortalReservation(int id, PortalReservation portalReservation)
+        public async Task<IActionResult> PutPortalReservation(int id, PortalReservationDto portalReservationDto)
         {
-            if (id != portalReservation.Id)
+
+
+            if (id != portalReservationDto.Id)
             {
                 return BadRequest();
             }
 
             try
             {
+                var portalReservation = await _service.GetByIdAsync(id);
+                portalReservation.Status = portalReservationDto.Status;
+
                 await _service.UpdateAsync(portalReservation);
             }
             catch (DbUpdateConcurrencyException)

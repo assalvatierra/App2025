@@ -6,46 +6,38 @@
     </mat-card-header>
     <mat-card-content>
 
-    <form [formGroup]="dataForm">
+      <form [formGroup]="dataForm">
         <!-- Basic Information Card -->
         <mat-card class="shipping-card">
           <mat-card-header>
             <mat-card-title>Reservation Details</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
-              <mat-label>Transaction Type</mat-label>
-              <input matInput type="text" id="transactionType" formControlName="transactionType" class="form-control" placeholder="Enter Transaction Type" required>
-            </mat-form-field>
-            <mat-form-field class="full-width" style="width: 48%;">
-              <mat-label>Customer Name</mat-label>
-              <input matInput type="text" id="customerName" formControlName="customerName" class="form-control" placeholder="Enter Customer Name" required>
-            </mat-form-field>
-          </mat-card-content>
-          <mat-card-content>
-            <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
+            <mat-form-field class="full-width" style="width: 32%; margin-right: 2%;">
               <mat-label>Portal Item ID</mat-label>
               <input matInput type="number" id="portalItemId" formControlName="portalItemId" class="form-control" placeholder="Enter Portal Item ID">
             </mat-form-field>
-            <mat-form-field class="full-width" style="width: 48%;">
-              <mat-label>Status</mat-label>
-              <input matInput type="text" id="status" formControlName="status" class="form-control" placeholder="Enter Status">
+            <mat-form-field class="full-width" style="width: 32%; margin-right: 2%;">
+              <mat-label>Transaction Type</mat-label>
+              <input matInput type="text" id="transactionType" formControlName="transactionType" class="form-control" placeholder="Enter Transaction Type">
+            </mat-form-field>
+            <mat-form-field class="full-width" style="width: 32%;">
+              <mat-label>Date Received</mat-label>
+              <input matInput type="date" id="dateReceived" formControlName="dateReceived" class="form-control">
             </mat-form-field>
           </mat-card-content>
           <mat-card-content>
-            <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
+            <mat-form-field class="full-width" style="width: 32%; margin-right: 2%;">
+              <mat-label>Customer Name</mat-label>
+              <input matInput type="text" id="customerName" formControlName="customerName" class="form-control" placeholder="Enter Customer Name">
+            </mat-form-field>
+            <mat-form-field class="full-width" style="width: 32%; margin-right: 2%;">
               <mat-label>Contact No</mat-label>
               <input matInput type="text" id="contactNo" formControlName="contactNo" class="form-control" placeholder="Enter Contact Number">
             </mat-form-field>
-            <mat-form-field class="full-width" style="width: 48%;">
+            <mat-form-field class="full-width" style="width: 32%;">
               <mat-label>Contact Email</mat-label>
               <input matInput type="email" id="contactEmail" formControlName="contactEmail" class="form-control" placeholder="Enter Contact Email">
-            </mat-form-field>
-          </mat-card-content>
-          <mat-card-content>
-            <mat-form-field class="full-width" style="width: 100%;">
-              <mat-label>Date Received</mat-label>
-              <input matInput type="date" id="dateReceived" formControlName="dateReceived" class="form-control">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -53,7 +45,7 @@
         <!-- Reservation Data Card -->
         <mat-card class="shipping-card" style="margin-top: 20px;">
           <mat-card-header>
-            <mat-card-title>Pickup & Delivery Information</mat-card-title>
+            <mat-card-title>Pickup & Destination Information</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
@@ -86,26 +78,43 @@
             </mat-form-field>
           </mat-card-content>
           <mat-card-content>
-            <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
+            <mat-form-field class="full-width" style="width: 23%; margin-right: 2%;">
               <mat-label>Number of Days</mat-label>
               <input matInput type="number" id="numberOfDays" formControlName="numberOfDays" class="form-control" placeholder="Enter Number of Days">
             </mat-form-field>
-            <mat-form-field class="full-width" style="width: 48%;">
+            <mat-form-field class="full-width" style="width: 23%; margin-right: 2%;">
               <mat-label>Base Currency</mat-label>
               <input matInput type="text" id="baseCurrency" formControlName="baseCurrency" class="form-control" placeholder="Enter Currency Code">
             </mat-form-field>
-          </mat-card-content>
-          <mat-card-content>
-            <mat-form-field class="full-width" style="width: 48%; margin-right: 2%;">
+            <mat-form-field class="full-width" style="width: 23%; margin-right: 2%;">
               <mat-label>Base Rate</mat-label>
               <input matInput type="number" step="0.01" id="baseRate" formControlName="baseRate" class="form-control" placeholder="Enter Base Rate">
             </mat-form-field>
-            <mat-form-field class="full-width" style="width: 48%;">
+            <mat-form-field class="full-width" style="width: 23%;">
               <mat-label>Calculated Cost</mat-label>
               <input matInput type="number" step="0.01" id="calculatedCost" formControlName="calculatedCost" class="form-control" placeholder="Enter Calculated Cost">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
+
+
+        <mat-card class="shipping-card">
+          <mat-card-header>
+            <mat-card-title>Reservation Status</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field class="full-width" style="width: 48%;">
+              <mat-label>Status</mat-label>
+              <mat-select id="status" formControlName="status">
+                <mat-option *ngFor="let status of statusOptions" [value]="status">
+                  {{ status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+
+
 
       </form>
 
@@ -113,14 +122,19 @@
     <mat-card-actions>
 
       <div *ngIf="!showAddBtn">
-        <button mat-raised-button color="primary" (click)="onSubmit()" disabled>Submit</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
       </div>
 
       <div *ngIf="showAddBtn">
-          <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
+        <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
       </div>
 
       <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+
+      <!-- Update Message Alert -->
+      <span *ngIf="showUpdateMessage" [ngClass]="isUpdateSuccess ? 'alert-success' : 'alert-error'" class="update-message">
+        {{ updateMessage }}
+      </span>
     </mat-card-actions>
   </mat-card>
 

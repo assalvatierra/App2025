@@ -1,0 +1,24 @@
+<h3>Portal Reservations</h3>
+
+<div class="filter-container" style="margin-bottom: 20px;">
+  <label for="statusFilter" style="margin-right: 10px;">Filter by Status:</label>
+  <select 
+    id="statusFilter" 
+    [(ngModel)]="selectedStatus" 
+    (change)="onStatusFilterChange(selectedStatus)"
+    style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+    <option *ngFor="let status of statusOptions" [value]="status">
+      {{ status }}
+    </option>
+  </select>
+</div>
+
+<app-entity-list-table #ListTable
+        (addRecordClicked)="onAddRecord()"
+        (editRecordClicked)="onEdit($event)"
+        [showAdd]="showAdd"
+        [showEdit]="showEdit"
+        [showFilter]="true"
+        [editTitle]="'Edit Reservation'"
+        [tableFields]="tableFields">
+</app-entity-list-table>

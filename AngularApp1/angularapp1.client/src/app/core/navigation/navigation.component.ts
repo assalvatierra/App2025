@@ -72,6 +72,12 @@ export class NavigationComponent implements OnInit {
       route: '' 
     },
     {
+      name: 'Portal Reservations',
+      label: 'Portal Reservations',
+      icon: 'calendar_today',
+      route: 'portal-reservations'
+    },
+    {
       name: 'Jobs Orders',
       label: 'Jobs Orders',
       icon: 'dashboard',

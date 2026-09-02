@@ -50,6 +50,8 @@ import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.comp
 import { PublicLayoutComponent } from './core/layouts/public-layout/public-layout.component';
 import { PaymentSuccessComponent } from './pages/PaymentGateway/payment-success/payment-success.component';
 import { MainComponentComponent } from './pages/main-component/main-component.component';
+import { PortalReservationsComponent } from './pages/portal-reservations/portal-reservations.component';
+import { PortalReservationFormComponent } from './pages/portal-reservations/portal-reservation-form/portal-reservation-form.component';
 
 const routeConfig: Routes = [
 
@@ -100,6 +102,16 @@ const routeConfig: Routes = [
       {
         path: 'agents/form/:id',
         component: AgentChatComponent
+      },
+      {
+        path: 'portal-reservations',
+        component: PortalReservationsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'portal-reservations/form/:id',
+        component: PortalReservationFormComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'Jobs',

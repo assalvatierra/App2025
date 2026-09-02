@@ -58,6 +58,8 @@ import { ServiceItemsFormComponent } from './pages/serviceitems/serviceitems-for
 import { AgentChatComponent } from './pages/agent-chat/agent-chat.component';
 import { AgentsComponent } from './pages/agents/agents.component';
 import { AgentFormComponent } from './pages/agents/agent-form/agent-form.component';
+import { PortalReservationsComponent } from './pages/portal-reservations/portal-reservations.component';
+import { PortalReservationFormComponent } from './pages/portal-reservations/portal-reservation-form/portal-reservation-form.component';
 import { JobMainComponent } from './pages/job-main/job-main.component';
 import { JobMainFormComponent } from './pages/job-main/job-main-form/job-main-form.component';
 import { SharedModule } from './shared/shared.module'; 
@@ -138,6 +140,8 @@ import { environment } from '../environments/environment';
     AgentChatComponent,
     AgentsComponent,
     AgentFormComponent,
+    PortalReservationsComponent,
+    PortalReservationFormComponent,
     JobMainFormComponent,
     JobMainDetailsComponent,
     JobMainServicesComponent,
